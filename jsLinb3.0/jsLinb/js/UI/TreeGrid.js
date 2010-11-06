@@ -172,7 +172,24 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             });
             return dirty;
         },
-
+        _getObjByDom:function(src, type){
+            var prf=this.get(0),
+                subId=prf.getSubId(typeof src=='string'
+                    ? src.charAt(0)=='!'
+                        ? ((src=linb.use(src).get(0))&&src.id)
+                        : src
+                    : src.id );
+            return prf[type=="row"?"rowMap":type=="col"?"colMap":"cellMap"][subId];
+        },
+        getRowByDom:function(src){
+            return this._getObjByDom(src, "row");
+        },
+        getHeaderByDom:function(src){
+            return this._getObjByDom(src, "col");
+        },
+        getCellByDom:function(src){
+            return this._getObjByDom(src, "cell");
+        },
         /*rows related*/
         //type: 'original', 'data', 'min'
         getRows:function(type){
@@ -639,7 +656,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     ns.getSubNode('HHANDLER',hid).css('display',(options.colResizer=t)?"block":'none');
                 }
 
-                // 	Forward-compatible with 'visibility'
+                //  Forward-compatible with 'visibility'
                 if(options.hasOwnProperty('visibility') && !options.hasOwnProperty('hidden'))
                     options.hidden=!options.visibility;
 
@@ -2629,7 +2646,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
 
                 t.colDDDisplay = (('colResizer' in o)?o.colResizer:pro.colResizer)?'':'display:none';
 
-                // 	Forward-compatible with 'visibility'
+                //  Forward-compatible with 'visibility'
                 if(o.hasOwnProperty('visibility') && !o.hasOwnProperty('hidden'))
                     o.hidden=!o.visibility;
 
