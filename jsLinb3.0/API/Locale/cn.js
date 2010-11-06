@@ -14957,6 +14957,27 @@ _.set(linb.Locale,["cn","app"], {
                     "}"
                 ]
             },
+            getRowByDom:{
+                $desc:"从指定的DOM节点(或DOM id)中获取行对象.",
+                $rtn:"Object, 行对象.",
+                $paras:[
+                    "src [必需参数] : DOM(或DOM的id)."
+                ]
+            },
+            getHeaderByDom:{
+                $desc:"从指定的DOM节点(或DOM id)中获取列头对象.",
+                $rtn:"Object, 列头对象.",
+                $paras:[
+                    "src [必需参数] : DOM(或DOM的id)."
+                ]
+            },
+            getCellByDom:{
+                $desc:"从指定的DOM节点(或DOM id)中获取单元格对象.",
+                $rtn:"Object, 单元格对象.",
+                $paras:[
+                    "src [必需参数] : DOM(或DOM的id)."
+                ]
+            },
             getRowbyRowId  :{
                 $desc:"更新行id为指定值的行.",
                 $rtn:"Object",

@@ -15034,6 +15034,27 @@ _.set(linb.Locale,["en","app"], {
                     "}"
                 ]
             },
+            getRowByDom:{
+                $desc:"Gets the row Object according to a specified DOM element or an id string.",
+                $rtn:"Object, row object.",
+                $paras:[
+                    "src [Required] : DOM element or id string."
+                ]
+            },
+            getHeaderByDom:{
+                $desc:"Gets the column header Object according to a specified DOM element or an id string.",
+                $rtn:"Object, column header oject.",
+                $paras:[
+                    "src [Required] : DOM element or id string."
+                ]
+            },
+            getCellByDom:{
+                $desc:"Gets the cell Object according to a specified DOM element or an id string.",
+                $rtn:"Object, cell object.",
+                $paras:[
+                    "src [Required] : DOM element or id string."
+                ]
+            },
             getRowbyRowId  :{
                 $desc:"Gets a row item Object according to a given row id.",
                 $rtn:"Object",
