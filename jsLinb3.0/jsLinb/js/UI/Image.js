@@ -44,6 +44,7 @@ Class("linb.UI.Image", "linb.UI",{
             var self=this, pro=self.properties, v=pro.src;
             if(v){
                 pro.value=pro.$UIvalue='';
+                v=linb.adjustRes(v);
                 self.boxing().setSrc(v, v!=linb.ini.img_bg);
             }
         },
@@ -103,7 +104,7 @@ Class("linb.UI.Image", "linb.UI",{
                 action:function(v){
                     var self=this;
                     if(false!==self.boxing().beforeLoad(this))
-                        _.asyRun(function(){self.getRoot().attr({width:'0',height:'0',src:v})});
+                        _.asyRun(function(){self.getRoot().attr({width:'0',height:'0',src:linb.adjustRes(v)})});
                 }
             },
             alt:{

@@ -2307,7 +2307,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                 ini:"",
                 action:function(v){
                     v=(_.isSet(v)?v:"")+"";
-                    this.getSubNode('GRIDCAPTION').html(v.indexOf('$')!=-1?linb.adjustRes(v,true):v);
+                    this.getSubNode('GRIDCAPTION').html(linb.adjustRes(v,true));
                 }
             },
             rowHandlerWidth: {

@@ -66,7 +66,7 @@ Class("linb.UI.Label", "linb.UI.Widget",{
                 action: function(v){
                     var self=this,p=self.properties,b=self.boxing(),k=self.keys;
                     v=(_.isSet(v)?v:"")+"";
-                    self.getSubNodes(['CAPTION','SCAPTION']).html(v.indexOf('$')!=-1?linb.adjustRes(v,true):v);
+                    self.getSubNodes(['CAPTION','SCAPTION']).html(linb.adjustRes(v,true));
                     if(p.hAlign!='left')b.setHAlign(p.hAlign,true);
                     if(p.vAlign!='top')b.setVAlign(p.vAlign,true);
                 }

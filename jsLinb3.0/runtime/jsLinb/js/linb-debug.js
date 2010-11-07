@@ -753,7 +753,8 @@ _.merge(linb,{
         linb.include(z,linb.getPath(z, '.js'),m,m);
     },
     _langParamReg:/\x24(\d+)/g,
-    _langReg:/\B\$([\w]+[\.][\w\.]+[\w])/g,
+    _langscMark:/[$@][\S]+/,
+    _langReg:/((\$)([$@]))|((\$)([\w\.]*[\w]+))|((\@)([\w\.]*[\w]+))/g,
     getRes:function(path){
         var arr,conf,tmp,params=arguments;
         if(typeof path=='string'){
@@ -783,7 +784,9 @@ _.merge(linb,{
     },
     adjustRes:function(str, wrap){
         wrap=wrap?linb.wrapRes:linb.getRes;
-        return str.indexOf('$')!=-1 ?  str.replace(linb._langReg, function(a,b){return wrap(b)}): str;
+        return linb._langscMark.test(str) ?  str.replace(linb._langReg, function(a,b,c,d,e,f,g,h,i,j){
+            return c=='$' ? d : f=='$' ? wrap(g) : i=='@' ? ((j=linb.SC.get(j)) || (_.isSet(j)?j:"")) : a;
+            }): str;
     },
     request:function(uri, query, onSuccess, onFail, threadid, options){
         return (
@@ -13161,11 +13164,7 @@ Class("linb.UI",  "linb.absObj", {
             for(i in hashIn){
                 if(i.charAt(0)=='$')continue;
                 if(hashIn.hasOwnProperty(i) &&  !hashOut.hasOwnProperty(i))
-                    hashOut[i] = typeof (o=hashIn[i])=='string' ?
-                             (
-                                  ((o.indexOf('$')!=-1) ? (o=linb.adjustRes(o,true)) : o)
-                                &&((o.charAt(0)=='@') ? (linb.SC.get(o.substr(1,o.length)) || o) : o)
-                              ) : o;
+                    hashOut[i] = typeof (o=hashIn[i])=='string' ? linb.adjustRes(o,true) : o;
             }
 
 
@@ -14595,7 +14594,7 @@ new function(){
                     ini:undefined,
                     action:function(v){
                         v=(_.isSet(v)?v:"")+"";
-                        this.getRoot().html(v.indexOf('$')!=-1?linb.adjustRes(v,true):v);
+                        this.getRoot().html(linb.adjustRes(v,true));
                     }
                 },
                 href:{
@@ -14632,7 +14631,7 @@ new function(){
                     ini:undefined,
                     action: function(v){
                         v=(_.isSet(v)?v:"")+"";
-                        this.getRoot().html(v.indexOf('$')!=-1?linb.adjustRes(v,true):v);
+                        this.getRoot().html(linb.adjustRes(v,true));
                     }
                 },
                 hAlign:{
@@ -14718,7 +14717,7 @@ new function(){
                     ini:undefined,
                     action: function(v){
                         v=(_.isSet(v)?v:"")+"";
-                        this.getSubNode('FOCUS').html(v.indexOf('$')!=-1?linb.adjustRes(v,true):v);
+                        this.getSubNode('FOCUS').html(linb.adjustRes(v,true));
                     }
                 },
                 hAlign:{
@@ -14826,7 +14825,7 @@ new function(){
                     ini:undefined,
                     action: function(v){
                         v=(_.isSet(v)?v:"")+"";
-                        this.getSubNode('CAPTION').html(v.indexOf('$')!=-1?linb.adjustRes(v,true):v);
+                        this.getSubNode('CAPTION').html(linb.adjustRes(v,true));
                     }
                 }
             },
@@ -15051,6 +15050,7 @@ new function(){
             var self=this, pro=self.properties, v=pro.src;
             if(v){
                 pro.value=pro.$UIvalue='';
+                v=linb.adjustRes(v);
                 self.boxing().setSrc(v, v!=linb.ini.img_bg);
             }
         },
@@ -15110,7 +15110,7 @@ new function(){
                 action:function(v){
                     var self=this;
                     if(false!==self.boxing().beforeLoad(this))
-                        _.asyRun(function(){self.getRoot().attr({width:'0',height:'0',src:v})});
+                        _.asyRun(function(){self.getRoot().attr({width:'0',height:'0',src:linb.adjustRes(v)})});
                 }
             },
             alt:{
@@ -16441,7 +16441,7 @@ Class("linb.UI.Label", "linb.UI.Widget",{
                 action: function(v){
                     var self=this,p=self.properties,b=self.boxing(),k=self.keys;
                     v=(_.isSet(v)?v:"")+"";
-                    self.getSubNodes(['CAPTION','SCAPTION']).html(v.indexOf('$')!=-1?linb.adjustRes(v,true):v);
+                    self.getSubNodes(['CAPTION','SCAPTION']).html(linb.adjustRes(v,true));
                     if(p.hAlign!='left')b.setHAlign(p.hAlign,true);
                     if(p.vAlign!='top')b.setVAlign(p.vAlign,true);
                 }
@@ -16940,7 +16940,7 @@ Class("linb.UI.Button", ["linb.UI.Widget","linb.absValue"],{
                 // ui update function when setCaption
                 action: function(v){
                     v=(_.isSet(v)?v:"")+"";
-                    this.getSubNode('CAPTION').html(v.indexOf('$')!=-1?linb.adjustRes(v,true):v);
+                    this.getSubNode('CAPTION').html(linb.adjustRes(v,true));
                 }
             },
             image:{
@@ -20222,7 +20222,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                     
                     if(_.isSet(v)){
                         v=v+"";
-                        p.caption=v.indexOf('$')!=-1?linb.adjustRes(v,false):v;
+                        p.caption=linb.adjustRes(v,false);
                     }
                     if(this.renderId){
                         if(this.$inputReadonly || p.inputReadonly){
@@ -20577,7 +20577,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 // ui update function when setCaption
                 action: function(v){
                     v=(_.isSet(v)?v:"")+"";
-                    this.getSubNode('CAPTION').html(v.indexOf('$')!=-1?linb.adjustRes(v,true):v);
+                    this.getSubNode('CAPTION').html(linb.adjustRes(v,true));
                 }
             },
             html:{
@@ -24039,7 +24039,7 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                 // ui update function when setCaption
                 action: function(v){
                     v=(_.isSet(v)?v:"")+"";
-                    this.getSubNode('CAPTION').html(v.indexOf('$')!=-1?linb.adjustRes(v,true):v);
+                    this.getSubNode('CAPTION').html(linb.adjustRes(v,true));
                 }
             },
             image:{
@@ -24526,7 +24526,7 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
                 ini:' Page: ',
                 action:function(v){
                     v=(_.isSet(v)?v:"")+"";
-                    this.getSubNode('LABEL').html(v.indexOf('$')!=-1?linb.adjustRes(v,true):v);
+                    this.getSubNode('LABEL').html(linb.adjustRes(v,true));
                 }
             },
             value:"1:1:1",
@@ -32684,7 +32684,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                 ini:"",
                 action:function(v){
                     v=(_.isSet(v)?v:"")+"";
-                    this.getSubNode('GRIDCAPTION').html(v.indexOf('$')!=-1?linb.adjustRes(v,true):v);
+                    this.getSubNode('GRIDCAPTION').html(linb.adjustRes(v,true));
                 }
             },
             rowHandlerWidth: {
@@ -35162,7 +35162,7 @@ if(linb.browser.ie){
                 // ui update function when setCaption
                 action: function(v){
                     v=(_.isSet(v)?v:"")+"";
-                    this.getSubNode('CAPTION').html(v.indexOf('$')!=-1?linb.adjustRes(v,true):v);
+                    this.getSubNode('CAPTION').html(linb.adjustRes(v,true));
                 }
             },
             image:{

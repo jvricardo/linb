@@ -479,7 +479,7 @@ if(linb.browser.ie){
                 // ui update function when setCaption
                 action: function(v){
                     v=(_.isSet(v)?v:"")+"";
-                    this.getSubNode('CAPTION').html(v.indexOf('$')!=-1?linb.adjustRes(v,true):v);
+                    this.getSubNode('CAPTION').html(linb.adjustRes(v,true));
                 }
             },
             image:{

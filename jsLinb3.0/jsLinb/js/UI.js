@@ -3637,11 +3637,7 @@ Class("linb.UI",  "linb.absObj", {
             for(i in hashIn){
                 if(i.charAt(0)=='$')continue;
                 if(hashIn.hasOwnProperty(i) &&  !hashOut.hasOwnProperty(i))
-                    hashOut[i] = typeof (o=hashIn[i])=='string' ?
-                             (
-                                  ((o.indexOf('$')!=-1) ? (o=linb.adjustRes(o,true)) : o)
-                                &&((o.charAt(0)=='@') ? (linb.SC.get(o.substr(1,o.length)) || o) : o)
-                              ) : o;
+                    hashOut[i] = typeof (o=hashIn[i])=='string' ? linb.adjustRes(o,true) : o;
             }
 
 
@@ -5071,7 +5067,7 @@ new function(){
                     ini:undefined,
                     action:function(v){
                         v=(_.isSet(v)?v:"")+"";
-                        this.getRoot().html(v.indexOf('$')!=-1?linb.adjustRes(v,true):v);
+                        this.getRoot().html(linb.adjustRes(v,true));
                     }
                 },
                 href:{
@@ -5108,7 +5104,7 @@ new function(){
                     ini:undefined,
                     action: function(v){
                         v=(_.isSet(v)?v:"")+"";
-                        this.getRoot().html(v.indexOf('$')!=-1?linb.adjustRes(v,true):v);
+                        this.getRoot().html(linb.adjustRes(v,true));
                     }
                 },
                 hAlign:{
@@ -5194,7 +5190,7 @@ new function(){
                     ini:undefined,
                     action: function(v){
                         v=(_.isSet(v)?v:"")+"";
-                        this.getSubNode('FOCUS').html(v.indexOf('$')!=-1?linb.adjustRes(v,true):v);
+                        this.getSubNode('FOCUS').html(linb.adjustRes(v,true));
                     }
                 },
                 hAlign:{
@@ -5302,7 +5298,7 @@ new function(){
                     ini:undefined,
                     action: function(v){
                         v=(_.isSet(v)?v:"")+"";
-                        this.getSubNode('CAPTION').html(v.indexOf('$')!=-1?linb.adjustRes(v,true):v);
+                        this.getSubNode('CAPTION').html(linb.adjustRes(v,true));
                     }
                 }
             },

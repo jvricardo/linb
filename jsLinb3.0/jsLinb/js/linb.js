@@ -753,7 +753,8 @@ _.merge(linb,{
         linb.include(z,linb.getPath(z, '.js'),m,m);
     },
     _langParamReg:/\x24(\d+)/g,
-    _langReg:/\B\$([\w]+[\.][\w\.]+[\w])/g,
+    _langscMark:/[$@][\S]+/,
+    _langReg:/((\$)([$@]))|((\$)([\w\.]*[\w]+))|((\@)([\w\.]*[\w]+))/g,
     getRes:function(path){
         var arr,conf,tmp,params=arguments;
         if(typeof path=='string'){
@@ -783,7 +784,9 @@ _.merge(linb,{
     },
     adjustRes:function(str, wrap){
         wrap=wrap?linb.wrapRes:linb.getRes;
-        return str.indexOf('$')!=-1 ?  str.replace(linb._langReg, function(a,b){return wrap(b)}): str;
+        return linb._langscMark.test(str) ?  str.replace(linb._langReg, function(a,b,c,d,e,f,g,h,i,j){
+            return c=='$' ? d : f=='$' ? wrap(g) : i=='@' ? ((j=linb.SC.get(j)) || (_.isSet(j)?j:"")) : a;
+            }): str;
     },
     request:function(uri, query, onSuccess, onFail, threadid, options){
         return (
