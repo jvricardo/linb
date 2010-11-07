@@ -754,7 +754,7 @@ _.merge(linb,{
     },
     _langParamReg:/\x24(\d+)/g,
     _langscMark:/[$@][\S]+/,
-    _langReg:/((\$)([$@]))|((\$)([\w\.]*[\w]+))|((\@)([\w\.]*[\w]+))/g,
+    _langReg:/((\$)([^\w]))|((\$)([\w][\w\.]*[\w]+))|((\@)([\w][\w\.]*[\w]+))/g,
     getRes:function(path){
         var arr,conf,tmp,params=arguments;
         if(typeof path=='string'){

@@ -561,7 +561,7 @@ Class('VisualJS', 'linb.Com',{
             return hash['*'];
         },
         _openproject: function(pm, obj){
-            PRJ_PATH=linb.ini.appPath + pm;
+            PRJ_PATH=linb.ini.appPath + pm + "/";
             
             this.curProject = pm;
             
