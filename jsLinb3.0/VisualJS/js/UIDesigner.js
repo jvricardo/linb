@@ -282,6 +282,7 @@ Class('UIDesigner', 'linb.Com',{
                 .setCustomStyle({"BORDER":"border:none;background:none;"})
                 .onMenuBtnClick('_menubar_btnclick')
                 .onMenuSelected('_menubar_selected')
+                .setZIndex(5)
             )
                         
             return children;
@@ -329,7 +330,8 @@ Class('UIDesigner', 'linb.Com',{
                 linb.Dom.submit("http://jsoneditor.appspot.com");
                 break;
                 case 'adv':
-                linb.Dom.submit("http://www.linb.net/VisualJS/");
+                linb.Dom.submit("index.html");
+                //linb.Dom.submit("http://www.linb.net/VisualJS/");
                 break;
                 case 'commecial':
                 linb.Dom.submit("http://www.sigmawidgets.com/");
