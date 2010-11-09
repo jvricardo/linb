@@ -27,7 +27,7 @@ new function(){
         path_gpllicence:'http://www.gnu.org/licenses/lgpl-3.0-standalone.html',
         path_licence:'http://www.sigmawidgets.com/license.html',
         path_purchase:'http://www.sigmawidgets.com/buy_now2.html',
-        path_video:"video/simple.html",
+        path_video:"../video/simple.html",
 
 
         mapWidgets:{},
