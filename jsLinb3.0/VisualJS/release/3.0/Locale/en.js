@@ -94,6 +94,7 @@
 
         help: 'Help',
         simple: 'Simple Version',
+        video:'Introduction Video',
         forum: 'Go to Forum...',
         license:'License',
         gpllicense:'LGPL License',

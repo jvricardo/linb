@@ -94,6 +94,7 @@
 
         help: '幫助',
         simple: '入門版',
+        video:'教學視頻',
         forum: '到論壇...',
         license:'授權許可',
         gpllicense:'LGPL 開源許可',

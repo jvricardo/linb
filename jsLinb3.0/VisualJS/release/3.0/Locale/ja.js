@@ -95,6 +95,7 @@
 
         help: 'ヘルプ',
         simple:'Simple Version',
+        video:'紹介ビデオ',
         forum: 'フォーラムを開く',
         license:'ライセンス',
         gpllicense:'LGPLライセンス',

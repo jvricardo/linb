@@ -49,6 +49,8 @@ Class('VisualJS', 'linb.Com',{
                     {id:'help',caption:'$VisualJS.menu.help', sub:[
                         {id:'simple', caption:'$VisualJS.menu.simple'},
                         {type:'split'},
+                        {id:'video', caption:'$VisualJS.menu.video'},
+                        {type:'split'},
                         {id:'forum', caption:'$VisualJS.menu.forum'},
                         {type:'split'},
                         {id:'license', caption:'$VisualJS.menu.license', sub:[
@@ -747,6 +749,9 @@ Class('VisualJS', 'linb.Com',{
                     break;
                 case 'simple':
                     linb.Dom.submit(CONF.path_simple);
+                    break;
+                case 'video':
+                    linb.Dom.submit(CONF.path_video);
                     break;
                 case 'forum':
                     linb.Dom.submit(CONF.path_forum);
