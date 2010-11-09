@@ -5980,6 +5980,28 @@ _.set(linb.Locale,["en","app"], {
                     "}"
                 ]
             },
+            beforeDrop:{
+                $desc:"Fired before the user drop the Object to a valid drop target. If returns false, onDrop and afteDrop will not be triggered.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "e : Event.",
+                    "src : String, the event source DOM element's linbid.",
+                    "dragKey : String, the DragDrop key.",
+                    "dragData : Object, the DragDrop data.",
+                    "item : Object, the target item Object."
+                ]
+            },
+            afterDrop:{
+                $desc:"Fired after the user drop the Object to a valid drop target.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "e : Event.",
+                    "src : String, the event source DOM element's linbid.",
+                    "dragKey : String, the DragDrop key.",
+                    "dragData : Object, the DragDrop data.",
+                    "item : Object, the target item Object."
+                ]
+            },
             onDropMarkClear:{
                 $desc:"Fired when the user drags the Object leave a valid drop target.",
                 $paras:[

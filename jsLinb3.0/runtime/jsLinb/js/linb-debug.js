@@ -12694,7 +12694,7 @@ Class("linb.UI",  "linb.absObj", {
                     if(!t[o])t[o]=src[o];
                 });
                 self.$DataModel.dropKeys=self.$DataStruct.dropKeys='';
-                hls.onDragEnter=hls.onDragLeave=hls.onDrop=hls.onDropTest=hls.onDropMarkShow=hls.onDropMarkClear=src._e4;
+                hls.onDragEnter=hls.onDragLeave=hls.beforeDrop=hls.onDrop=hls.afterDrop=hls.onDropTest=hls.onDropMarkShow=hls.onDropMarkClear=src._e4;
             }
             if((t=hash.DraggableKeys)&& t.length){
                 _.arr.each(t,function(o){
@@ -13084,14 +13084,24 @@ Class("linb.UI",  "linb.absObj", {
                     if(profile.onDropMarkClear && (false===box.onDropMarkClear.apply(box,args))){}
                     else if((t=profile.box._onDropMarkClear) && (false===t.apply(profile.host||profile, args))){}
 
-                    if(profile.onDrop && (false===box.onDrop.apply(box,args))){}
-                    else if((t=profile.box._onDrop) && (false===t.apply(profile.host||profile, args))){}
+                    if(profile.beforeDrop && (false===box.beforeDrop.apply(box,args)))
+                        return;
+
+                    if(profile.onDrop && (false===box.onDrop.apply(box,args))){
+                        // dont call inner _onDrop
+                    }else if(profile.box._onDrop)
+                        profile.box._onDrop.apply(profile.host||profile, args);
+
+                    if(profile.afterDrop)
+                        box.afterDrop.apply(box,args);
                 }
             }, 'all');
             _.merge(ch,{
                 onmouseover:h2,
                 onmouseout:h2,
-                ondrop:h2
+                ondrop:h2,
+                afterDrop:h2,
+                beforeDrop:h2
             });
             return self;
         },

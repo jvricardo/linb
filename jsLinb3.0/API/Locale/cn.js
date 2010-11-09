@@ -6009,6 +6009,28 @@ _.set(linb.Locale,["cn","app"], {
                     "}"
                 ]
             },
+            beforeDrop:{
+                $desc:"在用户拖动某个对象在该对象上空放下前调用，如返回 false，onDrop和afterDrop不会调用.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "e : Event, DOM事件元素.",
+                    "src: String, 事件所属DOM元素的linbid.",
+                    "dragKey : String, 被拖动物体的拖动标志串.",
+                    "dragData : Object, 拖动物体代表的数据.",
+                    "item : Object, drop到的子项对象.可能为空."
+                ]
+            },
+            afterDrop:{
+                $desc:"在用户拖动某个对象在该对象上空放下后调用.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "e : Event, DOM事件元素.",
+                    "src: String, 事件所属DOM元素的linbid.",
+                    "dragKey : String, 被拖动物体的拖动标志串.",
+                    "dragData : Object, 拖动物体代表的数据.",
+                    "item : Object, drop到的子项对象.可能为空."
+                ]
+            },
             onDropMarkClear:{
                 $desc:"当丢放标志被清除时调用.",
                 $paras:[
