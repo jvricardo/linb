@@ -1479,8 +1479,8 @@ _.set(linb.Locale,["cn","app"], {
                 "<br><em>//functions</em>"+
                 "<br>&nbsp;&nbsp;cusomQS: Function, 函数参数: [obj, type]. 用来自定义query string对象的函数."+
                 "<br><em>//normal events</em>"+
-                "<br>&nbsp;&nbsp;onSuccess: Function, 函数参数:[response Object, 如请求成功返回,调用这个回调函."+
-                "<br>&nbsp;&nbsp;onFail: Function, 函数参数:[response Object, response type, threadid].  如请求失败,调用这个回调函."+
+                "<br>&nbsp;&nbsp;onSuccess: Function, 函数参数:[response Object, 如请求成功返回,调用这个回调函数."+
+                "<br>&nbsp;&nbsp;onFail: Function, 函数参数:[response Object, response type, threadid].  如请求失败,调用这个回调函数."+
                 "<br><em>//trace events</em>"+
                 "<br>&nbsp;&nbsp;onRetry: Function, 函数参数:[the current retry time], 请求失败重试时调用的函数."+
                 "<br>&nbsp;&nbsp;onTimeout: Function, 请求超时的时候调用的函数."+
@@ -1582,8 +1582,8 @@ _.set(linb.Locale,["cn","app"], {
                 "<br><em>//functions</em>"+
                 "<br>&nbsp;&nbsp;cusomQS: Function, 函数参数: [obj, type]. 用来自定义query string对象的函数."+
                 "<br><em>//normal events</em>"+
-                "<br>&nbsp;&nbsp;onSuccess: Function, 函数参数:[response Object, 如请求成功返回,调用这个回调函."+
-                "<br>&nbsp;&nbsp;onFail: Function, 函数参数:[response Object, response type, threadid].  如请求失败,调用这个回调函."+
+                "<br>&nbsp;&nbsp;onSuccess: Function, 函数参数:[response Object, 如请求成功返回,调用这个回调函数."+
+                "<br>&nbsp;&nbsp;onFail: Function, 函数参数:[response Object, response type, threadid].  如请求失败,调用这个回调函数."+
                 "<br><em>//trace events</em>"+
                 "<br>&nbsp;&nbsp;onRetry: Function, 函数参数:[the current retry time], 请求失败重试时调用的函数."+
                 "<br>&nbsp;&nbsp;onTimeout: Function, 请求超时的时候调用的函数."+
@@ -1687,8 +1687,8 @@ _.set(linb.Locale,["cn","app"], {
                 "<br><em>//functions</em>"+
                 "<br>&nbsp;&nbsp;cusomQS: Function, 函数参数: [obj, type]. 用来自定义query string对象的函数."+
                 "<br><em>//normal events</em>"+
-                "<br>&nbsp;&nbsp;onSuccess: Function, 函数参数:[response Object, 如请求成功返回,调用这个回调函."+
-                "<br>&nbsp;&nbsp;onFail: Function, 函数参数:[response Object, response type, threadid].  如请求失败,调用这个回调函."+
+                "<br>&nbsp;&nbsp;onSuccess: Function, 函数参数:[response Object, 如请求成功返回,调用这个回调函数."+
+                "<br>&nbsp;&nbsp;onFail: Function, 函数参数:[response Object, response type, threadid].  如请求失败,调用这个回调函数."+
                 "<br><em>//trace events</em>"+
                 "<br>&nbsp;&nbsp;onRetry: Function, 函数参数:[the current retry time], 请求失败重试时调用的函数."+
                 "<br>&nbsp;&nbsp;onTimeout: Function, 请求超时的时候调用的函数."+
