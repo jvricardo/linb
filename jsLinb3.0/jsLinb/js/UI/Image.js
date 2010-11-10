@@ -44,7 +44,6 @@ Class("linb.UI.Image", "linb.UI",{
             var self=this, pro=self.properties, v=pro.src;
             if(v){
                 pro.value=pro.$UIvalue='';
-                v=linb.adjustRes(v);
                 self.boxing().setSrc(v, v!=linb.ini.img_bg);
             }
         },
