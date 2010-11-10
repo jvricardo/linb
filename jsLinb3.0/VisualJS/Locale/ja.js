@@ -204,6 +204,9 @@
         domIdValid:'DOM idには英数字のみが使用できます。',
         confirmdel:'削除しますか?',
         confirmdel2:"選択されたウィジェット($0個)を削除してもよいですか?",
+        confirmrefresh1:"リフレッシュデザインビュー",
+        confirmrefresh2は:"現在のデザインのビューが変更されており、更新は更新を続行するかどうか、これらの変更が失われるのだろうか？",
+        refreshOK:'更新されました',
         wlist: 'ウィジェット一覧',
         weditor:'ウィジェットエディタ',
         gridcol1: 'プロパティ',
@@ -214,6 +217,7 @@
         openapi:'ダブルクリックすると、APIリファレンスを表示します',
         tool:{
             viewsize:"表示画面サイズ",
+            refresh:"リフレッシュデザインビュー",
             tocode:"選択内容をJavaScriptコードに整形",
             tojson:"選択内容をJSONコードに整形",
             left: '左にそろえる',

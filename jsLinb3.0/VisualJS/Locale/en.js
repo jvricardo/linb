@@ -203,6 +203,9 @@
         domIdValid:'DOM id must be char and number only',
         confirmdel:'Delete?',
         confirmdel2:"Are You Sure to Delete the $0 Selected  Component(s)?",
+        confirmrefresh1: "Refresh Design View from Code",
+        confirmrefresh2: "UI has been changed, 'refresh' will result in loss of these changes, whether to refresh?",
+        refreshOK:'Refreshed!',
         wlist: 'Widgets List',
         weditor:'Widget Editor',
         gridcol1: 'property',
@@ -213,6 +216,7 @@
         openapi:'DblClick to open API window',
         tool:{
             viewsize:"View Size",
+            refresh:"Refresh the Design View",
             tocode:"Serialize selection to JS code",
             tojson:"Serialize selection to JSON code",
             left: 'Align to left',

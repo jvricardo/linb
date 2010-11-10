@@ -82,6 +82,12 @@ Class('VisualJS.Designer', 'linb.Com',{
                         tips:tbk+'viewsize'
                     },
                     {
+                        id : "refresh",
+                        image : CONF.img_app,
+                        imagePos:"-112px -16px",
+                        type : "button",
+                        tips : tbk+'refresh'
+                    },{
                         id : "format",
                         image : CONF.img_app,
                         imagePos:"-32px -48px",
@@ -1288,7 +1294,16 @@ Class('VisualJS.Designer', 'linb.Com',{
                               dialog.setHtml(code);
                               dialog.show(linb('body'), true);
                           });
-                      break;
+                        break;
+                        case 'refresh':
+                            if(!page._dirty){
+                                page.refreshFromCode();
+                            }else{
+                                linb.UI.Dialog.confirm(linb.getRes('VisualJS.designer.confirmrefresh1'),linb.getRes('VisualJS.designer.confirmrefresh2'),function(){
+                                    page.refreshFromCode();
+                                });
+                            }
+                        break;
                     }
                     break;
                 case 'align':

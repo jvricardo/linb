@@ -592,6 +592,13 @@ Class('VisualJS.JSEditor', 'linb.Com',{
                 ns.showPage('code');
                 var cursor = ns.codeeditor.searchCode(code);
             };
+            designer.refreshFromCode=function(){
+                var obj=ns.check(ns._ovalue = ns.codeeditor.getUIValue());
+                if(obj.ok){
+                    this.refreshView(obj.ok);
+                    linb.message(linb.getRes('VisualJS.designer.refreshOK'));
+                }
+            };
             ns.paneDesign.append(designer);
         },
         iniComponents:function(){

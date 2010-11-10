@@ -78,7 +78,7 @@ Class('VisualJS', 'linb.Com',{
                     {id:'demo', image:CONF.img_app, imagePos:'-48px -64px ', tips:'$VisualJS.tool.demo'},
 */
                     {split:true},
-                    {id:'ec', dropButton:true, image:CONF.img_app, imagePos:'-98px -16px', tips:'$VisualJS.tool.ec'},
+                    {id:'ec', dropButton:true, image:CONF.img_app, imagePos:'-96px -16px', tips:'$VisualJS.tool.ec'},
                     {split:true},
                     {id:'theme', dropButton:true, image:CONF.img_app, imagePos:'-208px -48px', tips:'$VisualJS.builder.dftThemeTips'},
                     {split:true},

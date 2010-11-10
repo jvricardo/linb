@@ -206,6 +206,9 @@
         domIdValid:'DOM id 只能是數字或英文字母',
         confirmdel:'刪除?',
         confirmdel2:"您是否確認刪除選中的$0個控件?",
+        confirmrefresh1:"重新刷新設計視圖",
+        confirmrefresh2:"當前設計視圖已經改動，刷新將導致這些改動丟失，是否繼續刷新?",
+        refreshOK:'刷新成功!',
         wlist: '元件樹',
         weditor:'元件編輯器',
         gridcol1: '鍵',
@@ -216,6 +219,7 @@
         openapi:'可雙擊滑鼠查看 API 文檔',
         tool:{
             viewsize:"視圖大小",
+            refresh:"重新刷新設計視圖",
             tocode:"序列化到 javascript 代碼",
             tojson:"序列化到 JSON 代碼",
             left: '左對齊',
