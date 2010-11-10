@@ -2341,7 +2341,7 @@ Class("linb.UI",  "linb.absObj", {
             },
             '.uicon-main':{
                 position:'relative',
-                'padding-left':'5px',
+                'padding-left':'4px',
                 'font-size':0,
                 'line-height':0,
                 'z-index':1,
@@ -2349,7 +2349,7 @@ Class("linb.UI",  "linb.absObj", {
                 background: linb.UI.$bg('bar_horizontal.gif', 'repeat-y -595px top', true)
             },
             '.uicon-maini':{
-                'padding-right':'5px',
+                'padding-right':'4px',
                 'font-size':0,
                 'line-height':0,
                 background: linb.UI.$bg('container_right.gif', '#AAD2FA repeat-y right top', true)
@@ -2360,7 +2360,7 @@ Class("linb.UI",  "linb.absObj", {
             },
             '.uibar-bottom .uibar-tdl':{
                 $order:1,
-                'padding-left':'5px',
+                'padding-left':'4px',
                 height:'100%',
                 'background-position': 'left -189px'
             },
@@ -2371,7 +2371,7 @@ Class("linb.UI",  "linb.absObj", {
             },
             '.uibar-bottom .uibar-tdr':{
                 $order:1,
-                'padding-left':'5px',
+                'padding-left':'4px',
                 'background-position': 'right -233px'
             },
 //uibar-top-s
@@ -2382,7 +2382,7 @@ Class("linb.UI",  "linb.absObj", {
             '.uibar-top-s .uibar-tdl':{
                 $order:3,
                 height:'100%',
-                'padding-left':'5px',
+                'padding-left':'4px',
                 'background-position': 'left -261px'
             },
             '.uibar-top-s .uibar-tdm':{
@@ -2392,7 +2392,7 @@ Class("linb.UI",  "linb.absObj", {
             },
             '.uibar-top-s .uibar-tdr':{
                 $order:3,
-                'padding-left':'5px',
+                'padding-left':'4px',
                 'background-position': 'right -305px'
             },
             '.uibar-top-s .uibar-cmdl':{
@@ -2411,7 +2411,7 @@ Class("linb.UI",  "linb.absObj", {
             '.uibar-bottom-s .uibar-tdl':{
                 $order:3,
                 height:'100%',
-                'padding-left':'5px',
+                'padding-left':'4px',
                 'background-position': 'left -327px'
             },
             '.uibar-bottom-s .uibar-tdm':{
@@ -2421,7 +2421,7 @@ Class("linb.UI",  "linb.absObj", {
             },
             '.uibar-bottom-s .uibar-tdr':{
                 $order:3,
-                'padding-left':'5px',
+                'padding-left':'4px',
                 'background-position': 'right -371px'
             }
         })

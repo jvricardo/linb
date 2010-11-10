@@ -11868,7 +11868,7 @@ Class("linb.UI",  "linb.absObj", {
             },
             '.uicon-main':{
                 position:'relative',
-                'padding-left':'5px',
+                'padding-left':'4px',
                 'font-size':0,
                 'line-height':0,
                 'z-index':1,
@@ -11876,7 +11876,7 @@ Class("linb.UI",  "linb.absObj", {
                 background: linb.UI.$bg('bar_horizontal.gif', 'repeat-y -595px top', true)
             },
             '.uicon-maini':{
-                'padding-right':'5px',
+                'padding-right':'4px',
                 'font-size':0,
                 'line-height':0,
                 background: linb.UI.$bg('container_right.gif', '#AAD2FA repeat-y right top', true)
@@ -11887,7 +11887,7 @@ Class("linb.UI",  "linb.absObj", {
             },
             '.uibar-bottom .uibar-tdl':{
                 $order:1,
-                'padding-left':'5px',
+                'padding-left':'4px',
                 height:'100%',
                 'background-position': 'left -189px'
             },
@@ -11898,7 +11898,7 @@ Class("linb.UI",  "linb.absObj", {
             },
             '.uibar-bottom .uibar-tdr':{
                 $order:1,
-                'padding-left':'5px',
+                'padding-left':'4px',
                 'background-position': 'right -233px'
             },
 //uibar-top-s
@@ -11909,7 +11909,7 @@ Class("linb.UI",  "linb.absObj", {
             '.uibar-top-s .uibar-tdl':{
                 $order:3,
                 height:'100%',
-                'padding-left':'5px',
+                'padding-left':'4px',
                 'background-position': 'left -261px'
             },
             '.uibar-top-s .uibar-tdm':{
@@ -11919,7 +11919,7 @@ Class("linb.UI",  "linb.absObj", {
             },
             '.uibar-top-s .uibar-tdr':{
                 $order:3,
-                'padding-left':'5px',
+                'padding-left':'4px',
                 'background-position': 'right -305px'
             },
             '.uibar-top-s .uibar-cmdl':{
@@ -11938,7 +11938,7 @@ Class("linb.UI",  "linb.absObj", {
             '.uibar-bottom-s .uibar-tdl':{
                 $order:3,
                 height:'100%',
-                'padding-left':'5px',
+                'padding-left':'4px',
                 'background-position': 'left -327px'
             },
             '.uibar-bottom-s .uibar-tdm':{
@@ -11948,7 +11948,7 @@ Class("linb.UI",  "linb.absObj", {
             },
             '.uibar-bottom-s .uibar-tdr':{
                 $order:3,
-                'padding-left':'5px',
+                'padding-left':'4px',
                 'background-position': 'right -371px'
             }
         })
@@ -22570,30 +22570,45 @@ Class("linb.UI.Group", "linb.UI.Div",{
                     arr1=cls._v2a(uiv),
                     arr2=cls._v2a(value);
                 profile.$hour=arr2[0];
-                if(arr1&&arr1[1])
-                    cls._uncheck(profile.getSubNode('MI',arr1[1]).get(0));
-                cls._check(profile.getSubNode('MI',arr2[1]).get(0));
+                profile.$minute=arr2[1];
+                
+                profile.getSubNode('HI',true).removeClass(cls._excls_c3).removeClass(cls._excls_mo3);
+                profile.getSubNode('HI',arr2[0]).addClass(cls._excls_c3);
+
+                profile.getSubNode('MI',true).removeClass(cls._excls_c).removeClass(cls._excls_mo);
+                profile.getSubNode('MI',arr2[1]).addClass(cls._excls_c);
 
                 profile.getSubNode('HOUR').html(arr2[0],false);
+                profile.getSubNode('MINUTE').html(arr2[1],false);
                 profile.getSubNode('CAPTION').html(profile.box._showV(profile,profile.box._v2a(arr2)),false);
             });
         }
     },
     Initialize:function(){
-        this.addTemplateKeys(['MI']);
+        this.addTemplateKeys(['HI','MI']);
 
-        var a=[],
-            cls=this._excls,
-            cls2=this._excls2,
-            id=linb.UI.$ID,
-            t='<span id="'+this.KEY+'-MI:'+id+':@" class="'+cls+' !" '+linb.$IEUNSELECTABLE+' >@</span>',
-            i,m;
+        var a,i,h,m,cls,cls2,id,t;
 
-        for(i=0;i<60;i++)
-            a[a.length]=t.replace(/@/g,i<10?'0'+i:i).replace('!',(i%5===0)?cls2:'');
-        m=a.join('');
+        cls=this._excls3;
+        cls2=this._excls4;
+        id=linb.UI.$ID;
+        t='<span id="'+this.KEY+'-HI:'+id+':@" class="'+cls+' !" '+linb.$IEUNSELECTABLE+' >@</span>';
+        a=[];
+        for(i=0;i<24;i++)
+            a[a.length]=t.replace(/@/g,i<10?('0'+i):i).replace('!',(i%6===0)?cls2:'');
+        h=a.join('');
         a.length=0;
 
+        cls=this._excls;
+        cls2=this._excls2;
+        id=linb.UI.$ID;
+        t='<span id="'+this.KEY+'-MI:'+id+':@" class="'+cls+' !" '+linb.$IEUNSELECTABLE+' >@</span>';
+        a=[];
+        for(i=0;i<60;i++)
+            a[a.length]=t.replace(/@/g,i<10?('0'+i):i).replace('!',(i%5===0)?cls2:'');
+        m=a.join('');
+        a.length=0;
+        
         this.setTemplate({
             tagName : 'div',
             onselectstart:'return false',
@@ -22633,17 +22648,29 @@ Class("linb.UI.Group", "linb.UI.Div",{
                     BARCMDL:{
                         tagName: 'div',
                         className:'uibar-cmdl',
-                        PRE:{
+                        PRE2:{
                             $order:0,
                             tabindex: '{tabindex}'
                         },
-                        HOUR:{
+                        PRE:{
                             $order:1,
+                            tabindex: '{tabindex}'
+                        },
+                        HOUR:{
+                            $order:2,
                             className:'ui-draggable'
                         },
-//                        HOURTXT:{$order:2,style:'display:inline'},
+                        MTXT:{$order:3,text:':'},
+                        MINUTE:{
+                                $order:4,
+                                className:'ui-draggable'
+                            },
                         NEXT:{
-                            $order:3,
+                            $order:6,
+                            tabindex: '{tabindex}'
+                        },
+                        NEXT2:{
+                            $order:7,
                             tabindex: '{tabindex}'
                         }
                     },
@@ -22663,8 +22690,15 @@ Class("linb.UI.Group", "linb.UI.Div",{
                     MAINI:{
                         tagName:'div',
                         className:'uicon-maini',
-                        CON:{
+                        CONH:{
                             tagName:'div',
+                            className:'uiborder-inset',
+                            text:h
+                        },
+                        CONM:{
+                            $order:2,
+                            tagName:'div',
+                            className:'uiborder-inset',
                             text:m
                         }
                     }
@@ -22731,31 +22765,33 @@ Class("linb.UI.Group", "linb.UI.Div",{
     Static:{
         _excls:'linbex-timepicker',
         _excls2:'linbex-timepicker2',
+        _excls3:'linbex-timepicker3',
+        _excls4:'linbex-timepicker4',
+
         _excls_mo:'linbex-timepicker-mouseover',
         _excls_c:'linbex-timepicker-checked',
-        _mover:function(src){
+        _excls_mo3:'linbex-timepicker3-mouseover',
+        _excls_c3:'linbex-timepicker3-checked',
+        _mover:function(src, type){
             var b=this,cn=src.className;
-            if(cn.indexOf(b._excls_mo)==-1)
-                src.className=cn + ' ' + b._excls_mo;
+            if(type==2){
+                if(cn.indexOf(b._excls_mo3)==-1)
+                    src.className=cn + ' ' + b._excls_mo3;
+            }else{
+                if(cn.indexOf(b._excls_mo)==-1)
+                    src.className=cn + ' ' + b._excls_mo;
+            }
             src=null;
         },
-        _mout:function(src){
+        _mout:function(src,type){
             var b=this,cn=src.className;
-            if(cn.indexOf(b._excls_mo)!=-1)
-                src.className=cn.replace(b._excls_mo,'');
-            src=null;
-        },
-        _check:function(src){
-            var b=this,cn=src.className;
-            if(cn.indexOf(b._excls_c)==-1)
-                src.className=cn + ' ' + b._excls_c;
-            b._mout(src);
-            src=null;
-        },
-        _uncheck:function(src){
-            var b=this,cn=src.className;
-            if(cn.indexOf(b._excls_c)!=-1)
-                src.className=cn.replace(b._excls_c,'');
+            if(type==2){
+                if(cn.indexOf(b._excls_mo3)!=-1)
+                    src.className=cn.replace(b._excls_mo3,'');
+            }else{
+                if(cn.indexOf(b._excls_mo)!=-1)
+                    src.className=cn.replace(b._excls_mo,'');
+            }
             src=null;
         },
         Appearances:{
@@ -22764,15 +22800,17 @@ Class("linb.UI.Group", "linb.UI.Div",{
             MAINI:{
                 'padding-top':'4px'
             },
-            CON:{
-                width:'220px',
-                'border-left':'solid 1px #648CB4',
-                'border-top':'solid 1px #648CB4'
+            CONH:{
+                width:'240px'
+            },
+            CONM:{
+                'margin-top':'4px',
+                width:'240px'
             },
             BARCMDL:{
                 top:'3px'
             },
-            'PRE,NEXT':{
+            'PRE,PRE2,NEXT,NEXT2':{
                 position:'relative',
                 margin:'0 2px',
                 width:'15px',
@@ -22784,7 +22822,6 @@ Class("linb.UI.Group", "linb.UI.Div",{
             },
             PRE:{
                 $order:1,
-                display:linb.$inlineBlock,
                 'background-position': '-260px -70px'
             },
             'PRE-mouseover':{
@@ -22797,7 +22834,6 @@ Class("linb.UI.Group", "linb.UI.Div",{
             },
             NEXT:{
                 $order:1,
-                display:linb.$inlineBlock,
                 'background-position': '-280px -70px'
             },
             'NEXT-mouseover':{
@@ -22808,7 +22844,31 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 $order:3,
                 'background-position': '-280px -110px'
             },
-            HOUR:{
+            PRE2:{
+                $order:1,
+                'background-position': '-240px -70px'
+            },
+            'PRE2-mouseover':{
+                $order:2,
+                'background-position': '-240px -90px'
+            },
+            'PRE2-mousedown':{
+                $order:3,
+                'background-position': '-240px -110px'
+            },
+            NEXT2:{
+                $order:1,
+                'background-position': '-300px -70px'
+            },
+            'NEXT2-mouseover':{
+                $order:2,
+                'background-position': '-300px -90px'
+            },
+            'NEXT2-mousedown':{
+                $order:3,
+                'background-position': '-300px -110px'
+            },
+            'HOUR, MINUTE':{
                 $order:3,
                 margin:'0 2px',
                 height:'15px',
@@ -22837,32 +22897,38 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 'font-size':'12px',
                 'vertical-align':linb.browser.ie6?'baseline':'middle'
             },
-            '.linbex-timepicker2':{
+            '.linbex-timepicker2, .linbex-timepicker4':{
                 $order:1,
                 'background-color':'#FDF8D2'
             },
             '.linbex-timepicker':{
                 'font-size':"12px",
-                'padding-left':'3px',
-                width:'18px',
+                width:'24px',
                 height:'16px',
-                'border-right':'1px solid #648CB4',
-                'border-bottom':'1px solid #648CB4',
+                'text-align':'center',
                 'background-color': '#F9F9FB'
             },
-            '.linbex-timepicker-mouseover':{
+            '.linbex-timepicker3':{
+                'font-size':"12px",
+                width:'20px',
+                height:'16px',
+                'text-align':'center',
+                'background-color': '#F9F9FB',
+                'font-weight':'bold'
+            },
+            '.linbex-timepicker-mouseover, .linbex-timepicker3-mouseover':{
                 $order:2,
                 'background-color': '#d9e8fb'
             },
-            '.linbex-timepicker-checked':{
+            '.linbex-timepicker-checked, .linbex-timepicker3-checked':{
                 $order:2,
                 'background-color':'#316AC5',
                 color:'#fff'
             }
         },
         Behaviors:{
-            HoverEffected:{CLOSE:'CLOSE',PRE:'PRE',NEXT:'NEXT',SET:'SET'},
-            ClickEffected:{CLOSE:'CLOSE',PRE:'PRE',NEXT:'NEXT',SET:'SET'},
+            HoverEffected:{CLOSE:'CLOSE',PRE:'PRE',NEXT:'NEXT',PRE2:'PRE2',NEXT2:'NEXT2',SET:'SET'},
+            ClickEffected:{CLOSE:'CLOSE',PRE:'PRE',NEXT:'NEXT',PRE2:'PRE2',NEXT2:'NEXT2',SET:'SET'},
             KEY:{onClick:function(){return false}},
             HOUR:{
                 onMousedown:function(profile, e, src){
@@ -22885,8 +22951,39 @@ Class("linb.UI.Group", "linb.UI.Div",{
                         profile.getSubNode('HOUR').html(profile.$temp2,false);
                 },
                 onDragstop:function(profile, e, src){
-                    if(profile.$temp2)
+                    if(profile.$temp2){
                         profile.$hour=profile.$temp2;
+                        profile.boxing()._setCtrlValue(profile.$hour+":"+profile.$minute);
+                    }
+                    profile.$temp2=0;
+                    profile.box._hourC(profile);
+                }
+            },
+             MINUTE:{
+                onMousedown:function(profile, e, src){
+                    if(linb.Event.getBtn(e)!="left")return;
+                    linb(src).startDrag(e, {
+                        dragType:'blank',
+                        targetReposition:false,
+                        widthIncrement:5,
+                        dragCursor:true
+                    });
+                    profile.$temp2=0;
+                },
+                onDrag:function(profile, e, src){
+                    var count,off = linb.DragDrop.getProfile().offset,v=profile.properties.$UIvalue,a=v.split(':');
+                    a[0]=(parseFloat(a[0])||0)+parseInt(off.x/20);
+                    a[0]=(a[0]%60+60)%60;
+                    profile.$temp2=(a[0]<=9?'0':'')+a[0];
+
+                    if(v[0]!=profile.$temp2)
+                        profile.getSubNode('MINUTE').html(profile.$temp2,false);
+                },
+                onDragstop:function(profile, e, src){
+                    if(profile.$temp2){
+                        profile.$minute=profile.$temp2;
+                        profile.boxing()._setCtrlValue(profile.$hour+":"+profile.$minute);
+                    }
                     profile.$temp2=0;
                     profile.box._hourC(profile);
                 }
@@ -22897,7 +22994,23 @@ Class("linb.UI.Group", "linb.UI.Div",{
                         v=pro.$UIvalue,
                         a=v.split(':');
                     a[0]=profile.$hour;
+                    a[1]=profile.$minute;
                     profile.boxing().setUIValue(a.join(':'),true);
+                    profile.box._hourC(profile);
+                }
+            },
+            HI:{
+                onMouseover:function(profile, e, src){
+                    if(profile.properties.disableHoverEffect)return;
+                    profile.box._mover(linb.use(src).get(0),2);
+                },
+                onMouseout:function(profile, e, src){
+                    if(profile.properties.disableHoverEffect)return;
+                    profile.box._mout(linb.use(src).get(0),2);
+                },
+                onClick:function(profile, e, src){
+                    profile.$hour=profile.getSubId(src);
+                    profile.boxing()._setCtrlValue(profile.$hour+":"+profile.$minute);
                     profile.box._hourC(profile);
                 }
             },
@@ -22911,10 +23024,8 @@ Class("linb.UI.Group", "linb.UI.Div",{
                     profile.box._mout(linb.use(src).get(0));
                 },
                 onClick:function(profile, e, src){
-                    var a=[];
-                    a[0]=profile.$hour;
-                    a[1]=profile.getSubId(src);
-                    profile.boxing().setUIValue(a.join(':'),true);
+                    profile.$minute=profile.getSubId(src);
+                    profile.boxing().setUIValue(profile.$hour+":"+profile.$minute,true);
                     profile.box._hourC(profile);
                 }
             },
@@ -22922,11 +23033,11 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 onClick:function(profile, e, src){
                     var p = profile.properties;
                     if(p.disabled||p.readonly)return;
-                    var v=profile.$hour;
+                    var v=profile.$minute;
                     v=(parseFloat(v)||0)-1;
-                    v=(v%24+24)%24;
-                    profile.$hour=v=(v<=9?'0':'')+v;
-                    profile.getSubNode('HOUR').html(v,false);
+                    v=(v%60+60)%60;
+                    profile.$minute=v=(v<=9?'0':'')+v;
+                    profile.boxing()._setCtrlValue(profile.$hour+":"+profile.$minute);
                     profile.box._hourC(profile);
                 }
             },
@@ -22934,11 +23045,35 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 onClick:function(profile, e, src){
                     var p = profile.properties;
                     if(p.disabled||p.readonly)return;
+                    var v=profile.$minute;
+                    v=(parseFloat(v)||0)+1;
+                    v=(v%60+60)%60;
+                    profile.$minute=v=(v<=9?'0':'')+v;
+                    profile.boxing()._setCtrlValue(profile.$hour+":"+profile.$minute);
+                    profile.box._hourC(profile);
+                }
+            },
+            PRE2:{
+                onClick:function(profile, e, src){
+                    var p = profile.properties;
+                    if(p.disabled||p.readonly)return;
+                    var v=profile.$hour;
+                    v=(parseFloat(v)||0)-1;
+                    v=(v%24+24)%24;
+                    profile.$hour=v=(v<=9?'0':'')+v;
+                    profile.boxing()._setCtrlValue(profile.$hour+":"+profile.$minute);
+                    profile.box._hourC(profile);
+                }
+            },
+            NEXT2:{
+                onClick:function(profile, e, src){
+                    var p = profile.properties;
+                    if(p.disabled||p.readonly)return;
                     var v=profile.$hour;
                     v=(parseFloat(v)||0)+1;
                     v=(v%24+24)%24;
                     profile.$hour=v=(v<=9?'0':'')+v;
-                    profile.getSubNode('HOUR').html(v,false);
+                    profile.boxing()._setCtrlValue(profile.$hour+":"+profile.$minute);
                     profile.box._hourC(profile);
                 }
             },
@@ -22960,7 +23095,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 readonly:true
             },
             width:{
-                ini:231,
+                ini:250,
                 readonly:true
             },
             value:'00:00',
@@ -22978,7 +23113,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
             var pro=profile.properties,
                 v=pro.$UIvalue,
                 a=v.split(':'),
-                d=a[0]==profile.$hour;
+                d = (a[0]+"")==(profile.$hour+"") && (a[1]+"")==(profile.$minute+"");
             profile.getSubNode('SET').css('display',d?'none':'block');
             profile.getSubNode('CAPTION').css('color',d?'':'#ff0000');
         },
