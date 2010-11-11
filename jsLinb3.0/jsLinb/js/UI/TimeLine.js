@@ -918,7 +918,12 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                 }
             },
 
-            fixWidth:true,
+            fixWidth:{
+                ini:true,
+                action:function(){
+                    this.boxing().refresh();
+                }
+            },
             dateStart : {
                 ini:new Date,
                 action:function(){
