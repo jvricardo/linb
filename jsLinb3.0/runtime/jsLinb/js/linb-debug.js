@@ -18451,7 +18451,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
     },
     Instance:{
         _setCtrlValue:function(value){
-            if(_.isNull(value) || !_.isDefined(value))value='';
+            if(!_.isSet(value))value='';
             return this.each(function(profile){
                 var doc=profile.$doc, body=doc && (doc.body||doc.documentElement);
                 if(body)
@@ -18635,11 +18635,18 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                                 linb.doc.onMousedown(true);
                         },
                         _focus=function(e){
-                            if(kprf && (kprf.properties.disabled||kprf.properties.readonly))return;
+                            if(!kprf)return;
+                            if(kprf.properties.disabled||kprf.properties.readonly)return;
                             kprf.box._onchange(kprf);
                         },
                         _blur=function(e){
-                            if(kprf && (kprf.properties.disabled||kprf.properties.readonly))return;
+                            if(!kprf)return;
+                            if(kprf.properties.disabled||kprf.properties.readonly)return;
+                            
+                            _.resetRun('RichEditor:'+domId, function(){
+                                linb.UI.RichEditor._updateToolbar(domId, true)
+                            },100);
+
                             if(kprf._onchangethread){
                                 clearInterval(kprf._onchangethread);
                                 kprf._onchangethread=null;
@@ -18665,7 +18672,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                                 win=self.$win=frames[id];
     
                                 self.$doc=doc=frames[id].document;
-    
+
                                 doc.open();
                                 doc.write('<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><style type="text/css">body{border:0;margin:0;padding:0;margin:0;cursor:text;background:#fff;color:#000;padding:3px;font-size:12px;}p{margin:0;padding:0;} div{margin:0;padding:0;}</style></head><body>'+(self.properties.$UIvalue||"")+'</body></html>');
                                 doc.close();
@@ -18750,12 +18757,15 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                                         doc.addEventListener("dblclick",event,false);
                                         doc.addEventListener("click",event,false);
                                         doc.addEventListener("keyup",event,false);
-                                        win.addEventListener("focus",_focus,false);
-                                        win.addEventListener("blur",_blur,false);
-                                        if(linb.browser.gek)
+                                        if(linb.browser.gek){
+                                            doc.addEventListener("focus",_focus,false);
+                                            doc.addEventListener("blur",_blur,false);
                                             doc.addEventListener("keypress",event,false);
-                                        else
+                                        }else{
+                                            win.addEventListener("focus",_focus,false);
+                                            win.addEventListener("blur",_blur,false);
                                             doc.addEventListener("keydown",event,false);
+                                        }
                                     }
     
                                     //don't ues $ondestory, opera will set doc to null
@@ -18779,12 +18789,15 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                                             doc.removeEventListener("dblclick",event,false);
                                             doc.removeEventListener("click",event,false);
                                             doc.removeEventListener("keyup",event,false);
-                                            win.removeEventListener("focus",_focus,false);
-                                            win.removeEventListener("blur",_blur,false);
-                                            if(linb.browser.gek)
+                                            if(linb.browser.gek){
+                                                doc.removeEventListener("focus",_focus,false);
+                                                doc.removeEventListener("blur",_blur,false);
                                                 doc.removeEventListener("keypress",event,false);
-                                            else
+                                            }else{
+                                                win.removeEventListener("focus",_focus,false);
+                                                win.removeEventListener("blur",_blur,false);
                                                 doc.removeEventListener("keydown",event,false);
+                                            }
                                         }
                                         prf=gekfix=event=win=doc=null;
                                     }
@@ -19137,7 +19150,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
         },
         _ensureValue:function(profile, value){
             var p=linb.$getGhostDiv();
-            p.innerHTML=value;
+            p.innerHTML=(_.isSet(value)?value:'')+"";
             v=p.innerHTML;
             p=null;
             return v;
