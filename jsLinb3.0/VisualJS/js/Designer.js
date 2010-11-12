@@ -145,7 +145,25 @@ Class('VisualJS.Designer', 'linb.Com',{
                             t=profile.properties[key];
                         obj[fn](t);
                     }
-                    return obj['get'+_.str.initial(key)]();
+
+                    var v=obj['get'+_.str.initial(key)]();
+                    
+                    if(linb.UI.$ps[key]){
+                        t=parseInt(profile.getRoot().css(key))||0;
+                        if(t!=v){
+                            // if in selected, refresh
+                            if((t=profile.parent) && t.reSelectObject &&_.arr.indexOf(page.tempSelected, profile.$linbid)!=-1){
+                                _.resetRun(":"+page.tempSelected.join(':'), function(){
+                                    if(!profile.box)return;
+                                    if(page.tempSelected.length>1)
+                                        t.reSelectObject.call(t,profile, profile.getRoot().parent());
+                                    else
+                                        t.selectObject.call(t,profile, profile.getRoot().parent());
+                                });
+                            }
+                        }
+                    }
+                    return v;
                 };
 
                 //div for hold resizer and proxy
@@ -747,6 +765,19 @@ Class('VisualJS.Designer', 'linb.Com',{
                             }
                             return false;
                         });
+                        
+                        profile.$onDock=function(profile){
+                            var t;
+                            if((t=profile.parent) && t.reSelectObject &&_.arr.indexOf(page.tempSelected, profile.$linbid)!=-1){
+                                _.resetRun(":"+page.tempSelected.join(':'), function(){
+                                    if(!profile.box)return;
+                                    if(page.tempSelected.length>1)
+                                        t.reSelectObject.call(t,profile, profile.getRoot().parent());
+                                    else
+                                        t.selectObject.call(t,profile, profile.getRoot().parent());
+                                });
+                            }
+                        };
                     }
 
                     var t=profile.behavior.DroppableKeys;
@@ -1551,7 +1582,6 @@ Class('VisualJS.Designer', 'linb.Com',{
                                 target.setAlias(value);
                             }else{
                                 target[property](value);
-                                alert(9);
                             }
                         }
                 }

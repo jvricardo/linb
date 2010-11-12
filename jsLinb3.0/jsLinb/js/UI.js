@@ -1835,6 +1835,14 @@ Class("linb.UI",  "linb.absObj", {
                             $dockid:_.arr.indexOf(['width','height','fill','cover'],p.dock)!=-1?self.$linbid:null
                         };
                         switch(p.dock){
+                            case 'middle':
+                                if(o!='height'&&o!='top')return;
+                                args.top=args.height=1;
+                                break;
+                            case 'center':
+                                if(o!='width'&&o!='left')return;
+                                args.left=args.width=1;
+                                break;
                             case 'top':
                                 if(o!='height'&&o!='top')return;
                                 args.width=args.height=1;
@@ -4010,6 +4018,7 @@ Class("linb.UI",  "linb.absObj", {
 
                                     }
                                 }
+                                
                                 if(obj.later){
                                     _.each(obj.later, function(o){
                                         var profile;
@@ -4021,8 +4030,8 @@ Class("linb.UI",  "linb.absObj", {
                                                 // for no _onresize widget only
                                                 if(!profile.box._onresize && profile.onResize && (o.width!==null||o.height!==null))
                                                     profile.boxing().onResize(profile,o.width,o.height);
-                                                if(profile.onDock)
-                                                    profile.boxing().onDock(profile,o);
+                                                if(profile.onDock)profile.boxing().onDock(profile,o);
+                                                if(profile.$onDock)profile.$onDock(profile,o);
                                             }
                                         }catch(e){
                                             _.asyRun(function(){
@@ -4036,12 +4045,26 @@ Class("linb.UI",  "linb.absObj", {
                                                     // for no _onresize widget only
                                                     if(!profile.box._onresize && profile.onResize && (o.width!==null||o.height!==null))
                                                         profile.boxing().onResize(profile,o.width,o.height);
-                                                    if(profile.onDock)
-                                                        profile.boxing().onDock(profile,o);
+                                                    if(profile.onDock)profile.boxing().onDock(profile,o);
+                                                    if(profile.$onDock)profile.$onDock(profile,o);
                                                 }
                                             })
                                         }
                                     });
+                                }
+                                // for those are not in obj.later
+                                for(k=0;key=arr[k++];){
+                                    target = me[key];
+                                    if(target.length){
+                                        for(i=0;o=target[i++];){
+                                            if(!o.properties.dockIgnore){
+                                                if(!obj.later || !obj.later[o.$linbid]){
+                                                    if(o.onDock)o.boxing().onDock(o);
+                                                    if(o.$onDock)o.$onDock(o);
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
 
                                 //if window resize, keep the timestamp
