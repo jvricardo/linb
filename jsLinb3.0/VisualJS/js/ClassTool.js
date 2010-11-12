@@ -2,14 +2,35 @@ Class('VisualJS.ClassTool',null,{
     Static:{
         getClassName:function(str){
             var reg1=/^(\s*\/\*[^*@]*\*+([^\/][^*]*\*+)*\/\s*)|^(\s*\/\/[^\n]*\s*)/,
+                reg12=/(\s*\/\*[^*@]*\*+([^\/][^*]*\*+)*\/\s*)$|(\s*\/\/[^\n]*\s*)$/,
                 reg2=/(\{([^\{\}]*)\})|(\[([^\[\]]*)\])/,
                 reg3=/\s*(((function\s*([\w$]+\s*)?\(\s*([\w$\s,]*)\s*\)\s*)?(\{([^\{\}]*)\}))|(\[([^\[\]]*)\]))/g,
-                reg4=/^\s*Class\s*\(\s*[\'\"]([^\'\"]+)[\'\"]\s*\,\s*[\'\"]([^\'\"]+)[\'\"]\s*\,\s*\)\s*;?\s*$/;
+                reg4=/^\s*Class\s*\(\s*[\'\"]([^\'\"]+)[\'\"]\s*\,\s*[\'\"]([^\'\"]+)[\'\"]\s*\,1\s*\)\s*;?\s*$/,
+                reg5=/^\s*Class\s*\(/,
+                reg6=/^[\w]+[\w\.]*[\w]+$/;
+            // clear top comments
             while(reg1.test(str))
                 str = str.replace(reg1,'');
+            // clear bottom comments
+            while(reg12.test(str))
+                str = str.replace(reg12,'');
+                
+            // check "Class(" string
+            if(!reg5.test(str))
+                return false;
+            // clear "{}", "[]" and "funciton(){}"
             while(reg2.test(str))
-                str = str.replace(reg3, '');
-            return str.replace(reg4,'$1');
+                str = str.replace(reg3, '1');
+            // check "Class(.....)"
+            if(reg4.test(str))
+                str=str.replace(reg4,'$1');
+            else
+               return false;
+            // check name space
+            if(reg6.test(str))
+                return str;
+            else
+                return false;
         },
         isJson:function(txt){
             var reg = new RegExp("^(\\s*\\/\\*[^*@]*\\*+([^\\/][^*]*\\*+)*\\/\\s*)|^(\\s*\\/\\/[^\\n]*\\s*)");

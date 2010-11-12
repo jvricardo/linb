@@ -187,7 +187,7 @@
         err2:'Invalid Code Format, Please Go Back to Have a Check!',
         err3:'Invalid Code Format, Please Go Back to Have a Check!',
         err4:'Invalid Code Format, Please Go Back to Have a Check!',
-        noClass:'Not a UI Class File!'
+        noClass:'Not a single jsLinb Class File!'
     },
     designer:{
         toolsbox:'Tools Box',

@@ -724,8 +724,8 @@ Class('VisualJS.JSEditor', 'linb.Com',{
                 ns.paneDesign.setDisplay('none').setZIndex(1);
             }else if(nv=='design'){
 
-                if(!VisualJS.ClassTool.getClassName(nv)){
-                    linb.message(linb.getRes('VisualJS.classtool.noClass', obj.ko));
+                if(!VisualJS.ClassTool.getClassName(ns.codeeditor.getUIValue()||"")){
+                    linb.message(linb.getRes('VisualJS.classtool.noClass'));
                     return false;
                 }
 
