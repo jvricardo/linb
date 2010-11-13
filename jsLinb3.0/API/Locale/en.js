@@ -1929,7 +1929,7 @@ _.set(linb.Locale,["en","app"], {
             ]
         },
         keyboardHook :{
-            $desc:" To add/remove a global keyboard event hook.",
+            $desc:" To add/remove a global keyboard down event hook.",
             $rtn:'[self]',
             $paras:[
                 "key [Required] : String, keyboard name to be monitored.",
@@ -1946,6 +1946,19 @@ _.set(linb.Locale,["en","app"], {
                 "//'Run' the code, and You can't input 'a' in this input! \n"+
                 "if(!linb.Dom.byId('linb.temp.1')){this.prepend(linb.create('<div><input /><button id=\"linb.temp.1\" onclick=\"linb.Event.keyboardHook(\\\'a\\\');linb(this).parent().remove()\">remove this example</button></div>'));}" +
                 "linb.Event.keyboardHook('a',0,0,0,function(){return false;});"
+            ]
+        },
+        keyboardHook :{
+            $desc:" To add/remove a global keyboard up event hook".",
+            $rtn:'[self]',
+            $paras:[
+                "key [Required] : String, keyboard name to be monitored.",
+                "ctrl [Optional] : Boolean, to Determines whether or not it monitors 'CTRL' status. Default is [false].",
+                "shift [Optional] : Boolean, to Determines whether or not it monitors 'SHIFT' status. Default is [false].",
+                "alt [Optional] : Boolean, to Determines whether or not it monitors 'ALT' status. Default is [false].",
+                "fun [Optional] : Function, the hook function that will be executed whenever the pre-defined condition is triggered. If you do not specify this parameter, or enter a non-function variable, system will remove the event hook by the [key](keyboard name).",
+                "args [Optional]: Array, arguments for fun. Default is []",
+                "scope [Optional]: Object, [this] pointer for [fun]. Default is [window]"
             ]
         },
         popTabOutTrigger:{

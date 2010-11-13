@@ -80,12 +80,23 @@
         newproject:'New Project',
         openproject:'Open Project',
         closeproject:'Close Project',
+        deleteproject:'Delete Project',
         save:'Save',
         saveall:'Save All',
 
         tools: 'Tools',
-        command:'Command Window',
-        spy:'Components Spy',
+            servicetester:"LINB Service Test",
+            command:'Command Window',
+            jsoneditor:'JSON Editor',
+            
+            cookbook:'CookBook',
+            api:'API Documentation',
+            codesnipt:'Code Snippet',
+            backendcode:'Back-end Service Code',
+                php:'PHP Code',
+                csharp:'C# Code',
+                java:'JAVA Code',
+            spy:'Components Spy',
 
         build: 'Build',
         debug: 'Run Application',
@@ -118,8 +129,8 @@
         flash:'Flash Video Show'
     },
     tool2:{
-        'new':'Create a New File',
-        del: 'Delete Current File',
+        'new':'Add files',
+        del: 'Delete Files',
         refresh:'Refresh Project Files',
         refreshOK:'Project Refreshed!'
     },
@@ -243,19 +254,23 @@
         filenameformat:'2 - 9 characters only',
         add:'Add',
         'iDir':'Folder',
-        'iHtml':'HTML file',
-        'iCSS':'CSS file',
-        'iJs':'JS file',
-        'iPhp':'PHP file',
+        'iHtml':'New HTML file',
+        'iCSS':'New CSS file',
+        'iJs':'New JS file',
+        'iPhp':'New PHP file',
+        'iUpload':'Upload a file',
         'target':'Target',
         filetype:'File Type',
-        notarget:'File or Directory to be built does NOT exist'
+        notarget:'File or Directory to be built does NOT exist',
+        invalidExts: 'The file type is not allowed',
+        invalidName: 'Only numbers and letters allowed'
     },
     delfile:{
         caption:'Delete Files From Project...',
         sel:'Select target files or folders',
         notarget:'Target files or folders does NOT exist',
         confirmdel:'Delete?',
-        confirmdel2:"Are You Sure to Delete the $0 Selected  Files or Folders?"
+        confirmdel2:"Are You Sure to Delete the $0 Selected  Files or Folders?",
+        confirmdel3:"Are You Sure to Delete the current project?"
     }
 }

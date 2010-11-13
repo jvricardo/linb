@@ -123,6 +123,7 @@
             }
         },
         _treebar_beforevalueupdated:function (profile, oldValue, newValue) {
+            if(!newValue)return;
             var arr = newValue.split(';');
             arr.sort();
             _.filter(arr,function(o,j){

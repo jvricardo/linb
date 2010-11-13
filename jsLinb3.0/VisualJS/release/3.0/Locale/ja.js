@@ -81,12 +81,23 @@
         newproject:'新規プロジェクト',
         openproject:'プロジェクトを開く',
         closeproject:'プロジェクトを閉じる',
+        deleteproject:'削除プロジェクト',
         save:'保存',
         saveall:'すべて保存',
 
         tools: 'ツール',
-        command:'コマンドウインドウ',
-        spy:'ウィジェットスパイ',
+            servicetester:'LINB サービステスター',
+            command:'コマンドウインドウ',
+            jsoneditor:'JSONのエディタ',
+            
+            cookbook:'ユーザーズマニュアル',
+            api:'API ドキュメント',
+            codesnipt:'コードスニペット',
+            backendcode:'バックエンドサービスコード',
+                php:'PHP のコード',
+                csharp:'C# のコード',
+                java:'JAVA のコード',
+            spy:'ウィジェットスパイ',
 
         build: 'ビルド',
         debug: 'アプリケーションの実行',
@@ -119,7 +130,7 @@
         flash:'ビデオプレゼンテーション'
     },
     tool2:{
-        'new':'新規ファイル',
+        'new':'プロジェクトにファイルを追加します。',
         del: '現在のファイルを削除',
         refresh:'プロジェクトファイルを更新',
         refreshOK:'プロジェクトは更新されました'
@@ -241,22 +252,26 @@
         caption:'ファイルをプロジェクトに追加...',
         sel:'ターゲットフォルダの選択',
         filename:'ファイル名',
-        filenameformat:'2〜9文字の英数字',
+        filenameformat:'2-18文字の英数字',
         add:'追加',
         'iDir':'フォルダ',
-        'iHtml':'HTMLファイル',
-        'iCSS':'CSSファイル',
-        'iJs':'JSファイル',
-        'iPhp':'PHPファイル',
+        'iHtml':'新しいHTMLファイル',
+        'iCSS':'新しいCSSファイル',
+        'iJs':'新しいJSファイル',
+        'iPhp':'新しいPHPファイル',
+        'IUpload':'ファイルのアップロード',
         'target':'ターゲット',
         filetype:'ファイルの種類',
-        notarget:'ファイルまたはディレクトリが存在しません。'
+        notarget:'ファイルまたはディレクトリが存在しません。',
+        invalidExts:'アップロードは、ファイルタイプが許可されていません',
+        invalidName: 'アップロード文字または数字のみのファイル名から'
     },
     delfile:{
         caption:'プロジェクトからファイルを削除します',
         sel:'ファイルかフォルダを選択してください。',
         notarget:'ファイルまたはディレクトリが存在しません。',
         confirmdel:'削除しますか?',
-        confirmdel2:"選択された $0 を削除してもよろしいですか?"
+        confirmdel2:"選択された $0 を削除してもよろしいですか?",
+        confirmdel3:"現在のプロジェクトを削除?"
     }
 }

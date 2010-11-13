@@ -100,6 +100,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                     if(linb.browser.opr)
                         drop.getRoot().css('display','none');
                     _.asyRun(function(){
+                        if(drop.boxing()._clearMouseOver)drop.boxing()._clearMouseOver();
                         profile.getSubNode('POOL').append(drop.getRoot())
                     });
                 }
@@ -342,7 +343,11 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 }, null, profile.$linbid);
 
                 //for esc
-                linb.Event.keyboardHook('esc',0,0,0,function(){
+                linb.Event.keyboardHookUp('esc',0,0,0,function(){
+                    profile.$escclosedrop=1;
+                    _.asyRun(function(){
+                        delete profile.$escclosedrop;
+                    });
                     box.activate();
                     //unhook
                     linb.Event.keyboardHook('esc');
@@ -771,6 +776,10 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
 
                     // must be key up event
                     if(key.key=='esc'){
+                        if(profile.$escclosedrop){
+                            return;
+                        }
+                        
                         profile.$_onedit=true;
                         profile.boxing().setUIValue(p.value,true);
                         profile.$_onedit=false;
@@ -1015,7 +1024,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                     var pro=this;
                     pro.properties.type=value;
                     if(pro.renderId)
-                        pro.boxing().refresh();
+                        pro.boxing().refresh(true);
                 }
             },
             precision:2,

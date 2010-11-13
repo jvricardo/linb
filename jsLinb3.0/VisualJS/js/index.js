@@ -40,11 +40,28 @@ Class('VisualJS', 'linb.Com',{
                         {id:'openproject', caption:'$VisualJS.menu.openproject', add:'Ctrl+Alt+O', image:CONF.img_app, imagePos:'-48px top'},
                         {id:'closeproject', caption:'$VisualJS.menu.closeproject'},
                         {type:'split'},
+                        {id:'deleteproject', caption:'$VisualJS.menu.deleteproject', image:CONF.img_app, imagePos:'-16px -16px'},
+                        {type:'split'},
                         {id:'saveall', caption:'$VisualJS.menu.saveall', add:'Ctrl+Alt+S', image:CONF.img_app, imagePos:'-96px top'}
                     ]},
                     {id:'build',caption:'$VisualJS.menu.build', sub:[
                         {id:'debug', caption:'$VisualJS.menu.debug', image:CONF.img_app, imagePos:'-239px -64px',add:'F9'},
                         {id:'release', caption:'$VisualJS.menu.release', image:CONF.img_app, imagePos:'-144px top',add:'Ctrl+F9'}
+                    ]},
+                    {id:'tools',caption:'$VisualJS.menu.tools', sub:[
+                        {id:'servicetester', caption:'$VisualJS.menu.servicetester'},
+                        {id:'command', caption:'$VisualJS.menu.command'},
+                        {id:'jsoneditor', caption:'$VisualJS.menu.jsoneditor'},
+                        {type:'split'},
+                        {id:'cookbook', caption:'$VisualJS.menu.cookbook'},
+                        {id:'api', caption:'$VisualJS.menu.api'},
+                        {id:'codesnipt', caption:'$VisualJS.menu.codesnipt'},
+                        {type:'split'},
+                        {id:'backendcode', caption:'$VisualJS.menu.backendcode', sub:[
+                            {id:'php', caption:'$VisualJS.menu.php'},
+                            {id:'csharp', caption:'$VisualJS.menu.csharp'},
+                            {id:'java', caption:'$VisualJS.menu.java'}
+                        ]}
                     ]},
                     {id:'help',caption:'$VisualJS.menu.help', sub:[
                         {id:'simple', caption:'$VisualJS.menu.simple'},
@@ -81,6 +98,12 @@ Class('VisualJS', 'linb.Com',{
                     {id:'ec', dropButton:true, image:CONF.img_app, imagePos:'-96px -16px', tips:'$VisualJS.tool.ec'},
                     {split:true},
                     {id:'theme', dropButton:true, image:CONF.img_app, imagePos:'-208px -48px', tips:'$VisualJS.builder.dftThemeTips'},
+                    {split:true},
+                    {id:'command', image:CONF.img_app, imagePos:'-128px -48px', tips:'$VisualJS.menu.command'},                    
+                    {split:true},
+                    {id:'servicetester', image:CONF.img_app, imagePos:'-64px top', tips:'$VisualJS.menu.servicetester'},
+                    {split:true},
+                    {id:'jsoneditor', image:CONF.img_app, imagePos:'-128px -64px', tips:'$VisualJS.menu.servicetester'},
                     {split:true},
                     {id:'info', caption:'...', label:'$VisualJS.noMessage', tips:'$VisualJS.message'}
                 ]}]);
@@ -126,23 +149,27 @@ Class('VisualJS', 'linb.Com',{
                 
             }
         },
-        _addfile:function(id, path, name, type){
+        _addfile:function(id, path, name, type, file){
             var tb = this.treebarPrj,pathadd;
-            if(type!='/'){
-                name=name+type;
-                pathadd=path+'/'+name;
-            }else{
-                pathadd=path=path+'/'+name;
+            if(type=="upload"){
+            }else{            
+                if(type!='/'){
+                    name=name+type;
+                    pathadd=path+'/'+name;
+                }else{
+                    pathadd=path=path+'/'+name;
+                }
             }
             linb.request(CONF.phpPath, ({
                 key:CONF.requestKey,
                 para:{
-                    action:'add',
+                    action:type=="upload"?'upload':'add',
                     hashCode:_.id(),
                     type:type=='/'?'dir':'file',
                     path:path,
                     filename:name
-                }
+                },
+                file:file
             }),function(txt){
                 var obj = typeof txt=='string'?_.unserialize(txt):txt;
                 if(obj && !obj.error && obj.data && obj.data.OK){
@@ -150,6 +177,10 @@ Class('VisualJS', 'linb.Com',{
                         if(type=='/')
                             imagePos='-48px top';
                         else{
+                            if(type=="upload"){
+                                name=obj.data.name;
+                                pathadd=path+'/'+name;
+                            }
                             var a = name.split('.');
                             switch(a[1].toLowerCase()){
                                 case 'html':
@@ -161,6 +192,11 @@ Class('VisualJS', 'linb.Com',{
                                 case 'js':
                                     imagePos='-16px -48px';
                                     break;
+                                case 'jpg':
+                                case 'png':
+                                case 'gif':
+                                    imagePos='-192px 0px';
+                                    break;                                
                                 default:
                                     imagePos='-96px -48px';
                             }
@@ -171,7 +207,8 @@ Class('VisualJS', 'linb.Com',{
             });
         },
         _delfile:function(id){
-            var tb = this.treebarPrj,
+            var self=this,
+                tree = this.treebarPrj,
                 tab=this.tabsMain,
                 arr = id.split(';'),
                 a=[];
@@ -188,23 +225,35 @@ Class('VisualJS', 'linb.Com',{
             },function(txt){
                 var obj = typeof txt=='string'?_.unserialize(txt):txt;
                 if(obj && !obj.error && obj.data && obj.data.OK){
-                    tb.removeItems(arr);
+                    tree.removeItems(arr);
                     var items = tab.getItems(),b=[];
                     _.arr.each(items,function(o){
-                        if(!tb.getSubIdByItemId(o.id))
+                        if(!tree.getSubIdByItemId(o.id))
                             b.push(o.id);
                     },null,true);
                     tab.removeItems(b);
+                                        
+                    if(id==self.curProject){
+                        tab.clearItems();
+                        tree.clearItems();
+                        self.curProject = null;
+                    }
                 }else
                     linb.message(obj.error.message);
             });
         },
         _projecttool_onclick:function(profile,item, group, e, src){
+            if(!this.curProject){
+                linb.message(linb.getRes('VisualJS.ps.noprj'));
+                return;
+            }
+
             var self=this;
             switch(item.id){
                 case 'new':
                     linb.ComFactory.getCom('addFile',function(){
                         this.host = self;
+                        this.reset();
                         this.setProperties({
                             onOK: self._addfile,
                             parent:self,
@@ -263,7 +312,6 @@ Class('VisualJS', 'linb.Com',{
                 tb.clearItems();
                 tree.clearItems();
                 self.curProject = null;
-                self.projecttool.setDisabled(true);
                 if(typeof callback=='function')callback();
             };
 
@@ -499,7 +547,6 @@ Class('VisualJS', 'linb.Com',{
             .setDock("bottom")
             .setHandler(false)
             .setHAlign("right")
-            .setDisabled(true)
             .setItems([{id:'only', sub:[
                 {id:'refresh', image:'@CONF.img_app', imagePos:'-113px -16px', tips:'$VisualJS.tool2.refresh'},
                 {type:'split'},
@@ -549,6 +596,11 @@ Class('VisualJS', 'linb.Com',{
                         case 'js':
                             imagePos='-16px -48px';
                             break;
+                        case 'jpg':
+                        case 'png':
+                        case 'gif':
+                            imagePos='-192px 0px';
+                            break;                                
                         default:
                             imagePos='-96px -48px';
                     }
@@ -572,9 +624,7 @@ Class('VisualJS', 'linb.Com',{
             var tb = this.treebarPrj;
             tb.clearItems();
             tb.insertItems([root]);
-            tb.toggleNode(root.id,true);
-            
-            this.projecttool.setDisabled(false);
+            tb.toggleNode(root.id,true);            
         },
         _menubar_onclick: function(profile, popPro, item, src){
             var self=this;
@@ -605,6 +655,11 @@ Class('VisualJS', 'linb.Com',{
                         return;
                     }
                     this._closeproject();
+                    break;
+                case 'deleteproject':
+                    linb.UI.Dialog.confirm(linb.getRes('VisualJS.delfile.confirmdel'), linb.getRes('VisualJS.delfile.confirmdel3'), function(){
+                        self._delfile(self.curProject);
+                    });
                     break;
                 case 'openproject':
                     var callback=function(){
@@ -746,6 +801,36 @@ Class('VisualJS', 'linb.Com',{
                     self._dirtyWarn(function(){
                         linb.IAjax(CONF.phpPath, {key:CONF.requestKey, para:{path: self.curProject, action:'release'}}, null, {method:'POST'}).start();
                     });
+                    break;
+                case 'servicetester':
+                    linb.ComFactory.getCom('VisualJS.ServiceTester',function(){
+                        this.init();
+                        this.show();
+                    });
+                    break;
+                case 'command':
+                    linb.log('Ready');
+                    break;
+                case 'jsoneditor':
+                    linb.Dom.submit("http://jsoneditor.appspot.com");
+                    break;
+                case 'cookbook':
+                    linb.Dom.submit("http://linb.googlecode.com/files/linb.cookbook.zip");
+                    break;
+                case 'api':
+                    linb.Dom.submit("../API");
+                    break;
+                case 'codesnipt':
+                    linb.Dom.submit("../CodeSnip");
+                    break;
+                case 'php':
+                    linb.Dom.submit("http://linb.googlecode.com/files/linb.backend.PHP.zip");
+                    break;
+                case 'csharp':
+                    linb.Dom.submit("http://linb.googlecode.com/files/linb.backend.CSharp.zip");
+                    break;
+                case 'java':
+                    linb.Dom.submit("http://linb.googlecode.com/files/linb.backend.Java.zip");
                     break;
                 case 'simple':
                     linb.Dom.submit(CONF.path_simple);

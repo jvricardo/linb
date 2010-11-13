@@ -1471,7 +1471,7 @@ Class("linb.UI",  "linb.absObj", {
             });
             return this.constructor.unserialize(arr);
         },
-        refresh:function(){
+        refresh:function(remedy){
             var para,node,b,p,s,$linbid,serialId,fun,box,children,uiv;
             return this.each(function(o){
                 if(!o.renderId)return;
@@ -1481,6 +1481,8 @@ Class("linb.UI",  "linb.absObj", {
                 //save related id
                 $linbid=o.$linbid;
                 serialId=o.serialId;
+
+                var ar=o.$afterRefresh;
 
                 if(typeof o.boxing().getUIValue=='function'){
                     uiv=o.boxing().getUIValue();
@@ -1497,7 +1499,8 @@ Class("linb.UI",  "linb.absObj", {
 
                 //protect children's dom node
                 //no need to trigger layouttrigger here
-                node=linb.$getGhostDiv();
+                //for example: if use getGhostDiv, upload input cant show file name
+                node=remedy?linb.Dom.getEmptyDiv():linb.$getGhostDiv();
                 o.boxing().getChildren().reBoxing().each(function(v){
                     node.appendChild(v);
                 });
@@ -1563,6 +1566,11 @@ Class("linb.UI",  "linb.absObj", {
 
                 if(uiv)
                     o.setUIValue(uiv,true);
+                    
+                if(ar){
+                    o.get(0).$afterRefresh=ar;
+                    ar(o.get(0));
+                }
             });
         },
         append:function(target, subId){

@@ -34,9 +34,17 @@ Class('VisualJS.AddFile', 'linb.Com',{
                     linb.message(_.get(obj,['error','message'])||'on response!');
                 else{
                     var root=pp.buildFileItems(pp.curProject, obj.data);
+                    self._rootId=root.id;
                     self.treebar.setItems([root]).openToNode(root.id);
                 }
             });
+        },
+        reset:function(){
+            var ns=this;
+            ns.treebar.setValue(self._rootId||null,true);
+            ns.input.setValue("",true).setType("none");
+            ns.inputTarget.setValue("",true);
+            ns.comboinput.setValue('.js',true);
         },
         iniComponents:function(){
             // [[code created by jsLinb UI Builder
@@ -74,20 +82,21 @@ Class('VisualJS.AddFile', 'linb.Com',{
             host.dialog.append(
                 (new linb.UI.Label)
                 .setHost(host,"label4")
-                .setLeft(10)
-                .setTop(180)
-                .setWidth(70)
+                .setLeft(0)
+                .setTop(184)
+                .setWidth(80)
                 .setCaption("$VisualJS.addfile.target")
             );
             
             host.dialog.append(
                 (new linb.UI.ComboInput)
                 .setHost(host,"comboinput")
+                .setDirtyMark(false)
                 .setLeft(300)
                 .setTop(150)
                 .setWidth(110)
                 .setType("listbox")
-                .setItems([{"id":"/", "caption":"$VisualJS.addfile.iDir"}, {"id":".html", "caption":"$VisualJS.addfile.iHtml"}, {"id":".css", "caption":"$VisualJS.addfile.iCSS"}, {"id":".js", "caption":"$VisualJS.addfile.iJs"}, {"id":".php", "caption":"$VisualJS.addfile.iPhp"}])
+                .setItems([{"id":"/", "caption":"$VisualJS.addfile.iDir"}, {"id":".html", "caption":"$VisualJS.addfile.iHtml"}, {"id":".css", "caption":"$VisualJS.addfile.iCSS"}, {"id":".js", "caption":"$VisualJS.addfile.iJs"}, {"id":".php", "caption":"$VisualJS.addfile.iPhp"}, {"id":"upload", "caption":"$VisualJS.addfile.iUpload"}])
                 .setValue(".js")
                 .afterUIValueSet("_refresh")
             );
@@ -117,7 +126,7 @@ Class('VisualJS.AddFile', 'linb.Com',{
                 (new linb.UI.Label)
                 .setHost(host,"label1")
                 .setLeft(10)
-                .setTop(150)
+                .setTop(154)
                 .setWidth(70)
                 .setCaption("$VisualJS.addfile.filename")
             );
@@ -138,19 +147,19 @@ Class('VisualJS.AddFile', 'linb.Com',{
                 (new linb.UI.Label)
                 .setHost(host,"label3")
                 .setLeft(230)
-                .setTop(150)
+                .setTop(154)
                 .setWidth(70)
                 .setCaption("$VisualJS.addfile.filetype")
             );
             
             host.dialog.append(
-                (new linb.UI.Input)
+                (new linb.UI.ComboInput)
                 .setHost(host,"input")
                 .setLeft(80)
                 .setTop(150)
                 .setWidth(140)
-                .setTipsErr("$VisualJS.addfile.filenameformat")
-                .setValueFormat("^[\\w_]{2,18}$")
+                .setType("none")
+                .beforeUIValueSet("_beforeInpuSet")
                 .afterUIValueSet("_refresh")
             );
             
@@ -173,23 +182,63 @@ Class('VisualJS.AddFile', 'linb.Com',{
         _btncancel_onclick:function (profile, e, value) {
             this.dialog.close();
         },
-        _refresh:function(){
+        _beforeInpuSet:function(profile, ov, nv){
+            if(profile.properties.type=="upload" && nv){
+                if(!CONF.fileExts.test(nv)){
+                    linb.message(linb.getRes('VisualJS.addfile.invalidExts'));
+                    return false;
+                }
+                if(!CONF.fileNames.test(nv)){
+                    linb.message(linb.getRes('VisualJS.addfile.invalidName'));
+                    return false;
+                }
+            }
+        },
+        _refresh:function(profile){
             var self=this,
                 s1=self.treebar.getUIValue(),
                 s2=self.input.getUIValue(),
                 s3=self.comboinput.getUIValue()
                 ;
-            if(s1&&s2&&s3)
-                self.inputTarget.setValue(s1+'/'+s2+s3, true);
+            if(profile==self.comboinput.get(0)){
+                self.input.setValue("",true);
+                if(s3=="upload"){
+                    self.input.setType("upload");
+                }else{
+                    self.input.setType("none");
+                }
+            }
+                
+            if(s1){
+                var str=s1;
+                if(s2 && s3 && s3!="upload"){
+                    str = s1 + '/' + s2 + s3;
+                }
+                self.inputTarget.setValue(str, true);
+            }
             return false;
         },
         _btnok_onclick:function (profile, e, value) {
             var self=this,
-                s = self.inputTarget.getValue();
+                s = self.inputTarget.getValue(),
+                type = self.comboinput.getUIValue();
             if(!s){
                 linb.message(linb.getRes('VisualJS.addfile.notarget'));
             }else{
-                _.tryF(self.properties.onOK, [self.treebar.getUIValue(), self.treebar.getUIValue(), self.input.getUIValue(), self.comboinput.getUIValue()], self.host);
+                if(type!="upload"){
+                    if(!/^[\w]{2,18}$/.test(s)){
+                        linb.message(linb.getRes("VisualJS.addfile.filenameformat"));
+                        self.input.activate();
+                        return;
+                    };
+                }
+                _.tryF(self.properties.onOK, [
+                    self.treebar.getUIValue(), 
+                    self.treebar.getUIValue(),
+                    self.input.getUIValue(),
+                    type, 
+                    type=="upload"?self.input.getUploadObj():null,
+                    ], self.host);
                 self.dialog.close();
             }
         },

@@ -706,6 +706,7 @@ _.merge(linb,{
         thread:{},
         SC:{},
         hookKey:{},
+        hookKeyUp:{},
         snipScript:{},
 
         //ghost divs
@@ -3084,6 +3085,14 @@ Class('linb.Event',null,{
         keyboardHook:function(key, ctrl, shift, alt, fun,args,scope){
             if(key){
                 var p = linb.$cache.hookKey, k = (key||'').toLowerCase() + ":"  + (ctrl?'1':'') + ":"  +(shift?'1':'')+ ":" + (alt?'1':'');
+                if(typeof fun!='function')delete p[k];
+                else p[k]=[fun,args,scope];
+             }
+            return this;
+        },
+        keyboardHookUp:function(key, ctrl, shift, alt, fun,args,scope){
+            if(key){
+                var p = linb.$cache.hookKeyUp, k = (key||'').toLowerCase() + ":"  + (ctrl?'1':'') + ":"  +(shift?'1':'')+ ":" + (alt?'1':'');
                 if(typeof fun!='function')delete p[k];
                 else p[k]=[fun,args,scope];
              }
@@ -6912,9 +6921,11 @@ type:4
                 ? ['inline-block', 'inline'] 
                 : 'inline-block',
         //hot keys
-        linb.doc.onKeydown(function(p,e){
+        linb.doc.onKeydown(function(p,e,s){
+            linb.Event.$keyboard=linb.Event.getKey(e);
+            
             var event=linb.Event,set,
-                ks=event.$keyboard=event.getKey(e);
+                ks=event.getKey(e);
             if(ks){
                 if(ks[0].length==1)ks[0]=ks[0].toLowerCase();
                 set = linb.$cache.hookKey[ks.join(":")];
@@ -6931,6 +6942,22 @@ type:4
         },"document")
         .onKeyup(function(p,e){
             delete linb.Event.$keyboard;
+
+            var event=linb.Event,set,
+                ks=event.getKey(e);
+            if(ks){
+                if(ks[0].length==1)ks[0]=ks[0].toLowerCase();
+                set = linb.$cache.hookKeyUp[ks.join(":")];
+                //if hot function return false, stop bubble
+                if(set)
+//                    try{
+                        if(_.tryF(set[0],set[1],set[2])===false){
+                            event.stopBubble(e);
+                            return false;
+                        }
+//                    }catch(e){}
+            }
+            return true;
         },"document");
 
         //hook link(<a ...>xxx</a>) click action
@@ -10998,7 +11025,7 @@ Class("linb.UI",  "linb.absObj", {
             });
             return this.constructor.unserialize(arr);
         },
-        refresh:function(){
+        refresh:function(remedy){
             var para,node,b,p,s,$linbid,serialId,fun,box,children,uiv;
             return this.each(function(o){
                 if(!o.renderId)return;
@@ -11008,6 +11035,8 @@ Class("linb.UI",  "linb.absObj", {
                 //save related id
                 $linbid=o.$linbid;
                 serialId=o.serialId;
+
+                var ar=o.$afterRefresh;
 
                 if(typeof o.boxing().getUIValue=='function'){
                     uiv=o.boxing().getUIValue();
@@ -11024,7 +11053,8 @@ Class("linb.UI",  "linb.absObj", {
 
                 //protect children's dom node
                 //no need to trigger layouttrigger here
-                node=linb.$getGhostDiv();
+                //for example: if use getGhostDiv, upload input cant show file name
+                node=remedy?linb.Dom.getEmptyDiv():linb.$getGhostDiv();
                 o.boxing().getChildren().reBoxing().each(function(v){
                     node.appendChild(v);
                 });
@@ -11090,6 +11120,11 @@ Class("linb.UI",  "linb.absObj", {
 
                 if(uiv)
                     o.setUIValue(uiv,true);
+                    
+                if(ar){
+                    o.get(0).$afterRefresh=ar;
+                    ar(o.get(0));
+                }
             });
         },
         append:function(target, subId){
@@ -19301,6 +19336,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                     if(linb.browser.opr)
                         drop.getRoot().css('display','none');
                     _.asyRun(function(){
+                        if(drop.boxing()._clearMouseOver)drop.boxing()._clearMouseOver();
                         profile.getSubNode('POOL').append(drop.getRoot())
                     });
                 }
@@ -19543,7 +19579,11 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 }, null, profile.$linbid);
 
                 //for esc
-                linb.Event.keyboardHook('esc',0,0,0,function(){
+                linb.Event.keyboardHookUp('esc',0,0,0,function(){
+                    profile.$escclosedrop=1;
+                    _.asyRun(function(){
+                        delete profile.$escclosedrop;
+                    });
                     box.activate();
                     //unhook
                     linb.Event.keyboardHook('esc');
@@ -19972,6 +20012,10 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
 
                     // must be key up event
                     if(key.key=='esc'){
+                        if(profile.$escclosedrop){
+                            return;
+                        }
+                        
                         profile.$_onedit=true;
                         profile.boxing().setUIValue(p.value,true);
                         profile.$_onedit=false;
@@ -20216,7 +20260,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                     var pro=this;
                     pro.properties.type=value;
                     if(pro.renderId)
-                        pro.boxing().refresh();
+                        pro.boxing().refresh(true);
                 }
             },
             precision:2,
@@ -23217,7 +23261,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
 
                     itemId = getI(value);
                     if(itemId)
-                        getN(k,itemId).tagClass('-checked');
+                        getN(k,itemId).tagClass('-checked').tagClass('-mouseover');
 
                     //scroll
                     if(itemId){
@@ -23243,10 +23287,15 @@ Class("linb.UI.Group", "linb.UI.Div",{
                         getN(k, getI(o)).tagClass('-checked',false)
                     });
                     _.arr.each(value,function(o){
-                        getN(k, getI(o)).tagClass('-checked')
+                        getN(k, getI(o)).tagClass('-checked').tagClass('-mouseover');
                     });
                 }
             });
+        },
+        _clearMouseOver:function(){
+            var box=this.constructor,
+                item=box._ITEMKEY || 'ITEM';
+            this.getSubNode(item, true).tagClass('-mouseover',false);
         },
         adjustSize:function(){
             return this.each(function(profile){

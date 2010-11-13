@@ -2116,9 +2116,11 @@ type:4
                 ? ['inline-block', 'inline'] 
                 : 'inline-block',
         //hot keys
-        linb.doc.onKeydown(function(p,e){
+        linb.doc.onKeydown(function(p,e,s){
+            linb.Event.$keyboard=linb.Event.getKey(e);
+            
             var event=linb.Event,set,
-                ks=event.$keyboard=event.getKey(e);
+                ks=event.getKey(e);
             if(ks){
                 if(ks[0].length==1)ks[0]=ks[0].toLowerCase();
                 set = linb.$cache.hookKey[ks.join(":")];
@@ -2135,6 +2137,22 @@ type:4
         },"document")
         .onKeyup(function(p,e){
             delete linb.Event.$keyboard;
+
+            var event=linb.Event,set,
+                ks=event.getKey(e);
+            if(ks){
+                if(ks[0].length==1)ks[0]=ks[0].toLowerCase();
+                set = linb.$cache.hookKeyUp[ks.join(":")];
+                //if hot function return false, stop bubble
+                if(set)
+//                    try{
+                        if(_.tryF(set[0],set[1],set[2])===false){
+                            event.stopBubble(e);
+                            return false;
+                        }
+//                    }catch(e){}
+            }
+            return true;
         },"document");
 
         //hook link(<a ...>xxx</a>) click action

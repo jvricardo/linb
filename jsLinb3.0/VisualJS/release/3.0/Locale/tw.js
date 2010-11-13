@@ -80,12 +80,23 @@
         newproject:'新建工程',
         openproject:'打開工程',
         closeproject:'關閉工程',
+        deleteproject:'刪除工程',
         save:'保存',
         saveall:'保存所有',
 
         tools: '工具',
-        command:'命令窗口',
-        spy:'控件瀏覽',
+            servicetester:'LINB 服務測試器',
+            command:'命令窗口',
+            jsoneditor:'JSON 編輯器',
+            
+            cookbook:'入門指南',
+            api:'API 文檔',
+            codesnipt:'代碼片段',
+            backendcode:'後台服務代碼',
+                php:'PHP 服務代碼',
+                csharp:'C# 服務代碼',
+                java:'JAVA 服務代碼',
+            spy:'控件瀏覽',
 
         build: '生成',
         debug: '運行程式',
@@ -119,7 +130,7 @@
         flash:'Flash 視頻介紹'
     },
     tool2:{
-        'new':'新建文件到工程',
+        'new':'向工程中添加文件',
         del: '從工程中刪除文件',
         refresh:'刷新工程文件',
         refreshOK:'工程文件刷新成功!'
@@ -243,22 +254,26 @@
         caption:'新建文件（夾）到工程...',
         sel:'選擇目標文件夾',
         filename:'文件名',
-        filenameformat:'自允許 2 到 9 個字元',
+        filenameformat:'自允許 2 到 18 個字元',
         add:'新建',
         'iDir':'文件夾',
-        'iHtml':'HTML 文件',
-        'iCSS':'CSS 文件',
-        'iJs':'JS 文件',
-        'iPhp':'PHP 文件',
+        'iHtml':'新建 HTML 文件',
+        'iCSS':'新建 CSS 文件',
+        'iJs':'新建 JS 文件',
+        'iPhp':'新建 PHP 文件',
+        'iUpload':'上傳一個文件',
         'target':'目標文件(夾)',
         filetype:'文件類型',
-        notarget:'沒有待生成的目標文件...'
+        notarget:'沒有待生成的目標文件...',
+        invalidExts:'該文件類型不允許上傳',
+        invalidName: '只允許上傳由英文字母或數字組成的文件名'
     },
     delfile:{
         caption:'從工程中刪除文件（夾）...',
         sel:'選擇目標文件夾',
         notarget:'沒有待刪除的目標文件...',
         confirmdel:'刪除?',
-        confirmdel2:"您是否確認刪除選中的$0個文件（夾）?"
+        confirmdel2:"您是否確認刪除選中的$0個文件（夾）?",
+        confirmdel3:"您是否確認刪除當前工程?"
    }
 }

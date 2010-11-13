@@ -196,15 +196,28 @@ class VisualJS extends Unit
             return;
 
             break;
-        case 'upload_img':
+        case 'upload':
+            LINB::checkArgs($hash, array(
+                'string' => array(
+                    'path' => null
+                )
+            ));
+
             $uploader = LINB::SC('Uploader');
             $uploader->set_type('image');
-            $r = array();
-            foreach($_FILES as $file)
-                if(!empty($file['name']))
-                    $r[] = $uploader->save($_FILES['file'],$save_path);
+            $name = "";
+            foreach($_FILES as $file){
+                if(!empty($file['name'])){
+                    $name=$file['name'];
+
+                    $save_path=$hash->path.'/';
+                    $uploader->save($file,$save_path);
+                    break;
+                }
+            }
             unset($uploader);
-            return $r;
+
+            return array('OK'=>true, 'name'=>$name);
             break;
         }
     }

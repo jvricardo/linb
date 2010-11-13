@@ -778,6 +778,19 @@ Class('VisualJS.Designer', 'linb.Com',{
                                 });
                             }
                         };
+                        profile.$afterRefresh=function(profile){
+                            var t;
+                            if((t=profile.parent) && t.reSelectObject &&_.arr.indexOf(page.tempSelected, profile.$linbid)!=-1){
+                                _.resetRun(":"+page.tempSelected.join(':'), function(){
+                                    if(!profile.box)return;
+                                    if(page.tempSelected.length>1)
+                                        t.reSelectObject.call(t,profile, profile.getRoot().parent());
+                                    else
+                                        t.selectObject.call(t,profile, profile.getRoot().parent());
+                                });
+                            }
+                            
+                        };
                     }
 
                     var t=profile.behavior.DroppableKeys;

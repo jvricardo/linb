@@ -414,6 +414,14 @@ Class('linb.Event',null,{
              }
             return this;
         },
+        keyboardHookUp:function(key, ctrl, shift, alt, fun,args,scope){
+            if(key){
+                var p = linb.$cache.hookKeyUp, k = (key||'').toLowerCase() + ":"  + (ctrl?'1':'') + ":"  +(shift?'1':'')+ ":" + (alt?'1':'');
+                if(typeof fun!='function')delete p[k];
+                else p[k]=[fun,args,scope];
+             }
+            return this;
+        },
         getWheelDelta:function(e){
             return e.wheelDelta
             // ie/opr/kde

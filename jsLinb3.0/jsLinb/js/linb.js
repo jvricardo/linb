@@ -706,6 +706,7 @@ _.merge(linb,{
         thread:{},
         SC:{},
         hookKey:{},
+        hookKeyUp:{},
         snipScript:{},
 
         //ghost divs

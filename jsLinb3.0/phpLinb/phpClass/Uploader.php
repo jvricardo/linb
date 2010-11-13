@@ -95,7 +95,7 @@ class Uploader
             'pdf' => array('pdf')
         );
         $this->mime_types = $this->MIMETYPES;
-        $this->max_size = 350000;
+        $this->max_size = 10240000;
     }
     public function __destruct(){
         unset($this->MIMETYPES);

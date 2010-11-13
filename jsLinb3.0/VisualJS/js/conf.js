@@ -14,6 +14,8 @@ new function(){
         path_opendir:"../CodeSnip/Classes/",
         path_apidir:"../API/",
         
+        fileExts:/\.(jpg|png|gif|css|txt|swf)$/,
+        fileNames:/[\w-]+\.[\w]+$/,
         
         prjPath:'projects/',
         requestKey:'VisualJS',

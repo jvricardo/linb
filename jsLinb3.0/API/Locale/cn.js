@@ -1940,7 +1940,7 @@ _.set(linb.Locale,["cn","app"], {
             ]
         },
         keyboardHook :{
-            $desc:" 添加/移除一个全局的键盘事件钩子.",
+            $desc:" 添加/移除一个全局的键盘事件钩子到keyDown事件.",
             $rtn:'[self]',
             $paras:[
                 "key [必需参数] : String, 被监视的键.",
@@ -1957,6 +1957,19 @@ _.set(linb.Locale,["cn","app"], {
                 "//'Run' the code, and You can't input 'a' in this input! \n"+
                 "if(!linb.Dom.byId('linb.temp.1')){this.prepend(linb.create('<div><input /><button id=\"linb.temp.1\" onclick=\"linb.Event.keyboardHook(\\\'a\\\');linb(this).parent().remove()\">remove this example</button></div>'));}" +
                 "linb.Event.keyboardHook('a',0,0,0,function(){return false;});"
+            ]
+        },
+        keyboardHook :{
+            $desc:" 添加/移除一个全局的键盘事件钩子到keyUp事件.",
+            $rtn:'[self]',
+            $paras:[
+                "key [必需参数] : String, 被监视的键.",
+                "ctrl [可选参数] : Boolean, 指示是否监视'CTRL'键. 默认为 [false].",
+                "shift [可选参数] : Boolean, 指示是否监视'SHIFT'键. 默认为 [false].",
+                "alt [可选参数] : Boolean, 指示是否监视'ALT'键. 默认为 [false].",
+                "fun [可选参数] : Function, 用户按下热键后要执行的函数. 如果不指定该参数, 或传入非function变量, 这个键[key](keyboard name)上的钩子将被移除.",
+                "args [可选参数]: Array, 函数的参数. 默认为 []",
+                "scope [可选参数]: Object, [fun]的this指针(哪个对象的函数). 默认为 [window]"
             ]
         },
         popTabOutTrigger:{

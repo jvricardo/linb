@@ -81,12 +81,25 @@
         newproject:'新建工程',
         openproject:'打开工程',
         closeproject:'关闭工程',
+        deleteproject:'删除工程',
         save:'保存',
         saveall:'保存所有',
 
         tools: '工具',
-        command:'命令窗口',
-        spy:'控件浏览',
+            servicetester:'LINB 服务测试器',
+            command:'命令窗口',
+            jsoneditor:'JSON 编辑器',
+            
+            cookbook:'入门指南',
+            api:'API 文档',
+            codesnipt:'代码片段',
+            backendcode:'后台服务代码',
+                php:'PHP 服务代码',
+                csharp:'C# 服务代码',
+                java:'JAVA 服务代码',
+
+        
+            spy:'控件浏览',
 
         build: '生成',
         debug: '运行程序',
@@ -120,7 +133,7 @@
         flash:'Flash 视频介绍'
     },
     tool2:{
-        'new':'新建文件到工程',
+        'new':'向工程中添加文件',
         del: '从工程中删除文件',
         refresh:'刷新工程文件',
         refreshOK:'工程文件刷新成功!'
@@ -244,22 +257,26 @@
         caption:'新建文件（夹）到工程...',
         sel:'选择目标文件夹',
         filename:'文件名',
-        filenameformat:'自允许 2 到 9 个字符',
+        filenameformat:'只允许 2 到 18 个英文字符或数字',
         add:'新建',
-        'iDir':'文件夹',
-        'iHtml':'HTML 文件',
-        'iCSS':'CSS 文件',
-        'iJs':'JS 文件',
-        'iPhp':'PHP 文件',
+        'iDir':'新建文件夹',
+        'iHtml':'新建 HTML 文件',
+        'iCSS':'新建 CSS 文件',
+        'iJs':'新建 JS 文件',
+        'iPhp':'新建 PHP 文件',
+        'iUpload':'上传一个文件',
         'target':'目标文件(夹)',
         filetype:'文件类型',
-        notarget:'没有待生成的目标文件...'
+        notarget:'没有待生成的目标文件...',
+        invalidExts:'该文件类型不允许上传',
+        invalidName: '只允许上传由英文字母或数字组成的文件名',
     },
     delfile:{
         caption:'从工程中删除文件（夹）...',
         sel:'选择目标文件夹',
         notarget:'没有待删除的目标文件...',
         confirmdel:'删除?',
-        confirmdel2:"您是否确认删除选中的$0个文件（夹）?"
+        confirmdel2:"您是否确认删除选中的$0个文件（夹）?",
+        confirmdel3:"您是否确认删除当前工程?"
    }
 }

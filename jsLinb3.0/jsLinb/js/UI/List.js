@@ -18,7 +18,7 @@ Class("linb.UI.List", ["linb.UI", "linb.absList","linb.absValue" ],{
 
                     itemId = getI(value);
                     if(itemId)
-                        getN(k,itemId).tagClass('-checked');
+                        getN(k,itemId).tagClass('-checked').tagClass('-mouseover');
 
                     //scroll
                     if(itemId){
@@ -44,10 +44,15 @@ Class("linb.UI.List", ["linb.UI", "linb.absList","linb.absValue" ],{
                         getN(k, getI(o)).tagClass('-checked',false)
                     });
                     _.arr.each(value,function(o){
-                        getN(k, getI(o)).tagClass('-checked')
+                        getN(k, getI(o)).tagClass('-checked').tagClass('-mouseover');
                     });
                 }
             });
+        },
+        _clearMouseOver:function(){
+            var box=this.constructor,
+                item=box._ITEMKEY || 'ITEM';
+            this.getSubNode(item, true).tagClass('-mouseover',false);
         },
         adjustSize:function(){
             return this.each(function(profile){
