@@ -95,6 +95,7 @@ new function(){
                 {id:'linb.UI.Media', caption:'Media', image:_img_widgets, imagePos:'-576px top', draggable:true},
                 {id:'linb.UI.Shape', caption:'Shape', image:_img_widgets, imagePos:'-544px top', draggable:true},
 */                
+                {id:'linb.UI.Flash', caption:'Flash', image:_img_widgets, imagePos:'-560px -16px', draggable:true},
                 {id:'linb.UI.FusionChartFree', caption:'FusionChartFree', image:_img_widgets, imagePos:'-560px top', draggable:true},
                 {id:'linb.UI.FusionChart3', caption:'FusionChart3', image:_img_widgets, imagePos:'-560px top', draggable:true}
 
@@ -146,7 +147,8 @@ new function(){
             'linb.UI.TreeBar':['items','value','onItemSelected','onGetContent','tabindex'],
             'linb.UI.TreeView':['items','value','onItemSelected','onGetContent','tabindex'],
             'linb.UI.TreeGrid':['header','rows','value','onClickCell','beforeComboPop','onRowSelected','onGetContent','tabindex'],
-            'linb.UI.Image':['src','tabindex'],
+            'linb.UI.Image':['src','cursor','tabindex'],
+            'linb.UI.Flash':['src','parameters','flashvars','tabindex'],
             'linb.UI.TimeLine':['onGetContent','tabindex'],
             'linb.UI.FusionChartFree':['tabindex','onFCClick'],
             'linb.UI.FusionChart3':['tabindex','onFCClick']

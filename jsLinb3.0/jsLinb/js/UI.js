@@ -3663,7 +3663,7 @@ Class("linb.UI",  "linb.absObj", {
             for(i in hashIn){
                 if(i.charAt(0)=='$')continue;
                 if(hashIn.hasOwnProperty(i) &&  !hashOut.hasOwnProperty(i))
-                    hashOut[i] = typeof (o=hashIn[i])=='string' ? linb.adjustRes(o,true) : o;
+                    hashOut[i] = typeof (o=hashIn[i])=='string' ? i=='html' ? o : linb.adjustRes(o,true) : o;
             }
 
 

@@ -1,49 +1,49 @@
 Class("linb.UI.FusionChart3", "linb.UI.FusionChartFree",{
     Instance:{
         setDataXML:function(xml){
-            var chart=this.constructor._getChart(this.get(0));
+            var chart=this.constructor._getSWF(this.get(0));
             if(chart)
                 return chart.setDataXML(xml);
         },
         print:function(){
-            var chart=this.constructor._getChart(this.get(0));
+            var chart=this.constructor._getSWF(this.get(0));
             if(chart)
                 return chart.print();
         },
         setDataURL:function(strDataURL){
-            var chart=this.constructor._getChart(this.get(0));
+            var chart=this.constructor._getSWF(this.get(0));
             if(chart)
                 return chart.setDataURL(strDataURL);
         },
         getDataAsCSV:function(){
-            var chart=this.constructor._getChart(this.get(0));
+            var chart=this.constructor._getSWF(this.get(0));
             if(chart)
                 return chart.getDataAsCSV();
         },
         hasRendered:function(){
-            var chart=this.constructor._getChart(this.get(0));
+            var chart=this.constructor._getSWF(this.get(0));
             if(chart)
                 return chart.hasRendered();
         },
         getChartAttribute:function(attrName){
-            var chart=this.constructor._getChart(this.get(0));
+            var chart=this.constructor._getSWF(this.get(0));
             if(chart)
                 return chart.getChartAttribute(attrName);
         },
         getXML:function(){
-            var chart=this.constructor._getChart(this.get(0));
+            var chart=this.constructor._getSWF(this.get(0));
             if(chart)
                 return chart.getXML();
         },
         callFCFunction:function(funName, funArgs){
-            var chart=this.constructor._getChart(this.get(0));
+            var chart=this.constructor._getSWF(this.get(0));
             if(chart)
                 return chart[funName].apply(chart, funArgs);
         }
     },
     Initialize:function(){
         var ns=this,fireEvent=function(domId, eName){
-            if(domId && ns._getChart(domId)){
+            if(domId && ns._getSWF(domId)){
                 var instance=ns.getFromDom(ns.KEY+":"+domId.replace(ns._idtag,'')+":"),
                     prf=instance && instance.get(0);
                 if(prf && prf[eName])

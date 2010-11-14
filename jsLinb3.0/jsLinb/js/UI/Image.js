@@ -7,7 +7,7 @@ Class("linb.UI.Image", "linb.UI",{
     Static:{
         Templates:{
             tagName:'image',
-            style:'{_style}',
+            style:'cursor:{cursor};{_style}',
             className:'{_className}',
             border:"0",
             width:"{width}",
@@ -107,8 +107,15 @@ Class("linb.UI.Image", "linb.UI",{
                 }
             },
             alt:{
+                ini:"",
                 action:function(v){
                     this.getRoot().attr('alt',v);
+                }
+            },
+            cursor:{
+                ini:"",
+                action:function(v){
+                    this.getRoot().css('cursor',v);
                 }
             }
         }

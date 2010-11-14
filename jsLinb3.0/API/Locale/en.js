@@ -1948,8 +1948,8 @@ _.set(linb.Locale,["en","app"], {
                 "linb.Event.keyboardHook('a',0,0,0,function(){return false;});"
             ]
         },
-        keyboardHook :{
-            $desc:" To add/remove a global keyboard up event hook".",
+        keyboardHookUp :{
+            $desc:" To add/remove a global keyboard up event hook.",
             $rtn:'[self]',
             $paras:[
                 "key [Required] : String, keyboard name to be monitored.",
@@ -13289,6 +13289,18 @@ _.set(linb.Locale,["en","app"], {
                     "}"
                 ]
             },
+            getCursor:{
+                $desc:"Gets image cursor status.",
+                $rtn:"String"
+            },
+            setCursor:{
+                $desc:"Sets image cursor status.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : String.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
             getRate:{
                 $desc:"Gets the rate (the real image size / the showed image size)",
                 $rtn:"Number",
@@ -16285,15 +16297,81 @@ _.set(linb.Locale,["en","app"], {
         }
     });
     
+    _.set(linb.Locale,["en","doc","linb","UI","Flash"], {
+        KEY:{$desc:"Class Name"},
+        $desc:"linb.UI.Flash Class",
+        constructor:{
+            $desc:"Creates a linb.UI.Flash Object."
+        },
+        getFlashVersion:{
+            $desc:"Gets the browser's Flash version.",
+            $rtn:"String"
+        },
+        prototype:{
+            KEY:{$desc:"Class Name"},
+            getParameters:{
+                $desc:"Gets url parameters to Flash.",
+                $rtn:'Object'
+            },
+            setParameters:{
+                $desc:"Sets Flash's url parameters.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : Object.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getFlashvars:{
+                $desc:"Gets Flash's vars.",
+                $rtn:'Object'
+            },
+            setFlashvars:{
+                $desc:"Sets vars to Flash.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : Object.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getCover:{
+                $desc:"Gets whether Flash has a cover on it or not.",
+                $rtn:"Boolean"
+            },
+            setCover:{
+                $desc:"Determines whether Flash has a cover on it or not.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : Boolean.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getFlash:{
+                $desc:"Gets the inner Flash Object",
+                $rtn:"Object"
+            },
+            getSrc:{
+                $desc:"Gets Flash's src",
+                $rtn:"String"
+            },
+            setSrc:{
+                $desc:"Sets Flash's src",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : String.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            refreshFlash:{
+                $desc:"Refresh the Flash."
+            }
+        }
+    });    
+        
     _.set(linb.Locale,["en","doc","linb","UI","FusionChartFree"], {
         KEY:{$desc:"Class Name"},
         $desc:"linb.UI.FusionChartFree Class",
         constructor:{
             $desc:"Creates a linb.UI.FusionChartFree Object."
-        },
-        getFlashVersion:{
-            $desc:"Gets the browser's Flash version.",
-            $rtn:"String"
         },
         replaceSpecialChars:{
             $desc:"A special char replacment function for FusionCharts.",
@@ -16302,11 +16380,11 @@ _.set(linb.Locale,["en","app"], {
         prototype:{
             KEY:{$desc:"Class Name"},
             getFC_attrs:{
-                $desc:"Gets FusionChar's attributes.",
+                $desc:"Gets FusionChart's attributes.",
                 $rtn:'Object'
             },
             setFC_attrs:{
-                $desc:"Sets FusionChar's attributes.",
+                $desc:"Sets FusionChart's attributes.",
                 $rtn:"[self]",
                 $paras:[
                     "value [Required] : Object.",
@@ -16314,11 +16392,11 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getFC_eventHandler:{
-                $desc:"Gets whether FusionChar has event handleror not.",
+                $desc:"Gets whether FusionChart has event handler or not.",
                 $rtn:'Boolean'
             },
             setFC_eventHandler:{
-                $desc:"Determines whether FusionChar has event handleror not.",
+                $desc:"Determines whether FusionChart has event handler or not.",
                 $rtn:"[self]",
                 $paras:[
                     "value [Required] : Boolean.",
@@ -16326,11 +16404,11 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getFC_chartType:{
-                $desc:"Gets FusionChar's chart type.",
+                $desc:"Gets FusionChart's chart type.",
                 $rtn:'String'
             },
             setFC_chartType:{
-                $desc:"Sets FusionChar's chart type, and refresh the chart.",
+                $desc:"Sets FusionChart's chart type, and refresh the chart.",
                 $rtn:"[self]",
                 $paras:[
                     "value [Required] : String.",
@@ -16338,11 +16416,11 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getFC_data:{
-                $desc:"Gets FusionChar's json data.",
+                $desc:"Gets FusionChart's json data.",
                 $rtn:'Object'
             },
             setFC_data:{
-                $desc:"Sets FusionChar's json data, and refreth the chart",
+                $desc:"Sets FusionChart's json data, and refreth the chart",
                 $rtn:"[self]",
                 $paras:[
                     "value [Required] : Object.",
@@ -16350,11 +16428,11 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getFC_demoDataPath:{
-                $desc:"Gets FusionChar' demo data file path.",
+                $desc:"Gets FusionChart' demo data file path.",
                 $rtn:'String'
             },
             setFC_demoDataPath:{
-                $desc:"Sets  FusionChar demo data file path.",
+                $desc:"Sets  FusionChart demo data file path.",
                 $rtn:"[self]",
                 $paras:[
                     "value [Required] : String.",
@@ -16362,11 +16440,11 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getFC_labels:{
-                $desc:"Gets FusionChar's show labels.",
+                $desc:"Gets FusionChart's show labels.",
                 $rtn:'Object'
             },
             setFC_labels:{
-                $desc:"Sets FusionChar's show labels.",
+                $desc:"Sets FusionChart's show labels.",
                 $rtn:"[self]",
                 $paras:[
                     "value [Required] : Object.",
@@ -16374,11 +16452,11 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getFC_swfPath:{
-                $desc:"Gets FusionChar's .swf file path.",
+                $desc:"Gets FusionChart's .swf file path.",
                 $rtn:'String'
             },
             setFC_swfPath:{
-                $desc:"Sets FusionChar's .swf file path.",
+                $desc:"Sets FusionChart's .swf file path.",
                 $rtn:"[self]",
                 $paras:[
                     "value [Required] : String.",
