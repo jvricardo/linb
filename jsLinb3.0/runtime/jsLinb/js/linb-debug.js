@@ -15187,7 +15187,7 @@ new function(){
                 }
             },
             cursor:{
-                ini:"",
+                ini:"default",
                 action:function(v){
                     this.getRoot().css('cursor',v);
                 }
