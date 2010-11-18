@@ -14,11 +14,11 @@ Class("linb.UI.List", ["linb.UI", "linb.absList","linb.absValue" ],{
                 if(p.selMode=='single'){
                     var itemId = getI(uiv);
                     if(uiv!==null && itemId)
-                        getN(k,itemId).tagClass('-checked',false);
+                        getN(k,itemId).tagClass('-checked',false).tagClass('-mouseover',false);
 
                     itemId = getI(value);
                     if(itemId)
-                        getN(k,itemId).tagClass('-checked').tagClass('-mouseover');
+                        getN(k,itemId).tagClass('-checked');
 
                     //scroll
                     if(itemId){
@@ -41,10 +41,10 @@ Class("linb.UI.List", ["linb.UI", "linb.absList","linb.absValue" ],{
                     value = value?value.split(';'):[];
                     //check all
                     _.arr.each(uiv,function(o){
-                        getN(k, getI(o)).tagClass('-checked',false)
+                        getN(k, getI(o)).tagClass('-checked',false).tagClass('-mouseover',false);
                     });
                     _.arr.each(value,function(o){
-                        getN(k, getI(o)).tagClass('-checked').tagClass('-mouseover');
+                        getN(k, getI(o)).tagClass('-checked');
                     });
                 }
             });
