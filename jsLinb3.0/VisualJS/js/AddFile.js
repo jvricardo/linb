@@ -220,7 +220,7 @@ Class('VisualJS.AddFile', 'linb.Com',{
         },
         _btnok_onclick:function (profile, e, value) {
             var self=this,
-                s = self.inputTarget.getValue(),
+                s = self.input.getUIValue(),
                 type = self.comboinput.getUIValue();
             if(!s){
                 linb.message(linb.getRes('VisualJS.addfile.notarget'));
