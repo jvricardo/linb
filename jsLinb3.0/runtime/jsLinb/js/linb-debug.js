@@ -32421,7 +32421,10 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                         if(p.disabled || col.disabled)return false;
                         if(!(col.hasOwnProperty('colSortable')?col.colSortable:p.colSortable))return;
                     }
-
+                    
+                    if(profile.beforeColSorted && false===profile.boxing().beforeColSorted(profile, col))
+                        return;
+                        
                     var order = (col ? col._order : profile._order) || false,
                     type = (col ? col.type : null) || 'input',
                     sortby = col ? col.sortby : null,
@@ -32497,6 +32500,10 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
 
                     //clear rows cache
                     delete profile.$allrowscache;
+                    
+                    if(profile.afterColSorted)
+                        profile.boxing().afterColSorted(profile, col);
+
                     return false;
                 },
                 onMousedown:function(profile, e, src){
@@ -33211,6 +33218,8 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             beforeColDrag:function(profile, colId){},
             beforeColMoved:function(profile, colId, toId){},
             afterColMoved:function(profile, colId, toId){},
+            beforeColSorted:function(profile, col){},
+            afterColSorted:function(profile, col){},
 
             beforeRowActive:function(profile, row){},
             afterRowActive:function(profile, row){},

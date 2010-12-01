@@ -15347,6 +15347,20 @@ _.set(linb.Locale,["cn","app"], {
                     "}"
                 ]
             },
+            beforeColSorted:{
+                $desc:"在对列排序前调用.返回false将阻止列排序.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "col : Object, 被排序的列."
+                ]
+            },
+            afterColSorted:{
+                $desc:"在对列排序后调用.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "col : Object, 被排序的列."
+                ]
+            },
             beforeColDrag:{
                 $desc:"在终端用户拖动列之前被调用. 返回false将阻止列拖动.",
                 $paras:[

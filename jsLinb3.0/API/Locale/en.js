@@ -15439,6 +15439,20 @@ _.set(linb.Locale,["en","app"], {
                     "}"
                 ]
             },
+            beforeColSorted:{
+                $desc:"Fired before the column is sorted. If returns false, the sort action will be ignored.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "col : Object, the column header object."
+                ]
+            },
+            afterColSorted:{
+                $desc:"Fired after the column is sorted.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "col : Object, the column header object."
+                ]
+            },
             beforeColDrag:{
                 $desc:"Fired before the column is draged. If returns false, the drag action will be ignored.",
                 $paras:[
