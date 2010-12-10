@@ -709,7 +709,9 @@ Class('linb.UIProfile','linb.Profile', {
 
             //set once
             ns.$destroyed=true;
+            //afterDestroy
             _.tryF(ns.$afterdestory,[],ns);
+            if(ns.afterDestroy)ns.boxing().afterDestroy(ns);
             _.breakO([ns.properties,ns.events, ns.CF, ns.CB, ns.CC, ns.CS, ns],2);
             //set again
             ns.$destroyed=true;
@@ -3794,6 +3796,7 @@ Class("linb.UI",  "linb.absObj", {
             afterRemove:function(profile,child,subId,bdestroy){},
             onDestroy:function(profile){},
             beforeDestroy:function(profile){},
+            afterDestroy:function(profile){},
             onShowTips:function(profile, node, pos){},
             onContextmenu:function(profile, e, node, item){}
         },

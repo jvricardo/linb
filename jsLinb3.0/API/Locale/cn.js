@@ -7392,6 +7392,12 @@ _.set(linb.Locale,["cn","app"], {
                     "}"
                 ]
             },
+            afterDestroy:{
+                $desc:"在控件被销毁后触发.",
+                $paras:[
+                    "profile : linb.UIProfile."
+                ]
+            },
             onDestroy:{
                 $desc:"当控件被销毁时调用.",
                 $paras:[

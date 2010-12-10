@@ -7368,6 +7368,12 @@ _.set(linb.Locale,["en","app"], {
                     "}"
                 ]
             },
+            afterDestroy:{
+                $desc:"Fired after the UIProfile was destroyed.",
+                $paras:[
+                    "profile : linb.UIProfile."
+                ]
+            },
             onDestroy:{
                 $desc:"Fired when the UIProfile is destroyed.",
                 $paras:[

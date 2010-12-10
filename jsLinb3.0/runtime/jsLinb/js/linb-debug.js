@@ -10263,7 +10263,9 @@ Class('linb.UIProfile','linb.Profile', {
 
             //set once
             ns.$destroyed=true;
+            //afterDestroy
             _.tryF(ns.$afterdestory,[],ns);
+            if(ns.afterDestroy)ns.boxing().afterDestroy(ns);
             _.breakO([ns.properties,ns.events, ns.CF, ns.CB, ns.CC, ns.CS, ns],2);
             //set again
             ns.$destroyed=true;
@@ -13348,6 +13350,7 @@ Class("linb.UI",  "linb.absObj", {
             afterRemove:function(profile,child,subId,bdestroy){},
             onDestroy:function(profile){},
             beforeDestroy:function(profile){},
+            afterDestroy:function(profile){},
             onShowTips:function(profile, node, pos){},
             onContextmenu:function(profile, e, node, item){}
         },
@@ -31332,6 +31335,10 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             if(profile.renderId){
                 profile.getSubNode('BODY').empty();
                 profile.getSubNode('SCROLL').scrollTop(0).scrollLeft(0);
+                // ensure the column header scroll to zero
+                // code must same to the SCROLL->onScroll event
+                if(profile.$sl!=0)
+                    profile.getSubNode('HEADER').get(0).scrollLeft=profile.$sl=0;
             }
             //clear rows cache
             delete profile.$allrowscache;
@@ -34172,28 +34179,7 @@ editorDropListHeight
                         //cache the stantdard editor
                         profile.$cache_editor[type] = editor;
                     }
-    
-                    //set properities
-                    switch(type){
-                        case 'listbox':
-                        case 'combobox':
-                        case 'helpinput':
-                            // set properties
-                            if(t=getPro('editorListItems')){
-                                editor.setListKey(null);
-                                editor.setItems(t);
-                            }else if(t=getPro('editorListKey')) {
-                                editor.setItems(null);
-                                editor.setListKey(t);
-                            }
-                            break;
-                        case 'cmdbox':
-                        case 'popbox':
-                            // reset Caption
-                            if(editor.setCaption)
-                                editor.setCaption(cell.caption||"");
-                    }
-    
+
                     if(editor.setInputReadonly && editorReadonly)
                         editor.setInputReadonly(true);
                     if(editor.setDropListWidth && editorDropListWidth)
@@ -34224,6 +34210,27 @@ editorDropListHeight
                     //$editorValue must be set in beforeIniEditor
                     editor.setValue(cell.$editorValue||cell.value,true);
                     delete cell.$editorValue;
+    
+                    //set properities
+                    switch(type){
+                        case 'listbox':
+                        case 'combobox':
+                        case 'helpinput':
+                            // set properties
+                            if(t=getPro('editorListItems')){
+                                editor.setListKey(null);
+                                editor.setItems(t);
+                            }else if(t=getPro('editorListKey')) {
+                                editor.setItems(null);
+                                editor.setListKey(t);
+                            }
+                            break;
+                        case 'cmdbox':
+                        case 'popbox':
+                            // reset Caption
+                            if(editor.setCaption)
+                                editor.setCaption(cell.caption||"");
+                    }
     
                     //$tag for compatible
                     if(cell.$tag){
