@@ -3415,9 +3415,6 @@ editorDropListHeight
     
                     // clear for valueFormat, setValue maybe cant set value because of valueFormat
                     editor.resetValue();
-                    //$editorValue must be set in beforeIniEditor
-                    editor.setValue(cell.$editorValue||cell.value,true);
-                    delete cell.$editorValue;
     
                     //set properities
                     switch(type){
@@ -3439,7 +3436,12 @@ editorDropListHeight
                             if(editor.setCaption)
                                 editor.setCaption(cell.caption||"");
                     }
-    
+
+                    // must set value here, after setItems/setListKey
+                    //$editorValue must be set in beforeIniEditor
+                    editor.setValue(cell.$editorValue||cell.value,true);
+                    delete cell.$editorValue;
+
                     //$tag for compatible
                     if(cell.$tag){
                         if(editor.setCaption)editor.setCaption(cell.$tag);
