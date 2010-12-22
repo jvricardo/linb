@@ -28557,9 +28557,13 @@ Class("linb.UI.MenuBar",["linb.UI","linb.absList" ],{
                 arguments.callee.upper.call(self,subId,options);
             //try each sub popmenu
             else{
+                var ok=0;
                 _.each(profile.$allPops,function(o){
                     o.updateItem(subId,options);
+                    ok=1;
                 });
+                if(!ok)
+                    arguments.callee.upper.call(self,subId,options);
             }
             return self;
         },
