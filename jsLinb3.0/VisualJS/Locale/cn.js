@@ -269,7 +269,7 @@
         filetype:'文件类型',
         notarget:'没有待生成的目标文件...',
         invalidExts:'该文件类型不允许上传',
-        invalidName: '只允许上传由英文字母或数字组成的文件名',
+        invalidName: '只允许上传由英文字母或数字组成的文件名'
     },
     delfile:{
         caption:'从工程中删除文件（夹）...',
