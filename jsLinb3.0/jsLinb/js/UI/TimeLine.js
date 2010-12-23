@@ -1492,7 +1492,7 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                 m,n,increment,
                 xx=x
                 ww=w;
-            if(y.visibility=='hidden')
+            if(!y.visibility || y.visibility=='hidden')
                 y.visibility='visible';
 
             if(increment=t.increment){
