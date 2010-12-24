@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="imagetoolbar" content="no" />
+    <meta content="IE=EmulateIE7" http-equiv="X-UA-Compatible">
+    <title>Web application powered by LINB framework</title>
+</head>
+    <body>
+        <div id='loading'><img src="../../../runtime/loading.gif" alt="Loading..." /></div>
+        <div style='height:20px;'></div>
+        <div id='layout' style="margin:0 auto;width:680px;border:solid 1px;padding:4px;">
+            <table border="1" align=center width="500" id="table1" cellspacing="0" cellpadding="0" style="border-collapse: collapse">
+                <caption><b>how to use linb.absIO to interact with service</b></caption>
+            	<tbody>
+            		<tr>
+            			<td width="14%" rowspan="2" bgcolor="#FFFF00"></td>
+            			<td rowspan="2" width="7%" align="center" bgcolor="#FFFF00"><b>get</b></td>
+            			<td width="9%" rowspan="2" align="center" bgcolor="#FFFF00"><b>post</b></td>
+            			<td width="16%" rowspan="2" align="center" bgcolor="#FFFF00"><b>post 
+            			file</b></td>
+            			<td colspan="2" align="center" bgcolor="#FFFF00"><b>cross domain</b></td>
+            		</tr>
+            		<tr>
+            			<td width="202" align="center" bgcolor="#FFFF00"><b>get</b></td>
+            			<td width="8%" align="center" bgcolor="#FFFF00"><b>post</b></td>
+            		</tr>
+            		<tr>
+            			<td width="14%" bgcolor="#FFFF00"><b>linb.Ajax</b></td>
+            			<td width="7%" align="center">yes</td>
+            			<td width="9%" align="center">yes</td>
+            			<td width="16%" align="center" bgcolor="#808080">no</td>
+            			<td width="202" align="center" bgcolor="#808080">no</td>
+            			<td width="8%" align="center" bgcolor="#808080">no</td>
+            		</tr>
+            		<tr>
+            			<td width="14%" bgcolor="#FFFF00"><b>linb.SAjax</b></td>
+            			<td width="7%" align="center">yes</td>
+            			<td width="9%" align="center" bgcolor="#808080">no</td>
+            			<td width="16%" align="center" bgcolor="#808080">no</td>
+            			<td width="202" align="center">yes (best for &quot;return big data&quot;)</td>
+            			<td width="8%" align="center" bgcolor="#808080">no</td>
+            		</tr>
+            		<tr>
+            			<td width="14%" bgcolor="#FFFF00"><b>linb.IAjax</b></td>
+            			<td width="7%" align="center">yes</td>
+            			<td width="9%" align="center">yes</td>
+            			<td width="16%" align="center">yes</td>
+            			<td width="202" align="center">yes</td>
+            			<td width="8%" align="center">yes</td>
+            		</tr>
+            	</tbody>
+            </table>
+            <br /><br />
+            <div>
+                <p>Request data:</p>
+                <textarea id='request' style='width:100%;height:80px;'>{
+    key:'test',
+    para:{
+        p1:'client_set'
+    }
+}</textarea><br /><br />
+                <div> <button id='ajax_get'>use linb.Ajax 'get'</button> <button id='ajax_post'>use linb.Ajax 'post'</button></div><br />
+                <div> <button id='sajax'>use linb.SAjax</button></div><br />
+                <div> <button id='iajax_get'>use linb.IAjax 'get'</button> <button id='iajax_post'>use linb.IAjax 'post'</button></div><br />
+                <div> <button id='linb_request'>use linb.request function</button></div><br />
+                <p>Response data:</p>
+                <textarea id='response' style='width:100%;height:50px;' readonly=readonly>
+                </textarea>
+             </div>
+        </div>
+        <script type="text/javascript" src="../../../runtime/jsLinb/js/linb.js"></script>
+        <script type="text/javascript">
+            linb.main(function(){
+                linb('loading').remove();
+
+                var getRequest=function(){
+                    return _.unserialize(linb.Dom.byId('request').value);
+                },
+                setResponse=function(value){
+                    linb('response').attr('value', _.serialize(value.data[0]));
+                },
+                showErr=function(uri,qs,msg){
+                    alert('request raise err in "'+uri+'"' + (qs?' with "'+qs+'"':'') + (msg?': "' + msg +'"':''));            
+                },
+                onOK=function(response){
+                    if(typeof response=='string')response=_.unserialize(response);
+                    if(response)setResponse(response);
+                    else showErr(this.uri, this.queryString, response);
+                },
+                onFail=function(msg){
+                    showErr(this.uri, this.queryString, msg);
+                };
+
+var linbService='../request.php';
+                //use linb.Ajax get method
+                linb('ajax_get').onClick(function(){
+                    var hash=getRequest();
+                    if(hash)
+                        linb.Thread.observableRun(function(threadid){
+                            linb.Ajax(linbService,hash, onOK, onFail,threadid).start();
+                        });
+                });
+                //use linb.Ajax post
+                linb('ajax_post').onClick(function(){
+                    var hash=getRequest();
+                    if(hash)
+                        linb.Thread.observableRun(function(threadid){
+                            linb.Ajax(linbService,hash, onOK, onFail,threadid,{method:'POST'}).start();
+                        });
+                });
+                //use linb.SAjax
+                linb('sajax').onClick(function(){
+                    var hash=getRequest();
+                    if(hash)
+                        linb.Thread.observableRun(function(threadid){
+                            linb.SAjax(linbService,hash, onOK, onFail,threadid).start();
+                        });
+                });
+                //use linb.IAjax get
+                linb('iajax_get').onClick(function(){
+                    var hash=getRequest();
+                    if(hash)
+                        linb.Thread.observableRun(function(threadid){
+                            linb.IAjax(linbService,hash, onOK, onFail,threadid,{method:'GET'}).start();
+                        });
+                });
+                //use linb.IAjax post
+                linb('iajax_post').onClick(function(){
+                    var hash=getRequest();
+                    if(hash)
+                        linb.Thread.observableRun(function(threadid){
+                            linb.IAjax(linbService,hash, onOK, onFail,threadid).start();
+                        });
+                });
+                //use linb.request function
+                linb('linb_request').onClick(function(){
+                    var hash=getRequest();
+                    if(hash)
+                        linb.Thread.observableRun(function(threadid){
+                            linb.request(linbService,hash, onOK, onFail,threadid);
+                        });
+                });
+            });
+        </script>
+</body>
+</html>

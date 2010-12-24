@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="keywords" content="javascript framework, RIA, SPA, client SOA, linb, jsLinb, RAD, IDE, Web IDE, widgets, javascript OOP, opensource, open-source, Ajax, cross-browser, prototype, web2.0, platform-independent, language-independent" />
+    <meta name="description" content="Web application created by Visual JS, powered by LINB framework" />
+    <meta name="copyright" content="copyright@www.linb.net" />
+    <meta http-equiv="imagetoolbar" content="no" />
+    <meta content="IE=EmulateIE7" http-equiv="X-UA-Compatible">
+    <title>Visual JS, powered by LINB</title>
+    <script type="text/javascript" src="../runtime/jsLinb/js/linb-debug.js"></script>
+
+</head>
+<body>
+    <script type="text/javascript">
+        var ctrl;
+        var start=function(){
+            index=0;
+            f=function(){
+                index++;
+                /*
+                ** 1#
+                **
+                if(index % 2 ==0){
+                    ctrl = new linb.UI;
+                }else if(ctrl){
+                    ctrl.destroy();
+                    ctrl=null;
+                }
+                *
+                ** 2#
+                **/
+                linb('memo3').empty().append(
+                    //new linb.create('<div style="width:100px;heihght:100px;">'+index+'</div>')
+                    new linb.UI.Div({width:100,height:100,html:index})
+                    //new linb.UI.Block)()
+                    //new linb.UI.SButton()
+                    //new linb.UI.Button()
+                    //new linb.UI.List({items:[{id:'a',caption:'a'+index},{id:'b',caption:'b'+index},{id:'c',caption:'c'+index},{id:'d',caption:'d'+index},{id:'e',caption:'e'+index},{id:'f',caption:'f'+index},{id:'g',caption:'g'+index},{id:'h',caption:'h'+index}]})
+                );
+            }
+            linb.Thread('test',[f],0,null,null,null,true).start();
+        };
+        var suspend=function(){
+            linb.Thread('test').suspend();
+        };
+        var resume=function(){
+            linb.Thread('test').resume();
+        };
+    </script>
+
+    <div id='memo3' style='border:solid 1px;width:300px;height:300px;'></div>
+
+    <button onclick='start()'>start</button>
+    <button onclick='suspend()'>suspend</button>
+    <button onclick='resume()'>resume</button>
+    
+    
+</body>
+</html>
