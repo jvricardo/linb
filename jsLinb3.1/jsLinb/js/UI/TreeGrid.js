@@ -1995,8 +1995,12 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                         disabled=getPro(profile, cell, 'disabled'),
                         editable=getPro(profile, cell, 'editable');
 
-                    if(!disabled && (!editable || (type=='button'||type=='label')))
+                    if(!disabled && (!editable || (type=='button'||type=='label'))){
                         profile.boxing().onDblclickCell(profile, cell, e, src);
+                        // stop to trigger row's onDblclick event
+                        if(type=='button')
+                            return false;
+                    }
                 },
                 onClick:function(profile, e, src){
                     var p = profile.properties,

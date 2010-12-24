@@ -32791,8 +32791,10 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                         disabled=getPro(profile, cell, 'disabled'),
                         editable=getPro(profile, cell, 'editable');
 
-                    if(!disabled && (!editable || (type=='button'||type=='label')))
+                    if(!disabled && (!editable || (type=='button'||type=='label'))){
                         profile.boxing().onDblclickCell(profile, cell, e, src);
+                        if(type=='button'||type=='label')return false;
+                    }
                 },
                 onClick:function(profile, e, src){
                     var p = profile.properties,

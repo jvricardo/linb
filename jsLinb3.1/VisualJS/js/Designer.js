@@ -1676,6 +1676,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                 deeppage=this,
                 data=page._cls,
                 type,
+                caption,cellEx,
                 len=uis._nodes.length;
 
             //get the last one first
@@ -1684,6 +1685,9 @@ Class('VisualJS.Designer', 'linb.Com',{
             //for properties
             if(id=='properties' || id=='special'){
                 _.each(target.box.$DataStruct,function(o,i){
+                    
+                    caption=cellEx=null;
+                    
                     $tagVar=null;
                     if(i.charAt(0)=='_'||i.charAt(0)=='$') return;
                     if(dm[i].hidden) return;
@@ -1741,8 +1745,17 @@ Class('VisualJS.Designer', 'linb.Com',{
                         type='label';
                         editorDisabled=true;
                     }else if(dm[i].custom){
-                        type='cmdbox';
+                        type='popbox';
                         editorReadonly=true;
+                        cv=caption='[<strong> custom </strong>]';
+                        
+                        if(_.isFun(dm[i].customIniCell)){
+                            type='label';
+                            cv='';
+                            // customIniCell(profile/*control's profile object*/, propKey/*property key*/)
+                            cellEx = dm[i].customIniCell(target,i);
+                        }
+
                         //keep object
                         $tag = null;
 
@@ -1751,22 +1764,33 @@ Class('VisualJS.Designer', 'linb.Com',{
                             var tagVar=cell.$tagVar;
                                 if(!tagVar)return;
                                 var node=profile.getSubNode('CELL', cell._serialId),
-                                submit=function(newValue){
+                                callback=function(newValue, cellOptions){
                                     var b=tagVar.profile.boxing(),
                                         fn='set'+_.str.initial(tagVar.key);
                                     if(!_.isFun(b[fn]))return;
                                     page._change();
                                     b[fn](newValue);
+                                    if(cellOptions)
+                                        profile.boxing().updateCell(cell,cellOptions);
                                     node.focus();
                                  };
-                            dm[i].custom(tagVar.profile, tagVar.key, tagVar.profile.properties[tagVar.key], submit, page, profile/*grid*/, cell, node/*cell*/);
+                            //custom(
+                            //  profile, /*control's profile object*/
+                            //  propKey, /*property key*/
+                            //  propValue, /*property value*/
+                            //  callback, /*callback(newValue,cellOptions)*/
+                            //  canvas, /*the canvas object*/
+                            //  gridprofile, /* grid*/
+                            //  gridcell, /*grid cell*/
+                            //  gridcellnode /*grid cell node*/
+                            //)
+                            dm[i].custom(tagVar.profile, tagVar.key, tagVar.profile.properties[tagVar.key], callback, page, profile/*grid*/, cell, node/*cell*/);
                         };
                         $tagVar = {
                              profile: target,
                              alias:target.alias,
                              key:i
                         };
-                        cv='[<strong> custom </strong>]';
                     }else if(dm[i].listbox){
                         type='listbox';
                         list=[];
@@ -1901,7 +1925,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                              profile: target,
                              name:i
                         };
-                        cv='[<strong> key/value pairs</strong>]';
+                        cv=caption='[<strong> key/value pairs</strong>]';
                     }else{
                         type='input';
                     }
@@ -1912,8 +1936,14 @@ Class('VisualJS.Designer', 'linb.Com',{
                         //cv = cv.replace(/^\"/,'').replace(/\"$/,'');
                     }
 
+                    var cell={value:cv, type:type , disabled:editorDisabled, editorReadonly:editorReadonly, $tag:$tag, event:$fun , $tagVar:$tagVar,  editorListKey:listKey};
+                    if(caption)
+                        cell.caption=caption;
+                    if(cellEx)
+                        _.merge(cell,cellEx,'all');
+
                     arr.push({id:'properties:'+i, tipk:'property', tipv:i, value:i, caption:i,cells:[
-                        {value:cv, type:type , disabled:editorDisabled, editorReadonly:editorReadonly, $tag:$tag, event:$fun , $tagVar:$tagVar,  editorListKey:listKey}
+                        cell
                     ]});
                 });
             }
