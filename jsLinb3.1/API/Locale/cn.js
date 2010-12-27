@@ -3899,6 +3899,33 @@ _.set(linb.Locale,["cn","app"], {
                     "var host={},o=new linb.UI.Button; o.setHost(host, 'aBtn'); alert(host.aBtn.KEY);"
                 ]
             },
+            getProperties:{
+                $desc:"取得当前对象所有的属性或某个指定的属性.",
+                $rtn:"Object",
+                $paras:[
+                    "key [可选参数] : String或Boolean, 属性名称。如果为true,将返回包括隐藏属性的所有属性。"
+                ]
+            },
+            setProperties:{
+                $desc:"设置一系列的属性或某个指定的属性到所有对象.",
+                $rtn:"[self]",
+                $paras:[
+                    "key [必需参数] : Object/String, 属性键/值对或属性关键字.",
+                    "value [可选参数] : Object, 属性值."
+                ]
+            },
+            getEvents:{
+                $desc:"获取当前对象的所有事件或某个指定的事件.",
+                $rtn:"Object"
+            },
+            setEvents:{
+                $desc:"设置一系列的事件或某个指定的事件到所有对象.",
+                $rtn:"[self]",
+                $paras:[
+                    "key [必需参数] : Object, 事件键/值对或事件关键字.",
+                    "value [可选参数] : Object, 事件函数."
+                ]
+            },
             getAlias:{
                 $desc:"获取别名.",
                 $rtn:'String',
@@ -6413,33 +6440,6 @@ _.set(linb.Locale,["cn","app"], {
                 $rtn:"[self]",
                 $paras:[
                     "key [可选参数] : String, 皮肤键字符串."
-                ]
-            },
-            getProperties:{
-                $desc:"取得当前控件所有的属性或某个指定的属性.",
-                $rtn:"Object",
-                $paras:[
-                    "key [可选参数] : String或Boolean, 属性名称。如果为true,将返回包括隐藏属性的所有属性。"
-                ]
-            },
-            setProperties:{
-                $desc:"设置一系列的属性或某个指定的属性到所有控件.",
-                $rtn:"[self]",
-                $paras:[
-                    "key [必需参数] : Object/String, 属性键/值对或属性关键字.",
-                    "value [可选参数] : Object, 属性值."
-                ]
-            },
-            getEvents:{
-                $desc:"获取当前控件的所有事件或某个指定的事件.",
-                $rtn:"Object"
-            },
-            setEvents:{
-                $desc:"设置一系列的事件或某个指定的事件到所有控件.",
-                $rtn:"[self]",
-                $paras:[
-                    "key [必需参数] : Object, 事件键/值对或事件关键字.",
-                    "value [可选参数] : Object, 事件函数."
                 ]
             },
             busy:{
@@ -9032,6 +9032,90 @@ _.set(linb.Locale,["cn","app"], {
                 $paras:[
                     "value [必需参数] : 最大长度.",
                     "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值 默认为 [false]."
+                ]
+            },
+            getLabelSize:{
+                $desc:"获取标签的大小",
+                $rtn:"Number"
+            },
+            setLabelSize:{
+                $desc:"设置标签的大小, 并刷新界面.当标签的大小为0时,不显示标签.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : Number.",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值 默认为 [false]."
+                ]
+            },
+            getLabelPos:{
+                $desc:"获取标签的位置",
+                $rtn:"String"
+            },
+            setLabelPos:{
+                $desc:"设置标签的位置, 并刷新界面.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : left, right, top, bottom 之一.",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值 默认为 [false]."
+                ]
+            },
+            getLabelGap:{
+                $desc:"获取标签与输入框的距离",
+                $rtn:"Number"
+            },
+            setLabelGap:{
+                $desc:"设置标签的大小, 并刷新界面.当标签的大小为0时,不显示标签.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : Number.",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值 默认为 [false]."
+                ]
+            },
+            getLabelCaption:{
+                $desc:"获取标签的文字",
+                $rtn:"String"
+            },
+            setLabelCaption:{
+                $desc:"设置标签的文字, 并刷新界面.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : String.",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值 默认为 [false]."
+                ]
+            },
+            getLabelHAlign:{
+                $desc:"获取标签的水平对齐方式.",
+                $rtn:"String"
+            },
+            setLabelHAlign:{
+                $desc:"设置按标签的水平对齐方式 , 并刷新界面.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : String, 'left', 'center' or 'right'. 默认为 'left'.",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为 [false]."
+                ]
+            },
+            onLabelClick:{
+                $desc:"在单击标签的时候触发该事件.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "e: Event, 事件对象.",
+                    "src: String, 事件所属DOM元素的linbid."
+                ]
+            },
+            onLabelDblClick:{
+                $desc:"在双击标签的时候触发该事件.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "e: Event, 事件对象.",
+                    "src: String, 事件所属DOM元素的linbid."
+                ]
+            },
+            onLabelActive:{
+                $desc:"当鼠标在标签上按下时调用.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "e: Event, 事件对象.",
+                    "src: String, 事件所属DOM元素的linbid."
                 ]
             },
             onBlur:{
@@ -14204,6 +14288,9 @@ _.set(linb.Locale,["cn","app"], {
                     "linb(id).prepend(o);"+
                     "}"
                 ]
+            },
+            offEditor:{
+                $desc:"解除单元格的编辑模式."
             },
             editCell:{
                 $desc:"将单元格绑定到指定的编辑器上.",

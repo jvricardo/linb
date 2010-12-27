@@ -320,6 +320,52 @@ Class('linb.absObj',"linb.absBox",{
         getAlias:function(){
             return this.get(0).alias;
         },
+        getProperties:function(key){
+            var h={},prf=this.get(0),prop=prf.properties,funName;
+            if(key===true)
+                return _.copy(prop);
+            else if(typeof key=='string')
+                return prop[key];
+            else{
+                for(var k in prop){
+                    funName="get"+_.str.initial(k);
+                    if(typeof this[funName]=='function')
+                        h[k]=this[funName].call(this);
+                }
+                return h;
+            }
+        },
+        setProperties:function(key, value){
+            if(typeof key=="string"){
+                var h={};
+                h[key]=value;
+                key=h;
+            }
+            return this.each(function(o){
+                _.each(key, function(v,k){
+                    var funName="set"+_.str.initial(k),ins=o.boxing();
+                    if(typeof ins[funName]=='function')
+                        ins[funName].call(ins, v);
+                });
+            });
+        },
+        getEvents:function(key){
+            return this.get(0).getEvents(key);
+        },
+        setEvents:function(key, value){
+            if(typeof key=="string"){
+                var h={};
+                h[key]=value;
+                key=h;
+            }
+            return this.each(function(o){
+                var ins=o.boxing();
+                _.each(key, function(v,k){
+                    if(typeof ins[k]=='function')
+                        ins[k].call(ins, v);
+                });
+            });
+        },
         alias:function(value){
             return value?this.setAlias(value):this.getAlias();
         },
@@ -1174,52 +1220,6 @@ Class("linb.UI",  "linb.absObj", {
                 a[a.length]=o.serialize(false, keepHost);
             });
             return rtnString===false?a:a.length==1?" new "+a[0].key+"("+_.serialize(a[0])+")":"linb.UI.unserialize("+_.serialize(a)+")";
-        },
-        getProperties:function(key){
-            var h={},prf=this.get(0),prop=prf.properties,funName;
-            if(key===true)
-                return _.copy(prop);
-            else if(typeof key=='string')
-                return prop[key];
-            else{
-                for(var k in prop){
-                    funName="get"+_.str.initial(k);
-                    if(typeof this[funName]=='function')
-                        h[k]=this[funName].call(this);
-                }
-                return h;
-            }
-        },
-        setProperties:function(key, value){
-            if(typeof key=="string"){
-                var h={};
-                h[key]=value;
-                key=h;
-            }
-            return this.each(function(o){
-                _.each(key, function(v,k){
-                    var funName="set"+_.str.initial(k),ins=o.boxing();
-                    if(typeof ins[funName]=='function')
-                        ins[funName].call(ins, v);
-                });
-            });
-        },
-        getEvents:function(key){
-            return this.get(0).getEvents(key);
-        },
-        setEvents:function(key, value){
-            if(typeof key=="string"){
-                var h={};
-                h[key]=value;
-                key=h;
-            }
-            return this.each(function(o){
-                var ins=o.boxing();
-                _.each(key, function(v,k){
-                    if(typeof ins[k]=='function')
-                        ins[k].call(ins, v);
-                });
-            });
         },
         _toDomElems:function(){
             var arr=[];

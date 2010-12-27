@@ -579,8 +579,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 height:'20px',
                 'font-size':0,
                 'line-height':0,
-                position:'relative',
-                'float':'right'
+                position:'absolute'
             },
             SBTN:{
                 $order:2,
@@ -1254,18 +1253,26 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
 
             var t = profile.properties,
                 o = profile.getSubNode('BOX'),
+                label = profile.getSubNode('LABEL'),
+                labelSize=t.labelSize||0,
+                labelGap=t.labelGap||0,
+                labelPos=t.labelPos || 'left',
                 px='px',
                 f=function(k){return k?profile.getSubNode(k).get(0):null},
                 v1=f('INPUT'),
-                save=f(t.commandBtn!='none'?'SBTN':null),
-                btn=f(t.type=='spin'?'RBTN':t.type=='none'?null:'BTN'),
+                commandbtn=f(t.commandBtn!='none'?'SBTN':null),
+                functionbtn=f(t.type=='spin'?'RBTN':t.type=='none'?null:'BTN'),
                 ww=width,
                 hh=height,
+                bw1=0,
+                bw2=0,
                 left=Math.max(0, (t.$b_lw||0)-$hborder),
                 top=Math.max(0, (t.$b_tw||0)-$vborder);
             if(null!==ww){
                 ww -= Math.max($hborder*2, (t.$b_lw||0)+(t.$b_rw||0));
-                ww -= ((save?save.offsetWidth:0)+(btn?btn.offsetWidth:0));
+                bw1=(commandbtn?commandbtn.offsetWidth:0);
+                bw2=(functionbtn?functionbtn.offsetWidth:0);
+                ww -= (bw1+bw2);
                 /*for ie6 bug*/
                 /*for example, if single number, 100% width will add 1*/
                 /*for example, if single number, attached shadow will overlap*/
@@ -1278,25 +1285,55 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 /*for ie6 bug*/
                 if(linb.browser.ie6&&null===width)o.ieRemedy();
             }
+            var iL=left + (labelPos=='left'?labelSize:0),
+                iT=top + (labelPos=='top'?labelSize:0),
+                iW=ww===null?null:(ww - ((labelPos=='left'||labelPos=='right')?labelSize:0)),
+                iH=hh===null?null:(hh - ((labelPos=='top'||labelPos=='bottom')?labelSize:0)),
+                iH2=hh===null?null:(height - ((labelPos=='top'||labelPos=='bottom')?labelSize:0));
 
-            if(null!==ww && ww-loff>0)
-                v1.style.width=(ww-loff)+px;
+            if(null!==iW && iW-loff>0)
+                v1.style.width=(iW-loff)+px;
+            if(null!==iH && iH-toff>0)
+                v1.style.height=(iH-toff)+px;
 
-            if(null!==hh && hh-toff>0)
-                v1.style.height=(hh-toff)+px;
-            if(height-2>0){
-                if(btn)btn.style.height=(height-2)+px;
-                if(save)save.style.height=(height-2)+px;
+            o.cssRegion({
+                left:iL,
+                top:iT,
+                width:iW,
+                height:iH
+            });
+            
+            if(labelSize)
+                label.cssRegion({
+                    left:ww===null?null:labelPos=='right'?(ww-labelSize+labelGap+bw1+bw2+$hborder*2):0,
+                    top: height===null?null:labelPos=='bottom'?(height-labelSize+labelGap):0, 
+                    width:ww===null?null:((labelPos=='left'||labelPos=='right')?(labelSize-labelGap):ww),
+                    height:height===null?null:((labelPos=='top'||labelPos=='bottom')?(labelSize-labelGap):height)
+                });
+
+            iL += (iW||0) + $hborder*2;
+            if(commandbtn){
+                if(iH2!==null)
+                    commandbtn.style.height=Math.max(0,iH2-2) + px;
+                if(iW!==null)
+                    commandbtn.style.left=iL + px;
+                commandbtn.style.top=iT + px;
             }
-            if(t.type=='spin'){
-                if(height/2-2>0){
-                    height=(height/2-2)+px;
-                    f('R1').style.height=height;
-                    f('R2').style.height=height;
+            iL += bw1;
+            if(functionbtn){
+                if(iH2!==null)
+                    functionbtn.style.height=Math.max(0,iH2-2) + px;
+                if(iW!==null)
+                    functionbtn.style.left=iL + px;
+                functionbtn.style.top=iT + px;
+
+               if(iH2!==null && t.type=='spin'){
+                    if(iH2/2-2>0){
+                        f('R1').style.height=(iH2/2-2)+px;
+                        f('R2').style.height=(iH2/2-2)+px;
+                    }
                 }
             }
-
-            o.cssRegion({left:left,top:top,width:ww,height:hh});
 
             /*for ie6 bug*/
             if((profile.$border||profile.$shadow||profile.$resizer) && linb.browser.ie){

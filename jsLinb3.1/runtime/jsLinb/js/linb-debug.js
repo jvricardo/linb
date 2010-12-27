@@ -9874,6 +9874,52 @@ Class('linb.absObj',"linb.absBox",{
         getAlias:function(){
             return this.get(0).alias;
         },
+        getProperties:function(key){
+            var h={},prf=this.get(0),prop=prf.properties,funName;
+            if(key===true)
+                return _.copy(prop);
+            else if(typeof key=='string')
+                return prop[key];
+            else{
+                for(var k in prop){
+                    funName="get"+_.str.initial(k);
+                    if(typeof this[funName]=='function')
+                        h[k]=this[funName].call(this);
+                }
+                return h;
+            }
+        },
+        setProperties:function(key, value){
+            if(typeof key=="string"){
+                var h={};
+                h[key]=value;
+                key=h;
+            }
+            return this.each(function(o){
+                _.each(key, function(v,k){
+                    var funName="set"+_.str.initial(k),ins=o.boxing();
+                    if(typeof ins[funName]=='function')
+                        ins[funName].call(ins, v);
+                });
+            });
+        },
+        getEvents:function(key){
+            return this.get(0).getEvents(key);
+        },
+        setEvents:function(key, value){
+            if(typeof key=="string"){
+                var h={};
+                h[key]=value;
+                key=h;
+            }
+            return this.each(function(o){
+                var ins=o.boxing();
+                _.each(key, function(v,k){
+                    if(typeof ins[k]=='function')
+                        ins[k].call(ins, v);
+                });
+            });
+        },
         alias:function(value){
             return value?this.setAlias(value):this.getAlias();
         },
@@ -10728,52 +10774,6 @@ Class("linb.UI",  "linb.absObj", {
                 a[a.length]=o.serialize(false, keepHost);
             });
             return rtnString===false?a:a.length==1?" new "+a[0].key+"("+_.serialize(a[0])+")":"linb.UI.unserialize("+_.serialize(a)+")";
-        },
-        getProperties:function(key){
-            var h={},prf=this.get(0),prop=prf.properties,funName;
-            if(key===true)
-                return _.copy(prop);
-            else if(typeof key=='string')
-                return prop[key];
-            else{
-                for(var k in prop){
-                    funName="get"+_.str.initial(k);
-                    if(typeof this[funName]=='function')
-                        h[k]=this[funName].call(this);
-                }
-                return h;
-            }
-        },
-        setProperties:function(key, value){
-            if(typeof key=="string"){
-                var h={};
-                h[key]=value;
-                key=h;
-            }
-            return this.each(function(o){
-                _.each(key, function(v,k){
-                    var funName="set"+_.str.initial(k),ins=o.boxing();
-                    if(typeof ins[funName]=='function')
-                        ins[funName].call(ins, v);
-                });
-            });
-        },
-        getEvents:function(key){
-            return this.get(0).getEvents(key);
-        },
-        setEvents:function(key, value){
-            if(typeof key=="string"){
-                var h={};
-                h[key]=value;
-                key=h;
-            }
-            return this.each(function(o){
-                var ins=o.boxing();
-                _.each(key, function(v,k){
-                    if(typeof ins[k]=='function')
-                        ins[k].call(ins, v);
-                });
-            });
         },
         _toDomElems:function(){
             var arr=[];
@@ -18028,6 +18028,10 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
         var t = this.getTemplate();
         _.merge(t.FRAME.BORDER,{
             style:'',
+            LABEL:{
+                style:'{labelShow};width:{labelSize}px;{labelHAlign}',
+                text:'{labelCaption}'
+            },
             BOX:{
                 WRAP:{
                     tagName : 'div',
@@ -18063,6 +18067,14 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
             BORDER:{
                 'line-height':'0px',
                 'font-size':'0px'
+            },
+            LABEL:{
+               'z-index':1,
+               top:0,
+               left:0,
+               position:'absolute',
+               'padding-top':'4px',
+               'font-size':'12px'
             },
             WRAP:{
                 left:0,
@@ -18193,6 +18205,24 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
         Behaviors:{
             HoverEffected:{BOX:['BOX']},
             NavKeys:{INPUT:1},
+            LABEL:{
+                onClick:function(profile, e, src){
+                    if(profile.properties.disabled)return false;
+                    if(profile.onLabelClick)
+                        profile.boxing().onLabelClick(profile, e, src);
+                },
+                onDblClick:function(profile, e, src){
+                    if(profile.properties.disabled)return false;
+                    if(profile.onLabelDblClick)
+                        profile.boxing().onLabelDblClick(profile, e, src);
+                },
+                onMousedown:function(profile, e, src){
+                    if(linb.Event.getBtn(e)!='left')return;
+                    if(profile.properties.disabled)return false;
+                     if(profile.onLabelActive)
+                        profile.boxing().onLabelActive(profile, e, src);
+                }
+            },
             INPUT:{
                 onChange:function(profile, e, src){
                     var p=profile.properties,b=profile.box,
@@ -18319,6 +18349,42 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
             tipsOK:'',
 
             dynCheck:false,
+
+            labelSize:{
+                ini:0,
+                action: function(v){
+                    this.getSubNode('LABEL').css({display:v?'':'none',width:(v||0)+"px"});
+                    linb.UI.$doResize(this,this.properties.width,this.properties.height,true);
+                }
+            },
+            labelPos:{
+                ini:"left",
+                listbox:['left','top', 'right', 'bottom'],
+                action: function(v){
+                    linb.UI.$doResize(this,this.properties.width,this.properties.height,true);
+                }                
+            },
+            labelGap:{
+                ini:4,
+                action: function(v){
+                    linb.UI.$doResize(this,this.properties.width,this.properties.height,true);
+                }
+            },
+            labelCaption:{
+                ini:undefined,
+                action: function(v){
+                    v=(_.isSet(v)?v:"")+"";
+                    this.getSubNode('LABEL').html(linb.adjustRes(v,true));
+                }
+            },
+            labelHAlign:{
+                ini:'right',
+                listbox:['','left','center','right'],
+                action: function(v){
+                    this.getSubNode('LABEL').css('textAlign',v);
+                }
+            },
+
             valueFormat:{
                 helpinput:[
                     {caption : 'required', id: "[^.*]"},
@@ -18436,15 +18502,31 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
             onCancel:function(profile){},
             beforeFormatCheck:function(profile, value){},
             beforeFormatMark:function(profile, formatErr){},
-            beforeKeypress:function(profile,caret,keyboard,e,src){}
+            beforeKeypress:function(profile,caret,keyboard,e,src){},
+            
+            onLabelClick:function(profile, e, src){},
+            onLabelDblClick:function(profile, e, src){},
+            onLabelActive:function(profile, e, src){}
         },
         _prepareData:function(profile){
+            // give default labelCaption
+            if(profile.properties.labelCaption===undefined)
+                profile.properties.labelCaption =  profile.alias;
+
             var d=arguments.callee.upper.call(this, profile);
+
             d.cursor = d.readonly?'pointer':'';
             d._type = d.type || '';
             if(linb.browser.kde)
                 d._css='resize:none;';
             d.hAlign=d.hAlign?("text-align:" + d.hAlign):"";
+            
+            d.labelHAlign=d.labelHAlign?("text-align:" + d.labelHAlign):"";
+            d.labelShow=d.labelSize?"":("display:none");
+    
+            // adjustRes for labelCaption
+            d.labelCaption=linb.adjustRes(d.labelCaption,true);
+
             return d;
         },
         _dynamicTemplate:function(profile){
@@ -18660,8 +18742,11 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
 
                 var t = profile.properties,
                     o = profile.getSubNode('BOX'),
+                    label = profile.getSubNode('LABEL'),
+                    labelSize=t.labelSize||0,
+                    labelGap=t.labelGap||0,
+                    labelPos=t.labelPos || 'left',
                     v1=profile.getSubNode('INPUT'),
-                    region,
                     ww=width,
                     hh=height,
                     left=Math.max(0, (t.$b_lw||0)-$hborder),
@@ -18680,8 +18765,22 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                     /*for ie6 bug*/
                     if(linb.browser.ie6&&null===width)o.ieRemedy();
                 }
-                region={left:left,top:top,width:ww,height:hh};
-                o.cssRegion(region);
+
+                o.cssRegion({
+                    left:left + (labelPos=='left'?labelSize:0),
+                    top:top + (labelPos=='top'?labelSize:0),
+                    width:ww===null?null:(ww - ((labelPos=='left'||labelPos=='right')?labelSize:0)),
+                    height:hh===null?null:(hh - ((labelPos=='top'||labelPos=='bottom')?labelSize:0))
+                });
+                
+                if(labelSize)
+                    label.cssRegion({
+                        left:ww===null?null:labelPos=='right'?(ww-labelSize+labelGap):0,
+                        top: height===null?null:labelPos=='bottom'?(height-labelSize+labelGap):0, 
+                        width:ww===null?null:((labelPos=='left'||labelPos=='right')?(labelSize-labelGap):ww),
+                        height:height===null?null:((labelPos=='top'||labelPos=='bottom')?(labelSize-labelGap):height)
+                    });
+
                 if(ww||hh)
                     v1.cssSize({width:ww?(ww-loff):null,height:hh?(hh-toff):null});
 
@@ -20001,8 +20100,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 height:'20px',
                 'font-size':0,
                 'line-height':0,
-                position:'relative',
-                'float':'right'
+                position:'absolute'
             },
             SBTN:{
                 $order:2,
@@ -20676,18 +20774,26 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
 
             var t = profile.properties,
                 o = profile.getSubNode('BOX'),
+                label = profile.getSubNode('LABEL'),
+                labelSize=t.labelSize||0,
+                labelGap=t.labelGap||0,
+                labelPos=t.labelPos || 'left',
                 px='px',
                 f=function(k){return k?profile.getSubNode(k).get(0):null},
                 v1=f('INPUT'),
-                save=f(t.commandBtn!='none'?'SBTN':null),
-                btn=f(t.type=='spin'?'RBTN':t.type=='none'?null:'BTN'),
+                commandbtn=f(t.commandBtn!='none'?'SBTN':null),
+                functionbtn=f(t.type=='spin'?'RBTN':t.type=='none'?null:'BTN'),
                 ww=width,
                 hh=height,
+                bw1=0,
+                bw2=0,
                 left=Math.max(0, (t.$b_lw||0)-$hborder),
                 top=Math.max(0, (t.$b_tw||0)-$vborder);
             if(null!==ww){
                 ww -= Math.max($hborder*2, (t.$b_lw||0)+(t.$b_rw||0));
-                ww -= ((save?save.offsetWidth:0)+(btn?btn.offsetWidth:0));
+                bw1=(commandbtn?commandbtn.offsetWidth:0);
+                bw2=(functionbtn?functionbtn.offsetWidth:0);
+                ww -= (bw1+bw2);
                 /*for ie6 bug*/
                 /*for example, if single number, 100% width will add 1*/
                 /*for example, if single number, attached shadow will overlap*/
@@ -20700,25 +20806,55 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 /*for ie6 bug*/
                 if(linb.browser.ie6&&null===width)o.ieRemedy();
             }
+            var iL=left + (labelPos=='left'?labelSize:0),
+                iT=top + (labelPos=='top'?labelSize:0),
+                iW=ww===null?null:(ww - ((labelPos=='left'||labelPos=='right')?labelSize:0)),
+                iH=hh===null?null:(hh - ((labelPos=='top'||labelPos=='bottom')?labelSize:0)),
+                iH2=hh===null?null:(height - ((labelPos=='top'||labelPos=='bottom')?labelSize:0));
 
-            if(null!==ww && ww-loff>0)
-                v1.style.width=(ww-loff)+px;
+            if(null!==iW && iW-loff>0)
+                v1.style.width=(iW-loff)+px;
+            if(null!==iH && iH-toff>0)
+                v1.style.height=(iH-toff)+px;
 
-            if(null!==hh && hh-toff>0)
-                v1.style.height=(hh-toff)+px;
-            if(height-2>0){
-                if(btn)btn.style.height=(height-2)+px;
-                if(save)save.style.height=(height-2)+px;
+            o.cssRegion({
+                left:iL,
+                top:iT,
+                width:iW,
+                height:iH
+            });
+            
+            if(labelSize)
+                label.cssRegion({
+                    left:ww===null?null:labelPos=='right'?(ww-labelSize+labelGap+bw1+bw2+$hborder*2):0,
+                    top: height===null?null:labelPos=='bottom'?(height-labelSize+labelGap):0, 
+                    width:ww===null?null:((labelPos=='left'||labelPos=='right')?(labelSize-labelGap):ww),
+                    height:height===null?null:((labelPos=='top'||labelPos=='bottom')?(labelSize-labelGap):height)
+                });
+
+            iL += (iW||0) + $hborder*2;
+            if(commandbtn){
+                if(iH2!==null)
+                    commandbtn.style.height=Math.max(0,iH2-2) + px;
+                if(iW!==null)
+                    commandbtn.style.left=iL + px;
+                commandbtn.style.top=iT + px;
             }
-            if(t.type=='spin'){
-                if(height/2-2>0){
-                    height=(height/2-2)+px;
-                    f('R1').style.height=height;
-                    f('R2').style.height=height;
+            iL += bw1;
+            if(functionbtn){
+                if(iH2!==null)
+                    functionbtn.style.height=Math.max(0,iH2-2) + px;
+                if(iW!==null)
+                    functionbtn.style.left=iL + px;
+                functionbtn.style.top=iT + px;
+
+               if(iH2!==null && t.type=='spin'){
+                    if(iH2/2-2>0){
+                        f('R1').style.height=(iH2/2-2)+px;
+                        f('R2').style.height=(iH2/2-2)+px;
+                    }
                 }
             }
-
-            o.cssRegion({left:left,top:top,width:ww,height:hh});
 
             /*for ie6 bug*/
             if((profile.$border||profile.$shadow||profile.$resizer) && linb.browser.ie){
@@ -31559,6 +31695,13 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             this.constructor._editCell(this.get(0), cell);
             return this;
         },
+        offEditor:function(){
+            var profile=this.get(0),editor;
+            if(profile&&profile.$curEditor){
+                editor=profile.$curEditor;
+                _.tryF(editor.undo,[],editor);
+            }
+        },
         focusCellbyRowCol:function(rowId, colId){
             var profile=this.get(0),con=profile.box,
                 cellId=con._getCellId(profile, rowId, colId);
@@ -32793,7 +32936,9 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
 
                     if(!disabled && (!editable || (type=='button'||type=='label'))){
                         profile.boxing().onDblclickCell(profile, cell, e, src);
-                        if(type=='button'||type=='label')return false;
+                        // stop to trigger row's onDblclick event
+                        if(type=='button')
+                            return false;
                     }
                 },
                 onClick:function(profile, e, src){

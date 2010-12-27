@@ -763,6 +763,13 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             this.constructor._editCell(this.get(0), cell);
             return this;
         },
+        offEditor:function(){
+            var profile=this.get(0),editor;
+            if(profile&&profile.$curEditor){
+                editor=profile.$curEditor;
+                _.tryF(editor.undo,[],editor);
+            }
+        },
         focusCellbyRowCol:function(rowId, colId){
             var profile=this.get(0),con=profile.box,
                 cellId=con._getCellId(profile, rowId, colId);

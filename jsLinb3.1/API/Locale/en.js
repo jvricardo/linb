@@ -3888,6 +3888,39 @@ _.set(linb.Locale,["en","app"], {
                     "var host={},o=new linb.UI.Button; o.setHost(host, 'aBtn'); alert(host.aBtn.KEY);"
                 ]
             },
+            getProperties:{
+                $desc:"Gets all Properties or a specified Properties from the first Profile.",
+                $rtn:"Object",
+                $paras:[
+                    "key [Optional] : String"
+                ]
+            },
+            setProperties:{
+                $desc:"Sets a set of Properties(or a specified Property with a key) to all inner Profiles.",
+                $rtn:"[self]",
+                $paras:[
+                    "key [Required] : Object/String, A set of event or key.",
+                    "value [Optional] : Object, a property value."
+                ]
+            },
+            getEvents:{
+                $desc:"Collects all the event(or a specified event) functions from the first Profile, and returns it.",
+                $rtn:"Object",
+                $snippet:[
+                    "var p=linb.UIProfile.getFromDom('btnLang'); p.setEvents({onA:_.fun(), onShowTips:function(){return false}}); alert(_.serialize(p.getEvents()))"
+                ]
+            },
+            setEvents:{
+                $desc:"Sets a set of event functions(or a specified event fucntion with a key ) to all inner Profiles.",
+                $rtn:"[self]",
+                $paras:[
+                    "key [Required] : Object/String, A set of Properties or key.",
+                    "value [Optional] : Object, a property value."
+                ],
+                $snippet:[
+                    "var p=linb.UIProfile.getFromDom('btnLang'); p.setEvents({onA:_.fun(), onShowTips:function(){return false}}); alert(_.serialize(p.getEvents()))"
+                ]
+            },
             getAlias:{
                 $desc:"Gets an alias to the first profile.",
                 $rtn:'String',
@@ -6384,39 +6417,6 @@ _.set(linb.Locale,["en","app"], {
                 $rtn:"[self]",
                 $paras:[
                     "key [Optional] : String, the theme key."
-                ]
-            },
-            getProperties:{
-                $desc:"Gets all Properties or a specified Properties from the first UIProfile.",
-                $rtn:"Object",
-                $paras:[
-                    "key [Optional] : String"
-                ]
-            },
-            setProperties:{
-                $desc:"Sets a set of Properties(or a specified Property with a key) to all inner UIProfiles.",
-                $rtn:"[self]",
-                $paras:[
-                    "key [Required] : Object/String, A set of event or key.",
-                    "value [Optional] : Object, a property value."
-                ]
-            },
-            getEvents:{
-                $desc:"Collects all the event(or a specified event) functions from the first UIProfile, and returns it.",
-                $rtn:"Object",
-                $snippet:[
-                    "var p=linb.UIProfile.getFromDom('btnLang'); p.setEvents({onA:_.fun(), onShowTips:function(){return false}}); alert(_.serialize(p.getEvents()))"
-                ]
-            },
-            setEvents:{
-                $desc:"Sets a set of event functions(or a specified event fucntion with a key ) to all inner UIProfiles.",
-                $rtn:"[self]",
-                $paras:[
-                    "key [Required] : Object/String, A set of Properties or key.",
-                    "value [Optional] : Object, a property value."
-                ],
-                $snippet:[
-                    "var p=linb.UIProfile.getFromDom('btnLang'); p.setEvents({onA:_.fun(), onShowTips:function(){return false}}); alert(_.serialize(p.getEvents()))"
                 ]
             },
             busy:{
@@ -9091,6 +9091,90 @@ _.set(linb.Locale,["en","app"], {
                 $paras:[
                     "value [Required] : the maxlength number.",
                     "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getLabelSize:{
+                $desc:"Gets the label's size",
+                $rtn:"Number"
+            },
+            setLabelSize:{
+                $desc:"Sets the label's size, and reflects the value to UI.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : Number.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getLabelPos:{
+                $desc:"Gets the label's positoin.",
+                $rtn:"String"
+            },
+            setLabelPos:{
+                $desc:"Sets the label's positoin, and reflects the value to UI.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : left, right, top, bottom 之一.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getLabelGap:{
+                $desc:"Gets the gap between the label and the input.",
+                $rtn:"Number"
+            },
+            setLabelGap:{
+                $desc:"Sets the the gap between label and input, and reflects the value to UI.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : Number.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getLabelCaption:{
+                $desc:"Gets the label's caption.",
+                $rtn:"String"
+            },
+            setLabelCaption:{
+                $desc:"Sets the label's caption, and reflects the value to UI.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : String.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getLabelHAlign:{
+                $desc:"Gets the label's horizontal alignment.",
+                $rtn:"String"
+            },
+            setLabelHAlign:{
+                $desc:"Sets the label's horizontal alignment, and reflects the value to UI.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : String, 'left', 'center' or 'right'. 默认为 'left'.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            onLabelClick:{
+                $desc:"Fired when user click the label.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "e: Event, DOM event Object.",
+                    "src : String, the event source DOM element's linbid."
+                ]
+            },
+            onLabelDblClick:{
+                $desc:"Fired when user double click the label.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "e: Event, DOM event Object.",
+                    "src : String, the event source DOM element's linbid."
+                ]
+            },
+            onLabelActive:{
+                $desc:"Fired when user mousedown the label.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "e: Event, DOM event Object.",
+                    "src : String, the event source DOM element's linbid."
                 ]
             },
             onBlur:{
@@ -14280,6 +14364,9 @@ _.set(linb.Locale,["en","app"], {
                     "linb(id).prepend(o);"+
                     "}"
                 ]
+            },
+            offEditor:{
+                $desc:"To off the cell's edit mode."
             },
             editCell:{
                 $desc:"To bind a specified cell to a specified editor.",

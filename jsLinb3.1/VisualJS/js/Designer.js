@@ -31,6 +31,11 @@ Class('VisualJS.Designer', 'linb.Com',{
                 ap.setHeader(['col1','col2', 'col3', 'col4'])
                 .setRowNumbered(true)
                 .setRows([['row1 col1','row1 col2','row1 col3','row1 col4'],['row2 col1','row2 col2','row2 col3','row2 col4'],{cells:['row3 col1','row3 col2','row3 col3','row3 col4'],sub:[['sub1','sub2','sub3','sub4']]}]);
+            }else if(key=='linb.UI.ToolBar'){
+                ap.setItems([
+                    {id:'grp1',sub:[{caption:'button'}, {type:'split'}, {caption:'drop button', dropButton:true}, {caption:'status button', statusButton:true}]}, 
+                    {id:'grp2',sub:[{image:'img/demo.gif'},{caption:'image button',label:"label:",image:'img/demo.gif'}]}
+                ]);
             }else if(key=='linb.UI.ToolBar'||key=='linb.UI.MenuBar'||key=='linb.UI.TreeBar'||key=='linb.UI.TreeView'){
                 ap.setItems([{id:'item a',sub:['sub a1', 'sub a2', 'sub a3', 'sub a4']}, {id:'item b',sub:['sub b1', 'sub b2', 'sub b3', 'sub b4']}]);
             }else if(key=='linb.UI.Layout'){
@@ -194,7 +199,8 @@ Class('VisualJS.Designer', 'linb.Com',{
                                     targetTop:pos.top+12,
                                     dragKey:item.dragKey || profile.properties.dragKey,
                                     dragData:{
-                                        type:item.id,
+                                        type:item.key,
+                                        iniProp:item.iniProp,
                                         image: item.image,
                                         imagePos:item.imagePos
                                     }
@@ -669,6 +675,9 @@ Class('VisualJS.Designer', 'linb.Com',{
             //for UI refresh itself
             profile.$refreshTrigger=function(profile){
                 me.call(self,profile);
+                
+                //off editor
+                self.profileGrid.offEditor();
             };
         },
 
@@ -848,6 +857,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                         dragKey = dd.dragKey,
                         dragData = dd.dragData,
                         type=dragData.type,
+                        iniProp=dragData.iniProp,
                         image = dragData.image,
                         imagePos = dragData.imagePos,
                         data=dragData.data,
@@ -887,6 +897,10 @@ Class('VisualJS.Designer', 'linb.Com',{
 
                                     page._setItems(target);
 
+                                    if(_.isHash(iniProp)){
+                                        target.setProperties(iniProp);
+                                    }
+
                                     var p=target.get(0).properties;
 
                                     target.setLeft(_.arr.indexOf(['top','bottom','width','fill','cover'],p.dock)!=-1?0:cssPos.left);
@@ -894,12 +908,17 @@ Class('VisualJS.Designer', 'linb.Com',{
                                     target.setPosition('absolute');
                                     target.setZIndex(1);
 
+
                                     target.render();
                                 }else{
                                     //give design mark
                                     target = new (linb.SC(linb.absBox.$type[type]));
                                     target.get(0).$inDesign=true;
                                     page._setItems(target);
+
+                                    if(_.isHash(iniProp)){
+                                        target.setProperties(iniProp);
+                                    }
 
                                     target.render();
                                 }
@@ -917,7 +936,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                                 //_.tryF(page.afterAddWidget, [target, profile.$linbid], page);
 
                                 profile.setSelectFromPanel.call(profile, src, ids);
-
+                    
                             }
                         };
                         fun.page=page;
@@ -2458,7 +2477,6 @@ Class('VisualJS.Designer', 'linb.Com',{
             host.panelLeft.append(
                 (new linb.UI.TreeBar)
                 .setHost(host,"treebarCom")
-                .setGroup(true)
                 .setSelMode("none")
                 .setDragKey("___iDesign")
             );
