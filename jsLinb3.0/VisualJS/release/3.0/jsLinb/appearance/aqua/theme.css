@@ -220,14 +220,14 @@ html, .uibg-base{
 
 /*linb.UI.Input*/
 /*linb.UI.ComboInput*/
-.linb-input-readoly .linb-input-border, .linb-comboinput-readoly .linb-comboinput-border{
+.linb-input-readonly .linb-input-border, .linb-comboinput-readonly .linb-comboinput-border{
     background-image: url(Input/inputbgb.gif);
 }
 .linb-input-box, .linb-comboinput-box{
     background-image: url(Input/inputbg.gif);
     border: solid 1px #727272;
 }
-.linb-input-readoly .linb-input-box, .linb-comboinput-readoly .linb-comboinput-box{
+.linb-input-readonly .linb-input-box, .linb-comboinput-readonly .linb-comboinput-box{
     background:none;
 }
 
