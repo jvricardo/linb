@@ -3658,10 +3658,8 @@ Class("linb.UI",  "linb.absObj", {
         adjustData:function(profile, hashIn, hashOut){
             if(!hashOut)hashOut={};
 
-            var dm = profile.box.$DataModel,
-                prop=profile.properties;
-
-            var i,o;
+            var dm = profile.box.$DataModel,i,o;
+            
             for(i in hashIn){
                 if(i.charAt(0)=='$')continue;
                 if(hashIn.hasOwnProperty(i) &&  !hashOut.hasOwnProperty(i))
@@ -3670,9 +3668,9 @@ Class("linb.UI",  "linb.absObj", {
 
 
             if('disabled' in dm)
-                hashOut.disabled= ((_.isSet(hashOut.disabled) && hashOut.disabled) || (_.isSet(prop.disabled) && prop.disabled)) ?'ui-itemdisabled':'';
+                hashOut.disabled= (_.isSet(hashOut.disabled) && hashOut.disabled) ?'ui-itemdisabled':'';
             if('readonly' in dm)
-                hashOut.readonly= ((_.isSet(hashOut.readonly) && hashOut.readonly) || (_.isSet(prop.readonly) && prop.readonly)) ?'ui-itemreadonly':'';
+                hashOut.readonly= (_.isSet(hashOut.readonly) && hashOut.readonly) ?'ui-itemreadonly':'';
 
             //todo:remove the extra para
             hashOut.imageDisplay = (hashOut.imageClass||hashOut.image)?'':'display:none';
