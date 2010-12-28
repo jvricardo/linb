@@ -19743,7 +19743,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                                 o.setProperties(pro.popCtrlProp);
                             }
 
-                            o.setWidth(pro.dropListWidth || profile.getRoot().width());
+                            o.setWidth(pro.dropListWidth || (pro.width-(pro.labelSize||0)));
                             if(pro.dropListHeight)
                                 o.setHeight(pro.dropListHeight);
                             else
@@ -19854,7 +19854,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
 
                 //pop
                 var node=o.reBoxing();
-                node.popToTop(profile.getRoot());
+                node.popToTop(profile.getSubNode('BOX'));
 
                 _.tryF(o.activate,[],o);
 
@@ -20084,13 +20084,9 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 'text-align':'left',
                 overflow:'hidden'
             },
-            'KEY-upload BORDER, KEY-cmdbox BORDER, KEY-listbox BORDER':{
-                $order:1,
-                background:linb.UI.$bg('inputbgb.gif', '#fff left bottom repeat-x',"Input")
-            },
             'KEY-upload BOX, KEY-cmdbox BOX, KEY-listbox BOX':{
                 $order:4,
-                background:'none'
+                background:linb.UI.$bg('inputbgb.gif', '#fff left bottom repeat-x',"Input")
             },
             'RBTN,SBTN,BTN':{
                 display:'block',
