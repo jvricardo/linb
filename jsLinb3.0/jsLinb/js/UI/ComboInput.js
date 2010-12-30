@@ -1246,7 +1246,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
             precision=(precision||precision===0)?precision:2;
             value=parseFloat(value);
             if((value+"").indexOf('e')==-1){
-                value=value.toFixed(precision);
+                value=_.toFixedNumber(value,precision) + "";
                 value= value.split(".");
                 value[0] = value[0].split("").reverse().join("").replace(/(\d{3})(?=\d)/g, "$1,").split("").reverse().join("");
                 return value.join(".");
