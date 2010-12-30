@@ -20484,7 +20484,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 ini:{}
             },
             currencyTpl:{
-                ini:"",
+                ini:"$ *",
                 action: function(){
                     this.boxing().setUIValue(this.properties.$UIvalue,true);
                 }
@@ -20739,13 +20739,17 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
         },
         _number:function(profile, value){
             var prop=profile.properties;
-            value=parseFloat((value+"").replace(/[^\d.-]/g,''))||0;
+
+            if(!_.isNumb(value))
+                value=parseFloat((value+"").replace(/[^\d.-]/g,''))||0;
+
             if(_.isSet(prop.max))
                 value=value>prop.max?prop.max:value;
             if(_.isSet(prop.min))
                 value=value<prop.min?prop.min:value;
             if(_.isSet(prop.precision) && prop.precision>=0)
-                value=value.toFixed(prop.precision);
+                 value=_.toFixedNumber(value,prop.precision);
+                 
             return value;
             //var n=Math.pow(10,Math.max(parseInt(prop.precision)||0,0));
             //value=(+value||0);
@@ -20755,10 +20759,14 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
             if(_.isSet(precision))precision=parseInt(precision);
             precision=(precision||precision===0)?precision:2;
             value=parseFloat(value);
-            value=value.toFixed(precision);
-            value= value.split(".");
-            value[0] = value[0].split("").reverse().join("").replace(/(\d{3})(?=\d)/g, "$1,").split("").reverse().join("");
-            return value.join(".");
+            if((value+"").indexOf('e')==-1){
+                value=_.toFixedNumber(value,precision) + "";
+                value= value.split(".");
+                value[0] = value[0].split("").reverse().join("").replace(/(\d{3})(?=\d)/g, "$1,").split("").reverse().join("");
+                return value.join(".");
+            }else{
+                return '0.00';
+            }
         },
         _onresize:function(profile,width,height){
             var $hborder=1, $vborder=1,
@@ -33160,7 +33168,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
         DataModel:{
             directInput:true,
             listKey:null,
-            currencyTpl:"",
+            currencyTpl:"$ *",
             selMode:{
                 ini:'none',
                 listbox:['single','none','multi','multibycheckbox'],

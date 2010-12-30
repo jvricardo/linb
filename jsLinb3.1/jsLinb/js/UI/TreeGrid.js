@@ -2235,7 +2235,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
         DataModel:{
             directInput:true,
             listKey:null,
-            currencyTpl:"",
+            currencyTpl:"$ *",
             selMode:{
                 ini:'none',
                 listbox:['single','none','multi','multibycheckbox'],
