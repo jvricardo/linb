@@ -12301,7 +12301,7 @@ Class("linb.UI",  "linb.absObj", {
                 action: fun
             },
             key2:null,
-            key3:'abc,
+            key3:'abc
         }
         */
         $buildTemplate:function(profile, template, key, obj, arr){
@@ -13049,9 +13049,9 @@ Class("linb.UI",  "linb.absObj", {
                     if(profile.properties.disabled||profile.properties.readonly)return;
 
                     // avoid no droppable keys
-                    if(profile.box.NoDroppableKeys){
+                    if(profile.behavior.NoDroppableKeys){
                         var sk = profile.getKey(linb.Event.getSrc(e).id || "").split('-')[1];
-                        if(sk && _.arr.indexOf(profile.box.NoDroppableKeys, sk)!=-1)return;
+                        if(sk && _.arr.indexOf(profile.behavior.NoDroppableKeys, sk)!=-1)return;
                     }
 
                     var ns=src,
@@ -13167,9 +13167,9 @@ Class("linb.UI",  "linb.absObj", {
                     if(!profile.properties.dragKey)return;
 
                     // avoid nodraggable keys
-                    if(profile.box.NoDraggableKeys){
+                    if(profile.behavior.NoDraggableKeys){
                         var sk = profile.getKey(linb.Event.getSrc(e).id || "").split('-')[1];
-                        if(sk && _.arr.indexOf(profile.box.NoDraggableKeys, sk)!=-1)return;
+                        if(sk && _.arr.indexOf(profile.behavior.NoDraggableKeys, sk)!=-1)return;
                     }
 
 
@@ -15061,7 +15061,8 @@ new function(){
     Class(u+".Pane", u+".Div",{
         Static:{
             Behaviors:{
-                DroppableKeys:['KEY']
+                DroppableKeys:['KEY'],
+                PanelKeys:['KEY']
             },
             RenderTrigger:function(){
                 // only div
@@ -16528,7 +16529,8 @@ Class("linb.UI.Resizer","linb.UI",{
     },
     Static:{
         Behaviors:{
-            DroppableKeys:['PANEL']
+            DroppableKeys:['PANEL'],
+            PanelKeys:['PANEL']
         },
         DataModel:{
             //delete those properties
@@ -20892,6 +20894,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
             HoverEffected:{TOGGLE:'TOGGLE'},
             ClickEffected:{TOGGLE:'TOGGLE'},
             DroppableKeys:['PANEL'],
+            PanelKeys:['PANEL'],
             DraggableKeys:['HANDLE'],
             onSize:linb.UI.$onSize,
             HANDLE:{
@@ -22529,6 +22532,13 @@ Class("linb.UI.Group", "linb.UI.Div",{
                     if(!p.timeInput)
                         //onClick event
                         profile.boxing().setUIValue(v);
+                },
+                onDblclick:function(profile,e,src){
+                    var p=profile.properties;
+                    if(p.timeInput){
+                        linb.use(src).onMouseout(true,{$force:true});
+                        profile.boxing().setUIValue(profile.$tempValue, true);
+                    }
                 }
             },
             TODAY:{
@@ -23414,6 +23424,11 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 onClick:function(profile, e, src){
                     profile.$hour=profile.getSubId(src);
                     profile.boxing()._setCtrlValue(profile.$hour+":"+profile.$minute);
+                    profile.box._hourC(profile);
+                },
+                onDblclick:function(profile, e, src){
+                    profile.$hour=profile.getSubId(src);
+                    profile.boxing().setUIValue(profile.$hour+":"+profile.$minute,true);
                     profile.box._hourC(profile);
                 }
             },
@@ -24502,6 +24517,7 @@ Class("linb.UI.Panel", "linb.UI.Div",{
         },
         Behaviors:{
             DroppableKeys:['PANEL'],
+            PanelKeys:['PANEL'],
             DraggableKeys:['TBAR'],
             NoDraggableKeys:['INFO','OPT','CLOSE','POP','REFRESH','TOGGLE','CAPTION'],
             HoverEffected:{INFO:'INFO',OPT:'OPT', CLOSE:'CLOSE',POP:'POP', REFRESH:'REFRESH',TOGGLE:'TOGGLE'},
@@ -25725,6 +25741,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
         },
         Behaviors:{
             DroppableKeys:['PANEL','KEY', 'ITEM'],
+            PanelKeys:['PANEL'],
             DraggableKeys:['ITEM'],
             HoverEffected:{ITEM:'ITEM',OPT:'OPT',CLOSE:'CLOSE',POP:'POP'},
             ClickEffected:{ITEM:'ITEM',OPT:'OPT',CLOSE:'CLOSE',POP:'POP'},
@@ -26542,7 +26559,7 @@ Class("linb.UI.ButtonViews", "linb.UI.Tabs",{
                     tabindex: '{_tabindex}',
                     MARK:{
                         $order:0,
-                        className:'uicmd-radio'
+                        className:'{_markcls}'
                     },
                     ICON:{
                         $order:1,
@@ -26593,9 +26610,20 @@ Class("linb.UI.ButtonViews", "linb.UI.Tabs",{
                 $order:2
             }
         },
+        DataModel:{
+            checkBox:{
+                ini:false,
+                action:function(v){
+                    this.getSubNode('MARK',true).replaceClass(v ? /(uicmd-radio)|(\s+uicmd-radio)/g : /(^uicmd-check)|(\s+uicmd-check)/g , v ? ' uicmd-check' : ' uicmd-radio');
+                }
+            }
+        },
         Behaviors:{
             HoverEffected:{ITEM:null,MARK:'MARK'},
             ClickEffected:{ITEM:null,MARK:'MARK'}
+        },
+        _prepareItem:function(profile, item){
+            item._markcls = profile.properties.checkBox?'uicmd-check':'uicmd-radio';
         }
     }
 });
@@ -27113,6 +27141,7 @@ Class("linb.UI.TreeBar",["linb.UI","linb.absList","linb.absValue"],{
             HoverEffected:{TOGGLE:'TOGGLE', BAR:'BAR'},
             ClickEffected:{TOGGLE:'TOGGLE', BAR:'BAR'},
             DraggableKeys:["BAR"],
+            NoDraggableKeys:['TOGGLE'],
             DroppableKeys:["BAR","TOGGLE","BOX"],
             onSize:linb.UI.$onSize,
             TOGGLE:{
@@ -29880,6 +29909,7 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
         },
         Behaviors:{
             DroppableKeys:['PANEL'],
+            PanelKeys:['PANEL'],
             HoverEffected:{MOVE:'MOVE',CMD:'CMD'},
             onSize:linb.UI.$onSize,
             MOVE:{
@@ -35548,6 +35578,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
         },
         Behaviors:{
             DroppableKeys:['PANEL'],
+            PanelKeys:['PANEL'],
             DraggableKeys:['LAND'],
             HoverEffected:{INFO:'INFO', OPT:'OPT', PIN:'PIN',MIN:'MIN',MAX:'MAX',RESTORE:'RESTORE',CLOSE:'CLOSE',REFRESH:'REFRESH',LAND:'LAND'},
             ClickEffected:{INFO:'INFO', OPT:'OPT', PIN:'PIN',MIN:'MIN',MAX:'MAX',RESTORE:'RESTORE',CLOSE:'CLOSE',REFRESH:'REFRESH',LAND:'LAND'},

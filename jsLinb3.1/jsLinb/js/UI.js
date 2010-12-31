@@ -2747,7 +2747,7 @@ Class("linb.UI",  "linb.absObj", {
                 action: fun
             },
             key2:null,
-            key3:'abc,
+            key3:'abc
         }
         */
         $buildTemplate:function(profile, template, key, obj, arr){
@@ -3495,9 +3495,9 @@ Class("linb.UI",  "linb.absObj", {
                     if(profile.properties.disabled||profile.properties.readonly)return;
 
                     // avoid no droppable keys
-                    if(profile.box.NoDroppableKeys){
+                    if(profile.behavior.NoDroppableKeys){
                         var sk = profile.getKey(linb.Event.getSrc(e).id || "").split('-')[1];
-                        if(sk && _.arr.indexOf(profile.box.NoDroppableKeys, sk)!=-1)return;
+                        if(sk && _.arr.indexOf(profile.behavior.NoDroppableKeys, sk)!=-1)return;
                     }
 
                     var ns=src,
@@ -3613,9 +3613,9 @@ Class("linb.UI",  "linb.absObj", {
                     if(!profile.properties.dragKey)return;
 
                     // avoid nodraggable keys
-                    if(profile.box.NoDraggableKeys){
+                    if(profile.behavior.NoDraggableKeys){
                         var sk = profile.getKey(linb.Event.getSrc(e).id || "").split('-')[1];
-                        if(sk && _.arr.indexOf(profile.box.NoDraggableKeys, sk)!=-1)return;
+                        if(sk && _.arr.indexOf(profile.behavior.NoDraggableKeys, sk)!=-1)return;
                     }
 
 
@@ -5507,7 +5507,8 @@ new function(){
     Class(u+".Pane", u+".Div",{
         Static:{
             Behaviors:{
-                DroppableKeys:['KEY']
+                DroppableKeys:['KEY'],
+                PanelKeys:['KEY']
             },
             RenderTrigger:function(){
                 // only div

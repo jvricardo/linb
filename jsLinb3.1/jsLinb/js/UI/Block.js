@@ -29,7 +29,8 @@ Class("linb.UI.Block", "linb.UI.Widget",{
     },
     Static:{
         Behaviors:{
-            DroppableKeys:['PANEL']
+            DroppableKeys:['PANEL'],
+            PanelKeys:['PANEL']
         },
         DataModel:{
             //delete those properties

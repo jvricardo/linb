@@ -440,6 +440,13 @@ Class('linb.UI.DatePicker', ['linb.UI',"linb.absValue"], {
                     if(!p.timeInput)
                         //onClick event
                         profile.boxing().setUIValue(v);
+                },
+                onDblclick:function(profile,e,src){
+                    var p=profile.properties;
+                    if(p.timeInput){
+                        linb.use(src).onMouseout(true,{$force:true});
+                        profile.boxing().setUIValue(profile.$tempValue, true);
+                    }
                 }
             },
             TODAY:{

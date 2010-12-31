@@ -186,6 +186,7 @@ Class("linb.UI.Panel", "linb.UI.Div",{
         },
         Behaviors:{
             DroppableKeys:['PANEL'],
+            PanelKeys:['PANEL'],
             DraggableKeys:['TBAR'],
             NoDraggableKeys:['INFO','OPT','CLOSE','POP','REFRESH','TOGGLE','CAPTION'],
             HoverEffected:{INFO:'INFO',OPT:'OPT', CLOSE:'CLOSE',POP:'POP', REFRESH:'REFRESH',TOGGLE:'TOGGLE'},

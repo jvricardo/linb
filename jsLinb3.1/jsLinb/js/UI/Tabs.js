@@ -552,6 +552,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
         },
         Behaviors:{
             DroppableKeys:['PANEL','KEY', 'ITEM'],
+            PanelKeys:['PANEL'],
             DraggableKeys:['ITEM'],
             HoverEffected:{ITEM:'ITEM',OPT:'OPT',CLOSE:'CLOSE',POP:'POP'},
             ClickEffected:{ITEM:'ITEM',OPT:'OPT',CLOSE:'CLOSE',POP:'POP'},

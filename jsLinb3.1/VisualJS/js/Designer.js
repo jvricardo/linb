@@ -21,42 +21,6 @@ Class('VisualJS.Designer', 'linb.Com',{
         dropPosition:'absolute',
         dropOffset:10,
 
-        _setItems:function(target){
-            var profile=target.get(0),
-                pro=profile.properties,
-                items=profile.box.$DataStruct.items,
-                key=profile.key,
-                ap=profile.boxing();
-            if(key=='linb.UI.TreeGrid'){
-                ap.setHeader(['col1','col2', 'col3', 'col4'])
-                .setRowNumbered(true)
-                .setRows([['row1 col1','row1 col2','row1 col3','row1 col4'],['row2 col1','row2 col2','row2 col3','row2 col4'],{cells:['row3 col1','row3 col2','row3 col3','row3 col4'],sub:[['sub1','sub2','sub3','sub4']]}]);
-            }else if(key=='linb.UI.ToolBar'){
-                ap.setItems([
-                    {id:'grp1',sub:[{caption:'button'}, {type:'split'}, {caption:'drop button', dropButton:true}, {caption:'status button', statusButton:true}]}, 
-                    {id:'grp2',sub:[{image:'img/demo.gif'},{caption:'image button',label:"label:",image:'img/demo.gif'}]}
-                ]);
-            }else if(key=='linb.UI.ToolBar'||key=='linb.UI.MenuBar'||key=='linb.UI.TreeBar'||key=='linb.UI.TreeView'){
-                ap.setItems([{id:'item a',sub:['sub a1', 'sub a2', 'sub a3', 'sub a4']}, {id:'item b',sub:['sub b1', 'sub b2', 'sub b3', 'sub b4']}]);
-            }else if(key=='linb.UI.Layout'){
-                ap.setItems([{id:'before',pos:'before'},{id:'main'},{id:'after',pos:'after'}]);
-            }else if(key=='linb.UI.ComboInput'){
-                if(pro.type=='combobox'||pro.type=='listbox'||pro.type=='helpinput'){
-                    ap.setItems([{id:'a',caption:'item a',image:'img/demo.gif'}, {id:'b',caption:'item b',image:'img/demo.gif'}, {id:'c',caption:'item c',image:'img/demo.gif'}, {id:'d',caption:'item d',image:'img/demo.gif'}]);
-                    if(pro.type=='combobox')
-                        ap.setValue('item a');
-                    else
-                        ap.setValue('a');
-                }
-            }else{
-                if(key=='linb.UI.TimeLine')return;
-                if(!items)return;
-                ap.setItems([{id:'a',caption:'item a',image:'img/demo.gif'}, {id:'b',caption:'item b',image:'img/demo.gif'}, {id:'c',caption:'item c',image:'img/demo.gif'}, {id:'d',caption:'item d',image:'img/demo.gif'}]);
-
-                if(ap.setValue)
-                    ap.setValue('a');
-            }
-        },
         events:{
             onSelected:function(page, profile, ids){
                 var v=null, id = ids && ids[ids.length-1];
@@ -184,6 +148,15 @@ Class('VisualJS.Designer', 'linb.Com',{
                     BAR:{
                         beforeMousedown : function(profile, e, src){
                             if(linb.Event.getBtn(e)!="left")return;
+                            if(profile.properties.disabled)return;
+                            // not resizable or drag
+                            if(!profile.properties.dragKey)return;
+        
+                            // avoid nodraggable keys
+                            if(profile.behavior.NoDraggableKeys){
+                                var sk = profile.getKey(linb.Event.getSrc(e).id || "").split('-')[1];
+                                if(sk && _.arr.indexOf(profile.behavior.NoDraggableKeys, sk)!=-1)return;
+                            }
                             var id=linb.use(src).id(),
                                 itemId = profile.getSubId(id),
                                 properties = profile.properties,
@@ -664,7 +637,7 @@ Class('VisualJS.Designer', 'linb.Com',{
             
             profile.$inDesign=true;
 
-            var t=profile.behavior.DroppableKeys;
+            var t=profile.behavior.PanelKeys;
             if(t && t.length)
                 self._enablePanelDesign(profile);
             if(profile.children && profile.children.length){
@@ -802,7 +775,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                         };
                     }
 
-                    var t=profile.behavior.DroppableKeys;
+                    var t=profile.behavior.PanelKeys;
                     if(t && t.length){
                         profile.getSubNode(t[0], true).addClass('panel')
                         .$addEventHandler('drop')
@@ -822,7 +795,7 @@ Class('VisualJS.Designer', 'linb.Com',{
 
         },
         _enablePanelDesign:function(profile){
-            var t,key = profile.box.KEY,pool=profile.behavior.DroppableKeys, page=this,h, k,
+            var t,key = profile.box.KEY,pool=profile.behavior.PanelKeys, page=this,h, k,
             self=this,
             cb={
                 //overwrite
@@ -875,10 +848,6 @@ Class('VisualJS.Designer', 'linb.Com',{
 
                                 page.iconlist.insertItems([{id:o.$linbid, image:linb.ini.img_bg, tips:o.key, imgStyle:'background:url('+image+') '+ imagePos}],null,false);
                                 page.iconlist.setUIValue(o.$linbid);
-
-                                if(t['linb.UI'])
-                                    page._setItems(o.boxing());
-                                //
                             }else{
                                 //before drop check
                                 //if(false===_.tryF(c.beforeAddWidget, [data], profile))return;
@@ -894,8 +863,6 @@ Class('VisualJS.Designer', 'linb.Com',{
                                     //give design mark
                                     target = new (linb.SC(linb.absBox.$type[type]));
                                     target.get(0).$inDesign=true;
-
-                                    page._setItems(target);
 
                                     if(_.isHash(iniProp)){
                                         target.setProperties(iniProp);
@@ -914,7 +881,6 @@ Class('VisualJS.Designer', 'linb.Com',{
                                     //give design mark
                                     target = new (linb.SC(linb.absBox.$type[type]));
                                     target.get(0).$inDesign=true;
-                                    page._setItems(target);
 
                                     if(_.isHash(iniProp)){
                                         target.setProperties(iniProp);
@@ -1929,7 +1895,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                                                 if(null===page.properties.object)
                                                     b.setItems([]);
 
-                                                if(t=tagVar.profile.behavior.DroppableKeys){
+                                                if(t=tagVar.profile.behavior.PanelKeys){
                                                     deeppage._giveHandler(tagVar.profile);
                                                 }
                                             }

@@ -458,6 +458,11 @@ Class('linb.UI.TimePicker', ['linb.UI',"linb.absValue"], {
                     profile.$hour=profile.getSubId(src);
                     profile.boxing()._setCtrlValue(profile.$hour+":"+profile.$minute);
                     profile.box._hourC(profile);
+                },
+                onDblclick:function(profile, e, src){
+                    profile.$hour=profile.getSubId(src);
+                    profile.boxing().setUIValue(profile.$hour+":"+profile.$minute,true);
+                    profile.box._hourC(profile);
                 }
             },
             MI:{

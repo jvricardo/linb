@@ -25,6 +25,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
             HoverEffected:{TOGGLE:'TOGGLE'},
             ClickEffected:{TOGGLE:'TOGGLE'},
             DroppableKeys:['PANEL'],
+            PanelKeys:['PANEL'],
             DraggableKeys:['HANDLE'],
             onSize:linb.UI.$onSize,
             HANDLE:{

@@ -283,6 +283,7 @@ Class("linb.UI.Dialog","linb.UI.Widget",{
         },
         Behaviors:{
             DroppableKeys:['PANEL'],
+            PanelKeys:['PANEL'],
             DraggableKeys:['LAND'],
             HoverEffected:{INFO:'INFO', OPT:'OPT', PIN:'PIN',MIN:'MIN',MAX:'MAX',RESTORE:'RESTORE',CLOSE:'CLOSE',REFRESH:'REFRESH',LAND:'LAND'},
             ClickEffected:{INFO:'INFO', OPT:'OPT', PIN:'PIN',MIN:'MIN',MAX:'MAX',RESTORE:'RESTORE',CLOSE:'CLOSE',REFRESH:'REFRESH',LAND:'LAND'},

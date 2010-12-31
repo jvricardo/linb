@@ -345,6 +345,7 @@ Class("linb.UI.TreeBar",["linb.UI","linb.absList","linb.absValue"],{
             HoverEffected:{TOGGLE:'TOGGLE', BAR:'BAR'},
             ClickEffected:{TOGGLE:'TOGGLE', BAR:'BAR'},
             DraggableKeys:["BAR"],
+            NoDraggableKeys:['TOGGLE'],
             DroppableKeys:["BAR","TOGGLE","BOX"],
             onSize:linb.UI.$onSize,
             TOGGLE:{

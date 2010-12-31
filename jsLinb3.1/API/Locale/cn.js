@@ -9978,6 +9978,21 @@ _.set(linb.Locale,["cn","app"], {
         $desc:"linb.UI.RadioBox 类",
         constructor:{
             $desc:"生成linb.UI.RadioBox对象."
+        },
+        prototype:{
+            KEY:{$desc:"本类名"},
+            getCheckBox:{
+                $desc:"得到是否是显示成checkbox样式.",
+                $rtn:"Boolean"
+            },
+            setCheckBox:{
+                $desc:"设置是否显示成checkbox样式，并刷新界面.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : Boolean.",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为 [false]."
+                ]
+            }
         }
     });
 
@@ -15892,20 +15907,6 @@ _.set(linb.Locale,["cn","app"], {
                     "_.asyRun(function(){o.addTasks([{from:(new Date).getTime(), to:(new Date).getTime()+1000*60*60*4 }])},1500);"+
                     "}"
                 ]
-            },
-            getFixWidth:{
-                $desc:"判断任务项是否具有固定宽度",
-                $rtn:"Boolean",
-                $memo:"如果设置为[false], 任务项的宽度会随着日程表的变化而变化."
-            },
-            setFixWidth:{
-                $desc:"设置任务项是否具有固定宽度, 并刷新界面.",
-                $rtn:"[self]",
-                $paras:[
-                    "value [必需参数] : Number.",
-                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为[false]."
-                ],
-                $memo:"If you set the FixWidth property to [false], the widget UI will be refreshed once when the widget width is changed."
             },
             getDateStart:{
                 $desc:"获取开始时间",

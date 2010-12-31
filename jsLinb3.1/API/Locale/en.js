@@ -10051,6 +10051,21 @@ _.set(linb.Locale,["en","app"], {
         $desc:"linb.UI.RadioBox Class",
         constructor:{
             $desc:"Creates a linb.UI.RadioBox Object."
+        },
+        prototype:{
+            KEY:{$desc:"Class Name"},
+            getCheckBox:{
+                $desc:"Gets whether the control shows checkbox style or not(radio style).",
+                $rtn:"Boolean"
+            },
+            setCheckBox:{
+                $desc:"Specifys whether the control shows checkbox style or not(radio style), and reflects the value to UI.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : Boolean.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            }
         }
     });
 
@@ -15983,20 +15998,6 @@ _.set(linb.Locale,["en","app"], {
                     "_.asyRun(function(){o.addTasks([{from:(new Date).getTime(), to:(new Date).getTime()+1000*60*60*4 }])},1500);"+
                     "}"
                 ]
-            },
-            getFixWidth:{
-                $desc:"Gets the FixWidth property value on the first UIProfile",
-                $rtn:"Boolean",
-                $memo:"If you set the FixWidth property to [false], the widget UI will be refreshed once when the widget width is changed."
-            },
-            setFixWidth:{
-                $desc:"Sets the FixWidth property value on the first UIProfile, and reflects it to DOM UI.",
-                $rtn:"[self]",
-                $paras:[
-                    "value [Required] : Number.",
-                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
-                ],
-                $memo:"If you set the FixWidth property to [false], the widget UI will be refreshed once when the widget width is changed."
             },
             getDateStart:{
                 $desc:"Gets the date start property value on the first UIProfile",

@@ -11,7 +11,7 @@ Class("linb.UI.RadioBox", "linb.UI.List",{
                     tabindex: '{_tabindex}',
                     MARK:{
                         $order:0,
-                        className:'uicmd-radio'
+                        className:'{_markcls}'
                     },
                     ICON:{
                         $order:1,
@@ -62,9 +62,20 @@ Class("linb.UI.RadioBox", "linb.UI.List",{
                 $order:2
             }
         },
+        DataModel:{
+            checkBox:{
+                ini:false,
+                action:function(v){
+                    this.getSubNode('MARK',true).replaceClass(v ? /(uicmd-radio)|(\s+uicmd-radio)/g : /(^uicmd-check)|(\s+uicmd-check)/g , v ? ' uicmd-check' : ' uicmd-radio');
+                }
+            }
+        },
         Behaviors:{
             HoverEffected:{ITEM:null,MARK:'MARK'},
             ClickEffected:{ITEM:null,MARK:'MARK'}
+        },
+        _prepareItem:function(profile, item){
+            item._markcls = profile.properties.checkBox?'uicmd-check':'uicmd-radio';
         }
     }
 });

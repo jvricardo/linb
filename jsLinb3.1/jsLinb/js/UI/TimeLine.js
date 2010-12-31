@@ -804,6 +804,7 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
             //time span key
             timeSpanKey : {
                 ini:'1 d',
+                combobox:['10 ms', '100 ms','1 s','10 s', '1 n','5 n', '10 n', '30 n', '1 h', '2 h', '6 h', '1 d', '1 w', '15 d', '1 m',  '1 q',  '1 y',  '1 de',  '1 c'],
                 action:function(){
                     this.box._refresh(this,true);
                 }
@@ -915,13 +916,6 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                 ini:false,
                 action:function(v){
                     this.getSubNode('OPT').css('display',v?'':'none');
-                }
-            },
-
-            fixWidth:{
-                ini:true,
-                action:function(){
-                    this.boxing().refresh();
                 }
             },
             dateStart : {
@@ -1193,10 +1187,6 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
             var self=this, p=self.properties,cls=self.box;
             self.$active = self.getSubNode('ACTIVE').get(0);
             cls._ajustHeight(self);
-
-            if(p.fixWidth){
-                self.boxing().iniContent();
-            }
         },
         _onDropMarkShow:function(){linb.DragDrop.setDragIcon('add');return false},
         _onDropMarkClear:function(){linb.DragDrop.setDragIcon('none');return false},
@@ -1941,8 +1931,6 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                 profile.getSubNodes(['BG','ITEMS','SCROLL']).height(t);
                 this._ajustHeight(profile);
             }
-            if(pro.fixWidth)return;
-
             if(width && profile._$w != width){
                 // special: modified widget width here
                 f('BORDER').width(profile._$w =  pro.width = width);
