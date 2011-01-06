@@ -19517,12 +19517,16 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                     drop.boxing().destroy();
                     delete profile.$drop;
                 }else{
-                    if(linb.browser.opr)
-                        drop.getRoot().css('display','none');
-                    _.asyRun(function(){
-                        if(drop.boxing()._clearMouseOver)drop.boxing()._clearMouseOver();
-                        profile.getSubNode('POOL').append(drop.getRoot())
-                    });
+                    if(!profile.__tryToHide){
+                        profile.__tryToHide= _.asyRun(function(){
+                            delete profile.__tryToHide;
+
+                            if(linb.browser.opr)
+                                drop.getRoot().css('display','none');
+                            if(drop.boxing()._clearMouseOver)drop.boxing()._clearMouseOver();
+                            profile.getSubNode('POOL').append(drop.getRoot());
+                        });
+                    }
                 }
             }
             delete profile.$poplink;
@@ -19592,10 +19596,14 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 size.width += 2;
                 pos.top += main.offsetHeight();
 
-
                 //special cmd type: getter, 'cmdbox' and 'popbox'
                 if((profile.beforeComboPop && false===box.beforeComboPop(profile, pos, e, src))||type=='getter'||type=='cmdbox'||type=='popbox')
                     return;
+
+                if(profile.__tryToHide){
+                    clearTimeout(profile.__tryToHide);
+                    delete profile.__tryToHide;
+                }
 
                 //get cache key
                 var cachekey;
@@ -19750,6 +19758,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 }
 
                 profile.$poplink = o.get(0);
+
 
                 //pop
                 var node=o.reBoxing();
