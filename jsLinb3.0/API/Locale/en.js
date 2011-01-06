@@ -9967,6 +9967,21 @@ _.set(linb.Locale,["en","app"], {
         $desc:"linb.UI.RadioBox Class",
         constructor:{
             $desc:"Creates a linb.UI.RadioBox Object."
+        },
+        prototype:{
+            KEY:{$desc:"Class Name"},
+            getCheckBox:{
+                $desc:"Gets whether the control shows checkbox style or not(radio style).",
+                $rtn:"Boolean"
+            },
+            setCheckBox:{
+                $desc:"Specifys whether the control shows checkbox style or not(radio style), and reflects the value to UI.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : Boolean.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            }
         }
     });
 

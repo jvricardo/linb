@@ -9894,6 +9894,21 @@ _.set(linb.Locale,["cn","app"], {
         $desc:"linb.UI.RadioBox 类",
         constructor:{
             $desc:"生成linb.UI.RadioBox对象."
+        },
+        prototype:{
+            KEY:{$desc:"本类名"},
+            getCheckBox:{
+                $desc:"得到是否是显示成checkbox样式.",
+                $rtn:"Boolean"
+            },
+            setCheckBox:{
+                $desc:"设置是否显示成checkbox样式，并刷新界面.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : Boolean.",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为 [false]."
+                ]
+            }
         }
     });
 
