@@ -2,7 +2,7 @@ Class("linb.UI.StatusButtons", ["linb.UI.List"],{
     Initialize:function(){
         //modify default template fro shell
         var t = this.getTemplate();
-        t.className='';
+        t.className='{_className}';
         t.$submap={
             items:{
                 ITEM:{
