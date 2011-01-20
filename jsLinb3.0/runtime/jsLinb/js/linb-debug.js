@@ -34334,7 +34334,7 @@ editorDropListHeight
                                 nV=(nV||nV===0)?nV:null;
                                 break;
                             case 'currency':
-                                nV=parseFloat(nV.replace(/[^\d.-]/g,''));
+                                nV=parseFloat((''+nV).replace(/[^\d.-]/g,''));
                                 nV=(nV||nV===0)?nV:null;
                                 break;
                             case 'cmdbox':
