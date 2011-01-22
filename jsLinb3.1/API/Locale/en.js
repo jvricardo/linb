@@ -5181,7 +5181,9 @@ _.set(linb.Locale,["en","app"], {
                 $desc:"Gets a key/value pairs Object from the current databinder, that includes the values of all those bound linb.absValue profiles.",
                 $paras:[
                     "dirtyOnly [Optional] : Boolean, only get dirtied data, Default is [false]",
-                    "reset [Optional] : Boolean, Determines whether to reset all controls' value and clear the diry mark immediately or not, Default is [true]"
+                    "reset [Optional] : Boolean, Determines whether to reset all controls' value and clear the diry mark immediately or not, Default is [true]",
+                    "withCaption [Optional] : Boolean, Determines whether include caption(if has this property), Default is [false]",
+                    "returnArr [Optional] : Boolean, Determines whether return array object(for those multi selection absList only),Default is [false]"
                 ],
                 $rtn:"Object, key/value pairs Object.",
                 $snippet:[
@@ -5458,6 +5460,14 @@ _.set(linb.Locale,["en","app"], {
                     "}"
                 ]
             },
+            getValueSeparator:{
+                $desc:"Gets the separator for string value(only for selMode is 'multi' or 'multibycheckbox'); Default is ';'.",
+                $rtn:"String"
+            },
+            setValueSeparator:{
+                $desc:"Sets the separator for string value(only for selMode is 'multi' or 'multibycheckbox').",
+                $rtn:"[self]"
+            },
             getListKey:{
                 $desc:"Gets the list key property from the current UI Object.",
                 $rtn:"String",
@@ -5603,6 +5613,9 @@ _.set(linb.Locale,["en","app"], {
             getUIValue:{
                 $desc:"Gets the 'UI value' on the first UIProfile",
                 $rtn:"Object",
+                $paras:[
+                    "returnArr [Optional] : Boolean. to determine whether return array or string,(selMode is 'multi' or 'multibycheckbox')"
+                ],
                 $snippet:[
                     "var id='linb.temp.absv7'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:100px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o;linb(id).prepend(o=new linb.UI.Input({value:'ini'}));"+
@@ -5639,6 +5652,9 @@ _.set(linb.Locale,["en","app"], {
             getValue:{
                 $desc:"Gets the 'value' on the first UIProfile",
                 $rtn:"Object",
+                $paras:[
+                    "returnArr [Optional] : Boolean. to determine whether return array or string,(selMode is 'multi' or 'multibycheckbox')"
+                ],
                 $snippet:[
                     "var id='linb.temp.absv9'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:100px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o;linb(id).prepend(o=new linb.UI.Input({value:'ini'}));"+
@@ -14416,6 +14432,14 @@ _.set(linb.Locale,["en","app"], {
                     "_.asyRun(function(){o.editCellbyRowCol('row2','col2')},1000);"+
                     "}"
                 ]
+            },
+            getValueSeparator:{
+                $desc:"Gets the separator for string value(only for selMode is 'multi' or 'multibycheckbox'); Default is ';'.",
+                $rtn:"String"
+            },
+            setValueSeparator:{
+                $desc:"Sets the separator for string value(only for selMode is 'multi' or 'multibycheckbox').",
+                $rtn:"[self]"
             },
             getCurrencyTpl:{
                 $desc:"Gets the currency template",

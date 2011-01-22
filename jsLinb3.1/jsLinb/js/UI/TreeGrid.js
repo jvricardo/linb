@@ -50,8 +50,8 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                         }
                     }*/
                 }else if(p.selMode=='multi'||p.selMode=='multibycheckbox'){
-                    uiv = uiv?uiv.split(';'):[];
-                    value = value?value.split(';'):[];
+                    uiv = uiv?uiv.split(p.valueSeparator):[];
+                    value = value?value.split(p.valueSeparator):[];
                     //check all
                     _.arr.each(uiv,function(o){
                         getN(k, getI(o)).tagClass('-checked',false)
@@ -308,11 +308,11 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     ns.removeRows([id]);
                     
                     if(profile.properties.activeMode=='row'){
-                        var uiv=profile.properties.$UIvalue||"", arr=uiv.split(';');
+                        var uiv=profile.properties.$UIvalue||"", arr=uiv.split(profile.properties.valueSeparator);
                         if(arr.length && _.arr.indexOf(arr, rowId)!=-1){
                             if(nid)
                                 _.arr.removeValue(arr, rowId);
-                            ns.setUIValue(arr.join(';'), true);
+                            ns.setUIValue(arr.join(profile.properties.valueSeparator), true);
                         }
                     }
                     
@@ -494,11 +494,11 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             });
             // clear UI value
             if(v=p.$UIvalue){
-                if((v=v.split(';')).length>1){
+                if((v=v.split(p.valueSeparator)).length>1){
                     _.filter(v,function(o){
                         return _.arr.indexOf(ids,o)==-1;
                     });
-                    p.$UIvalue=v.join(';');
+                    p.$UIvalue=v.join(p.valueSeparator);
                 }else{
                     if(_.arr.indexOf(ids,p.$UIvalue)!=-1)
                         p.$UIvalue=null;
@@ -1413,7 +1413,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     }else{
                         profile._$checkAll=true;
                         linb.use(src).tagClass('-checked')
-                        profile.boxing().setUIValue(rows.join(';'));
+                        profile.boxing().setUIValue(rows.join(profile.properties.valueSeparator));
                     }
                     return false;
                 }
@@ -2236,6 +2236,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             directInput:true,
             listKey:null,
             currencyTpl:"$ *",
+            valueSeparator:";",
             selMode:{
                 ini:'none',
                 listbox:['single','none','multi','multibycheckbox'],
@@ -3162,9 +3163,9 @@ editorDropListHeight
         },
         _ensureValue:function(profile,value){
             if(profile.properties.selMode=='multi'||profile.properties.selMode=='multibycheckbox'){
-                var arr = (value||"").split(';');
+                var arr = (value||"").split(profile.properties.valueSeparator);
                 arr.sort();
-                return arr.join(';');
+                return arr.join(profile.properties.valueSeparator);
             }else
                 return value;
         },
@@ -3194,7 +3195,7 @@ editorDropListHeight
                 }
             case 'multi':
                 var value = box.getUIValue(),
-                    arr = value?value.split(';'):[],
+                    arr = value?value.split(properties.valueSeparator):[],
                     checktype=1;
                 if(arr.length&&(ks.ctrlKey||ks.shiftKey||properties.noCtrlKey)){
                     //todo: give cell multi selection function
@@ -3220,7 +3221,7 @@ editorDropListHeight
                     }
 
                     arr.sort();
-                    value = arr.join(';');
+                    value = arr.join(properties.valueSeparator);
 
                     //update string value only for setCtrlValue
                     if(box.getUIValue() != value){

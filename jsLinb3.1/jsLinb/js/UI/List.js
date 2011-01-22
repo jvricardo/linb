@@ -37,8 +37,8 @@ Class("linb.UI.List", ["linb.UI", "linb.absList","linb.absValue" ],{
                         }
                     }
                 }else if(p.selMode=='multi'||p.selMode=='multibycheckbox'){
-                    uiv = uiv?uiv.split(';'):[];
-                    value = value?value.split(';'):[];
+                    uiv = uiv?uiv.split(p.valueSeparator):[];
+                    value = value?value.split(p.valueSeparator):[];
                     //check all
                     _.arr.each(uiv,function(o){
                         getN(k, getI(o)).tagClass('-checked',false).tagClass('-mouseover',false);
@@ -216,7 +216,7 @@ Class("linb.UI.List", ["linb.UI", "linb.absList","linb.absValue" ],{
                     case 'multi':
                         if(properties.readonly|| item.readonly)return false;
                         var value = box.getUIValue(),
-                            arr = value?value.split(';'):[],
+                            arr = value?value.split(properties.valueSeparator):[],
                             checktype=1;
 
                         if(arr.length&&(ks.ctrlKey||ks.shiftKey||properties.noCtrlKey||properties.$checkbox)){
@@ -239,7 +239,7 @@ Class("linb.UI.List", ["linb.UI", "linb.absList","linb.absValue" ],{
                             }
 
                             arr.sort();
-                            value = arr.join(';');
+                            value = arr.join(properties.valueSeparator);
 
                             //update string value only for setCtrlValue
                             if(box.getUIValue() == value)
@@ -351,14 +351,6 @@ Class("linb.UI.List", ["linb.UI", "linb.absList","linb.absValue" ],{
         EventHandlers:{
             onDblclick:function(profile, item, e, src){},
             onItemSelected:function(profile, item, e, src, type){}
-        },
-        _ensureValue:function(profile,value){
-            if(profile.properties.selMode=='multi'||profile.properties.selMode=='multibycheckbox'){
-                var arr = (value||"").split(';');
-                arr.sort();
-                return arr.join(';');
-            }else
-                return value;
         },
         _onStartDrag:function(profile, e, src, pos){
             var pos=linb.Event.getPos(e);

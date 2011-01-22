@@ -472,6 +472,7 @@ Class("linb.DataBinder","linb.absObj",{
                         }
                         // set value
                         b.resetValue(v);
+                        profile.__returnArray=_.isArr(v);
                         // set caption
                         if(!_.isSet(p.caption) && b.setCaption)
                             _.tryF(b.setCaption,[c,true],b);
@@ -496,7 +497,7 @@ Class("linb.DataBinder","linb.absObj",{
         checkValid:function(){
             return linb.absValue.pack(this.get(0)._n,false).checkValid();
         },
-        getValue:function(dirtyOnly, reset, withCaption){
+        getValue:function(dirtyOnly, reset, withCaption, returnArr){
             var ns=this,o=ns.get(0),bDirty=false;
             // check dirty
             _.arr.each(o._n,function(profile){
@@ -514,8 +515,9 @@ Class("linb.DataBinder","linb.absObj",{
             _.arr.each(o._n,function(profile){
                 var p=profile.properties,
                 b = profile.boxing(),
-                v = b.getValue(),
-                uv = b.getUIValue();
+                // maybe return array
+                v = b.getValue(_.isBool(returnArr)?returnArr:profile.__returnArray),
+                uv = b.getUIValue(_.isBool(returnArr)?returnArr:profile.__returnArray);
                 // v and uv can be object(Date,Number)
                 if(!dirtyOnly || (dirtyOnly && (uv+" ")!==(v+" "))){
                     if(withCaption && b.getCaption){
@@ -1488,7 +1490,7 @@ Class("linb.UI",  "linb.absObj", {
 
                 if(typeof o.boxing().getUIValue=='function'){
                     uiv=o.boxing().getUIValue();
-                    if(o.boxing().getValue()===uiv)
+                    if((o.boxing().getValue() + " ")==(uiv+" "))
                         uiv=null;
                 }
 
@@ -4540,11 +4542,11 @@ Class("linb.absList", "linb.absObj",{
                 remove(profile, p.items, arr, data);
                 // clear value
                 if(v=p.$UIvalue){
-                    if((v=v.split(';')).length>1){
+                    if((v=v.split(p.valueSeparator)).length>1){
                         _.filter(v,function(o){
                             return _.arr.indexOf(arr,o)==-1;
                         });
-                        p.$UIvalue=v.join(';');
+                        p.$UIvalue=v.join(p.valueSeparator);
                     }else{
                         if(_.arr.indexOf(arr,p.$UIvalue)!=-1)
                             p.$UIvalue=null;
@@ -4635,10 +4637,10 @@ Class("linb.absList", "linb.absObj",{
                             t.replace(sub);
                     }
                     if(typeof self.setUIValue=='function'){
-                        var uiv=profile.properties.$UIvalue||"", arr=uiv.split(';');
+                        var uiv=profile.properties.$UIvalue||"", arr=uiv.split(profile.properties.valueSeparator);
                         if(arr.length && _.arr.indexOf(arr, subId)!=-1){
                             if(nid)_.arr.removeValue(arr,subId);
-                            self.setUIValue(arr.join(';'), true);
+                            self.setUIValue(arr.join(profile.properties.valueSeparator), true);
                         }
                     }
                 }
@@ -4697,7 +4699,8 @@ Class("linb.absList", "linb.absObj",{
                     else
                         o.properties.items = _.copy(value);
                 }
-            }
+            },
+            valueSeparator:';'
         },
         RenderTrigger:function(){
             this.destroyTrigger=function(){
@@ -4780,14 +4783,27 @@ Class("linb.absValue", "linb.absObj",{
             });
         },
 
-        getValue:function(){return this.get(0).properties.value},
-        getUIValue:function(){
+        getValue:function(returnArr){
+            var prop=this.get(0).properties,
+                v=prop.value;
+            if((prop.selMode=='multi'||prop.selMode=='multibycheckbox') && returnArr){
+                v=v.split(prop.valueSeparator);
+                v.sort();
+            }
+            return v;
+        },
+        getUIValue:function(returnArr){
             var prf=this.get(0),
                 prop=prf.properties,
-                cv=this._getCtrlValue();
+                cv=this._getCtrlValue(),v;
             if(!prf.box._checkValid || false!==prf.box._checkValid(prf,cv))
                 prf.$UIvalue=cv;
-            return prf.$UIvalue;
+            v=prf.$UIvalue;
+            if((prop.selMode=='multi'||prop.selMode=='multibycheckbox') && returnArr){
+                v=v.split(prop.valueSeparator);
+                v.sort();
+            }
+            return v;
         },
         resetValue:function(value){
             var self=this;
@@ -4964,6 +4980,16 @@ Class("linb.absValue", "linb.absObj",{
             },
             dirtyMark:true,
             showDirtyMark:true
+        },
+        _ensureValue:function(profile,value){
+            if(profile.properties.selMode && (profile.properties.selMode=='multi'||profile.properties.selMode=='multibycheckbox')){
+                if(!_.isArr(value)){
+                    value = (value||"").split(profile.properties.valueSeparator);
+                }
+                value.sort();
+                return value.join(profile.properties.valueSeparator);
+            }else
+                return _.isArr(value)?value[0]:value;
         },
         EventHandlers:{
            //real value set

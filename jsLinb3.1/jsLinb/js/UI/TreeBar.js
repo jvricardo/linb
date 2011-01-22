@@ -36,8 +36,8 @@ Class("linb.UI.TreeBar",["linb.UI","linb.absList","linb.absValue"],{
                         }
                     }
                 }else if(selmode=='multi'||selmode=='multibycheckbox'){
-                    uiv = uiv?uiv.split(';'):[];
-                    value = value?value.split(';'):[];
+                    uiv = uiv?uiv.split(properties.valueSeparator):[];
+                    value = value?value.split(properties.valueSeparator):[];
                     if(flag){
                         _.arr.each(value,function(o){
                             fun('BAR', o);
@@ -477,7 +477,7 @@ Class("linb.UI.TreeBar",["linb.UI","linb.absList","linb.absValue"],{
             case 'multi':
                 if(properties.readonly|| item.readonly)return false;
                 var value = box.getUIValue(),
-                    arr = value?value.split(';'):[],
+                    arr = value?value.split(properties.valueSeparator):[],
                     checktype=1;
                 if(arr.length&&(ks.ctrlKey||ks.shiftKey||properties.noCtrlKey)){
                     if(ks.shiftKey){
@@ -501,7 +501,7 @@ Class("linb.UI.TreeBar",["linb.UI","linb.absList","linb.absValue"],{
                             arr.push(item.id);
                     }
                     arr.sort();
-                    value = arr.join(';');
+                    value = arr.join(properties.valueSeparator);
     
                     //update string value only for _setCtrlValue
                     if(box.getUIValue() != value){
@@ -617,14 +617,6 @@ Class("linb.UI.TreeBar",["linb.UI","linb.absList","linb.absValue"],{
                 b.insertItems([oitem], item.id, null, false);
 
             return false;
-        },
-        _ensureValue:function(profile,value){
-            if(profile.properties.selMode=='multi'||profile.properties.selMode=='multibycheckbox'){
-                var arr = (value||"").split(';');
-                arr.sort();
-                return arr.join(';');
-            }else
-                return value;
         },
         _prepareItem:function(profile, item, oitem, pid, index,len){
             var p=profile.properties,

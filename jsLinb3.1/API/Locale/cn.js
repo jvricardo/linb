@@ -5195,7 +5195,9 @@ _.set(linb.Locale,["cn","app"], {
                 $rtn:"Object, 键值对.",
                 $paras:[
                     "dirtyOnly [可选参数] : Boolean, 只得到脏数据, 默认为 false",
-                    "reset [可选参数] : Boolean, 立即重新设置界面数据和清理脏数据标识, 默认为true"
+                    "reset [可选参数] : Boolean, 立即重新设置界面数据和清理脏数据标识, 默认为true",
+                    "withCaption [可选参数] : Boolean, 是否连caption一起得到(如果有caption属性的话), 默认为false",
+                    "returnArr [可选参数] : Boolean, 是否得到数组格式(只针对可多选择absList控件), 默认为false"
                 ],
                 $snippet:[
                     "var id='linb.temp.cv'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:10px;\">' + '<br /><button onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -5481,6 +5483,14 @@ _.set(linb.Locale,["cn","app"], {
                     "}"
                 ]
             },
+            getValueSeparator:{
+                $desc:"获取字符串值的分隔符(只对selMode为multi或multibycheckbox的情况有效).默认为“;”",
+                $rtn:"String"
+            },
+            setValueSeparator:{
+                $desc:"设置字符串值的分隔符(只对selMode为multi或multibycheckbox的情况有效).",
+                $rtn:"[self]"
+            },
             getListKey:{
                 $desc:"获取列表键.",
                 $rtn:"String",
@@ -5626,6 +5636,9 @@ _.set(linb.Locale,["cn","app"], {
             getUIValue:{
                 $desc:"获取用户界面值",
                 $rtn:"Object",
+                $paras:[
+                    "returnArr [可选参数] : Boolean. 是否返回Array(只对selMode为multi或multibycheckbox的情况有效)"
+                ],
                 $snippet:[
                     "var id='linb.temp.absv7'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:100px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o;linb(id).prepend(o=new linb.UI.Input({value:'ini'}));"+
@@ -5662,6 +5675,9 @@ _.set(linb.Locale,["cn","app"], {
             getValue:{
                 $desc:"获取内部值",
                 $rtn:"Object",
+                $paras:[
+                    "returnArr [可选参数] : Boolean. 是否返回Array(只对selMode为multi或multibycheckbox的情况有效)"
+                ],
                 $snippet:[
                     "var id='linb.temp.absv9'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:100px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o;linb(id).prepend(o=new linb.UI.Input({value:'ini'}));"+
@@ -14340,6 +14356,14 @@ _.set(linb.Locale,["cn","app"], {
                     "_.asyRun(function(){o.editCellbyRowCol('row2','col2')},1000);"+
                     "}"
                 ]
+            },
+            getValueSeparator:{
+                $desc:"获取字符串值的分隔符(只对selMode为multi或multibycheckbox的情况有效).默认为“;”",
+                $rtn:"String"
+            },
+            setValueSeparator:{
+                $desc:"设置字符串值的分隔符(只对selMode为multi或multibycheckbox的情况有效).",
+                $rtn:"[self]"
             },
             getCurrencyTpl:{
                 $desc:"得到货币的显示模板",
