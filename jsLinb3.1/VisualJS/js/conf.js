@@ -40,7 +40,7 @@ new function(){
         mapWidgets:{},
         widgets: [
             {id:'linb.Data',key:'linb.Data',caption:'Data', group:true, image:'img/App.gif', imagePos:'-48px -48px', sub:[
-                {id:'linb.UI.DataBinder',key:'linb.DataBinder', caption:'DataBinder', image:'img/widgets.gif', imagePos:'-640px top', draggable:true}
+                {id:'linb.DataBinder',key:'linb.DataBinder', caption:'DataBinder', image:'img/widgets.gif', imagePos:'-640px top', draggable:true}
             ]},
             {id:'linb.UI.absForm1',key:'linb.UI.absForm1',caption:'Simple Elements',group:true, image:_img_app, imagePos:'-48px -48px',sub:[
                 {id:'linb.UI.Tag',key:'linb.UI.Tag', caption:'Tag Element', image:_img_widgets, imagePos:'left top', draggable:true},
