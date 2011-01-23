@@ -1038,7 +1038,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                     if(m=profile.children){
                         _.arr.each(m,function(v,i){
                             v=v[0];
-                            if(v.getRootNode().parentNode===self && v.getRootNode().style.display!='none' && v.getRootNode().style.visibility!='hidden'){
+                            if(v.renderId && v.getRootNode() && v.getRootNode().parentNode===self && v.getRootNode().style.display!='none' && v.getRootNode().style.visibility!='hidden'){
                                 o=v.getRoot();
                                 x1= o.offsetLeft();
                                 y1= o.offsetTop();
