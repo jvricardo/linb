@@ -73,7 +73,7 @@ Class("linb.UI.Stacks", "linb.UI.Tabs",{
         },
         DataModel:{
             $border:1,
-            NoPanel:null
+            noPanel:null
         },
         _onresize:function(profile,width,height,force,key){
             var t=profile.properties,

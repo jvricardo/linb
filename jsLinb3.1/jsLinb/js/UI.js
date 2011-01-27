@@ -3847,7 +3847,8 @@ Class("linb.UI",  "linb.absObj", {
             var s=profile.box,t=s._onresize;
             if(t&&(force||w||h)){
                 //adjust width and height
-                w=parseInt(w)||null;
+                //w=parseInt(w)||null;
+                w=((w===""||w=='auto')?"auto":parseInt(w))||null
                 h=((h===""||h=='auto')?"auto":parseInt(h))||null;
 
                 //if it it has delay resize, overwrite arguments
@@ -4782,12 +4783,19 @@ Class("linb.absValue", "linb.absObj",{
                 }
             });
         },
-
         getValue:function(returnArr){
-            var prop=this.get(0).properties,
+            var prf=this.get(0),
+                prop=prf.properties,
                 v=prop.value;
-            if((prop.selMode=='multi'||prop.selMode=='multibycheckbox') && returnArr){
-                v=v.split(prop.valueSeparator);
+            
+            if(prf.box.$valuemode=='multi')
+                if(returnArr)
+                    if(_.isStr(v))
+                        v=v.split(prop.valueSeparator);
+            
+            if(prf.box.$DataModel.selMode && (prop.selMode=='multi'||prop.selMode=='multibycheckbox') && returnArr){
+                if(_.isStr(v))
+                    v=v.split(prop.valueSeparator);
                 v.sort();
             }
             return v;
@@ -4799,8 +4807,15 @@ Class("linb.absValue", "linb.absObj",{
             if(!prf.box._checkValid || false!==prf.box._checkValid(prf,cv))
                 prf.$UIvalue=cv;
             v=prf.$UIvalue;
-            if((prop.selMode=='multi'||prop.selMode=='multibycheckbox') && returnArr){
-                v=v.split(prop.valueSeparator);
+            
+            if(prf.box.$valuemode=='multi')
+                if(returnArr)
+                    if(_.isStr(v))
+                        v=v.split(prop.valueSeparator);
+
+            if(prf.box.$DataModel.selMode && (prop.selMode=='multi'||prop.selMode=='multibycheckbox') && returnArr){
+                if(_.isStr(v))
+                    v=v.split(prop.valueSeparator);
                 v.sort();
             }
             return v;
@@ -4813,13 +4828,17 @@ Class("linb.absValue", "linb.absObj",{
                     value=r.call(profile.box, profile, value);
                 if(pro.value !== value || pro.$UIvalue!==value){
                     if(profile.box._beforeResetValue)profile.box._beforeResetValue(profile);
+                    if(typeof(r=profile.$onValueSet)=='function'){
+                        r=r.call(profile,value);
+                        if(_.isSet(r))value=r;
+                    }
+
                     // _setCtrlValue maybe use $UIvalue
                     profile.boxing()._setCtrlValue(pro.value = value);
                     // So, maintain $UIvalue during _setCtrlValue call
                     pro.$UIvalue = value;
-                    if(typeof(r=profile.$onValueSet)=='function')r.call(profile,value);
                 }
-                if(!profile._inValid)profile._inValid=1;
+                profile._inValid=1;
             });
             self._setDirtyMark();
             return self;
@@ -4843,10 +4862,14 @@ Class("linb.absValue", "linb.absObj",{
                     //before _setCtrlValue
                     if(typeof (r=profile.box._ensureValue)=='function')
                         value = r.call(profile.box, profile, value);
-                    if(typeof(r=profile.$onValueUpdated)=='function')r.call(profile,value);
+                    
+                    if(typeof(r=profile.$onUIValueSet)=='function'){
+                        r=r.call(profile,value);
+                        if(_.isSet(r))value=r;
+                    }
+
                     //before value copy
                     if(profile.renderId)box._setCtrlValue(value);
-                    
                     //value copy
                     prop.$UIvalue = value;
 
@@ -4967,7 +4990,12 @@ Class("linb.absValue", "linb.absObj",{
                     //ensure value
                     if(typeof (r=profile.box._ensureValue)=='function')
                         nv = r.call(profile.box, profile, nv);
-                    if(typeof(r=profile.$onValueSet)=='function')r.call(profile,nv);
+
+                    if(typeof(r=profile.$onValueSet)=='function'){
+                        r=r.call(profile,nv);
+                        if(_.isSet(r))nv=r;
+                    }
+
                     //before value copy
                     if(profile.renderId)box._setCtrlValue(nv);
                     //value copy
@@ -4982,7 +5010,7 @@ Class("linb.absValue", "linb.absObj",{
             showDirtyMark:true
         },
         _ensureValue:function(profile,value){
-            if(profile.properties.selMode && (profile.properties.selMode=='multi'||profile.properties.selMode=='multibycheckbox')){
+            if(profile.box.$DataModel.selMode && (profile.properties.selMode=='multi'||profile.properties.selMode=='multibycheckbox')){
                 if(!_.isArr(value)){
                     value = (value||"").split(profile.properties.valueSeparator);
                 }

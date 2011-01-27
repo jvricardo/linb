@@ -52,7 +52,7 @@ copy linb.js  %outPath%jsLinb\js%debugPath%
 rem ==================
 rem for adv code
 rem ==================
-copy %relPath%jsLinb\js\UI\FusionChartFree.js /b + %relPath%jsLinb\js\UI\FusionChart3.js /b + %relPath%jsLinb\js\UI\TextEditor.js /b + %relPath%jsLinb\js\UI\TimeLine.js /b +  %relPath%jsLinb\js\UI\Poll.js /b + %relPath%jsLinb\js\UI\FoldingList.js /b + %relPath%jsLinb\js\UI\Range.js /b  + %relPath%jsLinb\js\UI\Calendar.js /b adv.js
+copy %relPath%jsLinb\js\UI\FusionChartFree.js /b + %relPath%jsLinb\js\UI\FusionChart3.js /b + %relPath%jsLinb\js\UI\TextEditor.js /b + %relPath%jsLinb\js\UI\TimeLine.js /b +  %relPath%jsLinb\js\UI\TagEditor.js /b + %relPath%jsLinb\js\UI\FoldingTabs.js /b + %relPath%jsLinb\js\UI\Poll.js /b + %relPath%jsLinb\js\UI\FoldingList.js /b + %relPath%jsLinb\js\UI\Range.js /b  + %relPath%jsLinb\js\UI\Calendar.js /b adv.js
 
 java -jar %compressTool% -o  %outPath%jsLinb\js%advAllPath% adv.js
 java -jar %compressTool% -o  %outPath%jsLinb\js%advRawPath%   --nomunge  adv.js

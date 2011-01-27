@@ -10767,7 +10767,7 @@ _.set(linb.Locale,["en","app"], {
                 $desc:"Sets selection mode, and reflects the value to UI.",
                 $rtn:"[self]",
                 $paras:[
-                    "value [Required] : String, 'none', 'multi' or 'single'.",
+                    "value [Required] : String, 'none', 'multi', 'multibycheckbox', or 'single'.",
                     "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
                 ],
                 $snippet:[

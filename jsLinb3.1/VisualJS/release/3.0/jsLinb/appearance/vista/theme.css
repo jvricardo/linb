@@ -590,6 +590,20 @@ html, .uibg-base{
 .linb-foldinglist-cmds, .linb-foldinglist-body, .linb-foldinglist-bodyi{
     background-image: url(FoldingList/border_left.gif);
 }
+
+/*linb.UI.FoldingTabs*/
+.linb-foldingtabs-hl, .linb-foldingtabs-hr, .linb-foldingtabs-tl, .linb-foldingtabs-tr{
+    background-image: url(FoldingList/corner.gif);
+}
+.linb-foldingtabs-handle{
+    background-image: url(FoldingList/border_top.gif);
+}
+.linb-foldingtabs-tail{
+    background-image: url(FoldingList/border_bottom.gif);
+}
+.linb-foldinglist-body, .linb-foldinglist-bodyi{
+    background-image: url(FoldingList/border_left.gif);
+}
 /*linb.UI.TimeLine*/
 .linb-timeline-items{
     background-image: url(TimeLine/bars.gif);

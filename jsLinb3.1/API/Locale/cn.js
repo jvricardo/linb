@@ -10694,7 +10694,7 @@ _.set(linb.Locale,["cn","app"], {
                 $desc:"设置选择模式, 并刷新界面.",
                 $rtn:"[self]",
                 $paras:[
-                    "value [必需参数] : String, 'none' 为不选, 'multi'为多选 or 'single'为单选.",
+                    "value [必需参数] : String, 'none' 为不选, 'multi'为多选, 'multibycheckbox'表示可多选并且只能点击checkbox来选中 or 'single'为单选.",
                     "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为 [false]."
                 ],
                 $snippet:[

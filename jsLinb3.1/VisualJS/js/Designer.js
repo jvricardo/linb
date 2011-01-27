@@ -18,7 +18,6 @@ Class('VisualJS.Designer', 'linb.Com',{
                 height:1024
             }
         },
-        dropPosition:'absolute',
         dropOffset:10,
 
         events:{
@@ -853,41 +852,40 @@ Class('VisualJS.Designer', 'linb.Com',{
                                 //if(false===_.tryF(c.beforeAddWidget, [data], profile))return;
 
                                 //check position
-                                if(self.dropPosition=='absolute'){
-                                    // get Pos
-                                    var basePos = linb.use(src).offset(),
-                                    cssPos = {
-                                        left : parseInt((dropx - basePos.left)/offset)*offset,
-                                        top : parseInt((dropy - basePos.top)/offset)*offset
-                                    };
-                                    //give design mark
-                                    target = new (linb.SC(linb.absBox.$type[type]));
-                                    target.get(0).$inDesign=true;
+                                //give design mark
+                                target = new (linb.SC(linb.absBox.$type[type]));
+                                target.get(0).$inDesign=true;
 
-                                    if(_.isHash(iniProp)){
-                                        target.setProperties(iniProp);
-                                    }
-
-                                    var p=target.get(0).properties;
-
-                                    target.setLeft(_.arr.indexOf(['top','bottom','width','fill','cover'],p.dock)!=-1?0:cssPos.left);
-                                    target.setTop(_.arr.indexOf(['left','right','height','fill','cover'],p.dock)!=-1?0:cssPos.top);
-                                    target.setPosition('absolute');
-                                    target.setZIndex(1);
-
-
-                                    target.render();
-                                }else{
-                                    //give design mark
-                                    target = new (linb.SC(linb.absBox.$type[type]));
-                                    target.get(0).$inDesign=true;
-
-                                    if(_.isHash(iniProp)){
-                                        target.setProperties(iniProp);
-                                    }
-
-                                    target.render();
+                                if(_.isHash(iniProp)){
+                                    target.setProperties(iniProp);
                                 }
+
+                                if(target['linb.UI']){
+                                    var parentNode=profile.keys.PANEL?profile.getSubNode(profile.keys.PANEL, subId):profile.getRoot();
+                                    if(!parentNode.isEmpty()){
+                                        var p=target.get(0).properties,
+                                            h=parentNode.get(0).style.height;
+                                        // absolute for fixed height parent, or relative
+                                        if(h && h!='auto'){
+                                            // get Pos
+                                            var basePos = linb.use(src).offset(),
+                                            cssPos = {
+                                                left : parseInt((dropx - basePos.left)/offset)*offset,
+                                                top : parseInt((dropy - basePos.top)/offset)*offset
+                                            };
+                                            target.setLeft(_.arr.indexOf(['top','bottom','width','fill','cover'],p.dock)!=-1?0:cssPos.left);
+                                            target.setTop(_.arr.indexOf(['left','right','height','fill','cover'],p.dock)!=-1?0:cssPos.top);
+                                            target.setPosition('absolute');
+                                        }else{
+                                            target.setLeft('auto');
+                                            target.setTop('auto');
+                                            target.setPosition('relative');
+                                        }
+                                    }
+                                }
+                                target.setZIndex(1);
+                                target.render();
+                            
                                 var pro = target.get(0);
 
                                 page._designable(pro);

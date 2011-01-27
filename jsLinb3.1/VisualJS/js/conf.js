@@ -393,8 +393,31 @@ new function(){
             {id:'linb.UI.absAdv',key:'linb.UI.absAdv',caption:'Advanced',group:true, image:_img_app, imagePos:'-48px -48px', sub:[
                 {id:'linb.UI.TextEditor',key:'linb.UI.TextEditor', caption:'TextEditor', image:_img_widgets, imagePos:'-128px top', draggable:true},
                 {id:'linb.UI.Range',key:'linb.UI.Range', caption:'Range', image:_img_widgets, imagePos:'left -16px', draggable:true},
+                {id:'linb.UI.TagEditor',key:'linb.UI.TagEditor', caption:'TagEditor', image:_img_widgets, imagePos:'-624px top', draggable:true},
                 {id:'linb.UI.Poll',key:'linb.UI.Poll', caption:'Poll', image:_img_widgets, imagePos:'-208px -16px', draggable:true},
-                {id:'linb.UI.FoldingList',key:'linb.UI.FoldingList', caption:'FoldingList', image:_img_widgets, imagePos:'-32px -16px', draggable:true},
+                {id:'linb.UI.FoldingList',key:'linb.UI.FoldingList', caption:'FoldingList', image:_img_widgets, imagePos:'-32px -16px', draggable:true,
+                    iniProp:{
+                        items:[
+                            {id:'a',caption:'tab1',title:'title1',text:'text1'},
+                            {id:'b',caption:'tab2',title:'title2',text:'text2'},
+                            {id:'c',caption:'tab3',title:'title3',text:'text3'},
+                            {id:'d',caption:'tab4',title:'title4',text:'text4'},
+                            {id:'e',caption:'tab5',title:'title5',text:'text5'}
+                        ],
+                        cmds:["Refresh","Remove"]
+                    }
+                },
+                {id:'linb.UI.FoldingTabs',key:'linb.UI.FoldingTabs', caption:'FoldingTabs', image:_img_widgets, imagePos:'-624px top', draggable:true,
+                    iniProp:{
+                        items:[
+                        {id:'a',caption:'tab1',message:"normal"}, 
+                        {id:'b',caption:'tab2',message:"with image",image:_imgdemo}, 
+                        {id:'c',caption:'tab3',message:"height:100",height:100}, 
+                        {id:'d',caption:'tab4',message:"with commands",closeBtn:true,optBtn:true,popBtn:true}
+                        ],
+                        value:'a'
+                    }
+                },
                 {id:'linb.UI.Calendar',key:'linb.UI.Calendar', caption:'Calendar', image:_img_widgets, imagePos:'-496px top', draggable:true},
                 {id:'linb.UI.TimeLine',key:'linb.UI.TimeLine', caption:'TimeLine', image:_img_widgets, imagePos:'-528px top', draggable:true,
                     iniProp:{},
@@ -444,6 +467,7 @@ new function(){
             'linb.UI.Tabs':['items','value','onItemSelected','tabindex'],
             'linb.UI.Stacks':['items','value','onItemSelected','tabindex'],
             'linb.UI.ButtonViews':['items','value','onItemSelected','tabindex'],
+            'linb.UI.FoldingTabs':['items','value','onItemSelected','tabindex'],
             'linb.UI.StatusButtons':['items','value','onItemClick','tabindex'],
             'linb.UI.FoldingList':['items','onGetContent','tabindex'],
             'linb.UI.IconList':['items','value','onItemSelected','tabindex'],
@@ -459,6 +483,7 @@ new function(){
             'linb.UI.Image':['src','cursor','tabindex'],
             'linb.UI.Flash':['src','parameters','flashvars','tabindex'],
             'linb.UI.TimeLine':['onGetContent','tabindex'],
+            'linb.UI.TagEditor':['tagCount','tagMaxlength','value','tabindex'],
             'linb.UI.FusionChartFree':['tabindex','onFCClick'],
             'linb.UI.FusionChart3':['tabindex','onFCClick']
         },

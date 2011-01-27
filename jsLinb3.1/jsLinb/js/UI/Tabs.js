@@ -11,7 +11,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                     temp,t
                     ;
                     if(uiv && profile.getSubIdByItemId(uiv)){
-                        profile.getSubNodes(['ITEM','BOX'],itemId).tagClass('-checked',false);
+                        profile.getSubNode('ITEM',itemId).tagClass('-checked',false);
 
                         if(!p.noPanel)
                             // hide pane
@@ -24,7 +24,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                         // to show the seleted one
                         _.tryF(profile.box._adjustScroll,[profile,value],profile.box);
 
-                        profile.getSubNodes(['ITEM','BOX'],itemId).tagClass('-checked');
+                        profile.getSubNode('ITEM',itemId).tagClass('-checked');
 
                         if(!p.noPanel){
                             // show pane

@@ -689,7 +689,7 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
             beforeClose:function(profile, src){}
         },
         RenderTrigger:function(){
-            this.$onValueSet=this.$onValueUpdated=function(v){
+            this.$onValueSet=this.$onUIValueSet=function(v){
                 this.box._setClrName(this,v);
             };
         },

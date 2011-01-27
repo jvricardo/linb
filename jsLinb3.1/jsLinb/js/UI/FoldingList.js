@@ -175,7 +175,10 @@ Class("linb.UI.FoldingList", ["linb.UI.List"],{
             },
 
             CMDS:{
-                padding:'4px 8px 2px 18px',
+                'font-size':0,
+                'line-height':0,
+                padding:'2px 0 0 4px',
+                'text-align':'right',
                 position:'relative',
                 background: linb.UI.$bg('border_left.gif', 'repeat-y left top #EEE'),
                 zoom:linb.browser.ie?1:null
@@ -196,6 +199,10 @@ Class("linb.UI.FoldingList", ["linb.UI.List"],{
                 background: linb.UI.$bg('border_left.gif', 'repeat-y left top'),
                 position:'relative'
             },
+            'BODY, BODYI':{
+                'font-size':0,
+                'line-height':0
+            },
             'ITEM-checked':{
                 $order:2,
                 'margin-bottom':'12px'
@@ -206,8 +213,8 @@ Class("linb.UI.FoldingList", ["linb.UI.List"],{
             },
             'HL, HR, TL, TR':{
                 position:'absolute',
-                '_font-size':0,
-                '_line-height':0,
+                'font-size':0,
+                'line-height':0,
                 width:'8px',
                 background: linb.UI.$bg('corner.gif', 'no-repeat')
             },
@@ -264,8 +271,8 @@ Class("linb.UI.FoldingList", ["linb.UI.List"],{
                 overflow:'hidden'
             },
             TAIL:{
-                '_font-size':0,
-                '_line-height':0,
+                'font-size':0,
+                'line-height':0,
                 position:'relative',
                 height:'5px',
                 background: linb.UI.$bg('border_bottom.gif', 'repeat-x left bottom #EEE')
@@ -336,6 +343,7 @@ Class("linb.UI.FoldingList", ["linb.UI.List"],{
         },
         DataModel:({
             value:null,
+            borderType:null,
             cmds:{
                 ini:[]
             },
@@ -398,6 +406,7 @@ Class("linb.UI.FoldingList", ["linb.UI.List"],{
         },
         _buildBody:function(profile,item){
             return item.text?'<pre>'+item.text.replace(/</g,"&lt;")+'</pre>':'';
-        }
+        },
+        _onresize:function(){}
     }
 });
