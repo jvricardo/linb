@@ -18158,6 +18158,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                //don't change it in custom class or style
                'padding-top':'2px',
                'padding-left':'2px',
+               'padding-right':'2px',
 
                "background-color":"transparent",
                "background-image":linb.browser.ie?'url(.)':null,
@@ -18791,7 +18792,8 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
         _onresize:function(profile,width,height){
                 var $hborder=1, $vborder=1,
                     toff=linb.UI.$getCSSValue('linb-input-input','paddingTop'),
-                    loff=linb.UI.$getCSSValue('linb-input-input','paddingTop');
+                    loff=linb.UI.$getCSSValue('linb-input-input','paddingLeft'),
+                    roff=linb.UI.$getCSSValue('linb-input-input','paddingRight');
 
                 var t = profile.properties,
                     o = profile.getSubNode('BOX'),
@@ -18835,7 +18837,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                     });
 
                 if(ww||hh)
-                    v1.cssSize({width:ww?(ww-loff):null,height:hh?(hh-toff):null});
+                    v1.cssSize({width:ww?(ww-loff-roff):null,height:hh?(hh-toff):null});
 
                 /*for ie6 bug*/
                 if((profile.$border||profile.$shadow||profile.$resizer) && linb.browser.ie)o.ieRemedy();
@@ -20836,7 +20838,8 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
         _onresize:function(profile,width,height){
             var $hborder=1, $vborder=1,
                 toff=linb.UI.$getCSSValue('linb-comboinput-input','paddingTop'),
-                loff=linb.UI.$getCSSValue('linb-comboinput-input','paddingLeft');
+                loff=linb.UI.$getCSSValue('linb-comboinput-input','paddingLeft'),
+                roff=linb.UI.$getCSSValue('linb-comboinput-input','paddingRight');
 
             var t = profile.properties,
                 o = profile.getSubNode('BOX'),
@@ -20878,8 +20881,8 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 iH=hh===null?null:(hh - ((labelPos=='top'||labelPos=='bottom')?labelSize:0)),
                 iH2=hh===null?null:(height - ((labelPos=='top'||labelPos=='bottom')?labelSize:0));
 
-            if(null!==iW && iW-loff>0)
-                v1.style.width=(iW-loff)+px;
+            if(null!==iW && iW-loff-roff>0)
+                v1.style.width=(iW-loff-roff)+px;
             if(null!==iH && iH-toff>0)
                 v1.style.height=(iH-toff)+px;
 

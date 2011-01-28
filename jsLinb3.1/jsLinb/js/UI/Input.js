@@ -165,6 +165,7 @@ Class("linb.UI.Input", ["linb.UI.Widget","linb.absValue"] ,{
                //don't change it in custom class or style
                'padding-top':'2px',
                'padding-left':'2px',
+               'padding-right':'2px',
 
                "background-color":"transparent",
                "background-image":linb.browser.ie?'url(.)':null,
@@ -798,7 +799,8 @@ Class("linb.UI.Input", ["linb.UI.Widget","linb.absValue"] ,{
         _onresize:function(profile,width,height){
                 var $hborder=1, $vborder=1,
                     toff=linb.UI.$getCSSValue('linb-input-input','paddingTop'),
-                    loff=linb.UI.$getCSSValue('linb-input-input','paddingTop');
+                    loff=linb.UI.$getCSSValue('linb-input-input','paddingLeft'),
+                    roff=linb.UI.$getCSSValue('linb-input-input','paddingRight');
 
                 var t = profile.properties,
                     o = profile.getSubNode('BOX'),
@@ -842,7 +844,7 @@ Class("linb.UI.Input", ["linb.UI.Widget","linb.absValue"] ,{
                     });
 
                 if(ww||hh)
-                    v1.cssSize({width:ww?(ww-loff):null,height:hh?(hh-toff):null});
+                    v1.cssSize({width:ww?(ww-loff-roff):null,height:hh?(hh-toff):null});
 
                 /*for ie6 bug*/
                 if((profile.$border||profile.$shadow||profile.$resizer) && linb.browser.ie)o.ieRemedy();
