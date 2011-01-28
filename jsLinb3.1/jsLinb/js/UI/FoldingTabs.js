@@ -150,6 +150,9 @@ Class("linb.UI.FoldingTabs", "linb.UI.Tabs",{
                     fold(uiv);
                     expand(value);
                 }
+
+                var t=profile.getRootNode().style;
+                linb.UI.$tryResize(profile, t.width, t.height, true);
             });
         },
         getCurPanel:null,
@@ -531,7 +534,16 @@ Class("linb.UI.FoldingTabs", "linb.UI.Tabs",{
                 item._tlgchecked = profile.getClass('TOGGLE','-checked');
             }
         },
-        _onresize:function(){},
+        _onresize:function(profile,width,height,force,key){
+            if(force){profile._w=profile._h=null;}
+            if(width && profile._w!=width){
+                profile._w=width;
+                profile.getSubNode("PANEL",true).each(function(panel){
+                    if(panel.offsetWidth)
+                        linb(panel).width('auto').width(linb(panel).width());
+                });
+            }
+        },
         _adjustScroll:null
     }
 });
