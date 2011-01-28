@@ -1266,7 +1266,8 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
         _onresize:function(profile,width,height){
             var $hborder=1, $vborder=1,
                 toff=linb.UI.$getCSSValue('linb-comboinput-input','paddingTop'),
-                loff=linb.UI.$getCSSValue('linb-comboinput-input','paddingLeft');
+                loff=linb.UI.$getCSSValue('linb-comboinput-input','paddingLeft'),
+                roff=linb.UI.$getCSSValue('linb-comboinput-input','paddingRight');
 
             var t = profile.properties,
                 o = profile.getSubNode('BOX'),
@@ -1295,8 +1296,8 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 if(linb.browser.ie6&&null===width)o.ieRemedy();
             }
 
-            if(null!==ww && ww-loff>0)
-                v1.style.width=(ww-loff)+px;
+            if(null!==ww && ww-loff-roff>0)
+                v1.style.width=(ww-loff-roff)+px;
 
             if(null!==hh && hh-toff>0)
                 v1.style.height=(hh-toff)+px;
