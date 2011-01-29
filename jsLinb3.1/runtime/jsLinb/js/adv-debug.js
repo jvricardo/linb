@@ -3027,10 +3027,9 @@ Class("linb.UI.FoldingTabs", "linb.UI.Tabs",{
                     box = profile.boxing(),
                     uiv = box.getUIValue(),
                     prop = profile.properties,
-                    selmode=prop.selMode,
 
                     fold=function(itemId){
-                        subId = profile.getSubIdByItemId(itemId);
+                        var subId = profile.getSubIdByItemId(itemId);
                         if(subId){
                             profile.getSubNode('TOGGLE',subId).tagClass('-checked',false);
                             var itemnode=profile.getSubNode('ITEM',subId),
@@ -3061,104 +3060,12 @@ Class("linb.UI.FoldingTabs", "linb.UI.Tabs",{
                             //box.getPanel(value).css('position','relative').show('auto','auto');
                             profile.getSubNode('BODY', subId).css('display','block');
     
-                            //dynamic render
-                            if(prop.lazyAppend){
-                                var arr=profile.children,a=[];
-                                _.arr.each(arr,function(o){
-                                    if(o[1]==value && !o[0]['parent:'+profile.$linbid]){
-                                        a.push(o[0]);
-                                        o[0]['parent:'+profile.$linbid]=1;
-                                    }
-                                });
-                                if(a.length)
-                                    box.append(linb.UI.pack(a),value);
-    
-                                // $attached is dynamic
-                                if(profile.$attached){
-                                    for(var i=0,v;v=profile.$attached[i++];)
-                                        if(v._render)
-                                            v._render(true);
-                                    delete profile.$attached;
-                                }
-    
-                                arr=profile.exchildren;
-                                if(arr && arr.length){
-                                    a=[];
-                                    _.arr.filter(arr,function(o){
-                                        if(o[1]==value){
-                                            a.push(o[0]);
-                                            return false;
-                                        }
-                                    });
-                                    if(a.length)
-                                        _.arr.each(a,function(o){
-                                            box.append(linb(o),value);
-                                        });
-                                }
-                                
-                                arr=profile.excoms;
-                                if(arr && arr.length){
-                                    a=[];
-                                    _.arr.filter(arr,function(o){
-                                        if(o[1]==value){
-                                            a.push(o[0]);
-                                            return false;
-                                        }
-                                    });
-                                    if(a.length)
-                                        _.arr.each(a,function(o){
-                                            o.show(null, box, value, false);
-                                        });
-                                }
-                            }
-    
-                            if(!item._$ini){
-                                if(box.onIniPanelView){
-                                    if(box.onIniPanelView(profile,item)!==false)
-                                        item._$ini=true;
-                                    if(item.iframeAutoLoad){
-                                        box.getPanel(item.id).css('overflow','hidden');
-    
-                                        if(typeof item.iframeAutoLoad=='string')
-                                            item.iframeAutoLoad={url:item.iframeAutoLoad};
-                                        var hash=item.iframeAutoLoad,
-                                            ifr=document.createElement("iframe");
-                                        ifr.name="diframe:"+_();
-                                        ifr.id=ifr.name;
-                                        ifr.src=hash.url;
-                                        ifr.frameBorder='0';
-                                        ifr.marginWidth='0';
-                                        ifr.marginHeight='0';
-                                        ifr.vspace='0';
-                                        ifr.hspace='0';
-                                        ifr.allowTransparency='true';
-                                        ifr.width='100%';
-                                        ifr.height='100%';
-                                        box.getPanel(item.id).append(ifr);
-                                        linb.Dom.submit(hash.url, hash.query, hash.method, ifr.name, hash.enctype);
-                                    }else if(item.ajaxAutoLoad){
-                                        if(typeof item.ajaxAutoLoad=='string')
-                                            item.ajaxAutoLoad={url:item.ajaxAutoLoad};
-                                        var hash=item.ajaxAutoLoad;
-                                        box.busy(null,null,"PANEL",profile.getSubIdByItemId(item.id));
-                                        linb.Ajax(hash.url, hash.query, function(rsp){
-                                            var n=linb.create("div");
-                                            n.html(rsp,false,true);
-                                            box.getPanel(item.id).append(n.children());
-                                            box.free();
-                                        }, function(err){
-                                            box.getPanel(item.id).append("<div>"+err+"</div>");
-                                            box.free();
-                                        }, null, hash.options).start();
-                                    }else if(item.html){
-                                        box.getPanel(item.id).append(item.html);
-                                    }
-                                }
-                            }
+                            profile.box._forLazzyAppend(profile, item, value);
+                            profile.box._forIniPanelView(profile, item, value);
                         }
                     };
 
-                if(selmode=="multi"){
+                if(prop.selMode=="multi"){
                     uiv = uiv?uiv.split(prop.valueSeparator):[];
                     _.arr.each(uiv,function(key){
                         fold(key);
@@ -3453,21 +3360,21 @@ Class("linb.UI.FoldingTabs", "linb.UI.Tabs",{
                 onClick:function(profile, e, src){
                     if(linb.Event.getBtn(e)!='left')return false;
 
-                    var properties = profile.properties,
+                    var prop = profile.properties,
                         item = profile.getItemByDom(src),
                         itemId =profile.getSubId(src),
                         box = profile.boxing(),
                         rt,rt2;
 
-                    if(properties.disabled|| item.disabled)return false;
+                    if(prop.disabled|| item.disabled)return false;
+                    if(prop.readonly|| item.readonly)return false;
 
                     profile.getSubNode('TITLE').focus();
 
-                    switch(properties.selMode){
+                    switch(prop.selMode){
                     case 'multi':
-                        if(properties.readonly|| item.readonly)return false;
                         var value = box.getUIValue(),
-                            arr = value?value.split(properties.valueSeparator):[],
+                            arr = value?value.split(prop.valueSeparator):[],
                             checktype=1;
 
                         if(arr.length){
@@ -3480,7 +3387,7 @@ Class("linb.UI.FoldingTabs", "linb.UI.Tabs",{
                                 arr.push(item.id);
 
                             arr.sort();
-                            value = arr.join(properties.valueSeparator);
+                            value = arr.join(prop.valueSeparator);
 
                             //update string value only for setCtrlValue
                             if(box.getUIValue() == value)
@@ -3493,7 +3400,6 @@ Class("linb.UI.FoldingTabs", "linb.UI.Tabs",{
                             break;
                         }
                     case 'single':
-                        if(properties.readonly|| item.readonly)return false;
 
                         if(box.getUIValue() == item.id)
                             rt=false;

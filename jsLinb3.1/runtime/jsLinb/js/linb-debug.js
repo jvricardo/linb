@@ -25255,132 +25255,59 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                 var id=profile.domId,
                     box = profile.boxing(),
                     uiv = box.getUIValue(),
-                    p = profile.properties,
-                    itemId = profile.getSubIdByItemId(uiv),
-                    item,
-                    temp,t
-                    ;
-                    if(uiv && profile.getSubIdByItemId(uiv)){
-                        profile.getSubNode('ITEM',itemId).tagClass('-checked',false);
+                    prop = profile.properties,
+                    dm=profile.box.$DataModel,
 
-                        if(!p.noPanel)
-                            // hide pane
-                            //box.getPanel(uiv).hide();
-                            box.getPanel(uiv).css('display','none');
-                    }
-                    itemId = profile.getSubIdByItemId(value);
-                    item=profile.getItemByItemId(value);
-                    if(itemId){
-                        // to show the seleted one
-                        _.tryF(profile.box._adjustScroll,[profile,value],profile.box);
-
-                        profile.getSubNode('ITEM',itemId).tagClass('-checked');
-
-                        if(!p.noPanel){
-                            // show pane
-                            //box.getPanel(value).css('position','relative').show('auto','auto');
-                            box.getPanel(value).css('display','block');
-
-                            t=profile.getRootNode().style;
-                            //reset width and height
-                            linb.UI.$tryResize(profile, t.width, t.height, true, value);
-                            t=null;
-
-                            //dynamic render
-                            if(p.lazyAppend){
-                                var arr=profile.children,a=[];
-                                _.arr.each(arr,function(o){
-                                    if(o[1]==value && !o[0]['parent:'+profile.$linbid]){
-                                        a.push(o[0]);
-                                        o[0]['parent:'+profile.$linbid]=1;
-                                    }
-                                });
-                                if(a.length)
-                                    box.append(linb.UI.pack(a),value);
-
-                                // $attached is dynamic
-                                if(profile.$attached){
-                                    for(var i=0,v;v=profile.$attached[i++];)
-                                        if(v._render)
-                                            v._render(true);
-                                    delete profile.$attached;
-                                }
-
-                                arr=profile.exchildren;
-                                if(arr && arr.length){
-                                    a=[];
-                                    _.arr.filter(arr,function(o){
-                                        if(o[1]==value){
-                                            a.push(o[0]);
-                                            return false;
-                                        }
-                                    });
-                                    if(a.length)
-                                        _.arr.each(a,function(o){
-                                            box.append(linb(o),value);
-                                        });
-                                }
-                                
-                                arr=profile.excoms;
-                                if(arr && arr.length){
-                                    a=[];
-                                    _.arr.filter(arr,function(o){
-                                        if(o[1]==value){
-                                            a.push(o[0]);
-                                            return false;
-                                        }
-                                    });
-                                    if(a.length)
-                                        _.arr.each(a,function(o){
-                                            o.show(null, box, value, false);
-                                        });
-                                }
-                            }
-
-                            if(!item._$ini)
-                                if(box.onIniPanelView){
-                                    if(box.onIniPanelView(profile,item)!==false)
-                                        item._$ini=true;
-                                    if(item.iframeAutoLoad){
-                                        box.getPanel(item.id).css('overflow','hidden');
-
-                                        if(typeof item.iframeAutoLoad=='string')
-                                            item.iframeAutoLoad={url:item.iframeAutoLoad};
-                                        var hash=item.iframeAutoLoad,
-                                            ifr=document.createElement("iframe");
-                                        ifr.name="diframe:"+_();
-                                        ifr.id=ifr.name;
-                                        ifr.src=hash.url;
-                                        ifr.frameBorder='0';
-                                        ifr.marginWidth='0';
-                                        ifr.marginHeight='0';
-                                        ifr.vspace='0';
-                                        ifr.hspace='0';
-                                        ifr.allowTransparency='true';
-                                        ifr.width='100%';
-                                        ifr.height='100%';
-                                        box.getPanel(item.id).append(ifr);
-                                        linb.Dom.submit(hash.url, hash.query, hash.method, ifr.name, hash.enctype);
-                                    }else if(item.ajaxAutoLoad){
-                                        if(typeof item.ajaxAutoLoad=='string')
-                                            item.ajaxAutoLoad={url:item.ajaxAutoLoad};
-                                        var hash=item.ajaxAutoLoad;
-                                        box.busy(null,null,"PANEL",profile.getSubIdByItemId(item.id));
-                                        linb.Ajax(hash.url, hash.query, function(rsp){
-                                            var n=linb.create("div");
-                                            n.html(rsp,false,true);
-                                            box.getPanel(item.id).append(n.children());
-                                            box.free();
-                                        }, function(err){
-                                            box.getPanel(item.id).append("<div>"+err+"</div>");
-                                            box.free();
-                                        }, null, hash.options).start();
-                                    }else if(item.html){
-                                        box.getPanel(item.id).append(item.html);
-                                    }
-                                }
+                    fold=function(itemId){
+                        var subId = profile.getSubIdByItemId(itemId);
+                        if(subId){
+                            profile.getSubNode('ITEM',subId).tagClass('-checked',false);
+                            if(!dm.hasOwnProperty("noPanel") || !prop.noPanel)
+                                // hide pane
+                                //box.getPanel(uiv).hide();
+                                box.getPanel(uiv).css('display','none');                            
                         }
-                    }
+                    },
+                    expand = function(itemId){
+                        var subId = profile.getSubIdByItemId(itemId),
+                            item=profile.getItemByItemId(itemId);
+                        if(subId){
+                            // to show the seleted one
+                            _.tryF(profile.box._adjustScroll,[profile,value],profile.box);
+    
+                            profile.getSubNode('ITEM',subId).tagClass('-checked');
+    
+                            if(!dm.hasOwnProperty("noPanel") || !prop.noPanel){
+                                // show pane
+                                //box.getPanel(value).css('position','relative').show('auto','auto');
+                                box.getPanel(value).css('display','block');
+    
+                                var t=profile.getRootNode().style;
+                                //reset width and height
+                                linb.UI.$tryResize(profile, t.width, t.height, true, value);
+                                t=null;
+    
+                                profile.box._forLazzyAppend(profile, item, value);
+                                profile.box._forIniPanelView(profile, item, value);
+                            }
+                        }
+                    };
+                if(dm.hasOwnProperty("selMode") && 
+                    dm.hasOwnProperty("noPanel") && 
+                    prop.noPanel &&
+                    prop.selMode=="multi"){
+                    uiv = uiv?uiv.split(prop.valueSeparator):[];
+                    _.arr.each(uiv,function(key){
+                        fold(key);
+                    });
+                    value = value?value.split(prop.valueSeparator):[];
+                    _.arr.each(value,function(key){
+                        expand(key);
+                    });
+                }else{
+                    fold(uiv);
+                    expand(value);
+                }                   
             });
         },
         append:function(target,subId){
@@ -25390,8 +25317,14 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
             return this;
         },
         getCurPanel:function(){
-            var profile = this.get(0);
-            return this.getPanel(profile.properties.$UIvalue);
+            var profile = this.get(0),
+                dm=profile.box.$DataModel,
+                v=profile.properties.$UIvalue;
+            if(dm.hasOwnProperty("noPanel") && dm.hasOwnProperty("selMode") && profile.properties.selMode=='multi'){
+                v=v.split(prop.valueSeparator);
+                v=v[0]||null;
+            }
+            return v?this.getPanel(v):null;
         },
         // get pane in page views
         getPanel:function(subId){
@@ -25474,7 +25407,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                 // add panels anyway
                 obj.append(profile._buildItems('panels', data));
                 // for stacks only
-                if(!pp.hasOwnProperty("noPanel")){
+                if(!profile.box.$DataModel.hasOwnProperty("noPanel")){
                     if(!(v=this.getUIValue()))
                         this.fireItemClickEvent((v=pp.items[0]) && (v=v.id));
 
@@ -25493,7 +25426,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
             if(!_.isArr(arr))arr=[arr];
 
             self.each(function(profile){
-                if(!profile.properties.noPanel)
+                if(!profile.box.$DataModel.hasOwnProperty("noPanel") || !profile.properties.noPanel)
                     _.arr.each(arr,function(o){
                         // get ui serial id
                         serialId=profile.getSubIdByItemId(o);
@@ -25510,7 +25443,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                     var i;
                     profile.boxing().fireItemClickEvent((i=profile.properties.items[0]) && i.id);
                 }
-                if(!profile.properties.noPanel){
+                if(!profile.box.$DataModel.hasOwnProperty("noPanel") || !profile.properties.noPanel){
                     var t=profile.getRootNode().style;
                     linb.UI.$tryResize(profile, t.width, t.height, true, profile.boxing().getUIValue());
                     t=null;
@@ -25522,7 +25455,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
         clearItems:function(){
             var self=this;
             self.each(function(profile){
-                if(!profile.properties.noPanel)
+                if(!profile.box.$DataModel.hasOwnProperty("noPanel") || !profile.properties.noPanel)
                     profile.getSubNode('PANEL',true).remove();
             });
             self.setValue(null,true);
@@ -25839,24 +25772,60 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                     if(linb.Event.getBtn(e)!='left')return false;
                     if(profile.getKey(linb.Event.getSrc(e).parentNode.id)==profile.keys.CMDS)return false;
 
-                    var properties = profile.properties,
+                    var prop = profile.properties,
+                        dm=profile.box.$DataModel,
                         itemId = profile.getSubId(src),
                         item = profile.getItemByDom(src),
                         box = profile.boxing();
 
-                    if(properties.disabled || item.disabled)return false;
-                    if(properties.readonly || item.readonly)return false;
-                    if(box.getUIValue() == item.id)return;
+                    if(prop.disabled || item.disabled)return false;
+                    if(prop.readonly || item.readonly)return false;
 
                     //for some input onblur event
                     profile.getSubNode('HANDLE', itemId).focus();
-
-                    box.setUIValue(item.id);
-
-                    //if success
-                    if(box.getUIValue() == item.id){
-                        box.onItemSelected(profile, item, e, src);
-                        return false;
+    
+                    if(dm.hasOwnProperty("selMode") && 
+                        dm.hasOwnProperty("noPanel") && 
+                        prop.noPanel &&
+                        prop.selMode=="multi"){
+    
+                        var value = box.getUIValue(),
+                            arr = value?value.split(prop.valueSeparator):[],
+                            checktype=1,
+                            rt=false,
+                            rt2=false;
+                        // for multi selection
+                        if(arr.length){
+                            //for select
+                            if(_.arr.indexOf(arr,item.id)!=-1){
+                                _.arr.removeValue(arr,item.id);
+                                checktype=-1
+                            }else
+                                arr.push(item.id);
+    
+                            arr.sort();
+                            value = arr.join(prop.valueSeparator);
+    
+                            //update string value only for setCtrlValue
+                            if(box.getUIValue() == value)
+                                rt=false;
+                            else{
+                                box.setUIValue(value);
+                                if(box.get(0) && box.getUIValue() == value)
+                                    rt=box.onItemSelected(profile, item, e, src, checktype)||rt2;
+                            }
+                            return rt;
+                        }
+                        
+                    }
+                    // for single selection
+                    if(box.getUIValue() != item.id){
+                        box.setUIValue(item.id);
+                        //if success
+                        if(box.getUIValue() == item.id){
+                            box.onItemSelected(profile, item, e, src);
+                            return false;
+                        }
                     }
                 }
             },
@@ -26072,6 +26041,10 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
             value:{
                 ini:''
             },
+            selMode:{
+                ini:'single',
+                listbox:['single', 'multi']
+            },
             //use ilist defualt items
             items:{
                 set:function(value){
@@ -26124,7 +26097,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
             beforePageClose:function(profile, item, src){},
             afterPageClose:function(profile, item){},
             onShowOptions:function(profile,item,e,src){},
-            onItemSelected:function(profile, item,e,src){},
+            onItemSelected:function(profile, item,e,src,type){},
             onCaptionActive:function(profile, item,e,src){}
         },
         RenderTrigger:function(){
@@ -26152,6 +26125,105 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
         },
         getDropKeys:function(profile,node){
             return profile.properties[profile.getKey(linb.use(node).id())==profile.keys.PANEL?'dropKeys':'dropKeysPanel'];
+        },
+        _forLazzyAppend:function(profile, item, value){
+            var prop=profile.properties,box=profile.boxing();
+            //dynamic render
+            if(prop.lazyAppend){
+                var arr=profile.children,a=[];
+                _.arr.each(arr,function(o){
+                    if(o[1]==value && !o[0]['parent:'+profile.$linbid]){
+                        a.push(o[0]);
+                        o[0]['parent:'+profile.$linbid]=1;
+                    }
+                });
+                if(a.length)
+                    box.append(linb.UI.pack(a),value);
+
+                // $attached is dynamic
+                if(profile.$attached){
+                    for(var i=0,v;v=profile.$attached[i++];)
+                        if(v._render)
+                            v._render(true);
+                    delete profile.$attached;
+                }
+
+                arr=profile.exchildren;
+                if(arr && arr.length){
+                    a=[];
+                    _.arr.filter(arr,function(o){
+                        if(o[1]==value){
+                            a.push(o[0]);
+                            return false;
+                        }
+                    });
+                    if(a.length)
+                        _.arr.each(a,function(o){
+                            box.append(linb(o),value);
+                        });
+                }
+                
+                arr=profile.excoms;
+                if(arr && arr.length){
+                    a=[];
+                    _.arr.filter(arr,function(o){
+                        if(o[1]==value){
+                            a.push(o[0]);
+                            return false;
+                        }
+                    });
+                    if(a.length)
+                        _.arr.each(a,function(o){
+                            o.show(null, box, value, false);
+                        });
+                }
+            }
+        },
+        _forIniPanelView:function(profile, item, value){
+            var prop=profile.properties,box=profile.boxing();
+            if(!item._$ini){
+                if(profile.onIniPanelView){
+                    if(box.onIniPanelView(profile,item)!==false)
+                        item._$ini=true;
+                    if(item.iframeAutoLoad){
+                        box.getPanel(item.id).css('overflow','hidden');
+
+                        if(typeof item.iframeAutoLoad=='string')
+                            item.iframeAutoLoad={url:item.iframeAutoLoad};
+                        var hash=item.iframeAutoLoad,
+                            ifr=document.createElement("iframe");
+                        ifr.name="diframe:"+_();
+                        ifr.id=ifr.name;
+                        ifr.src=hash.url;
+                        ifr.frameBorder='0';
+                        ifr.marginWidth='0';
+                        ifr.marginHeight='0';
+                        ifr.vspace='0';
+                        ifr.hspace='0';
+                        ifr.allowTransparency='true';
+                        ifr.width='100%';
+                        ifr.height='100%';
+                        box.getPanel(item.id).append(ifr);
+                        linb.Dom.submit(hash.url, hash.query, hash.method, ifr.name, hash.enctype);
+                    }else if(item.ajaxAutoLoad){
+                        if(typeof item.ajaxAutoLoad=='string')
+                            item.ajaxAutoLoad={url:item.ajaxAutoLoad};
+                        var hash=item.ajaxAutoLoad;
+                        box.busy(null,null,"PANEL",profile.getSubIdByItemId(item.id));
+                        linb.Ajax(hash.url, hash.query, function(rsp){
+                            var n=linb.create("div");
+                            n.html(rsp,false,true);
+                            box.getPanel(item.id).append(n.children());
+                            box.free();
+                        }, function(err){
+                            box.getPanel(item.id).append("<div>"+err+"</div>");
+                            box.free();
+                        }, null, hash.options).start();
+                    }else if(item.html){
+                        box.getPanel(item.id).append(item.html);
+                    }
+                }
+            }
         },
         _showTips:function(profile, node, pos){
             if(profile.properties.disableTips)return;
@@ -26246,7 +26318,6 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
             right.css('display', profile._$scroll_l ? 'block' : 'none');
 
         }
-
     }
 });Class("linb.UI.Stacks", "linb.UI.Tabs",{
     Initialize:function(){
@@ -26323,7 +26394,8 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
         },
         DataModel:{
             $border:1,
-            noPanel:null
+            noPanel:null,
+            selMode:null
         },
         _onresize:function(profile,width,height,force,key){
             var t=profile.properties,
