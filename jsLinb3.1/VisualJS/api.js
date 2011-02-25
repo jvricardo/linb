@@ -41,7 +41,7 @@ new function(){
         iniStr = '<div id="loading"><img src="../../../runtime/loading.gif" alt="Loading..." /></div>',
 
         //default version mark
-        dft_ver = "3.0";
+        dft_ver = "3.1";
 
     new function(){
         var d = document,
