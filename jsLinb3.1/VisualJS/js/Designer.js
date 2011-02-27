@@ -1176,9 +1176,11 @@ Class('VisualJS.Designer', 'linb.Com',{
                 });
                 var rows=[
                     {id:'properties:width', caption:'width',tips:'Canvas width', cells:[{value: pro.properties.width}] },
-                    {id:'properties:height',caption:'height', tips:'Canvas height', cells:[{value: pro.properties.height}] },
-                    {id:'UIE', group:true, caption:'events', sub:arr}
+                    {id:'properties:height',caption:'height', tips:'Canvas height', cells:[{value: pro.properties.height}] }
                 ];
+                if(CONF.designer_editMode != "simple"){
+                    rows.push({id:'UIE', group:true, caption:'events', sub:arr});
+                }
                 var list=[];
 
                 page.profileGrid.insertRows(rows);
@@ -1226,9 +1228,12 @@ Class('VisualJS.Designer', 'linb.Com',{
 
                   rows.push({id:'key', tipk:'class', caption:'<strong>class</strong>', tips:linb.getRes('VisualJS.designer.openapi'), cells:[{disabled:true, value:'<strong>'+pro.key+'</strong>',type:'label', tips:linb.getRes('VisualJS.designer.openapi')}] });
                   rows.push({id:'alias',tipk:'fun', tipv:'alias',caption:'<strong>alias</strong>',cells:[{value:pro.alias,type:uis._nodes.length===1?'input':'label'}] });
-                  if(pro.domId){
-                      rows.push({id:'theme',tipk:'fun', tipv:'theme',caption:'<strong>theme</strong>',cells:[{value:pro.theme, type:'input'}] });
-                      rows.push({id:'domId',tipk:'fun', tipv:'setDomId',value:'setDomId',caption:'<strong>domId</strong>',cells:[{value:pro.domId,type:uis._nodes.length===1?'input':'label'}] });
+                  
+                  if(CONF.designer_editMode != "simple"){
+                      if(pro.domId){
+                          rows.push({id:'theme',tipk:'fun', tipv:'theme',caption:'<strong>theme</strong>',cells:[{value:pro.theme, type:'input'}] });
+                          rows.push({id:'domId',tipk:'fun', tipv:'setDomId',value:'setDomId',caption:'<strong>domId</strong>',cells:[{value:pro.domId,type:uis._nodes.length===1?'input':'label'}] });
+                      }
                   }
 
                   //if single selected
@@ -1245,7 +1250,9 @@ Class('VisualJS.Designer', 'linb.Com',{
 
                   //if single selected
                   if(uis._nodes.length==1){
-                        rows.push({id:'UIE', group:true, caption:'events', sub:true});
+                        if(CONF.designer_editMode != "simple"){
+                            rows.push({id:'UIE', group:true, caption:'events', sub:true});
+                        }
 
                       if(pro.domId){
                           rows.push({id:'CS', tipk:'fun', tipv:'setCustomStyle', value:'setCustomStyle',caption:'Custom Style', cells:[{value:'[<strong> key/value pairs</strong>]', event:$fun, $tagVar:{
@@ -1260,18 +1267,20 @@ Class('VisualJS.Designer', 'linb.Com',{
                               funName:'setCustomClass',
                               profile:pro
                           }, type:'popbox', editorReadonly:true}] });
-                          rows.push({id:'CB',tipk:'fun', tipv:'setCustomBehavior',value:'setCustomBehavior',caption:'Custom Behaviors', cells:[{value:'[<strong> key/value pairs</strong>]', event:$fun, $tagVar:{
-                              widgetName:pro.alias,
-                              name:'CB',
-                              funName:'setCustomBehavior',
-                              profile:pro
-                          }, type:'popbox', editorReadonly:true}] });
-                          rows.push({id:'CF',tipk:'fun', tipv:'setCustomFunction',value:'setCustomFunction',caption:'Custom Functions',cells:[{value:'[<strong> key/value pairs</strong>]', event:$fun, $tagVar:{
-                              widgetName:pro.alias,
-                              name:'CF',
-                              funName:'setCustomFunction',
-                              profile:pro
-                          }, type:'popbox', editorReadonly:true}] });
+                          if(CONF.designer_editMode != "simple"){
+                              rows.push({id:'CB',tipk:'fun', tipv:'setCustomBehavior',value:'setCustomBehavior',caption:'Custom Behaviors', cells:[{value:'[<strong> key/value pairs</strong>]', event:$fun, $tagVar:{
+                                  widgetName:pro.alias,
+                                  name:'CB',
+                                  funName:'setCustomBehavior',
+                                  profile:pro
+                              }, type:'popbox', editorReadonly:true}] });
+                              rows.push({id:'CF',tipk:'fun', tipv:'setCustomFunction',value:'setCustomFunction',caption:'Custom Functions',cells:[{value:'[<strong> key/value pairs</strong>]', event:$fun, $tagVar:{
+                                  widgetName:pro.alias,
+                                  name:'CF',
+                                  funName:'setCustomFunction',
+                                  profile:pro
+                              }, type:'popbox', editorReadonly:true}] });
+                          }
                       }
                   }
 
@@ -1668,6 +1677,9 @@ Class('VisualJS.Designer', 'linb.Com',{
             //for properties
             if(id=='properties' || id=='special'){
                 _.each(target.box.$DataStruct,function(o,i){
+                    
+                    if(CONF.widgets_hideProps && CONF.widgets_hideProps[i])
+                        return;
                     
                     caption=cellEx=null;
                     
@@ -2383,17 +2395,6 @@ Class('VisualJS.Designer', 'linb.Com',{
             );
             
             host.layoutBase.append(
-                (new linb.UI.IconList)
-                .setHost(host,"iconlist")
-                .setDirtyMark(false)
-                .setDock("bottom")
-                .setHeight(40)
-                .setZIndex(10)
-                .afterUIValueSet("$iconlist_aftervalueupdated")
-                .setCustomStyle({"KEY":"border-top:solid 1px #CDCDCD;"})
-            , 'main');
-            
-            host.layoutBase.append(
                 (new linb.UI.ToolBar)
                 .setHost(host,"toolbar")
                 .onClick("$toolbar_onclick")
@@ -2508,6 +2509,23 @@ Class('VisualJS.Designer', 'linb.Com',{
             
             return children;
             // ]]code created by jsLinb UI Builder
+        },
+        iniExComs:function(com, threadid){
+            var host=this;
+            host.layoutBase.append(
+                (new linb.UI.IconList)
+                .setHost(host,"iconlist")
+                .setDirtyMark(false)
+                .setDock("bottom")
+                .setHeight(40)
+                .setZIndex(10)
+                .setDisplay('none')
+                .afterUIValueSet("$iconlist_aftervalueupdated")
+                .setCustomStyle({"KEY":"border-top:solid 1px #CDCDCD;"})
+            , 'main');
+            if(CONF.designer_editMode != "simple"){
+                host.layoutBase.setDisplay('');
+            }
         }
     },
     Static:{

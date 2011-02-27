@@ -39,11 +39,7 @@ new function(){
 
         mapWidgets:{},
         widgets: [
-            {id:'linb.Data',key:'linb.Data',caption:'Data', group:true, image:'img/App.gif', imagePos:'-48px -48px', sub:[
-                {id:'linb.DataBinder',key:'linb.DataBinder', caption:'DataBinder', image:'img/widgets.gif', imagePos:'-640px top', draggable:true}
-            ]},
             {id:'linb.UI.absForm1',key:'linb.UI.absForm1',caption:'Simple Elements',group:true, image:_img_app, imagePos:'-48px -48px',sub:[
-                {id:'linb.UI.Tag',key:'linb.UI.Tag', caption:'Tag Element', image:_img_widgets, imagePos:'left top', draggable:true},
                 {id:'linb.UI.Span',key:'linb.UI.Span', caption:'Span Element', image:_img_widgets, imagePos:'-544px -16px', draggable:true},
                 {id:'linb.UI.Div',key:'linb.UI.Div', caption:'Div Element', image:_img_widgets, imagePos:'-544px top', draggable:true},
 
@@ -175,7 +171,6 @@ new function(){
                         iniProp:{selMode:'multibycheckbox', items:_.copy(_items), value:'a'}
                     }
                 ]},
-                {id:'linb.UI.RichEditor',key:'linb.UI.RichEditor', caption:'RichEditor', image:_img_widgets, imagePos:'-128px top', draggable:true},
                 {id:'linb.UI.ProgressBar',key:'linb.UI.ProgressBar', caption:'ProgressBar', image:_img_widgets, imagePos:'-608px top', draggable:true},
                 {id:'linb.UI.Slider',key:'linb.UI.Slider', caption:'Slider', image:_img_widgets, imagePos:'-63px -16px', draggable:true, 
                     iniProp:{isRange:false},sub:[
@@ -273,45 +268,6 @@ new function(){
                 {id:'linb.UI.Dialog',key:'linb.UI.Dialog', caption:'Dialog', image:_img_widgets, imagePos:'-320px top', draggable:true}
             ]},
             {id:'linb.UI.absNavigator',key:'linb.UI.absNavigator',caption:'Navigators',group:true, image:_img_app, imagePos:'-48px -48px', sub:[
-                {id:'linb.UI.PageBar',key:'linb.UI.PageBar', caption:'PageBar', image:_img_widgets, imagePos:'-48px -16px', draggable:true, sub:[
-                        {id:'linb.UI.PageBar2',key:'linb.UI.PageBar', caption:'Custom', draggable:true,
-                            iniProp:{value:"1:5:10", textTpl:'[*]', caption:''}
-                        }
-                    ]
-                },
-
-                {id:'linb.UI.PopMenu',key:'linb.UI.PopMenu', caption:'PopMenu', image:_img_widgets, imagePos:'-400px top', draggable:true,
-                    iniProp:{
-                        items:_items
-                    }
-                },
-                {id:'linb.UI.MenuBar',key:'linb.UI.MenuBar', caption:'MenuBar', image:_img_widgets, imagePos:'-416px top', draggable:true,
-                    iniProp:{
-                        items:[
-                          {"id":"menu1", "sub":[{"id":"normal", "caption":"normal"},
-                            {"id":"disabled", "caption":"disabled", "disabled":true}, 
-                            {"id":"image", "caption":"image", image:_imgdemo}, 
-                            {"type":"split"}, 
-                            {"id":"checkbox 1", "caption":"checkbox 1", "type":"checkbox"}, 
-                            {"id":"checkbox 2", "caption":"checkbox 2", "type":"checkbox"}], "caption":"menu1"},
-                          {"id":"menu2", "sub":[{"id":"sub menu 1", "caption":"sub menu 1", add:'[Ctrl+F]', 
-                            "sub":[{id:"sub 1",type:"radiobox"}, 
-                                 {id:"sub 2",type:"radiobox"},
-                                 {id:"sub 3"}
-                            ]}, 
-                            {"id":"sub menu 2", "caption":"sub menu 2", add:'[Ctrl+T]', 
-                             "sub":["sub 3", "sub 4"]}]}
-                        ]
-                    }
-                },
-                {id:'linb.UI.ToolBar',key:'linb.UI.ToolBar', caption:'ToolBar', image:_img_widgets, imagePos:'-432px top', draggable:true,
-                    iniProp:{
-                        items:[
-                            {id:'grp1',sub:[{caption:'button'}, {type:'split'}, {caption:'drop button', dropButton:true}, {caption:'status button', statusButton:true}]}, 
-                            {id:'grp2',sub:[{image:_imgdemo},{caption:'image button',label:"label:",image:_imgdemo}]}
-                        ]
-                    }
-                },
                 {id:'linb.UI.IconList',key:'linb.UI.IconList', caption:'IconList', image:_img_widgets, imagePos:'-384px top', draggable:true,
                     iniProp:{
                         items:_.copy(_items), value:'a'
@@ -343,70 +299,18 @@ new function(){
                 },
                 {id:'linb.UI.TreeGrid',key:'linb.UI.TreeGrid', caption:'TreeGrid', image:_img_widgets, imagePos:'-480px top', draggable:true,
                     iniProp:{
+                        selMode:'single',
                         rowHandler:true,
                         rowNumbered:true,
                         header: ['col1','col2', 'col3', 'col4'],
                         rows: [['row1 col1','row1 col2','row1 col3','row1 col4'],['row2 col1','row2 col2','row2 col3','row2 col4'],{cells:['row3 col1','row3 col2','row3 col3','row3 col4'],sub:[['sub1','sub2','sub3','sub4']]}]
-                    }, sub:[
-                        {id:'linb.UI.TreeGrid1',key:'linb.UI.TreeGrid', caption:'Editable', draggable:true,
-                        iniProp:{
-                            rowHandler:false,
-                            rowNumbered:false,
-                            editable:true,
-                            header: [
-                            {id:'label',type:'label'},
-                            {id:'input',type:'input'},
-                            {id:'combobox',type:'combobox'},
-                            {id:'listbox',type:'listbox'},
-                            {id:'getter',type:'getter'},
-                            {id:'cmdbox',type:'cmdbox'},
-                            {id:'popbox',type:'popbox'},
-                            {id:'date',type:'date'},
-                            {id:'time',type:'time'},
-                            {id:'datetime',type:'datetime'},
-                            {id:'color',type:'color'},
-                            {id:'spin',type:'spin'},
-                            {id:'currency',type:'currency'},
-                            {id:'number',type:'number'}
-                            ],
-                            rows: [
-                                ['label1','input1','','','','','',new Date,'00:00',new Date,'#ffffff',0.12,23.44,43.23],
-                                ['label2','input2','','','','','',new Date,'02:00',new Date,'#f0f0f0',0.13,123.00,56.32],
-                                ['label3','input3','','','','','',new Date,'03:00',new Date,'#0f0f0f',0.14,233.55,43.53]
-                            ]
-                        }
                     }
-                ]}
+                }
             ]},
             {id:'linb.UI.absMisc',key:'linb.UI.absMisc',caption:'Medias',group:true, image:_img_app, imagePos:'-48px -48px', sub:[
                 {id:'linb.UI.Image',key:'linb.UI.Image', caption:'Image Element', image:_img_widgets, imagePos:'-624px top', draggable:true},
-
-/*
-                {id:'linb.UI.Media',key:'linb.UI.Media', caption:'Media', image:_img_widgets, imagePos:'-576px top', draggable:true},
-                {id:'linb.UI.Shape',key:'linb.UI.Shape', caption:'Shape', image:_img_widgets, imagePos:'-544px top', draggable:true},
-*/                
                 {id:'linb.UI.Flash',key:'linb.UI.Flash', caption:'Flash', image:_img_widgets, imagePos:'-560px -16px', draggable:true},
-                {id:'linb.UI.FusionChartFree',key:'linb.UI.FusionChartFree', caption:'FusionChartFree', image:_img_widgets, imagePos:'-560px top', draggable:true},
-                {id:'linb.UI.FusionChart3',key:'linb.UI.FusionChart3', caption:'FusionChart3', image:_img_widgets, imagePos:'-560px top', draggable:true}
-
-            ]},
-            {id:'linb.UI.absAdv',key:'linb.UI.absAdv',caption:'Advanced',group:true, image:_img_app, imagePos:'-48px -48px', sub:[
-                {id:'linb.UI.TextEditor',key:'linb.UI.TextEditor', caption:'TextEditor', image:_img_widgets, imagePos:'-128px top', draggable:true},
-                {id:'linb.UI.Range',key:'linb.UI.Range', caption:'Range', image:_img_widgets, imagePos:'left -16px', draggable:true},
                 {id:'linb.UI.TagEditor',key:'linb.UI.TagEditor', caption:'TagEditor', image:_img_widgets, imagePos:'-624px top', draggable:true},
-                {id:'linb.UI.Poll',key:'linb.UI.Poll', caption:'Poll', image:_img_widgets, imagePos:'-208px -16px', draggable:true},
-                {id:'linb.UI.FoldingList',key:'linb.UI.FoldingList', caption:'FoldingList', image:_img_widgets, imagePos:'-32px -16px', draggable:true,
-                    iniProp:{
-                        items:[
-                            {id:'a',caption:'tab1',title:'title1',text:'text1'},
-                            {id:'b',caption:'tab2',title:'title2',text:'text2'},
-                            {id:'c',caption:'tab3',title:'title3',text:'text3'},
-                            {id:'d',caption:'tab4',title:'title4',text:'text4'},
-                            {id:'e',caption:'tab5',title:'title5',text:'text5'}
-                        ],
-                        cmds:["Refresh","Remove"]
-                    }
-                },
                 {id:'linb.UI.FoldingTabs',key:'linb.UI.FoldingTabs', caption:'FoldingTabs', image:_img_widgets, imagePos:'-624px top', draggable:true,
                     iniProp:{
                         items:[
@@ -417,79 +321,52 @@ new function(){
                         ],
                         value:'a'
                     }
-                },
-                {id:'linb.UI.Calendar',key:'linb.UI.Calendar', caption:'Calendar', image:_img_widgets, imagePos:'-496px top', draggable:true},
-                {id:'linb.UI.TimeLine',key:'linb.UI.TimeLine', caption:'TimeLine', image:_img_widgets, imagePos:'-528px top', draggable:true,
-                    iniProp:{},
-                    sub:[
-                        {id:'linb.UI.TimeLine1',key:'linb.UI.TimeLine', caption:'Without Bar', draggable:true,
-                            iniProp:{showBar:false, showTips:false}
-                        },
-                        {id:'linb.UI.TimeLine2',key:'linb.UI.TimeLine', caption:'Per 2 Hour', draggable:true,
-                            iniProp:{timeSpanKey:'2 h', multiTasks:true}
-                        },
-                        {id:'linb.UI.TimeLine3',key:'linb.UI.TimeLine', caption:'Per 6 Hour', draggable:true,
-                            iniProp:{timeSpanKey:'6 h', multiTasks:true}
-                        },
-                        {id:'linb.UI.TimeLine4',key:'linb.UI.TimeLine', caption:'Per 1 Week', draggable:true,
-                            iniProp:{timeSpanKey:'1 w', multiTasks:true}
-                        },
-                        {id:'linb.UI.TimeLine5',key:'linb.UI.TimeLine', caption:'Per 1 Month', draggable:true,
-                            iniProp:{timeSpanKey:'1 m', multiTasks:true}
-                        }
-                    ]
                 }
             ]}
         ],
+        designer_editMode:"simple",
+        widgets_hideProps:{
+            dataBinder:1,
+            dataField:1
+        },
         widgets_xprops:{
-            'linb.UI.Div':['html','tabindex'],
-            'linb.UI.Pane':['html','tabindex'],
-            'linb.UI.Block':['html','tabindex'],
-            'linb.UI.Tag':['tagKey','tabindex'],
-            'linb.UI.SLabel':['caption','tabindex'],
-            'linb.UI.Label':['caption','tabindex'],
-            'linb.UI.Link':['caption','onClick','tabindex'],
-            'linb.UI.SButton':['caption','onClick','tabindex'],
-            'linb.UI.Button':['type','value','caption','onClick','tabindex'],
-            'linb.UI.SCheckBox':['value','caption','onChecked','tabindex'],
-            'linb.UI.CheckBox':['value','caption','onChecked','tabindex'],
-            'linb.UI.Input':['value','labelSize','labelCaption','tabindex'],
-            'linb.UI.TextEditor':['value','labelSize','labelCaption','tabindex'],
-            'linb.UI.List':['items','value','onItemSelected','tabindex'],
-            'linb.UI.ComboInput':['type','value','tabindex'],
-            'linb.UI.ProgressBar':['value','tabindex'],
-            'linb.UI.Slider':['value','tabindex'],
-            'linb.UI.Range':['value','tabindex'],
-            'linb.UI.RadioBox':['items','value','onItemSelected','tabindex'],
-            'linb.UI.DatePiker':['value','tabindex'],
-            'linb.UI.TimePiker':['value','tabindex'],
-            'linb.UI.ColorPiker':['value','tabindex'],
-            'linb.UI.Poll':['Items','onGetContent','tabindex'],
-            'linb.UI.Group':['caption','tabindex'],
-            'linb.UI.Panel':['caption','tabindex'],
-            'linb.UI.Layout':['type','items','tabindex'],
-            'linb.UI.Tabs':['items','value','onItemSelected','tabindex'],
-            'linb.UI.Stacks':['items','value','onItemSelected','tabindex'],
-            'linb.UI.ButtonViews':['items','value','onItemSelected','tabindex'],
-            'linb.UI.FoldingTabs':['items','value','onItemSelected','tabindex'],
-            'linb.UI.StatusButtons':['items','value','onItemClick','tabindex'],
-            'linb.UI.FoldingList':['items','onGetContent','tabindex'],
-            'linb.UI.IconList':['items','value','onItemSelected','tabindex'],
-            'linb.UI.Dialog':['caption','tabindex'],
-            'linb.UI.Gallery':['items','value','onItemSelected','tabindex'],
-            'linb.UI.PageBar':['value','onClick','tabindex'],
-            'linb.UI.PopMenu':['items','onMenuSelected'],
-            'linb.UI.MenuBar':['items','onMenuSelected','tabindex'],
-            'linb.UI.ToolBar':['items','onClick','tabindex'],
-            'linb.UI.TreeBar':['items','value','onItemSelected','onGetContent','tabindex'],
-            'linb.UI.TreeView':['items','value','onItemSelected','onGetContent','tabindex'],
-            'linb.UI.TreeGrid':['header','rows','value','onClickCell','beforeComboPop','onRowSelected','onGetContent','tabindex'],
-            'linb.UI.Image':['src','cursor','tabindex'],
-            'linb.UI.Flash':['src','parameters','flashvars','tabindex'],
-            'linb.UI.TimeLine':['onGetContent','tabindex'],
-            'linb.UI.TagEditor':['tagCount','tagMaxlength','value','tabindex'],
-            'linb.UI.FusionChartFree':['tabindex','onFCClick'],
-            'linb.UI.FusionChart3':['tabindex','onFCClick']
+            'linb.UI.Div':['html'],
+            'linb.UI.Pane':['html'],
+            'linb.UI.Block':['html'],
+            'linb.UI.Tag':['tagKey'],
+            'linb.UI.SLabel':['caption'],
+            'linb.UI.Label':['caption'],
+            'linb.UI.Link':['caption'],
+            'linb.UI.SButton':['caption'],
+            'linb.UI.Button':['type','value','caption'],
+            'linb.UI.SCheckBox':['value','caption'],
+            'linb.UI.CheckBox':['value','caption'],
+            'linb.UI.Input':['value','labelSize','labelCaption'],
+            'linb.UI.List':['items','value','labelSize','labelCaption'],
+            'linb.UI.ComboInput':['type','value'],
+            'linb.UI.ProgressBar':['value'],
+            'linb.UI.Slider':['value'],
+            'linb.UI.RadioBox':['items','value'],
+            'linb.UI.DatePicker':['value'],
+            'linb.UI.TimePicker':['value'],
+            'linb.UI.ColorPicker':['value'],
+            'linb.UI.Group':['caption'],
+            'linb.UI.Panel':['caption'],
+            'linb.UI.Layout':['type','items'],
+            'linb.UI.Tabs':['items','value'],
+            'linb.UI.Stacks':['items','value'],
+            'linb.UI.ButtonViews':['items','value'],
+            'linb.UI.FoldingTabs':['items','value'],
+            'linb.UI.StatusButtons':['items','value'],
+            'linb.UI.IconList':['items','value'],
+            'linb.UI.Dialog':['caption'],
+            'linb.UI.Gallery':['items','value'],
+            'linb.UI.TreeBar':['items','value'],
+            'linb.UI.TreeView':['items','value'],
+            'linb.UI.TreeGrid':['header','rows','value'],
+            'linb.UI.Image':['src','cursor'],
+            'linb.UI.Flash':['src','parameters','flashvars'],
+            'linb.UI.TagEditor':['tagCount','tagMaxlength','value']
         },
         ComFactoryProfile:{
             about:{
