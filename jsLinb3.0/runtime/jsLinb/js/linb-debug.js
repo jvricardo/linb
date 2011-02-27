@@ -20207,7 +20207,9 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 onKeyup:function(profile, e, src){
                     var p=profile.properties,b=profile.box,
                         key=linb.Event.getKey(e);
-
+                    if(p.disabled || p.readonly)return false;
+                    if(profile.$inputReadonly || p.inputReadonly)return;
+                    
                     // must be key up event
                     if(key.key=='esc'){
                         if(profile.$escclosedrop){
