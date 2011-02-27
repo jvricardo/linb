@@ -12123,7 +12123,18 @@ _.set(linb.Locale,["en","app"], {
                     "}"
                 ]
             },
-
+            getSelMode :{
+                $desc:"Gets selection mode. Could be 'single', 'multi'. For noPanel widgets only.",
+                $rtn:"String"
+            },
+            setSelMode :{
+                $desc:"Sets selection mode. For noPanel widgets only.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : String, 'single' or 'multi'. Default is 'single'",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
             addPanel:{
                 $desc:"Adds a panel to the current UI.",
                 $rtn:"[self]",

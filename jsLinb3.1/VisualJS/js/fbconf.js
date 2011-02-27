@@ -14,19 +14,15 @@ new function(){
         img_widgets:_img_widgets,
 
         phpPath:linb.ini.appPath + 'request.php',
-        testphpPath:linb.ini.appPath + 'debug.php',
 
-        path_opendir:"../CodeSnip/Classes/",
         path_apidir:"../API/",
         
         fileExts:/\.(jpg|png|gif|css|txt|swf)$/,
         fileNames:/[\w-]+\.[\w]+$/,
         
-        prjPath:'projects/',
-        requestKey:'VisualJS',
-        requestKey2:'VisualJS2',
-
+        requestKey:'FormDesigner',
         path_link:"http://www.linb.net",
+
         //path_video:'http://linb.googlecode.com/files/video.html',
         path_simple:'UIBuilder.html',
         path_forum:'http://www.sigmawidgets.com/forum/',

@@ -12049,7 +12049,18 @@ _.set(linb.Locale,["cn","app"], {
                     "}"
                 ]
             },
-
+            getSelMode :{
+                $desc:"获取选择模式. 'single'表示可单选, 'multi'表示可多选. 只针对noPanel的控件有效.",
+                $rtn:"String"
+            },
+            setSelMode :{
+                $desc:"设置选择模式. 只针对noPanel的控件有效.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : String, 'single'表示可单选, 'multi'表示可多选. 默认为'single'",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为[false]."
+                ]
+            },
             addPanel:{
                 $desc:"添加一个面板到标签中.",
                 $rtn:"[self]",

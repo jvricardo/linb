@@ -75,7 +75,13 @@ Class('FormDesigner', 'linb.Com',{
                         {"caption":"Default Theme", "image":"img/App.gif", "imagePos":"-208px -48px", "dropButton":true}
                     ]},
                     */
-                    {"id":"grp2", "sub":[{"caption":"Open Form", "image":"http://localhost:8080/jsLinb3.1/VisualJS/img/App.gif", "imagePos":"-48px top"}, {"caption":"Save to server", "image":"http://localhost:8080/jsLinb3.1/VisualJS/img/App.gif", "imagePos":"-96px top"}, {"caption":"To fill Form", "image":"http://localhost:8080/jsLinb3.1/VisualJS/img/App.gif", "imagePos":"-80px -48px"}, {"caption":"Show Form", "image":"http://localhost:8080/jsLinb3.1/VisualJS/img/App.gif", "imagePos":"-128px -48px"}], "caption":"grp2"}])
+                    {"id":"grp2", "sub":[
+                        {id:"open","caption":"Open Form", "image":"img/App.gif", "imagePos":"-48px top"}, 
+                        {id:"save","caption":"Save to server", "image":"img/App.gif", "imagePos":"-96px top"}, 
+                        {id:"fill","caption":"To fill Form", "image":"img/App.gif", "imagePos":"-80px -48px"}, 
+                        {id:"show","caption":"Show Form", "image":"img/App.gif", "imagePos":"-128px -48px"}]
+                    }])
+                .onClick("_toolbar_onclick")
             );
             
             host.appRoot.append(
@@ -94,6 +100,90 @@ Class('FormDesigner', 'linb.Com',{
             
             return children;
             // ]]code created by jsLinb UI Builder
+        },
+        _toolbar_onclick: function(profile,item, group, e, src){
+            var ns=this, keypara=item.id;
+            switch(keypara){
+                case "open":
+                case "save":
+                _.observableRun(function(threadid){
+                    linb.request(CONF.phpPath, {
+                        key:CONF.requestKey,
+                        para:{
+                            action:'fetchForms'
+                        }
+                    },function(txt){
+                        var obj = typeof txt=='string'?_.unserialize(txt):txt;
+                        if(!obj.error){
+                            obj=obj.data;
+                            var items=[];
+                            if(obj && obj.length){
+                                _.arr.each(obj,function(i){
+                                    if(i.type===0){
+                                        items.push({id:i.name,caption:i.name})
+                                    }
+                                });
+                            }
+                            linb.ComFactory.getCom("FormDesigner.OpenSaveDlg",function(){
+                                var com=this;
+                                com.setMode(keypara);
+                                com.setFormItems(items);
+                                com.setEvents({
+                                    onOK:function(formId, recordId){
+                                        if(keypara=="open"){
+                                            ns.openForm(formId, recordId);
+                                        }else{
+                                            ns.saveForm(formId, recordId);
+                                        }
+                                    }
+                                });
+                                this.ctl_dlg.showModal();
+                            });
+                        }else
+                            linb.message(obj.error.message);
+                    });
+                });
+                break;
+                case "fill":
+                break;
+                case "show":
+                break;
+            }
+        },
+        openForm:function(formId, recordId){
+            var ns=this;
+            // clear the UI first
+            ns._Designer.refreshView({Instance:{iniComponents:""}});
+            
+            var para={
+                action:'openForm',
+                formId:formId,
+                rand:_()
+            };
+            if(recordId)
+                para.recordId=recordId;
+
+            _.observableRun(function(threadid){
+                linb.request(CONF.phpPath, {
+                    key:CONF.requestKey,
+                    para:para
+                },function(txt){
+                    var obj = typeof txt=='string'?_.unserialize(txt):txt;
+                    if(!obj.error){
+                        obj=obj.data;
+                        
+                        // build UI
+                        ns._Designer.refreshView({Instance:{iniComponents:obj.formCode}});
+                        
+                        // fill values
+                        //obj.formFields;
+                    }else
+                        linb.message(obj.error.message);
+                });
+            });            
+        },
+        saveForm:function(formId, recordId){
+            
         }
     }
 });

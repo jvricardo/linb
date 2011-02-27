@@ -2297,7 +2297,7 @@ Class('VisualJS.Designer', 'linb.Com',{
             if(fun){
                 linb.Dom.setCover(linb.getRes('VisualJS.designer.createContent'));
                 // reset scope
-                fun = new Function([],_.fun.body(fun));
+                fun = new Function([],typeof fun=="string"?fun:_.fun.body(fun));
                 try{
                     self.$host={};
                     var nodes = fun.call(self.$host)||[],
