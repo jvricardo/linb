@@ -53,6 +53,63 @@ class FormDesigner extends Unit
                }
             }
             break;
+        case 'saveForm':
+            LINB::checkArgs($hash, array(
+                'string' => array(
+                    'formId' => NULL,
+                    'formCode' => '',
+                    'recordId' => '',
+                    'formFields' => ''
+                )
+            ));
+
+            $io = LINB::SC('IO');
+            $r = new stdClass;
+            $path=self::PATH_FORMS.DIRECTORY_SEPARATOR.$hash->formId;
+            if(!file_exists($path)){
+                $io->dirMake($path);
+            }
+            // save form code?
+            if($hash->formCode != ""){
+                $path1=$path.DIRECTORY_SEPARATOR.self::FILE_FORMCODE;
+                if(file_exists($path1)){
+                    $io->delete($path1);
+                }
+                $io->setString($path1, $hash->formCode);
+            }
+            
+            // save form fields?
+            if($hash->recordId != "" && $hash->formFields != ""){
+                $path2=$path.DIRECTORY_SEPARATOR.$hash->recordId.self::FILETAG_JS;
+               if(file_exists($path2)){
+                    $io->delete($path2);
+               }
+               $io->setString($path2, $hash->formFields);
+            }
+            $r='ok';
+            break;
+        case 'delForm':
+            LINB::checkArgs($hash, array(
+                'string' => array(
+                    'formId' => NULL,
+                    'recordId' => ''
+                )
+            ));
+
+            $io = LINB::SC('IO');
+            $path=self::PATH_FORMS.DIRECTORY_SEPARATOR.$hash->formId;
+            if($hash->recordId === ""){
+                if(file_exists($path)){
+                    $io->delete($path);
+                }
+            }else{
+                $path2=$path.DIRECTORY_SEPARATOR.$hash->recordId.self::FILETAG_JS;
+                if(file_exists($path2)){
+                    $io->delete($path2);
+                }
+            }
+            $r='ok';
+            break;
         }
         return $r;
     }

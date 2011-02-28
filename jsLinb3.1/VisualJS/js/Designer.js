@@ -2151,7 +2151,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                 return x>y?1:x==y?0:-1;
             });
 
-            var page = this,t,arr=[];
+            var t,arr=[];
             arr.push('// [[code created by jsLinb UI Builder\n');
             arr.push('var host=this, children=[], append=function(child){children.push(child.get(0))};');
             var fun = function(v, pName, argsStr, arr){

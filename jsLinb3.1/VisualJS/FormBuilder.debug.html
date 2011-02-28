@@ -28,12 +28,15 @@
         <script type="text/javascript" src="codemirror/js/codemirror.js"></script>
         <script type="text/javascript" src="js/CodeEditor.js"></script>
 
+        <script type="text/javascript" src="js/ClassTool.js"></script>
         <script type="text/javascript" src="js/JSEditor.js"></script>
         <script type="text/javascript" src="js/PageEditor.js"></script>
         <script type="text/javascript" src="js/ObjectEditor.js"></script>
         <script type="text/javascript" src="js/Designer.js"></script>
 
         <script type="text/javascript" src="js/FormDesigner.js"></script>        
+        <script type="text/javascript" src="js/FormFiller.js"></script>
+        <script type="text/javascript" src="js/FormReader.js"></script>
         <script type="text/javascript" src="js/FormDesigner/OpenSaveDlg.js"></script>
 
 <script type="text/javascript">
@@ -55,12 +58,12 @@ var lang=(function(){
 })();
 
 // get arguments from url
-ARGS=_.urlDecode(location.search.replace('?',''));
+ARGS=_.urlDecode(location.href.split('#')[1]);
 
 // ensure ARGS.mode
 if(_.isEmpty(ARGS)) ARGS.mode='create'
-if(!ARGS.mode) ARGS='read';
-if(ARGS.mode!='create'&&ARGS.mode!='fill') ARGS='read';
+if(!ARGS.mode) ARGS.mode='read';
+if(ARGS.mode!='create'&&ARGS.mode!='fill') ARGS.mode='read';
 
 // to show UI according to ARGS.mode
 linb.Com.load(ARGS.mode=='create'?'FormDesigner':ARGS.mode=='fill'?'FormFiller':'FormReader', function(){
