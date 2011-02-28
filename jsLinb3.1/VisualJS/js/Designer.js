@@ -505,7 +505,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                     epoff.top=ep.top-ppos.top;
 
                     _.arr.each(arr,function(o){
-                        if(m=o[0].getRoot()){
+                        if(!(m=o[0].getRoot()).isEmpty()){
                             if(o[0].children.length)
                                 if(rt=me(o[0].children, ep, m))
                                     return false;

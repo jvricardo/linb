@@ -1,1 +1,1 @@
-{"ctl_input1":"afds", "ctl_input38":"afds", "ctl_checkbox1":true, "ctl_progressbar1":0}
+{"ctl_slider1":"34.810126582278485", "ctl_timepicker3":"00:00", "ctl_radiobox1":"a", "ctl_input3":"b33232", "ctl_colorpicker1":"FF69B4", "ctl_list1":"c", "ctl_input1":"aasdf", "ctl_input2":"aadf"}
