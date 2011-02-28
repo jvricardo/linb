@@ -10284,7 +10284,7 @@ Class('linb.UIProfile','linb.Profile', {
             return linb.getNodeData(this.renderId, 'element');
         },
         getRoot:function(){
-            return linb([this.renderId],false);
+            return linb(this.renderId?[this.renderId]:[],false);
         },
         getContainer:function(subId){
             if(subId=typeof subId=='string'?subId:null)subId=this.getSubIdByItemId(subId);
@@ -11021,7 +11021,7 @@ Class("linb.UI",  "linb.absObj", {
                 delete p.alias;delete p.domId;
                 if(p.children)
                     for(var i=0,c;c=p.children[i];i++)
-                        f(c);
+                        f(c[0]);
             };
             this.each(function(o){
                 o=o.serialize(false,true);
@@ -14341,8 +14341,12 @@ Class("linb.absValue", "linb.absObj",{
         getValue:function(){return this.get(0).properties.value},
         getUIValue:function(){
             var prf=this.get(0),
-                prop=prf.properties,
-                cv=this._getCtrlValue();
+                prop=prf.properties;
+           
+            if(!prf.renderId)
+                return prop.value;
+
+            var cv=this._getCtrlValue();
             if(!prf.box._checkValid || false!==prf.box._checkValid(prf,cv))
                 prf.$UIvalue=cv;
             return prf.$UIvalue;
@@ -17973,7 +17977,8 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
             });
         },
         _getCtrlValue:function(){
-            return this.getSubNode('INPUT').attr('value');
+            var node=this.getSubNode('INPUT');
+            return (node&&!node.isEmpty()) ? this.getSubNode('INPUT').attr('value') : null;
         },
         _setDirtyMark:function(){
             return this.each(function(profile){
