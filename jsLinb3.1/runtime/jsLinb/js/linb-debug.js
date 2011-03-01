@@ -17689,8 +17689,9 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
             onSize:linb.UI.$onSize,
             IND:{
                 onClick:function(profile, e, src){
-                    var p=profile.properties,
-                        p1=linb.use(src).offset(),
+                    var p=profile.properties;
+                    if(p.disabled || p.readonly)return;
+                    var p1=linb.use(src).offset(),
                         p2=linb.Event.getPos(e),
                         arr=profile.box._v2a(profile,profile.properties.$UIvalue),
                         i1,i2,
@@ -17714,8 +17715,9 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
             },
             IND1:{
                 onKeydown:function(profile, e, src){
-                    var p=profile.properties,
-                        type=p.type=='vertical',
+                    var p=profile.properties;
+                    if(p.disabled || p.readonly)return;
+                    var type=p.type=='vertical',
                         key=linb.Event.getKey(e).key;
                     if(key==(type?'up':'left'))
                         profile.box._auto(profile, false);
@@ -17730,8 +17732,9 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                 },
                 onMousedown:function(profile, e, src){
                     if(linb.Event.getBtn(e)!="left")return;
-                    var p=profile.properties,
-                        type=p.type=='vertical',
+                    var p=profile.properties;
+                    if(p.disabled || p.readonly)return;
+                    var type=p.type=='vertical',
                         k2=type?'offsetTop':'offsetLeft',
                         k3=type?'offsetHeight':'offsetWidth',
                         box=profile.box;
@@ -17767,8 +17770,9 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
             },
             IND2:{
                 onKeydown:function(profile, e, src){
-                    var p=profile.properties,
-                        type=p.type=='vertical',
+                    var p=profile.properties;
+                    if(p.disabled || p.readonly)return;
+                    var type=p.type=='vertical',
                         key=linb.Event.getKey(e).key;
                     if(key==(type?'up':'left'))
                         profile.box._auto(profile, false);
@@ -17783,8 +17787,9 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                 },
                 onMousedown:function(profile, e, src){
                     if(linb.Event.getBtn(e)!="left")return;
-                    var p=profile.properties,
-                        type=p.type=='vertical',
+                    var p=profile.properties;
+                    if(p.disabled || p.readonly)return;
+                    var type=p.type=='vertical',
                         k2=type?'offsetTop':'offsetLeft',
                         k3=type?'offsetHeight':'offsetWidth',
                         box=profile.box;
@@ -17805,7 +17810,6 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                 beforeDragbegin:function(profile, e, src){
                     var type=profile.properties.type=='vertical';
                     linb(src)[type?'top':'left'](profile.__x=linb.use(src).get(0)[type?'offsetTop':'offsetLeft']);
-
                 },
                 onDrag:function(profile, e, src){
                     var offset=linb.DragDrop.getProfile().offset,
@@ -17821,8 +17825,9 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
             },
             RULERRIGHT:{
                 onClick:function(profile, e, src){
-                    var p=profile.properties,
-                        b=profile.boxing(),
+                    var p=profile.properties;
+                    if(p.disabled || p.readonly)return;
+                    var b=profile.boxing(),
                         c=profile.box,
                         arr=c._v2a(profile,p.$UIvalue);
                     if(!p.isRange)
@@ -17834,23 +17839,29 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
             },
             DECREASE:{
                 onMousedown:function(profile){
+                    if(profile.properties.disabled || profile.properties.readonly)return;
                     profile.box._auto(profile, false);
                 },
                 onMouseout:function(profile){
+                    if(profile.properties.disabled || profile.properties.readonly)return;
                     linb.Thread.abort(profile.$linbid+':auto');
                 },
                 onMouseup:function(profile){
+                    if(profile.properties.disabled || profile.properties.readonly)return;
                     linb.Thread.abort(profile.$linbid+':auto');
                 }
             },
             INCREASE:{
                 onMousedown:function(profile){
+                    if(profile.properties.disabled || profile.properties.readonly)return;
                     profile.box._auto(profile, true);
                 },
                 onMouseout:function(profile){
+                    if(profile.properties.disabled || profile.properties.readonly)return;
                     linb.Thread.abort(profile.$linbid+':auto');
                 },
                 onMouseup:function(profile){
+                    if(profile.properties.disabled || profile.properties.readonly)return;
                     linb.Thread.abort(profile.$linbid+':auto');
                 }
             }
@@ -24847,6 +24858,7 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                 if(p.toggleBtn)
                     profile.getSubNode('TOGGLE').tagClass('-checked', !!value);
 
+                profile.getRoot().height(profile.getSubNode('BORDER').height());
                 if(value){
                     if(ins.afterExpend)
                         ins.afterExpend(profile);
@@ -35116,8 +35128,9 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
             onSize:linb.UI.$onSize,
             IND:{
                 onClick:function(profile, e, src){
-                    var p=profile.properties,
-                        p1=linb.use(src).offset(),
+                    var p=profile.properties;
+                    if(p.disabled || p.readonly)return;
+                    var p1=linb.use(src).offset(),
                         p2=linb.Event.getPos(e),
                         arr=profile.box._v2a(profile,profile.properties.$UIvalue),
                         i1,i2,
@@ -35141,8 +35154,9 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
             },
             IND1:{
                 onKeydown:function(profile, e, src){
-                    var p=profile.properties,
-                        type=p.type=='vertical',
+                    var p=profile.properties;
+                    if(p.disabled || p.readonly)return;
+                    var type=p.type=='vertical',
                         key=linb.Event.getKey(e).key;
                     if(key==(type?'up':'left'))
                         profile.box._auto(profile, false);
@@ -35157,8 +35171,9 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                 },
                 onMousedown:function(profile, e, src){
                     if(linb.Event.getBtn(e)!="left")return;
-                    var p=profile.properties,
-                        type=p.type=='vertical',
+                    var p=profile.properties;
+                    if(p.disabled || p.readonly)return;
+                    var type=p.type=='vertical',
                         k2=type?'offsetTop':'offsetLeft',
                         k3=type?'offsetHeight':'offsetWidth',
                         box=profile.box;
@@ -35194,8 +35209,9 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
             },
             IND2:{
                 onKeydown:function(profile, e, src){
-                    var p=profile.properties,
-                        type=p.type=='vertical',
+                    var p=profile.properties;
+                    if(p.disabled || p.readonly)return;
+                    var type=p.type=='vertical',
                         key=linb.Event.getKey(e).key;
                     if(key==(type?'up':'left'))
                         profile.box._auto(profile, false);
@@ -35210,8 +35226,9 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                 },
                 onMousedown:function(profile, e, src){
                     if(linb.Event.getBtn(e)!="left")return;
-                    var p=profile.properties,
-                        type=p.type=='vertical',
+                    var p=profile.properties;
+                    if(p.disabled || p.readonly)return;
+                    var type=p.type=='vertical',
                         k2=type?'offsetTop':'offsetLeft',
                         k3=type?'offsetHeight':'offsetWidth',
                         box=profile.box;
@@ -35232,7 +35249,6 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                 beforeDragbegin:function(profile, e, src){
                     var type=profile.properties.type=='vertical';
                     linb(src)[type?'top':'left'](profile.__x=linb.use(src).get(0)[type?'offsetTop':'offsetLeft']);
-
                 },
                 onDrag:function(profile, e, src){
                     var offset=linb.DragDrop.getProfile().offset,
@@ -35248,8 +35264,9 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
             },
             RULERRIGHT:{
                 onClick:function(profile, e, src){
-                    var p=profile.properties,
-                        b=profile.boxing(),
+                    var p=profile.properties;
+                    if(p.disabled || p.readonly)return;
+                    var b=profile.boxing(),
                         c=profile.box,
                         arr=c._v2a(profile,p.$UIvalue);
                     if(!p.isRange)
@@ -35261,23 +35278,29 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
             },
             DECREASE:{
                 onMousedown:function(profile){
+                    if(profile.properties.disabled || profile.properties.readonly)return;
                     profile.box._auto(profile, false);
                 },
                 onMouseout:function(profile){
+                    if(profile.properties.disabled || profile.properties.readonly)return;
                     linb.Thread.abort(profile.$linbid+':auto');
                 },
                 onMouseup:function(profile){
+                    if(profile.properties.disabled || profile.properties.readonly)return;
                     linb.Thread.abort(profile.$linbid+':auto');
                 }
             },
             INCREASE:{
                 onMousedown:function(profile){
+                    if(profile.properties.disabled || profile.properties.readonly)return;
                     profile.box._auto(profile, true);
                 },
                 onMouseout:function(profile){
+                    if(profile.properties.disabled || profile.properties.readonly)return;
                     linb.Thread.abort(profile.$linbid+':auto');
                 },
                 onMouseup:function(profile){
+                    if(profile.properties.disabled || profile.properties.readonly)return;
                     linb.Thread.abort(profile.$linbid+':auto');
                 }
             }

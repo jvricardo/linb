@@ -219,7 +219,7 @@ Class('FormDesigner.OpenSaveDlg', 'linb.Com',{
         _ctl_inputform_onchange : function (profile, oldValue, newValue) {
             var ns = this;
             if(ns.__mode!="save"){
-                ns.ctl_inputRecord.setItems([]).setValue(null);
+                ns.ctl_inputRecord.setItems([]).setValue(null).setCaption(null);
             }
         }
     }

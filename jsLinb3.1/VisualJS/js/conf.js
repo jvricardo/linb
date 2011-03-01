@@ -45,29 +45,37 @@ new function(){
             {id:'linb.UI.absForm1',key:'linb.UI.absForm1',caption:'Simple Elements',group:true, image:_img_app, imagePos:'-48px -48px',sub:[
                 {id:'linb.UI.Tag',key:'linb.UI.Tag', caption:'Tag Element', image:_img_widgets, imagePos:'left top', draggable:true},
                 {id:'linb.UI.Span',key:'linb.UI.Span', caption:'Span Element', image:_img_widgets, imagePos:'-544px -16px', draggable:true},
-                {id:'linb.UI.Div',key:'linb.UI.Div', caption:'Div Element', image:_img_widgets, imagePos:'-544px top', draggable:true},
-
-                {id:'linb.UI.SLabel',key:'linb.UI.SLabel', caption:'Simple Label', image:_img_widgets, imagePos:'-16px top', draggable:true},
-                {id:'linb.UI.SButton',key:'linb.UI.SButton', caption:'Simple Button', image:_img_widgets, imagePos:'-48px top', draggable:true/*, Appearances:['default','link','block']*/},
-                {id:'linb.UI.SCheckBox',key:'linb.UI.SCheckBox', caption:'Simple CheckBox', image:_img_widgets, imagePos:'-96px top', draggable:true}
+                {id:'linb.UI.Div',key:'linb.UI.Div', caption:'Div Element', image:_img_widgets, imagePos:'-544px top', draggable:true}
             ]},
             {id:'linb.UI.absForm',key:'linb.UI.absForm',caption:'Form Elements',group:true, image:_img_app, imagePos:'-48px -48px',sub:[
-                {id:'linb.UI.Label',key:'linb.UI.Label', caption:'Label', image:_img_widgets, imagePos:'-16px top', draggable:true},
                 {id:'linb.UI.Link',key:'linb.UI.Link', caption:'Link', image:_img_widgets, imagePos:'-32px top', draggable:true},
-                {id:'linb.UI.Button',key:'linb.UI.Button', caption:'Button', image:_img_widgets, imagePos:'-48px top', draggable:true,
+                {id:'linb.UI.SLabel',key:'linb.UI.SLabel', caption:'Label', image:_img_widgets, imagePos:'-16px top', draggable:true,
                     sub:[
-                        {id:'linb.UI.Button0',key:'linb.UI.Button', caption:'Image Button', draggable:true,
-                            iniProp:{image:_imgdemo}
-                        },
-                        {id:'linb.UI.Button1',key:'linb.UI.Button', caption:'Status Button', draggable:true,
-                            iniProp:{type:'status'}
-                        },
-                        {id:'linb.UI.Button2',key:'linb.UI.Button', caption:'Dropable Button', draggable:true,
-                            iniProp:{type:'drop'}
-                        }
+                        {id:'linb.UI.Label',key:'linb.UI.Label', caption:'Advanced Label', image:_img_widgets, imagePos:'-16px top', draggable:true}
                     ]
                 },
-                {id:'linb.UI.CheckBox',key:'linb.UI.CheckBox', caption:'CheckBox', image:_img_widgets, imagePos:'-96px top', draggable:true},
+                {id:'linb.UI.SButton',key:'linb.UI.SButton', caption:'Button', image:_img_widgets, imagePos:'-48px top', draggable:true,
+                    sub:[
+                        {id:'linb.UI.Button',key:'linb.UI.Button', caption:'Advanced Button', image:_img_widgets, imagePos:'-48px top', draggable:true,
+                            sub:[
+                                {id:'linb.UI.Button0',key:'linb.UI.Button', caption:'Image Button', draggable:true,
+                                    iniProp:{image:_imgdemo}
+                                },
+                                {id:'linb.UI.Button1',key:'linb.UI.Button', caption:'Status Button', draggable:true,
+                                    iniProp:{type:'status'}
+                                },
+                                {id:'linb.UI.Button2',key:'linb.UI.Button', caption:'Dropable Button', draggable:true,
+                                    iniProp:{type:'drop'}
+                                }
+                            ]
+                        }                    
+                    ]
+                },
+                {id:'linb.UI.SCheckBox',key:'linb.UI.SCheckBox', caption:'CheckBox', image:_img_widgets, imagePos:'-96px top', draggable:true,
+                    sub:[
+                        {id:'linb.UI.CheckBox',key:'linb.UI.CheckBox', caption:'Advanced CheckBox', image:_img_widgets, imagePos:'-96px top', draggable:true}
+                        ]
+                },
                 {id:'linb.UI.Input',key:'linb.UI.Input', caption:'Input', image:_img_widgets, imagePos:'-112px top', draggable:true,sub:[
                     {
                         id:'linb.UI.Input1',key:'linb.UI.Input', caption:'Password Input', draggable:true,
@@ -221,14 +229,33 @@ new function(){
                 ]}
             ]},
             {id:'linb.UI.',key:'linb.UI.absContainer',caption:'Containers',group:true, image:_img_app, imagePos:'-48px -48px',sub:[
-                {id:'linb.UI.Pane',key:'linb.UI.Pane', caption:'Pane', image:_img_widgets, imagePos:'-288px top', draggable:true},
+                {id:'linb.UI.Pane',key:'linb.UI.Pane', caption:'Pane', image:_img_widgets, imagePos:'-288px top', draggable:true,
+                    sub:[
+                        {id:'linb.UI.Pane1',key:'linb.UI.Pane', caption:'Relative Pane',draggable:true,
+                            customRegion:1,
+                            iniProp:{dock:'width',position:'relative', left:'auto', top:'auto',width:'auto',height:100}
+                        }
+                    ]
+                },
+                {id:'linb.UI.Block',key:'linb.UI.Block', caption:'Block', image:_img_widgets, imagePos:'-304px top', draggable:true,
+                    sub:[
+                        {id:'linb.UI.Block1',key:'linb.UI.Block', caption:'Relative Block',draggable:true,
+                           customRegion:1,
+                           iniProp:{dock:'width',position:'relative', left:'auto', top:'auto',width:'auto',height:100}
+                        }
+                    ]
+                },
                 {id:'linb.UI.Panel',key:'linb.UI.Panel', caption:'Panel', image:_img_widgets, imagePos:'-672px top', draggable:true,sub:[
                     {
-                        id:'linb.UI.Panel1',key:'linb.UI.Panel', caption:'Foldable Panel',  draggable:true,
+                        id:'linb.UI.Panel1',key:'linb.UI.Panel', caption:'Relative Panel',  draggable:true,
+                        customRegion:1,
+                        iniProp:{dock:'width',position:'relative', left:'auto', top:'auto',width:'auto',height:200,toggleBtn:true,closeBtn:true,refreshBtn:true}
+                    },
+                    {
+                        id:'linb.UI.Panel2',key:'linb.UI.Panel', caption:'Foldable Panel',  draggable:true,
                         iniProp:{dock:'none',width:200,height:200,toggleBtn:true,closeBtn:true,refreshBtn:true}
                     }                
                 ]},
-                {id:'linb.UI.Block',key:'linb.UI.Block', caption:'Block', image:_img_widgets, imagePos:'-304px top', draggable:true},
                 {id:'linb.UI.Layout',key:'linb.UI.Layout', caption:'Layout', image:_img_widgets, imagePos:'-336px top', draggable:true,
                     iniProp:{
                         items:[{id:'before',pos:'before'},{id:'main'},{id:'after',pos:'after'}]

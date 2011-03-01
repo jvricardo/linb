@@ -173,6 +173,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                                     dragData:{
                                         type:item.key,
                                         iniProp:item.iniProp,
+                                        customRegion:item.customRegion,
                                         image: item.image,
                                         imagePos:item.imagePos
                                     }
@@ -830,6 +831,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                         dragData = dd.dragData,
                         type=dragData.type,
                         iniProp=dragData.iniProp,
+                        customRegion=dragData.customRegion,
                         image = dragData.image,
                         imagePos = dragData.imagePos,
                         data=dragData.data,
@@ -860,7 +862,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                                     target.setProperties(iniProp);
                                 }
 
-                                if(target['linb.UI']){
+                                if(!customRegion && target['linb.UI']){
                                     var parentNode=profile.keys.PANEL?profile.getSubNode(profile.keys.PANEL, profile.getItemIdByDom(linb.use(src).id())):profile.getRoot();
                                     if(!parentNode.isEmpty()){
                                         var p=target.get(0).properties,
