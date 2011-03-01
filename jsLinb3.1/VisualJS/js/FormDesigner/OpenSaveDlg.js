@@ -60,7 +60,7 @@ Class('FormDesigner.OpenSaveDlg', 'linb.Com',{
                 .setLeft(10)
                 .setTop(14)
                 .setWidth(74)
-                .setCaption("From ID")
+                .setCaption("Form ID")
             );
             
             host.ctl_dlg.append(
