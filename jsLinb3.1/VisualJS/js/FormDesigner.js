@@ -81,8 +81,14 @@ Class('FormDesigner', 'linb.Com',{
                         {id:"save","caption":"Save Form", "image":"img/App.gif", "imagePos":"-96px top"}, 
                         {id:"delete","caption":"Remove Form", "image":"img/App.gif", "imagePos":"-16px -16px"}, 
                         {id:"fill","caption":"Fill Form", "image":"img/App.gif", "imagePos":"-80px -48px"}, 
-                        {id:"show","caption":"Read Form", "image":"img/App.gif", "imagePos":"-128px -48px"}]
-                    }])
+                        {id:"show","caption":"Read Form", "image":"img/App.gif", "imagePos":"-128px -48px"}
+                        ]
+                    },
+                    {"id":"grp3", "sub":[
+                        {id:"list","caption":"Forms List", "image":"img/App.gif", "imagePos":"-112px -48px"}
+                        ]
+                    }
+                ])
                 .onClick("_toolbar_onclick")
             );
             
@@ -97,7 +103,7 @@ Class('FormDesigner', 'linb.Com',{
                 .setShadowText(true)
                 .setFontSize("18px")
                 .setFontWeight("bold")
-                .setCustomStyle({"CAPTION":"font-family:Comic Sans MS", "SCAPTION":"font-familyr:Comic Sans MS"})
+                .setCustomStyle({"CAPTION":"font-family:Comic Sans MS", "SCAPTION":"font-family:Comic Sans MS"})
             );
             
             return children;
@@ -106,6 +112,9 @@ Class('FormDesigner', 'linb.Com',{
         _toolbar_onclick: function(profile,item, group, e, src){
             var ns=this, keypara=item.id;
             switch(keypara){
+                case "list":
+                    linb.Dom.submit("FormsList.html");
+                break;
                 case "open":
                 case "save":
                 case "delete":

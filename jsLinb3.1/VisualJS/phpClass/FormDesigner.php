@@ -15,6 +15,10 @@ class FormDesigner extends Unit
 
         //only input relative path, and not ./ or ../ allowed
         switch($hash->action){
+        case 'fetchFormsAndRecords':
+            $path=self::PATH_FORMS;
+            $r=$this->getFiles($path, -1, 1);        
+        break;
         case 'fetchForms':
             $path=self::PATH_FORMS;
             $r=$this->getFiles($path);
