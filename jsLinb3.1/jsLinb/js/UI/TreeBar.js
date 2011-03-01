@@ -283,7 +283,7 @@ Class("linb.UI.TreeBar",["linb.UI","linb.absList","linb.absValue"],{
                padding:'2px 4px',
                border: '1px solid',
                'outline-offset':'-1px',
-               '-moz-outline-offset':'-1px !important',
+               '-moz-outline-offset':(linb.browser.gek && parseInt(linb.browser.ver)<3)?'-1px !important':null,
                'border-color':'#EDF4FC #698AB3 #698AB3 #EDF4FC',
                'background-color':'#CCE4FC'
             },

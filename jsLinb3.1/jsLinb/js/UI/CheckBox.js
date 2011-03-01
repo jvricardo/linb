@@ -41,7 +41,7 @@ Class("linb.UI.CheckBox", "linb.UI.Button",{
                 width:'100%',
                 height:'100%',
                 'outline-offset':'-1px',
-                '-moz-outline-offset':'-1px !important'
+                '-moz-outline-offset':(linb.browser.gek && parseInt(linb.browser.ver)<3)?'-1px !important':null
             },
             /*span*/
             BOX:{

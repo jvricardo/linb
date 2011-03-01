@@ -469,10 +469,11 @@ new function(){
             ]}
         ],
         widgets_xprops:{
+            'linb.UI.Tag':['tagKey','tabindex'],
+            'linb.UI.Span':['html','tabindex'],
             'linb.UI.Div':['html','tabindex'],
             'linb.UI.Pane':['html','tabindex'],
             'linb.UI.Block':['html','tabindex'],
-            'linb.UI.Tag':['tagKey','tabindex'],
             'linb.UI.SLabel':['caption','tabindex'],
             'linb.UI.Label':['caption','tabindex'],
             'linb.UI.Link':['caption','onClick','tabindex'],

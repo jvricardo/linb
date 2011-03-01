@@ -286,12 +286,12 @@ Class("linb.CSS", null,{
             (linb.browser.ie6?("#"+linb.$localeDomId+"{vertical-align:baseline;}"):"")+
             "a{color:#0000ee;text-decoration:none;}"+
             "a:hover{color:red}"+
-            (b.gek?"a:focus{outline-offset:-1px;-moz-outline-offset:-1px !important}":"")+
+            (b.gek? ("a:focus{outline-offset:-1px;"+ (parseInt(b.ver)<3?"-moz-outline-offset:-1px !important":"") +"}" ):"")+
             "div{font-size:12px;}"+
             "span{outline-offset:-1px;"+
             (b.gek
                 ? parseFloat(linb.browser.ver)<3 
-                    ? "-moz-outline-offset:-1px !important;display:-moz-inline-block;display:-moz-inline-box;display:inline-block;"
+                    ? ((parseInt(b.ver)<3?"-moz-outline-offset:-1px !important;":"") + "display:-moz-inline-block;display:-moz-inline-box;display:inline-block;")
                     :"display:inline-block;"
                 : b.ie6
                     ?"display:inline-box;display:inline;"

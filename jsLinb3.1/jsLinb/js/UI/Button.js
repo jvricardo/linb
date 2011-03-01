@@ -213,7 +213,7 @@ Class("linb.UI.Button", ["linb.UI.Widget","linb.absValue"],{
                 height:'100%',
                 position:'absolute',
                 'outline-offset':'-1px',
-                '-moz-outline-offset':'-1px !important'
+                '-moz-outline-offset':(linb.browser.gek && parseInt(linb.browser.ver)<3)?'-1px !important':null
             },
             /*span*/
             BOX:{

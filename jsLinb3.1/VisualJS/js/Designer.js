@@ -38,7 +38,8 @@ Class('VisualJS.Designer', 'linb.Com',{
                 page.$curViewSize='800';
 
                 var tbpath = linb.ini.appPath+'img/designer/toolbar.gif',
-                    tbk='$VisualJS.designer.tool.';
+                    tbk='$VisualJS.designer.tool.',
+                    showRefresh = CONF.designer_editMode != "simple";
                 page.toolbar.setItems([{
                     id:'code',
                     sub:[
@@ -51,10 +52,10 @@ Class('VisualJS.Designer', 'linb.Com',{
                     },
                     {
                         id : "refresh",
-                        image : CONF.img_app,
-                        imagePos:"-112px -16px",
-                        type : "button",
-                        tips : tbk+'refresh'
+                        image :showRefresh?CONF.img_app:null,
+                        imagePos:showRefresh?"-112px -16px":null,
+                        type : showRefresh?"button":"split",
+                        tips : showRefresh?(tbk+'refresh'):null
                     },{
                         id : "format",
                         image : CONF.img_app,
@@ -475,17 +476,19 @@ Class('VisualJS.Designer', 'linb.Com',{
                 }
             })
             .onDblclick(function(profile, e, src){
-                var arr = this.tempSelected;
-                if(arr.length){
-                    var o = linb.getObject(arr[0]);
-                    page.startTransaction();
-                    // if dirty
-                    if(page._dirty)
-                        page.resetCodeFromDesigner(true);
-                        
-                    page.submitTransaction(function(){
-                        page.searchInEditor(".setHost(host,\""+o.alias+"\")");
-                    });
+                if(CONF.designer_editMode != "simple"){
+                    var arr = this.tempSelected;
+                    if(arr.length){
+                        var o = linb.getObject(arr[0]);
+                        page.startTransaction();
+                        // if dirty
+                        if(page._dirty)
+                            page.resetCodeFromDesigner(true);
+                            
+                        page.submitTransaction(function(){
+                            page.searchInEditor(".setHost(host,\""+o.alias+"\")");
+                        });
+                    }
                 }
             })
             //select children even if parent is selected

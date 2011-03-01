@@ -214,7 +214,7 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
             },
             'KEY a:focus, POP a:focus':{
                 'outline-offset':'',
-                '-moz-outline-offset': ''
+                '-moz-outline-offset': (linb.browser.gek && parseInt(linb.browser.ver)<3)?'':null
             },
             'KEY .ui-btn, POP .ui-btn':{
                 'margin-right':'3px'

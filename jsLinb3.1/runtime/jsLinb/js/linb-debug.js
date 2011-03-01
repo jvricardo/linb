@@ -4783,12 +4783,12 @@ Class("linb.CSS", null,{
             (linb.browser.ie6?("#"+linb.$localeDomId+"{vertical-align:baseline;}"):"")+
             "a{color:#0000ee;text-decoration:none;}"+
             "a:hover{color:red}"+
-            (b.gek?"a:focus{outline-offset:-1px;-moz-outline-offset:-1px !important}":"")+
+            (b.gek? ("a:focus{outline-offset:-1px;"+ (parseInt(b.ver)<3?"-moz-outline-offset:-1px !important":"") +"}" ):"")+
             "div{font-size:12px;}"+
             "span{outline-offset:-1px;"+
             (b.gek
                 ? parseFloat(linb.browser.ver)<3 
-                    ? "-moz-outline-offset:-1px !important;display:-moz-inline-block;display:-moz-inline-box;display:inline-block;"
+                    ? ((parseInt(b.ver)<3?"-moz-outline-offset:-1px !important;":"") + "display:-moz-inline-block;display:-moz-inline-box;display:inline-block;")
                     :"display:inline-block;"
                 : b.ie6
                     ?"display:inline-box;display:inline;"
@@ -17180,7 +17180,7 @@ Class("linb.UI.Button", ["linb.UI.Widget","linb.absValue"],{
                 height:'100%',
                 position:'absolute',
                 'outline-offset':'-1px',
-                '-moz-outline-offset':'-1px !important'
+                '-moz-outline-offset':(linb.browser.gek && parseInt(linb.browser.ver)<3)?'-1px !important':null
             },
             /*span*/
             BOX:{
@@ -17370,7 +17370,7 @@ Class("linb.UI.Button", ["linb.UI.Widget","linb.absValue"],{
                 width:'100%',
                 height:'100%',
                 'outline-offset':'-1px',
-                '-moz-outline-offset':'-1px !important'
+                '-moz-outline-offset':(linb.browser.gek && parseInt(linb.browser.ver)<3)?'-1px !important':null
             },
             /*span*/
             BOX:{
@@ -25086,7 +25086,7 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
             },
             'KEY a:focus, POP a:focus':{
                 'outline-offset':'',
-                '-moz-outline-offset': ''
+                '-moz-outline-offset': (linb.browser.gek && parseInt(linb.browser.ver)<3)?'':null
             },
             'KEY .ui-btn, POP .ui-btn':{
                 'margin-right':'3px'
@@ -27230,7 +27230,7 @@ Class("linb.UI.TreeBar",["linb.UI","linb.absList","linb.absValue"],{
                padding:'2px 4px',
                border: '1px solid',
                'outline-offset':'-1px',
-               '-moz-outline-offset':'-1px !important',
+               '-moz-outline-offset':(linb.browser.gek && parseInt(linb.browser.ver)<3)?'-1px !important':null,
                'border-color':'#EDF4FC #698AB3 #698AB3 #EDF4FC',
                'background-color':'#CCE4FC'
             },
@@ -27864,7 +27864,7 @@ Class("linb.UI.TreeView","linb.UI.TreeBar",{
             ITEMCAPTION:{
                 cursor:'pointer',
                'outline-offset':'-1px',
-               '-moz-outline-offset':'-1px !important'
+               '-moz-outline-offset':(linb.browser.gek && parseInt(linb.browser.ver)<3)?'-1px !important':null
             },
             'ITEMCAPTION-mouseover':{
                 $order:12,
@@ -32438,7 +32438,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                 overflow:'hidden',
                 '-moz-box-flex':'1',
                 'outline-offset':'-1px',
-                '-moz-outline-offset':'-1px !important',
+                '-moz-outline-offset':(linb.browser.gek && parseInt(linb.browser.ver)<3)?'-1px !important':null,
                 height:'100%',
                 color:'#000',
                 //ie need this

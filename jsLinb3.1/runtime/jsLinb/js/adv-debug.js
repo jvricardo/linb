@@ -1696,7 +1696,7 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
             },
             BAND:{
                 'outline-offset':'-1px',
-                '-moz-outline-offset':'-1px !important',
+                '-moz-outline-offset':(linb.browser.gek && parseInt(linb.browser.ver)<3)?'-1px !important':null,
                 'font-size':'0',
                 'line-height':'0'                
             },

@@ -352,7 +352,8 @@ new function(){
             dataField:1
         },
         widgets_xprops:{
-            'linb.UI.Div':['html'],
+            'linb.UI.Span':['html','tabindex'],
+            'linb.UI.Div':['html','tabindex'],
             'linb.UI.Pane':['html'],
             'linb.UI.Block':['html'],
             'linb.UI.Tag':['tagKey'],
