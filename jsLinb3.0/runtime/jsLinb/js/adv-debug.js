@@ -3882,9 +3882,11 @@ Class("linb.UI.Range", ["linb.UI","linb.absValue"],{
         Behaviors:{
             IND1:{
                 onKeydown:function(profile, e, src){
+                    if(profile.properties.disabled || profile.properties.readonly)return;
                     profile.box._keydown.apply(profile.box,[profile, e, src,0]);
                 },
                 onMousedown:function(profile, e, src){
+                    if(profile.properties.disabled || profile.properties.readonly)return;
                     if(linb.Event.getBtn(e)!="left")return;
                     var p=profile.properties,
                         box=profile.box,
@@ -3925,9 +3927,11 @@ Class("linb.UI.Range", ["linb.UI","linb.absValue"],{
             },
             IND2:{
                 onKeydown:function(profile, e, src){
+                    if(profile.properties.disabled || profile.properties.readonly)return;
                     profile.box._keydown.apply(profile.box,[profile, e, src,1]);
                 },
                 onMousedown:function(profile, e, src){
+                    if(profile.properties.disabled || profile.properties.readonly)return;
                     if(linb.Event.getBtn(e)!="left")return;
                     var p=profile.properties,
                         box=profile.box,
