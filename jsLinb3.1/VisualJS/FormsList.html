@@ -102,13 +102,13 @@
             _.each(items,function(row){
                 table.push("<tr style='height:20px;border-top:solid 1px #ccc;'>");
                 table.push("<td style='font-weight:bold;'>"+row[0]+"</td><td></td><td>");
-                table.push("<a target=_blank href='FormBuilder.html#mode=create&formId="+row[0]+"'>Edit Blank Form</a>");
+                table.push("<strong><a target=_blank href='FormBuilder.html#mode=create&formId="+row[0]+"'>Edit Blank Form</a></strong>");
                 table.push("</td>");
                 table.push("</tr>");
                 _.arr.each(row[1],function(cell){
                     table.push("<tr style='height:20px;border-top:solid 1px #eee;'>");
                     table.push("<td></td><td>"+cell+"</td><td>");
-                    table.push("<a target=_blank href='FormBuilder.html#mode=create&formId="+row[0]+"'>Edit Form</a>");
+                    table.push("<a target=_blank href='FormBuilder.html#mode=create&formId="+row[0]+"&recordId="+cell+"'>Edit Form</a>");
                     table.push("&nbsp;&nbsp;|&nbsp;&nbsp;");
                     table.push("<a target=_blank href='FormBuilder.html#mode=fill&formId="+row[0]+"&recordId="+cell+"'>Fill Form</a>");
                     table.push("&nbsp;&nbsp;|&nbsp;&nbsp;");
