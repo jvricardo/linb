@@ -1906,7 +1906,7 @@ Class('linb.IAjax','linb.absIO',{
                     b=true;
                 }else{
                     if(_.isDefined(k[i])){
-                        t=document.createElement('input');
+                        t=document.createElement('textarea');
                         t.id=t.name=i;
                         t.value= typeof k[i]=='string'?k[i]:_.serialize(k[i],function(o){return o!==undefined});
                         form.appendChild(t);
