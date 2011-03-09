@@ -1231,7 +1231,11 @@ Class('VisualJS.Designer', 'linb.Com',{
                       uis = pro.boxing();
                   }
 
-                  rows.push({id:'key', tipk:'class', caption:'<strong>class</strong>', tips:linb.getRes('VisualJS.designer.openapi'), cells:[{disabled:true, value:'<strong>'+pro.key+'</strong>',type:'label', tips:linb.getRes('VisualJS.designer.openapi')}] });
+                  rows.push({id:'key', tipk:'class', caption:'<strong>class</strong>', 
+                    tips:CONF.designer_editMode != "simple"?linb.getRes('VisualJS.designer.openapi'):"", 
+                    cells:[{disabled:true, value:'<strong>'+pro.key+'</strong>',type:'label', 
+                        
+                        tips:CONF.designer_editMode != "simple"?linb.getRes('VisualJS.designer.openapi'):""}] });
                   rows.push({id:'alias',tipk:'fun', tipv:'alias',caption:'<strong>alias</strong>',cells:[{value:pro.alias,type:uis._nodes.length===1?'input':'label'}] });
                   
                   if(CONF.designer_editMode != "simple"){
@@ -1655,8 +1659,10 @@ Class('VisualJS.Designer', 'linb.Com',{
                     }else if(row.tipk=='event'){
                         str+= '<div>'+key+' [event] : <b>'+row.tipv+ '</b> </div>';
                     }
-                    if(row.tipk=='class' || cell.value==row.tipv)
-                        str +='<div><em style="background-color:#EBEADB;">'+linb.getRes('VisualJS.designer.openapi')+'</em></div>';
+                    if(CONF.designer_editMode != "simple"){
+                        if(row.tipk=='class' || cell.value==row.tipv)
+                            str +='<div><em style="background-color:#EBEADB;">'+linb.getRes('VisualJS.designer.openapi')+'</em></div>';
+                        }
 
                     linb.Tips.show(pos, str);
                 }else if(cell.tips)
