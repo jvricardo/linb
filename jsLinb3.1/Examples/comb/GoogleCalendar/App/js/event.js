@@ -251,12 +251,12 @@ Class('App.event', 'linb.Com',{
         _getSimpleTimeSpan:function(){
                 var host = this, arr = [];
                 if(host._curDateTool=='simple'){
-                    var d = new Date(parseInt(host.cbFromDate.getUIValue())),
+                    var d = host.cbFromDate.getUIValue(),
                         m = host.cbFromTime.getUIValue(),
                         a = m.split(':');
                     arr[0] = linb.Date.add(d, 'n', Number(a[0])*60 + Number(a[1]));
 
-                    d = new Date(parseInt(host.cbToDate.getUIValue()));
+                    d = host.cbToDate.getUIValue();
                     m = host.cbToTime.getUIValue();
                     a = m.split(':');
                     arr[1] = linb.Date.add(d, 'n', Number(a[0])*60 + Number(a[1]));
