@@ -701,7 +701,7 @@ _.merge(linb,{
     $localeDomId:'linblid',
     $dateFormat:'',
 
-    Locale:{en:{}},
+    Locale:{},
     $cache:{
         thread:{},
         SC:{},
@@ -730,7 +730,7 @@ _.merge(linb,{
     getAppLangKey:function(key){return linb.$appLangKey},
     getLang:function(){return linb.$localeKey},
     setLang:function(key,callback){
-        var l=linb.Locale,g=linb.getRes,t,v,i,j,f,m,z,a=[];
+        var g=linb.getRes,t,v,i,j,f,m,z,a=[];
         linb.$localeKey=key;
         v = linb.browser.ie ? document.all.tags('span') : document.getElementsByTagName('span');
         for(i=0;t=v[i];i++)if(t.id==linb.$localeDomId)a[a.length]=t;
