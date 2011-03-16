@@ -360,6 +360,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                     PANEL:{
                         tagName : 'div',
                         className:'uibg-base',
+                        style:"{_overflow};",
                         text:linb.UI.$childTag
                     }
                 }
@@ -780,6 +781,12 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
             width:200,
             height:200,
             position:'absolute',
+            overflow:{
+                ini:undefined,
+                action:function(v){
+                    this.getSubNode('PANEL',true).css('overflow',v||'');
+                }
+            },
             HAlign:{
                 ini:'left',
                 listbox:['left','center','right'],
@@ -867,11 +874,16 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
             return data;
         },
         _prepareItem:function(profile, item){
-            var dpn = 'display:none';
+            var dpn = 'display:none',prop=profile.properties;
             item.closeDisplay = item.closeBtn?'':dpn;
             item.popDisplay = item.popBtn?'':dpn;
             item._opt = item.optBtn?'':dpn;
             item.itemDisplay = item.hidden?dpn:'';
+
+            if(_.isStr(item.overflow))
+                item._overflow = item.overflow.indexOf(':')!=-1?(item.overflow):("overflow:"+item.overflow);
+            else if(_.isStr(prop.overflow))
+                item._overflow = prop.overflow.indexOf(':')!=-1?(prop.overflow):("overflow:"+prop.overflow);
         },
         getDropKeys:function(profile,node){
             return profile.properties[profile.getKey(linb.use(node).id())==profile.keys.PANEL?'dropKeys':'dropKeysPanel'];

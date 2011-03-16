@@ -123,7 +123,7 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                         PANEL:{
                             tagName:'div',
                             className:'{_bordertype}',
-                            style:'{panelDisplay}',
+                            style:'{panelDisplay};{_overflow};',
                             text:'{html}'+linb.UI.$childTag
                         }
                     }
@@ -392,7 +392,7 @@ Class("linb.UI.Panel", "linb.UI.Div",{
             data._bordertype='uiborder-'+data.borderType;
             
             profile._toggle = !!data.toggle;
-            
+
             return data;
         },
         _onresize:function(profile,width,height){

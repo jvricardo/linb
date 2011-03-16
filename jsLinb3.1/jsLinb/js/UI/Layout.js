@@ -184,7 +184,7 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
                         PANEL:{
                             tagName:'div',
                             className:'uibg-base',
-                            style:'position:absolute;left:0;top:0;',
+                            style:'position:absolute;left:0;top:0;{_overflow};',
                             text:linb.UI.$childTag
                         }
                     }
@@ -585,7 +585,12 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
             listKey:null,
             width:200,
             height:200,
-
+            overflow:{
+                ini:undefined,
+                action:function(v){
+                    this.getSubNode('PANEL',true).css('overflow',v||'');
+                }
+            },
             items:{
                 ini:[],
                 set:function(value){
@@ -703,7 +708,7 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
             return data;
         },
         _prepareItem:function(profile, item){
-            var pp=profile.properties;
+            var prop=profile.properties;
             if(item.id=='main'){
                 item.cls1=profile.getClass('ITEM', '-main');
                 item.cls2  = profile.getClass('MOVE', '-main');
@@ -711,13 +716,13 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
                 return;
             }
 
-            if(pp.type=='vertical')
+            if(prop.type=='vertical')
                 item.size = 'height:'+item.size+'px';
             else
                 item.size = 'width:'+item.size+'px';
 
             var pos;
-            if(pp.type=='vertical'){
+            if(prop.type=='vertical'){
                 if(item.pos=='before')
                     pos='top';
                 else
@@ -735,6 +740,11 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
             item.display = item.hidden?'display:none':'';
             item.moveDisplay = item.locked?'display:none':'';
             item.cmdDisplay = item.cmd?'':'display:none';
+
+            if(_.isStr(item.overflow))
+                item._overflow = item.overflow.indexOf(':')!=-1?(item.overflow):("overflow:"+item.overflow);
+            else if(_.isStr(prop.overflow))
+                item._overflow = prop.overflow.indexOf(':')!=-1?(prop.overflow):("overflow:"+prop.overflow);
         },
         RenderTrigger:function(){
             var t, profile=this;

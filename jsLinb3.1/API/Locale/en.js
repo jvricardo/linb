@@ -7747,6 +7747,18 @@ _.set(linb.Locale,["en","app"], {
                     "_.asyRun(function(){o.setHtml('<span>b</span>')},1000);"+
                     "}"
                 ]
+            },
+            getOverflow:{
+                $desc:"Gets container's CSS overflow property.",
+                $rtn:"String"
+            },
+            setOverflow:{
+                $desc:"Sets container's CSS overflow property.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : String, 'auto','hidden','visible','' ",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
             }
         }
     });
@@ -8037,6 +8049,18 @@ _.set(linb.Locale,["en","app"], {
                     "var o;linb(id).prepend(o=(new linb.UI.Block).setBorder(true).setHtml('<span>a</span>'));"+
                     "_.asyRun(function(){o.setHtml('<span>b</span>')},1000);"+
                     "}"
+                ]
+            },
+            getOverflow:{
+                $desc:"Gets container's CSS overflow property.",
+                $rtn:"String"
+            },
+            setOverflow:{
+                $desc:"Sets container's CSS overflow property.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : String, 'auto','hidden','visible','' ",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
                 ]
             },
             getBackground:{
@@ -11839,6 +11863,18 @@ _.set(linb.Locale,["en","app"], {
                     "}"
                 ]
             },
+            getOverflow:{
+                $desc:"Gets container's CSS overflow property.",
+                $rtn:"String"
+            },
+            setOverflow:{
+                $desc:"Sets container's CSS overflow property.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : String, 'auto','hidden','visible','' ",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
             fireCmdClickEvent:{
                 $desc:"Fires 'fold/expand' command button's click event.",
                 $rtn:"[self]",
@@ -11999,6 +12035,18 @@ _.set(linb.Locale,["en","app"], {
                     "var o;linb(id).prepend(o=(new linb.UI.Tabs({height:'auto',items:[{id:'a',caption:'a a'},{id:'b',caption:'b b'},{id:'c',caption:'c c'}]})));"+
                     "_.asyRun(function(){o.clearItems()},1000);"+
                     "}"
+                ]
+            },
+            getOverflow:{
+                $desc:"Gets container's CSS overflow property.",
+                $rtn:"String"
+            },
+            setOverflow:{
+                $desc:"Sets container's CSS overflow property.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : String, 'auto','hidden','visible','' ",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
                 ]
             },
             getHAlign :{
@@ -13153,6 +13201,18 @@ _.set(linb.Locale,["en","app"], {
                     "var dlg=(new linb.UI.Dialog).show(null,false, 100,100); _.asyRun(function(){dlg.setHtml('<p>content</p>');alert(dlg.getHtml());},1000);"
                 ]
             },
+            getOverflow:{
+                $desc:"Gets container's CSS overflow property.",
+                $rtn:"String"
+            },
+            setOverflow:{
+                $desc:"Sets container's CSS overflow property.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : String, 'auto','hidden','visible','' ",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
             getStatus:{
                 $desc:"Gets dialog status. Could be 'normal', 'min' or 'max'.",
                 $rtn:"String",
@@ -13311,6 +13371,18 @@ _.set(linb.Locale,["en","app"], {
                   "value [Required] : String.",
                   "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
               ]
+            },
+            getOverflow:{
+                $desc:"Gets container's CSS overflow property.",
+                $rtn:"String"
+            },
+            setOverflow:{
+                $desc:"Sets container's CSS overflow property.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : String, 'auto','hidden','visible','' ",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
             }
         }
     });

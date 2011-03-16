@@ -5413,7 +5413,7 @@ new function(){
         Static:{
             Templates:{
                 className:'{_className}',
-                style:'{_style}',
+                style:'{_style};{_overflow};',
                 //for firefox div focus bug: outline:none; tabindex:'-1'
                 tabindex:'-1',
                 text:'{html}'+linb.UI.$childTag
@@ -5425,7 +5425,19 @@ new function(){
                     action:function(v){
                         this.getRoot().html(v);
                     }
+                },
+                overflow:{
+                    ini:undefined,
+                    action:function(v){
+                        this.getContainer().css('overflow',v||'');
+                    }
                 }
+            },
+            _prepareData:function(profile){
+                var data=arguments.callee.upper.call(this, profile);
+                if(_.isStr(data.overflow))
+                    data._overflow = data.overflow.indexOf(':')!=-1?(data.overflow):("overflow:"+data.overflow);
+                return data;
             }
         }
     });
@@ -5443,7 +5455,7 @@ new function(){
             Templates:{
                 tagName:'div',
                 className:'{_className}',
-                style:'{_style}',
+                style:'{_style};{_overflow};',
                 //for firefox div focus bug: outline:none; tabindex:'-1'
                 tabindex:'-1',
                 text:'{html}'+linb.UI.$childTag
@@ -5457,6 +5469,12 @@ new function(){
                     action:function(v){
                         this.getRoot().html(v);
                     }
+                },
+                overflow:{
+                    ini:undefined,
+                    action:function(v){
+                        this.getContainer().css('overflow',v||'');
+                    }
                 }
             },
             RenderTrigger:function(){
@@ -5465,6 +5483,12 @@ new function(){
                 if(ns.box.KEY=="linb.UI.Div")
                     if(ns.properties.iframeAutoLoad||ns.properties.ajaxAutoLoad)
                         ns.box._applyAutoLoad(this);
+            },
+            _prepareData:function(profile){
+                var data=arguments.callee.upper.call(this, profile);
+                if(_.isStr(data.overflow))
+                    data._overflow = data.overflow.indexOf(':')!=-1?(data.overflow):("overflow:"+data.overflow);
+                return data;
             },
             _applyAutoLoad:function(prf){
                 var prop=prf.properties, ins=prf.boxing();

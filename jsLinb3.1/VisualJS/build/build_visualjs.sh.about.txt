@@ -1,0 +1,1 @@
+The shell script for *nix / Mac OSX, converted from the batch script, build_visualjs.bat was contributed by Chris Green (thechrisgreen@gmail.com).

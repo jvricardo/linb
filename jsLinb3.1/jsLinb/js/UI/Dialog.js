@@ -209,6 +209,7 @@ Class("linb.UI.Dialog","linb.UI.Widget",{
                     className:'uicon-maini',
                     PANEL:{
                         tagName:'div',
+                        style:"{_overflow};",
                         text:'{html}'+linb.UI.$childTag
                     }
                 }
@@ -474,6 +475,12 @@ if(linb.browser.ie){
                     this.getSubNode('PANEL').html(v);
                 }
             },
+            overflow:{
+                ini:undefined,
+                action:function(v){
+                    this.getSubNode('PANEL').css('overflow',v||'');
+                }
+            },
             // setCaption and getCaption
             caption:{
                 ini:undefined,
@@ -628,6 +635,8 @@ if(linb.browser.ie){
             var status=profile.properties.status;
             if(status=='min'||status=='max')
                 profile.$noR=profile.$noS=1;
+            if(_.isStr(data.overflow))
+                data._overflow = data.overflow.indexOf(':')!=-1?(data.overflow):("overflow:"+data.overflow);
             return data;
         },
 

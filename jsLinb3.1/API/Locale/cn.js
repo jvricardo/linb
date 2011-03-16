@@ -7771,6 +7771,18 @@ _.set(linb.Locale,["cn","app"], {
                     "_.asyRun(function(){o.setHtml('<span>b</span>')},1000);"+
                     "}"
                 ]
+            },
+            getOverflow:{
+                $desc:"获取当前对象容器的CSS overflow属性.",
+                $rtn:"String"
+            },
+            setOverflow:{
+                $desc:"设置当前对象容器的CSS overflow属性,并反映到界面.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : String, 'auto','hidden','visible','' ",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值 默认为 [false]."
+                ]
             }
         }
     });
@@ -7977,6 +7989,18 @@ _.set(linb.Locale,["cn","app"], {
                     "var o;linb(id).prepend(o=(new linb.UI.Block).setBorder(true).setHtml('<span>a</span>'));"+
                     "_.asyRun(function(){o.setHtml('<span>b</span>')},1000);"+
                     "}"
+                ]
+            },
+            getOverflow:{
+                $desc:"获取当前对象容器的CSS overflow属性.",
+                $rtn:"String"
+            },
+            setOverflow:{
+                $desc:"设置当前对象容器的CSS overflow属性,并反映到界面.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : String, 'auto','hidden','visible','' ",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值 默认为 [false]."
                 ]
             },
             getBackground:{
@@ -11766,6 +11790,18 @@ _.set(linb.Locale,["cn","app"], {
                     "}"
                 ]
             },
+            getOverflow:{
+                $desc:"获取当前对象容器的CSS overflow属性.",
+                $rtn:"String"
+            },
+            setOverflow:{
+                $desc:"设置当前对象容器的CSS overflow属性,并反映到界面.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : String, 'auto','hidden','visible','' ",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值 默认为 [false]."
+                ]
+            },
             fireCmdClickEvent:{
                 $desc:"触发折叠/打开面板的click事件.",
                 $rtn:"[self]",
@@ -11925,6 +11961,18 @@ _.set(linb.Locale,["cn","app"], {
                     "var o;linb(id).prepend(o=(new linb.UI.Tabs({height:'auto',items:[{id:'a',caption:'a a'},{id:'b',caption:'b b'},{id:'c',caption:'c c'}]})));"+
                     "_.asyRun(function(){o.clearItems()},1000);"+
                     "}"
+                ]
+            },
+            getOverflow:{
+                $desc:"获取当前对象容器的CSS overflow属性.",
+                $rtn:"String"
+            },
+            setOverflow:{
+                $desc:"设置当前对象容器的CSS overflow属性,并反映到界面.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : String, 'auto','hidden','visible','' ",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值 默认为 [false]."
                 ]
             },
             getHAlign :{
@@ -13080,6 +13128,18 @@ _.set(linb.Locale,["cn","app"], {
                     "var dlg=(new linb.UI.Dialog).show(null,false, 100,100); _.asyRun(function(){dlg.setHtml('<p>content</p>');alert(dlg.getHtml());},1000);"
                 ]
             },
+            getOverflow:{
+                $desc:"获取当前对象容器的CSS overflow属性.",
+                $rtn:"String"
+            },
+            setOverflow:{
+                $desc:"设置当前对象容器的CSS overflow属性,并反映到界面.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : String, 'auto','hidden','visible','' ",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值 默认为 [false]."
+                ]
+            },
             getStatus:{
                 $desc:"获取对话框的大小状态. 可以是'normal'(通常), 'min'(最小话) or 'max'(最大化).",
                 $rtn:"String",
@@ -13236,6 +13296,18 @@ _.set(linb.Locale,["cn","app"], {
                 $paras:[
                     "value [必需参数] : String.",
                     "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为[false]."
+                ]
+            },
+            getOverflow:{
+                $desc:"获取当前对象容器的CSS overflow属性.",
+                $rtn:"String"
+            },
+            setOverflow:{
+                $desc:"设置当前对象容器的CSS overflow属性,并反映到界面.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : String, 'auto','hidden','visible','' ",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值 默认为 [false]."
                 ]
             }
         }

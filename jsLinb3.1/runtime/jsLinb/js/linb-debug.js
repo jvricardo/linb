@@ -14970,7 +14970,7 @@ new function(){
         Static:{
             Templates:{
                 className:'{_className}',
-                style:'{_style}',
+                style:'{_style};{_overflow};',
                 //for firefox div focus bug: outline:none; tabindex:'-1'
                 tabindex:'-1',
                 text:'{html}'+linb.UI.$childTag
@@ -14982,7 +14982,19 @@ new function(){
                     action:function(v){
                         this.getRoot().html(v);
                     }
+                },
+                overflow:{
+                    ini:undefined,
+                    action:function(v){
+                        this.getContainer().css('overflow',v||'');
+                    }
                 }
+            },
+            _prepareData:function(profile){
+                var data=arguments.callee.upper.call(this, profile);
+                if(_.isStr(data.overflow))
+                    data._overflow = data.overflow.indexOf(':')!=-1?(data.overflow):("overflow:"+data.overflow);
+                return data;
             }
         }
     });
@@ -15000,7 +15012,7 @@ new function(){
             Templates:{
                 tagName:'div',
                 className:'{_className}',
-                style:'{_style}',
+                style:'{_style};{_overflow};',
                 //for firefox div focus bug: outline:none; tabindex:'-1'
                 tabindex:'-1',
                 text:'{html}'+linb.UI.$childTag
@@ -15014,6 +15026,12 @@ new function(){
                     action:function(v){
                         this.getRoot().html(v);
                     }
+                },
+                overflow:{
+                    ini:undefined,
+                    action:function(v){
+                        this.getContainer().css('overflow',v||'');
+                    }
                 }
             },
             RenderTrigger:function(){
@@ -15022,6 +15040,12 @@ new function(){
                 if(ns.box.KEY=="linb.UI.Div")
                     if(ns.properties.iframeAutoLoad||ns.properties.ajaxAutoLoad)
                         ns.box._applyAutoLoad(this);
+            },
+            _prepareData:function(profile){
+                var data=arguments.callee.upper.call(this, profile);
+                if(_.isStr(data.overflow))
+                    data._overflow = data.overflow.indexOf(':')!=-1?(data.overflow):("overflow:"+data.overflow);
+                return data;
             },
             _applyAutoLoad:function(prf){
                 var prop=prf.properties, ins=prf.boxing();
@@ -16569,7 +16593,7 @@ Class("linb.UI.Resizer","linb.UI",{
             PANEL:{
                 tagName:'div',
                 className:'{clsBorderType2} uibg-bar',
-                style:'{background}',
+                style:'{background};{_overflow};',
                 text:'{html}'+linb.UI.$childTag
             }
         },'all');
@@ -16602,6 +16626,12 @@ Class("linb.UI.Resizer","linb.UI",{
             html:{
                 action:function(v){
                     this.getSubNode('PANEL').html(v);
+                }
+            },
+            overflow:{
+                ini:undefined,
+                action:function(v){
+                    this.getSubNode('PANEL').css('overflow',v||'');
                 }
             },
             borderType:{
@@ -16672,6 +16702,8 @@ Class("linb.UI.Resizer","linb.UI",{
         _prepareData:function(profile){
             var data=arguments.callee.upper.call(this, profile);
             data.background= data.background?'background:'+data.background:'';
+            if(_.isStr(data.overflow))
+                data._overflow = data.overflow.indexOf(':')!=-1?(data.overflow):("overflow:"+data.overflow);
             return data;
         },        
         _onresize:function(profile,width,height){
@@ -21027,7 +21059,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 PANEL:{
                     $order:1,
                     tagName:'div',
-                    style:'{panelDisplay}',
+                    style:'{panelDisplay};{_overflow};',
                     text:'{html}'+linb.UI.$childTag
                 }
             }
@@ -24532,7 +24564,7 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                         PANEL:{
                             tagName:'div',
                             className:'{_bordertype}',
-                            style:'{panelDisplay}',
+                            style:'{panelDisplay};{_overflow};',
                             text:'{html}'+linb.UI.$childTag
                         }
                     }
@@ -24801,7 +24833,7 @@ Class("linb.UI.Panel", "linb.UI.Div",{
             data._bordertype='uiborder-'+data.borderType;
             
             profile._toggle = !!data.toggle;
-            
+
             return data;
         },
         _onresize:function(profile,width,height){
@@ -25628,6 +25660,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                     PANEL:{
                         tagName : 'div',
                         className:'uibg-base',
+                        style:"{_overflow};",
                         text:linb.UI.$childTag
                     }
                 }
@@ -26048,6 +26081,12 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
             width:200,
             height:200,
             position:'absolute',
+            overflow:{
+                ini:undefined,
+                action:function(v){
+                    this.getSubNode('PANEL',true).css('overflow',v||'');
+                }
+            },
             HAlign:{
                 ini:'left',
                 listbox:['left','center','right'],
@@ -26135,11 +26174,16 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
             return data;
         },
         _prepareItem:function(profile, item){
-            var dpn = 'display:none';
+            var dpn = 'display:none',prop=profile.properties;
             item.closeDisplay = item.closeBtn?'':dpn;
             item.popDisplay = item.popBtn?'':dpn;
             item._opt = item.optBtn?'':dpn;
             item.itemDisplay = item.hidden?dpn:'';
+
+            if(_.isStr(item.overflow))
+                item._overflow = item.overflow.indexOf(':')!=-1?(item.overflow):("overflow:"+item.overflow);
+            else if(_.isStr(prop.overflow))
+                item._overflow = prop.overflow.indexOf(':')!=-1?(prop.overflow):("overflow:"+prop.overflow);
         },
         getDropKeys:function(profile,node){
             return profile.properties[profile.getKey(linb.use(node).id())==profile.keys.PANEL?'dropKeys':'dropKeysPanel'];
@@ -29892,7 +29936,7 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
                         PANEL:{
                             tagName:'div',
                             className:'uibg-base',
-                            style:'position:absolute;left:0;top:0;',
+                            style:'position:absolute;left:0;top:0;{_overflow};',
                             text:linb.UI.$childTag
                         }
                     }
@@ -30293,7 +30337,12 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
             listKey:null,
             width:200,
             height:200,
-
+            overflow:{
+                ini:undefined,
+                action:function(v){
+                    this.getSubNode('PANEL',true).css('overflow',v||'');
+                }
+            },
             items:{
                 ini:[],
                 set:function(value){
@@ -30411,7 +30460,7 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
             return data;
         },
         _prepareItem:function(profile, item){
-            var pp=profile.properties;
+            var prop=profile.properties;
             if(item.id=='main'){
                 item.cls1=profile.getClass('ITEM', '-main');
                 item.cls2  = profile.getClass('MOVE', '-main');
@@ -30419,13 +30468,13 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
                 return;
             }
 
-            if(pp.type=='vertical')
+            if(prop.type=='vertical')
                 item.size = 'height:'+item.size+'px';
             else
                 item.size = 'width:'+item.size+'px';
 
             var pos;
-            if(pp.type=='vertical'){
+            if(prop.type=='vertical'){
                 if(item.pos=='before')
                     pos='top';
                 else
@@ -30443,6 +30492,11 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
             item.display = item.hidden?'display:none':'';
             item.moveDisplay = item.locked?'display:none':'';
             item.cmdDisplay = item.cmd?'':'display:none';
+
+            if(_.isStr(item.overflow))
+                item._overflow = item.overflow.indexOf(':')!=-1?(item.overflow):("overflow:"+item.overflow);
+            else if(_.isStr(prop.overflow))
+                item._overflow = prop.overflow.indexOf(':')!=-1?(prop.overflow):("overflow:"+prop.overflow);
         },
         RenderTrigger:function(){
             var t, profile=this;
@@ -35659,6 +35713,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                     className:'uicon-maini',
                     PANEL:{
                         tagName:'div',
+                        style:"{_overflow};",
                         text:'{html}'+linb.UI.$childTag
                     }
                 }
@@ -35924,6 +35979,12 @@ if(linb.browser.ie){
                     this.getSubNode('PANEL').html(v);
                 }
             },
+            overflow:{
+                ini:undefined,
+                action:function(v){
+                    this.getSubNode('PANEL').css('overflow',v||'');
+                }
+            },
             // setCaption and getCaption
             caption:{
                 ini:undefined,
@@ -36078,6 +36139,8 @@ if(linb.browser.ie){
             var status=profile.properties.status;
             if(status=='min'||status=='max')
                 profile.$noR=profile.$noS=1;
+            if(_.isStr(data.overflow))
+                data._overflow = data.overflow.indexOf(':')!=-1?(data.overflow):("overflow:"+data.overflow);
             return data;
         },
 

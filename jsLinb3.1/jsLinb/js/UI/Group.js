@@ -70,7 +70,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 PANEL:{
                     $order:1,
                     tagName:'div',
-                    style:'{panelDisplay}',
+                    style:'{panelDisplay};{_overflow};',
                     text:'{html}'+linb.UI.$childTag
                 }
             }

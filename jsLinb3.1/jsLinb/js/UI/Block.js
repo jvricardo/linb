@@ -8,7 +8,7 @@ Class("linb.UI.Block", "linb.UI.Widget",{
             PANEL:{
                 tagName:'div',
                 className:'{clsBorderType2} uibg-bar',
-                style:'{background}',
+                style:'{background};{_overflow};',
                 text:'{html}'+linb.UI.$childTag
             }
         },'all');
@@ -41,6 +41,12 @@ Class("linb.UI.Block", "linb.UI.Widget",{
             html:{
                 action:function(v){
                     this.getSubNode('PANEL').html(v);
+                }
+            },
+            overflow:{
+                ini:undefined,
+                action:function(v){
+                    this.getSubNode('PANEL').css('overflow',v||'');
                 }
             },
             borderType:{
@@ -111,6 +117,8 @@ Class("linb.UI.Block", "linb.UI.Widget",{
         _prepareData:function(profile){
             var data=arguments.callee.upper.call(this, profile);
             data.background= data.background?'background:'+data.background:'';
+            if(_.isStr(data.overflow))
+                data._overflow = data.overflow.indexOf(':')!=-1?(data.overflow):("overflow:"+data.overflow);
             return data;
         },        
         _onresize:function(profile,width,height){
