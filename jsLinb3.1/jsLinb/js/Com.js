@@ -120,14 +120,13 @@ Class('linb.Com',null,{
         },
         show:function(onEnd,parent,subId,threadid,left,top){
             var self=this,f=function(){
-                // if it's an ui object without rendered
-                if(parent && parent['linb.UI'] && !parent.get(0).renderId){
+                // no UI control in com
+                if(self.getUIComponents().isEmpty()){
+                    _.tryF(onEnd,[self, threadid],self.host);
                 }else{
-                    // if it's an ui object without rendered, dont render the com
-                    if(parent && parent['linb.UI'] && !parent.get(0).renderId){
-                    }else{
+                    // if parent is an ui object without rendered, dont render the com
+                    if(!(parent && parent['linb.UI'] && !parent.get(0).renderId))
                         self.render();
-                    }
 
                     if(false===_.tryF(self.customAppend,[parent,subId,left,top,threadid], self))
                         (parent||linb('body')).append(self.getUIComponents(),subId);
