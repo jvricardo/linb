@@ -77,7 +77,7 @@ Class("linb.UI.Poll", "linb.UI.List",{
                         OPTION:{
                             $order:0,
                             tagName : 'DIV',
-                            MARK:{$order:1,className:'{_optclass}'}
+                            MARK2:{$order:1,className:'{_optclass}'}
                         },
                         CAPTION:{
                             $order:1,
@@ -307,7 +307,7 @@ Class("linb.UI.Poll", "linb.UI.List",{
         self.setBehavior(t);
     },
     Static:{
-        _DIRTYKEY:'MARK',
+        _DIRTYKEY:'MARK2',
         _ITEMKEY:'OUTER',
         Appearances:{
             KEY:{
@@ -483,8 +483,8 @@ Class("linb.UI.Poll", "linb.UI.List",{
             editorType:'none'
         },
         Behaviors:{
-            HoverEffected:{DEL:'DEL',CMD:'CMD',ITEM:'MARK'},
-            ClickEffected:{DEL:'DEL',CMD:'CMD',ITEM:'MARK'}
+            HoverEffected:{DEL:'DEL',CMD:'CMD',ITEM:'MARK2'},
+            ClickEffected:{DEL:'DEL',CMD:'CMD',ITEM:'MARK2'}
         },
         EventHandlers:{
             beforeTitleChanged:function(profile, value){},
