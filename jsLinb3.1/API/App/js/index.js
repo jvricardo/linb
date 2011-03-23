@@ -138,7 +138,7 @@ Class('App', 'linb.Com',{
                       key + ' = ' +
                       linb.SC.get(key).toString();
             txt = linb.Coder.formatAll(txt, 'js', ['plain']);
-            var node=linb.create("<div style='visibiliy:hidden;left:-10000px;width:600px;background:#fff;border:solid 1px #aaa;overflow:auto;'>"+txt+"</div>");
+            var node=linb.create("<div style='visibility:hidden;left:-10000px;width:600px;background:#fff;border:solid 1px #aaa;overflow:auto;'>"+txt+"</div>");
             //add first
             linb('body').append(node.setSelectable(true));
             //adjust height

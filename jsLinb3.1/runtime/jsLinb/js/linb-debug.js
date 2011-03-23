@@ -12394,8 +12394,8 @@ Class("linb.UI",  "linb.absObj", {
             arr[arr.length]='<'+tagName+' ';
 
             // add "unselectable" to node
-            if(!b.unselectable && !map3[tagName])
-                b.unselectable='on';
+            //if(!b.unselectable && !map3[tagName])
+            //    b.unselectable='on';
 
             for(var i in b)
                 if(b[i])
