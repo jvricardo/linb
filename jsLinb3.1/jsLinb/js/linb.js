@@ -1434,6 +1434,7 @@ Class('linb.absIO',null,{
             id : options.id || (_()+ '' +(con._id++)),
             uri : options.uri||'',
             query : options.query||'',
+            header : options.header||'',
             asy : options.asy!==false,
             method : 'POST'==(options.method||con.method).toUpperCase()?'POST':'GET'
         },'all');
@@ -1613,8 +1614,12 @@ Class('linb.Ajax','linb.absIO',{
                     }
 
                     self._XML.open(method, uri, asy);
-                self._header("Content-type", method=="POST" ? "application/x-www-form-urlencoded;charset=UTF-8" : "text/plain;charset=UTF-8");
-                self._header("X-Requested-With", "XMLHttpRequest");
+                    if (header)
+                        self._header("Content-type", header);
+                    else
+                        self._header("Content-type", method=="POST" ? "application/x-www-form-urlencoded;charset=UTF-8" : "text/plain;charset=UTF-8");
+                
+                    self._header("X-Requested-With", "XMLHttpRequest");
 
                     var cookie='',ac;
                     if(optimized){
