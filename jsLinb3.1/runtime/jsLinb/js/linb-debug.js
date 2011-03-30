@@ -1434,7 +1434,8 @@ Class('linb.absIO',null,{
             id : options.id || (_()+ '' +(con._id++)),
             uri : options.uri||'',
             query : options.query||'',
-            header : options.header||'',
+            contentType : options.contentType||'',
+            header : options.header||null,
             asy : options.asy!==false,
             method : 'POST'==(options.method||con.method).toUpperCase()?'POST':'GET'
         },'all');
@@ -1614,14 +1615,8 @@ Class('linb.Ajax','linb.absIO',{
                     }
 
                     self._XML.open(method, uri, asy);
-                    if (header)
-                        self._header("Content-type", header);
-                    else
-                        self._header("Content-type", method=="POST" ? "application/x-www-form-urlencoded;charset=UTF-8" : "text/plain;charset=UTF-8");
-                
-                    self._header("X-Requested-With", "XMLHttpRequest");
 
-                    var cookie='',ac;
+                    self._header("Content-type", contentType ? contentType : method=="POST" ? "application/x-www-form-urlencoded;charset=UTF-8" : "text/plain;charset=UTF-8");
                     if(optimized){
                         try {
                             self._header("User-Agent", null);
@@ -1633,6 +1628,10 @@ Class('linb.Ajax','linb.absIO',{
                             self._header("Cookie", "");
                         } catch(e) {}                        
                     }
+                    if(_.isHash(header))
+                        _.each(header,function(i,o){
+                            self._header(i, o);
+                        });
 
                     if(false===_.tryF(self.beforeSend,[self._XML],self)){
                         self._onEnd();
