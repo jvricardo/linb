@@ -14979,7 +14979,7 @@ new function(){
                         id="biframe_"+_(),
                         e=linb.browser.ie && parseInt(linb.browser.ver)<9,
                         ifr=document.createElement(e?"<iframe name='"+id+"'>":"iframe");
-                    ifr.id=ifr.name=id;
+                    prop.iframeAutoLoad.frameName=ifr.id=ifr.name=id;
                     ifr.src=hash.url;
                     ifr.frameBorder='0';
                     ifr.marginWidth='0';
@@ -25170,8 +25170,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                                             item.iframeAutoLoad={url:item.iframeAutoLoad};
                                         var hash=item.iframeAutoLoad,
                                             ifr=document.createElement("iframe");
-                                        ifr.name="diframe:"+_();
-                                        ifr.id=ifr.name;
+                                        item.iframeAutoLoad.frameName=ifr.id=ifr.name="diframe:"+_();
                                         ifr.src=hash.url;
                                         ifr.frameBorder='0';
                                         ifr.marginWidth='0';

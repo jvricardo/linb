@@ -5423,7 +5423,7 @@ new function(){
                         id="biframe_"+_(),
                         e=linb.browser.ie && parseInt(linb.browser.ver)<9,
                         ifr=document.createElement(e?"<iframe name='"+id+"'>":"iframe");
-                    ifr.id=ifr.name=id;
+                    prop.iframeAutoLoad.frameName=ifr.id=ifr.name=id;
                     ifr.src=hash.url;
                     ifr.frameBorder='0';
                     ifr.marginWidth='0';

@@ -98,8 +98,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                                             item.iframeAutoLoad={url:item.iframeAutoLoad};
                                         var hash=item.iframeAutoLoad,
                                             ifr=document.createElement("iframe");
-                                        ifr.name="diframe:"+_();
-                                        ifr.id=ifr.name;
+                                        item.iframeAutoLoad.frameName=ifr.id=ifr.name="diframe:"+_();
                                         ifr.src=hash.url;
                                         ifr.frameBorder='0';
                                         ifr.marginWidth='0';
