@@ -55,6 +55,7 @@ Class("linb.UI.Flash", "linb.UI",{
             onSize:linb.UI.$onSize
         },
         DataModel:{
+            selectable:true,
             width:500,
             height:300,
             cover:false,

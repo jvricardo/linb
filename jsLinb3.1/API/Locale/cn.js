@@ -6855,6 +6855,18 @@ _.set(linb.Locale,["cn","app"], {
                     "}"
                 ]
             },
+            getSelectable:{
+                $desc:"获取控件的selectable属性,该属性决定了控件的html内容是否可以选定",
+                $rtn:"Boolean"
+            },
+            setSelectable:{
+                $desc:"设置控件的selectable属性,该属性决定了控件的html内容是否可以选定",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : Boolean.",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为 [false]."
+                ]
+            },
             getPosition:{
                 $desc:"获取控件的位置属性,和CSS中的position对应",
                 $rtn:"String",

@@ -1,6 +1,6 @@
 /*
-jsLinb 3.0
-Copyright(c) 2010 Yingbo Li(www.linb.net, linb.net[at]gmail.com)
+jsLinb 3.1
+Copyright(c) 2011 Yingbo Li(www.linb.net, linb.net[at]gmail.com)
 Open Source under LGPL (http://www.gnu.org/licenses/lgpl-3.0-standalone.html)
 Contact linb.net[at]gmail.com for Commercial issues
 */
@@ -5957,11 +5957,14 @@ Class('linb.Dom','linb.absBox',{
         setSelectable:function(value){
             var me=arguments.callee, _f = me._f || (me._f=function(){return false});
              return this.each(function(o){
+                o.unselectable=value?"off":"on";
                 if(linb.browser.gek)
-                    o.style.MozUserSelect=value?"text":"none"
-                else{
-                    o.unselectable=value?"off":"on";
+                    o.style.MozUserSelect=value?"text":"-moz-none";
+                else if(linb.browser.ie)
                     o.onselectstart=value?null:_f;
+                else if(linb.browser.kde){
+                    o.style.webkitUserSelect=value?"text":"none";
+                    o.style.KhtmlUserSelect=value?"text":"none";
                 }
             })
         },
@@ -6995,16 +6998,9 @@ type:4
 
         if(linb.browser.ie || linb.browser.kde)
             document.onselectstart=function(){
-                try {
-                    var n = event.srcElement ;
-                    if(n.tagName== "INPUT" || n.tagName== "TEXTAREA" || n.tagName== "PRE" || n.tagName== "CODE" )
-                        return event.srcElement.unselectable!='on';
+                if(event.srcElement && (event.srcElement.tagName=="BODY"||event.srcElement.tagName=="HTML"))
                     return false;
-                }catch(e) {
-                    return false;
-                };
             };
-
         //free memory
         linb.win.afterUnload(function(){
             window.onresize=null;
@@ -11501,6 +11497,12 @@ Class("linb.UI",  "linb.absObj", {
                     else
                         this.getRoot().css('display',value);
                 }
+            },
+            selectable:{
+                ini:false,
+                action:function(value){
+                    this.getRoot().setSelectable(!!value);
+                }
             }
         });
 
@@ -12006,9 +12008,19 @@ Class("linb.UI",  "linb.absObj", {
             }
         })
         + linb.UI.buildCSSText({
+            '.ui-unselectable':{
+                $order:0,
+                '-moz-user-select': linb.browser.gek?'-moz-none':null,
+                '-khtml-user-select': linb.browser.kde?'none':null,
+                '-webkit-user-select': linb.browser.kde?'none':null
+            },
+            '.ui-selectable':{
+                $order:1,
+                '-moz-user-select': linb.browser.gek?'text':null,
+                '-khtml-user-select': linb.browser.kde?'text':null,
+                '-webkit-user-select': linb.browser.kde?'text':null
+            },
             '.ui-ctrl':{
-                // disable all selectable
-                '-moz-user-select':linb.browser.gek?'-moz-none':null,
                 'vertical-align':'middle'
             },
             '.uiw-shell':{
@@ -12319,6 +12331,7 @@ Class("linb.UI",  "linb.absObj", {
             }
             var self =arguments.callee,
                 behavior = profile.behavior?key?profile.behavior[key]:profile.behavior:null,
+                prop=profile.properties,
                 map1 = self.map1 ||(self.map1={tagName:1,text:1}),
                 map2 = self.map2 ||(self.map2={image:1,input:1,br:1,meta:1,hr:1,abbr:1,embed:1}),
                 map3 = self.map3 ||(self.map3={input:1,textarea:1,pre:1,code:1}),
@@ -12352,7 +12365,7 @@ Class("linb.UI",  "linb.absObj", {
                     //custom class here
                     bak+' '+
                     //add a special
-                    (lkey==profile.key?'ui-ctrl ':'') +
+                    (lkey==profile.key ? ('ui-ctrl '+ (prop.selectable?'ui-selectable ':'ui-unselectable ')) : '' ) +
                     //custom theme
                     u.$tag_special + (key||'KEY') + '_CT'+u.$tag_special + ' ' +
                     //custom class
@@ -12398,8 +12411,11 @@ Class("linb.UI",  "linb.absObj", {
             arr[arr.length]='<'+tagName+' ';
 
             // add "unselectable" to node
-            //if(!b.unselectable && !map3[tagName])
-            //    b.unselectable='on';
+            if(lkey==profile.key){
+                b.unselectable=prop.selectable?'off':'on';
+                if(linb.browser.ie && !prop.selectable)
+                    b.onselectstart="javascript:return false";
+            }
 
             for(var i in b)
                 if(b[i])
@@ -13013,12 +13029,7 @@ Class("linb.UI",  "linb.absObj", {
                 if(t=o.$before)r[r.length]=t;
                 if(t=o.$text)r[r.length]=t;
                 for(var j in o){
-                    switch(j.charAt(0)){
-                        case '$':continue;break;
-                        case '_':if(!ie6)continue;break;
-                        case '*':if(!ie)continue;break;
-                        case '-':if(!gek)continue;break;
-                    }
+                    if(j.charAt(0)=='$')continue;
                     //neglect '' or null
                     if((v=o[j])||o[j]===0){
                         //put string dir
@@ -14610,7 +14621,7 @@ Class("linb.absValue", "linb.absObj",{
                 if(!p.$UIvalue)
                     p.$UIvalue=p.value;
                 b._setCtrlValue(p.$UIvalue);
-            }
+            }            
         }
     }
 });
@@ -14759,6 +14770,7 @@ new function(){
                 }
             },
             DataModel:{
+                selectable:true,
                 caption:{
                     ini:undefined,
                     action: function(v){
@@ -14981,6 +14993,7 @@ new function(){
             DataModel:{
                 width:'16',
                 height:'16',
+                selectable:true,
                 html:{
                     action:function(v){
                         this.getRoot().html(v);
@@ -15025,6 +15038,7 @@ new function(){
                 ajaxAutoLoad:"",
                 width:'100',
                 height:'100',
+                selectable:true,
                 html:{
                     action:function(v){
                         this.getRoot().html(v);
@@ -15340,6 +15354,7 @@ new function(){
             onSize:linb.UI.$onSize
         },
         DataModel:{
+            selectable:true,
             width:500,
             height:300,
             cover:false,
@@ -15608,7 +15623,7 @@ Class("linb.UI.Border","linb.UI",{
                 //don't use width/height to trigger hasLayout in IE6
                 width:0,
                 height:0,
-                _display:'inline',
+                display:linb.browser.ie6?'inline':null,
                 'font-size':0,
                 'line-height':0
             },
@@ -15824,15 +15839,15 @@ Class("linb.UI.Shadow","linb.UI",{
             KEY:{
                width:0,
                height:0,
-               _display:'inline',
-               '_font-size':0,
-               '_line-height':0
+               display:linb.browser.ie6?'inline':null,
+               'font-size':linb.browser.ie6?0:null,
+               'line-height':linb.browser.ie6?0:null
             },
             'B, RB, R':{
                 position:'absolute',
                 display:'block',
-                '*font-size':0,
-                '*line-height':0,
+                'font-size':linb.browser.ie?0:null,
+                'line-height':linb.browser.ie?0:null,
                 'z-index':'-1'
             },
             B:{
@@ -16626,6 +16641,7 @@ Class("linb.UI.Resizer","linb.UI",{
             tips:null,
             iframeAutoLoad:"",
             ajaxAutoLoad:"",
+            selectable:true,
             html:{
                 action:function(v){
                     this.getSubNode('PANEL').html(v);
@@ -16782,6 +16798,7 @@ Class("linb.UI.Label", "linb.UI.Widget",{
             }
         },
         DataModel:{
+            selectable:true,
             // setCaption and getCaption
             caption:{
                 ini:undefined,
@@ -18451,6 +18468,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
             }
         },
         DataModel:{
+            selectable:true,
             _customBorder:'BOX',
             border:false,
 
@@ -18931,6 +18949,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
             POOL:{}
         },
         DataModel:{
+            selectable:true,
             value:'',
             width:400,
             height:300,
@@ -21110,6 +21129,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
         },
 
         DataModel:{
+            selectable:true,
             caption:{
                 ini:undefined,
                 // ui update function when setCaption
@@ -21655,7 +21675,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 height:'15px',
                 cursor:'default',
                 background: linb.UI.$bg('icons.gif', 'no-repeat -300px -70px', true),
-                _zoom:1
+                zoom:linb.browser.ie6?1:null
             },
             'TOGGLE-mouseover':{
                 'background-position': '-300px -90px'
@@ -24711,6 +24731,7 @@ Class("linb.UI.Panel", "linb.UI.Div",{
             }
         },
         DataModel:{
+            selectable:true,
             position:'absolute',
             zIndex:0,
             dock:'fill',
@@ -26072,6 +26093,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
             }
         },
         DataModel:{
+            selectable:true,
             dirtyMark:false,
 
             dataBinder:null,
@@ -27309,7 +27331,7 @@ Class("linb.UI.TreeBar",["linb.UI","linb.absList","linb.absValue"],{
             },
             SUB:{
                 overflow:'hidden',
-                '*zoom':1,
+                zoom:linb.browser.ie?1:null,
                 height:0,
                 'font-size':'1px',
                 //1px for ie8
@@ -27810,7 +27832,7 @@ Class("linb.UI.TreeView","linb.UI.TreeBar",{
                border: '0'
             },
             SUB:{
-                '*zoom':1,
+                zoom:linb.browser.ie?1:null,
                 height:0,
                 'font-size':'1px',
                 //1px for ie8
@@ -30298,6 +30320,7 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
             }
         },
         DataModel:{
+            selectable:true,
             disabled:null,
             position:'absolute',
             type:{
@@ -30941,6 +30964,7 @@ Class("linb.UI.ColLayout",["linb.UI","linb.absList"],{
             }
         },
         DataModel:{
+            selectable:true,
             position:'absolute',
             dock:'fill',
             listKey:null,
@@ -32544,7 +32568,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             },
             SUB:{
                 //for ie bug: relative , height='auto' will disppear
-                '*zoom':1,
+                zoom:linb.browser.ie?1:null,
                 height:0,
                 position:'relative',
                 overflow:'hidden',
@@ -35968,6 +35992,7 @@ if(linb.browser.ie){
             }
         },
         DataModel:{
+            selectable:true,
             tips:null,
             border:null,
             disabled:null,

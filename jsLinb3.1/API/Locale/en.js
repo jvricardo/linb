@@ -6831,6 +6831,18 @@ _.set(linb.Locale,["en","app"], {
                     "}"
                 ]
             },
+            getSelectable:{
+                $desc:"Gets the selectable property.",
+                $rtn:"Boolean"
+            },
+            setSelectable:{
+                $desc:"Sets the selectable property.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : Boolean.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
             getPosition:{
                 $desc:"Gets the position(corresponding to the CSS value of the root DOM element) property value on the first UIProfile",
                 $rtn:"String",

@@ -147,7 +147,7 @@ Class("linb.UI.Border","linb.UI",{
                 //don't use width/height to trigger hasLayout in IE6
                 width:0,
                 height:0,
-                _display:'inline',
+                display:linb.browser.ie6?'inline':null,
                 'font-size':0,
                 'line-height':0
             },

@@ -1941,6 +1941,12 @@ Class("linb.UI",  "linb.absObj", {
                     else
                         this.getRoot().css('display',value);
                 }
+            },
+            selectable:{
+                ini:false,
+                action:function(value){
+                    this.getRoot().setSelectable(!!value);
+                }
             }
         });
 
@@ -2446,9 +2452,19 @@ Class("linb.UI",  "linb.absObj", {
             }
         })
         + linb.UI.buildCSSText({
+            '.ui-unselectable':{
+                $order:0,
+                '-moz-user-select': linb.browser.gek?'-moz-none':null,
+                '-khtml-user-select': linb.browser.kde?'none':null,
+                '-webkit-user-select': linb.browser.kde?'none':null
+            },
+            '.ui-selectable':{
+                $order:1,
+                '-moz-user-select': linb.browser.gek?'text':null,
+                '-khtml-user-select': linb.browser.kde?'text':null,
+                '-webkit-user-select': linb.browser.kde?'text':null
+            },
             '.ui-ctrl':{
-                // disable all selectable
-                '-moz-user-select':linb.browser.gek?'-moz-none':null,
                 'vertical-align':'middle'
             },
             '.uiw-shell':{
@@ -2759,6 +2775,7 @@ Class("linb.UI",  "linb.absObj", {
             }
             var self =arguments.callee,
                 behavior = profile.behavior?key?profile.behavior[key]:profile.behavior:null,
+                prop=profile.properties,
                 map1 = self.map1 ||(self.map1={tagName:1,text:1}),
                 map2 = self.map2 ||(self.map2={image:1,input:1,br:1,meta:1,hr:1,abbr:1,embed:1}),
                 map3 = self.map3 ||(self.map3={input:1,textarea:1,pre:1,code:1}),
@@ -2792,7 +2809,7 @@ Class("linb.UI",  "linb.absObj", {
                     //custom class here
                     bak+' '+
                     //add a special
-                    (lkey==profile.key?'ui-ctrl ':'') +
+                    (lkey==profile.key ? ('ui-ctrl '+ (prop.selectable?'ui-selectable ':'ui-unselectable ')) : '' ) +
                     //custom theme
                     u.$tag_special + (key||'KEY') + '_CT'+u.$tag_special + ' ' +
                     //custom class
@@ -2838,8 +2855,11 @@ Class("linb.UI",  "linb.absObj", {
             arr[arr.length]='<'+tagName+' ';
 
             // add "unselectable" to node
-            //if(!b.unselectable && !map3[tagName])
-            //    b.unselectable='on';
+            if(lkey==profile.key){
+                b.unselectable=prop.selectable?'off':'on';
+                if(linb.browser.ie && !prop.selectable)
+                    b.onselectstart="javascript:return false";
+            }
 
             for(var i in b)
                 if(b[i])
@@ -3453,12 +3473,7 @@ Class("linb.UI",  "linb.absObj", {
                 if(t=o.$before)r[r.length]=t;
                 if(t=o.$text)r[r.length]=t;
                 for(var j in o){
-                    switch(j.charAt(0)){
-                        case '$':continue;break;
-                        case '_':if(!ie6)continue;break;
-                        case '*':if(!ie)continue;break;
-                        case '-':if(!gek)continue;break;
-                    }
+                    if(j.charAt(0)=='$')continue;
                     //neglect '' or null
                     if((v=o[j])||o[j]===0){
                         //put string dir
@@ -5050,7 +5065,7 @@ Class("linb.absValue", "linb.absObj",{
                 if(!p.$UIvalue)
                     p.$UIvalue=p.value;
                 b._setCtrlValue(p.$UIvalue);
-            }
+            }            
         }
     }
 });
@@ -5199,6 +5214,7 @@ new function(){
                 }
             },
             DataModel:{
+                selectable:true,
                 caption:{
                     ini:undefined,
                     action: function(v){
@@ -5421,6 +5437,7 @@ new function(){
             DataModel:{
                 width:'16',
                 height:'16',
+                selectable:true,
                 html:{
                     action:function(v){
                         this.getRoot().html(v);
@@ -5465,6 +5482,7 @@ new function(){
                 ajaxAutoLoad:"",
                 width:'100',
                 height:'100',
+                selectable:true,
                 html:{
                     action:function(v){
                         this.getRoot().html(v);

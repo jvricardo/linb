@@ -17,6 +17,7 @@ Class("linb.UI.FusionChartFree", "linb.UI.Flash",{
         _FC_LINKTAG:'JavaScript:',
         _FC_SWFFILEPRETAG:"FCF_",
         DataModel:{
+            selectable:true,
             FC_eventHandler:{
                 ini:true,
                 action:function(){
@@ -322,6 +323,7 @@ Class("linb.UI.FusionChartFree", "linb.UI.Flash",{
         _idtag:"linb_UI_FC3_", 
         _FC_SWFFILEPRETAG:"",
         DataModel:{
+            selectable:true,
             FC_chartType:{
                 combobox:"Column2D,Column3D,Pie2D,Pie3D,Line,Bar2D,Area2D,Doughnut2D,Doughnut3D,MSColumn2D,MSColumn3D,MSLine,MSArea,MSBar2D,MSBar3D,StackedColumn2D,StackedColumn3D,StackedArea2D,StackedBar2D,StackedBar3D,MSStackedColumn2D,MSCombi2D,MSCombi3D,MSColumnLine3D,MSCombiDY2D,MSColumn3DLineDY,StackedColumn3DLineDY,MSStackedColumn2DLineDY,Scatter,Bubble,ScrollColumn2D,ScrollLine2D,ScrollArea2D,ScrollStackedColumn2D,ScrollCombi2D,ScrollCombiDY2D".split(',')
             },
@@ -564,6 +566,7 @@ Class("linb.UI.TextEditor", ["linb.UI.Widget","linb.absValue"] ,{
             }
         },
         DataModel:{
+            selectable:true,
             left:0,
             top:0,
             width:200,
@@ -2824,6 +2827,7 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
             onSize:linb.UI.$onSize
         },
         DataModel:{
+            selectable:true,
             borderType:{
                 ini:'flat',
                 listbox:['none','flat','inset','outset'],
@@ -3884,6 +3888,7 @@ Class("linb.UI.Poll", "linb.UI.List",{
         },
         DataModel:{
             $checkbox:1,
+            selectable:true,
             noCtrlKey:null,
             title:{
                 action:function(v){

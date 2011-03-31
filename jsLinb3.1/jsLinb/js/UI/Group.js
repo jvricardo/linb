@@ -118,6 +118,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
         },
 
         DataModel:{
+            selectable:true,
             caption:{
                 ini:undefined,
                 // ui update function when setCaption

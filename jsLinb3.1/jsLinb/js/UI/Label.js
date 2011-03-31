@@ -59,6 +59,7 @@ Class("linb.UI.Label", "linb.UI.Widget",{
             }
         },
         DataModel:{
+            selectable:true,
             // setCaption and getCaption
             caption:{
                 ini:undefined,

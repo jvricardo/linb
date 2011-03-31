@@ -267,6 +267,7 @@ Class("linb.UI.Panel", "linb.UI.Div",{
             }
         },
         DataModel:{
+            selectable:true,
             position:'absolute',
             zIndex:0,
             dock:'fill',

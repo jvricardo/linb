@@ -866,7 +866,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                                 }
 
                                 if(!customRegion && target['linb.UI']){
-                                    var parentNode=profile.keys.PANEL?profile.getSubNode(profile.keys.PANEL, profile.getItemIdByDom(linb.use(src).id())):profile.getRoot();
+                                    var parentNode=profile.keys.PANEL?profile.getSubNode(profile.keys.PANEL, profile.getSubId(src)):profile.getRoot();
                                     if(!parentNode.isEmpty()){
                                         var p=target.get(0).properties,
                                             h=parentNode.get(0).style.height;

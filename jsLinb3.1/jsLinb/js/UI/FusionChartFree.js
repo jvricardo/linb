@@ -17,6 +17,7 @@ Class("linb.UI.FusionChartFree", "linb.UI.Flash",{
         _FC_LINKTAG:'JavaScript:',
         _FC_SWFFILEPRETAG:"FCF_",
         DataModel:{
+            selectable:true,
             FC_eventHandler:{
                 ini:true,
                 action:function(){

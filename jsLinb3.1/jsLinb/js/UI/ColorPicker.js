@@ -429,7 +429,7 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
                 height:'15px',
                 cursor:'default',
                 background: linb.UI.$bg('icons.gif', 'no-repeat -300px -70px', true),
-                _zoom:1
+                zoom:linb.browser.ie6?1:null
             },
             'TOGGLE-mouseover':{
                 'background-position': '-300px -90px'

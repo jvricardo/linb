@@ -279,6 +279,7 @@ Class("linb.UI.ColLayout",["linb.UI","linb.absList"],{
             }
         },
         DataModel:{
+            selectable:true,
             position:'absolute',
             dock:'fill',
             listKey:null,

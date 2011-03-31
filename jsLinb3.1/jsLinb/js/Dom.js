@@ -1148,11 +1148,14 @@ Class('linb.Dom','linb.absBox',{
         setSelectable:function(value){
             var me=arguments.callee, _f = me._f || (me._f=function(){return false});
              return this.each(function(o){
+                o.unselectable=value?"off":"on";
                 if(linb.browser.gek)
-                    o.style.MozUserSelect=value?"text":"none"
-                else{
-                    o.unselectable=value?"off":"on";
+                    o.style.MozUserSelect=value?"text":"-moz-none";
+                else if(linb.browser.ie)
                     o.onselectstart=value?null:_f;
+                else if(linb.browser.kde){
+                    o.style.webkitUserSelect=value?"text":"none";
+                    o.style.KhtmlUserSelect=value?"text":"none";
                 }
             })
         },
@@ -2186,16 +2189,9 @@ type:4
 
         if(linb.browser.ie || linb.browser.kde)
             document.onselectstart=function(){
-                try {
-                    var n = event.srcElement ;
-                    if(n.tagName== "INPUT" || n.tagName== "TEXTAREA" || n.tagName== "PRE" || n.tagName== "CODE" )
-                        return event.srcElement.unselectable!='on';
+                if(event.srcElement && (event.srcElement.tagName=="BODY"||event.srcElement.tagName=="HTML"))
                     return false;
-                }catch(e) {
-                    return false;
-                };
             };
-
         //free memory
         linb.win.afterUnload(function(){
             window.onresize=null;

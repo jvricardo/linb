@@ -225,6 +225,7 @@ Class("linb.UI.TextEditor", ["linb.UI.Widget","linb.absValue"] ,{
             }
         },
         DataModel:{
+            selectable:true,
             left:0,
             top:0,
             width:200,

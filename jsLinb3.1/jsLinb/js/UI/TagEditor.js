@@ -80,6 +80,7 @@ Class("linb.UI.TagEditor", ['linb.UI',"linb.absValue"], {
             onSize:linb.UI.$onSize
         },
         DataModel:{
+            selectable:true,
             borderType:{
                 ini:'flat',
                 listbox:['none','flat','inset','outset'],

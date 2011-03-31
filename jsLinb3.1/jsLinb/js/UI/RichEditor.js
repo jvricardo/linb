@@ -31,6 +31,7 @@ Class("linb.UI.RichEditor", ["linb.UI","linb.absValue"],{
             POOL:{}
         },
         DataModel:{
+            selectable:true,
             value:'',
             width:400,
             height:300,

@@ -38,6 +38,7 @@ Class("linb.UI.Block", "linb.UI.Widget",{
             tips:null,
             iframeAutoLoad:"",
             ajaxAutoLoad:"",
+            selectable:true,
             html:{
                 action:function(v){
                     this.getSubNode('PANEL').html(v);

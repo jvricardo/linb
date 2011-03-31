@@ -408,6 +408,7 @@ Class("linb.UI.Poll", "linb.UI.List",{
         },
         DataModel:{
             $checkbox:1,
+            selectable:true,
             noCtrlKey:null,
             title:{
                 action:function(v){

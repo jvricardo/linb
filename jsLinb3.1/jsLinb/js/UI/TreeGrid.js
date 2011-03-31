@@ -1382,7 +1382,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             },
             SUB:{
                 //for ie bug: relative , height='auto' will disppear
-                '*zoom':1,
+                zoom:linb.browser.ie?1:null,
                 height:0,
                 position:'relative',
                 overflow:'hidden',

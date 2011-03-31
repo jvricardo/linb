@@ -462,6 +462,7 @@ if(linb.browser.ie){
             }
         },
         DataModel:{
+            selectable:true,
             tips:null,
             border:null,
             disabled:null,

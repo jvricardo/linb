@@ -35,7 +35,7 @@ Class("linb.UI.TreeView","linb.UI.TreeBar",{
                border: '0'
             },
             SUB:{
-                '*zoom':1,
+                zoom:linb.browser.ie?1:null,
                 height:0,
                 'font-size':'1px',
                 //1px for ie8

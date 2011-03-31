@@ -544,6 +544,7 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
             }
         },
         DataModel:{
+            selectable:true,
             disabled:null,
             position:'absolute',
             type:{

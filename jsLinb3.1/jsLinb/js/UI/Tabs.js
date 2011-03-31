@@ -769,6 +769,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
             }
         },
         DataModel:{
+            selectable:true,
             dirtyMark:false,
 
             dataBinder:null,

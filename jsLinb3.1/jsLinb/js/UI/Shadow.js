@@ -92,15 +92,15 @@ Class("linb.UI.Shadow","linb.UI",{
             KEY:{
                width:0,
                height:0,
-               _display:'inline',
-               '_font-size':0,
-               '_line-height':0
+               display:linb.browser.ie6?'inline':null,
+               'font-size':linb.browser.ie6?0:null,
+               'line-height':linb.browser.ie6?0:null
             },
             'B, RB, R':{
                 position:'absolute',
                 display:'block',
-                '*font-size':0,
-                '*line-height':0,
+                'font-size':linb.browser.ie?0:null,
+                'line-height':linb.browser.ie?0:null,
                 'z-index':'-1'
             },
             B:{

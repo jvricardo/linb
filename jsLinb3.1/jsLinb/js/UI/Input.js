@@ -405,6 +405,7 @@ Class("linb.UI.Input", ["linb.UI.Widget","linb.absValue"] ,{
             }
         },
         DataModel:{
+            selectable:true,
             _customBorder:'BOX',
             border:false,
 
