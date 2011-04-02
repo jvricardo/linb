@@ -1525,8 +1525,8 @@ Class('linb.absIO',null,{
         timeout:60000,
         //form, xml, or json
         reqType:'form',
-        //text or xml
-        rspType:'text',
+        //json, text or xml
+        rspType:'json',
         
         optimized:false,
 
@@ -1616,7 +1616,13 @@ Class('linb.Ajax','linb.absIO',{
 
                     self._XML.open(method, uri, asy);
 
-                    self._header("Content-type", contentType ? contentType : method=="POST" ? "application/x-www-form-urlencoded;charset=UTF-8" : "text/plain;charset=UTF-8");
+                    self._header("Content-type", contentType ? contentType : (
+                        (rspType=='xml'?"text/xml;":rspType=='text'?"text/plain;":"") + 
+                        (method=="POST" ? "application/x-www-form-urlencoded;":
+                            (rspType=='json'?"application/json;":"")
+                        ) + "charset=UTF-8;"
+                    ));
+
                     if(optimized){
                         try {
                             self._header("User-Agent", null);
@@ -1672,7 +1678,7 @@ Class('linb.Ajax','linb.absIO',{
             with(this){
                 //this is for opera
                 var ns=this,status = ns._XML.status;
-                _response = rspType=='text'?ns._XML.responseText:ns._XML.responseXML;
+                _response = rspType=='xml'?ns._XML.responseXML:ns._XML.responseText;
                 if(status===undefined || status===0 || status==304 || (status >= 200 && status < 300 ))
                     _onResponse();
                 else

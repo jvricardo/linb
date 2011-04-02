@@ -1475,7 +1475,7 @@ _.set(linb.Locale,["cn","app"], {
                 "<br>&nbsp;&nbsp;retry: Number, 请求所允许的重试次数."+
                 "<br>&nbsp;&nbsp;timeout: Number, 请求的超时毫秒数."+
                 "<br>&nbsp;&nbsp;reqType: String, 'form','json', 或 'xml'. 请求返回的数据类型,默认是'form'."+
-                "<br>&nbsp;&nbsp;rspType: String, 'text' 或 'xml'. 请求返回的数据类型.,默认是'text'."+
+                "<br>&nbsp;&nbsp;rspType: String, 'json', 'text' 或 'xml'. 请求返回的数据类型.,默认是'json'."+
                 "<br><em>//functions</em>"+
                 "<br>&nbsp;&nbsp;cusomQS: Function, 函数参数: [obj, type]. 用来自定义query string对象的函数."+
                 "<br><em>//normal events</em>"+
