@@ -27918,7 +27918,11 @@ Class("linb.UI.PopMenu",["linb.UI.Widget","linb.absList"],{
             });
         },
         pop:function(obj, type, parent){
-            var profile=this.get(0);
+            var profile=this.get(0),
+                sms='$subPopMenuShowed',
+                hl='$highLight',
+                cm='$childPopMenu';
+
             //ensure rendered
             if(!profile.renderId){
                 var o=profile.boxing().render(true);
@@ -27950,6 +27954,7 @@ Class("linb.UI.PopMenu",["linb.UI.Widget","linb.absList"],{
                 root.setBlurTrigger(profile.$linbid, null);
                 root.setBlurTrigger(profile.$linbid, f, profile.$popGrp);
             }
+            profile[cm]=profile[sms]=profile[hl]=null;
             return this;
         },
         hide:function(triggerEvent){
@@ -27957,6 +27962,7 @@ Class("linb.UI.PopMenu",["linb.UI.Widget","linb.absList"],{
                 profile=this.get(0),
                 root=profile.getRoot(),
                 sms='$subPopMenuShowed',
+                hl='$highLight',
                 cm='$childPopMenu';
 
             if(false!==triggerEvent)
@@ -27973,15 +27979,18 @@ Class("linb.UI.PopMenu",["linb.UI.Widget","linb.absList"],{
             else
                 root.css('display','none');
 
+            if(t=profile[hl])
+               linb([t]).tagClass('-mouseover',false);
+
             //hide all parent pop
             var p=profile[cm],q;
             if(t=profile[sms])t.hide();
             while(p){
                 p.boxing().hide();
                 p=(q=p)[cm];
-                q[cm] = q[sms] = null;
+                q[cm] = q[sms] = q[hl] = null;
             }
-            profile[cm]=profile[sms]=null;
+            profile[cm]=profile[sms]=profile[hl]=null;
             if(t=profile.$parentPopMenu)t[sms]=null;
 
             _.arr.removeValue(profile.$popGrp,root._get(0));
@@ -28359,7 +28368,10 @@ Class("linb.UI.PopMenu",["linb.UI.Widget","linb.absList"],{
                         item = profile.getItemByDom(src),
                         itemId = item.id,
                         action = true,
+                        hl='$highLight',
                         t;
+                    if(profile[hl] == src)return;
+
                     //if cursor move to submenu, keep the hover face
                     if(t=profile.$subPopMenuShowed){
                         var node = e.toElement||e.relatedTarget,
@@ -28372,7 +28384,7 @@ Class("linb.UI.PopMenu",["linb.UI.Widget","linb.absList"],{
                         }catch(a){}
                     }
                     linb.use(src).tagClass('-mouseover',false);
-                    profile.$highLight = null;
+                    profile[hl] = null;
                 },
                 onClick:function(profile, e, src){
                     var prop = profile.properties,
