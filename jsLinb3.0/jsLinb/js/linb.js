@@ -1763,9 +1763,11 @@ Class('linb.SAjax','linb.absIO',{
                 self._flag = _.asyRun(function(){if(self && !self._end){self._time()}}, self.timeout);
         },
         _clear:function(){
-            var self=this, n=self.node, c=self.constructor,_pool=self.constructor._pool;
-            _pool.length=0;
-            delete _pool[self.id];
+            var self=this, n=self.node, c=self.constructor,id=self.id,_pool=self.constructor._pool;
+            if(_pool[id]){
+                _pool[id].length=0;
+                delete _pool[id];
+            }
             if(n){
                 self.node=n.id=n.onload=n.onreadystatechange=n.onerror=null;
 
@@ -1932,7 +1934,12 @@ Class('linb.IAjax','linb.absIO',{
                 self._flag = _.asyRun(function(){if(self && !self._end){self._time()}}, self.timeout);
         },
         _clear:function(){
-            var self=this, n=self.node,f=self.form, c=self.constructor, div=document.createElement('div');
+            var self=this, n=self.node,f=self.form, c=self.constructor, div=document.createElement('div'),
+                id=self.id,_pool=self.constructor._pool;
+            if(_pool[id]){
+                _pool[id].length=0;
+                delete _pool[id];
+            }
 			if(linb.browser.gek&&n)try{n.onload=null;var d=n.contentWindow.document;d.write(" ");d.close()}catch(e){}
             self.form=self.node=self.frm=null;
             if(n)div.appendChild(n.parentNode.removeChild(n));
