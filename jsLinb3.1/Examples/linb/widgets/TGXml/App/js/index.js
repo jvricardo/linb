@@ -80,7 +80,7 @@ Class('App', 'linb.Com',{
             var ns=this;
             if(item.id=='json'){
                 linb.Ajax("json/data.js","",function(rsp){
-                    var data =_.unserialize(rsp);
+                    var data =rsp;
                     if(!data)alert("no data");
                     else{
                         if(data.header)

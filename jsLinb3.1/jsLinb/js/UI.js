@@ -2643,7 +2643,7 @@ Class("linb.UI",  "linb.absObj", {
                 return id.boxing();
         },
         unserialize:function(target,keepSerialId){
-            if(typeof target=='string')target=_.unserialize(str);
+            if(typeof target=='string')target=_.unserialize(target);
             var f=function(o){
                 if(_.isArr(o))o=o[0];
                 delete o.serialId;

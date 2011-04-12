@@ -67,7 +67,7 @@ Class('App', 'linb.Com',{
             tg.setHeader([{"caption":"no", "width":60, "type":"label"}, {"caption":"country", "width":60, "type":"label"}, {"caption":"customer", "width":50, "type":"label"}, {"caption":"employee", "width":70, "type":"label"}, {"caption":"bill2005", "type":"number", "width":50}, {"caption":"bill2006", "type":"number", "width":50}, {"caption":"bill2007", "type":"number", "width":50}, {"caption":"bill2008", "type":"number", "width":50}, {"caption":"orderDate",  "width":70}]);
             tg.busy();
             linb.Ajax('App/js/data.js','',function(rsp){
-                SPA._rows=_.unserialize(rsp);
+                SPA._rows=rsp;
                 SPA.setPageCount(10);
                 tg.free();
             },function(msg){

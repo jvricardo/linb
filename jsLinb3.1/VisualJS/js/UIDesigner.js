@@ -148,7 +148,7 @@ Class('UIDesigner', 'linb.Com',{
                         path:url
                     }
                 },function(txt){
-                    var obj=_.unserialize(txt);
+                    var obj = txt;
                     if(!obj.error){
                         com.$fetchedCode=obj.data;
                         com.$fetchedurl=url;
@@ -436,7 +436,7 @@ Class('UIDesigner', 'linb.Com',{
                         path: path,
                         content:content
                     }}, function(txt){
-                        var obj = typeof txt=='string'?_.unserialize(txt):txt;
+                        var obj = txt;
                         if(obj && !obj.error && obj.data && obj.data.OK){
                             linb.message(linb.getRes('VisualJS.builder.save2serverOK'));
                             self.imgEdit.setDisplay('none');

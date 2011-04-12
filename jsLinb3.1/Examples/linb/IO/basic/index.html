@@ -89,7 +89,6 @@
                     alert('request raise err in "'+uri+'"' + (qs?' with "'+qs+'"':'') + (msg?': "' + msg +'"':''));            
                 },
                 onOK=function(response){
-                    if(typeof response=='string')response=_.unserialize(response);
                     if(response)setResponse(response);
                     else showErr(this.uri, this.queryString, response);
                 },

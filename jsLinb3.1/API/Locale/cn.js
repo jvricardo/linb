@@ -1497,7 +1497,7 @@ _.set(linb.Locale,["cn","app"], {
             "/*\n//The most common usage: \n"+
              "linb.Thread.observableRun(null,[function(threadid){\n"+
              "       linb.Ajax('request.php',hash, function(response){\n"+
-             "               //setResponse(_.unserialize(response));\n"+
+             "               //setResponse(response);\n"+
              "           }, function(msg){\n"+
              "               //show error msg\n"+
              "           },\n"+
@@ -1517,10 +1517,6 @@ _.set(linb.Locale,["cn","app"], {
             $desc:"Boolean, 默认的是否优化选项. <strong>会设置一些优化的header.</strong>",
             $snippet:["alert(linb.Ajax.optimized)"]
         },
-        randkey:{
-            $desc:"String, 默认的随机键值. <strong>服务器需要在返回结构中匹配它.</strong>.",
-            $snippet:["alert(linb.Ajax.randkey)"]
-        },
         retry:{
             $desc:"Number, 默认的重试次数.",
             $snippet:["alert(linb.Ajax.retry)"]
@@ -1536,10 +1532,6 @@ _.set(linb.Locale,["cn","app"], {
         timeout:{
             $desc:"Number, 默认的超时时间.",
             $snippet:["alert(linb.Ajax.timeout)"]
-        },
-        type:{
-            $desc:"Number, 默认的类型名称. <strong>服务器需要在返回结构中匹配它.</strong>.",
-            $snippet:["alert(linb.Ajax.type)"]
         },
         prototype:{
             KEY:{$desc:"本类名"},
@@ -1619,10 +1611,6 @@ _.set(linb.Locale,["cn","app"], {
             $desc:"Boolean, 默认的是否优化选项. <strong>会设置一些优化的header.</strong>",
             $snippet:["alert(linb.Ajax.optimized)"]
         },
-        randkey:{
-            $desc:"String, 默认的随机字符串关键字. 该串的主要目的是防止浏览器缓存数据. <strong>服务器需要在返回的内容中用相同的关键字.</strong>",
-            $snippet:["alert(linb.SAjax.randkey)"]
-        },
         retry:{
             $desc:"Number, 默认的重试次数.",
             $snippet:["alert(linb.SAjax.retry)"]
@@ -1639,11 +1627,6 @@ _.set(linb.Locale,["cn","app"], {
             $desc:"Number, 默认的超时时间.",
             $snippet:["alert(linb.SAjax.timeout)"]
         },
-        type:{
-            $desc:"Number, 默认的类型关键字. <strong>服务器需要在返回的内容中用相同的关键字.</strong>",
-            $snippet:["alert(linb.SAjax.type)"]
-        },
-
         customQS: {
             $desc:"自定义的请求字符串. 子类可覆盖该函数,以添加自定义的参数等等.",
             $rtn:"Object",
@@ -1734,10 +1717,6 @@ _.set(linb.Locale,["cn","app"], {
             $desc:"Boolean, 默认的是否优化选项. <strong>会设置一些优化的header.</strong>",
             $snippet:["alert(linb.Ajax.optimized)"]
         },
-        randkey:{
-            $desc:"String, 默认的随机字符串关键字. 该串的主要目的是防止浏览器缓存数据. <strong>服务器需要在返回的内容中用相同的关键字.</strong>",
-            $snippet:["alert(linb.IAjax.randkey)"]
-        },
         retry:{
             $desc:"Number, 默认的重试次数.",
             $snippet:["alert(linb.IAjax.retry)"]
@@ -1754,11 +1733,6 @@ _.set(linb.Locale,["cn","app"], {
             $desc:"Number, 默认的超时时间.",
             $snippet:["alert(linb.IAjax.timeout)"]
         },
-        type:{
-            $desc:"Number, 默认的类型名关键字. <strong>服务器需要在返回的内容中用相同的关键字.</strong>",
-            $snippet:["alert(linb.IAjax.type)"]
-        },
-
         customQS: {
             $desc:"自定义的请求字符串. 子类可覆盖该函数,以添加自定义的参数等等.",
             $rtn:"Object",
@@ -14379,7 +14353,7 @@ _.set(linb.Locale,["cn","app"], {
             $snippet:[
                 "var id='linb.temp.grid0'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                 "var o=new linb.UI.TreeGrid({editable:false, position:'relative'});"+
-                "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                 "o.setActiveMode('cell').afterCellActive(function(profile, cell){linb.message(profile.box.getCellPro(profile,cell,'type'))});"+
                 "linb(id).prepend(o);"+
                 "}"
@@ -14393,7 +14367,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid1'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false, position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setActiveMode('cell'); alert(o.getActiveMode());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14409,7 +14383,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid2'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,altRowsBg:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setActiveMode('row'); alert(o.getActiveMode());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14446,7 +14420,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid3'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "_.asyRun(function(){o.editCellbyRowCol('row2','col2')},1000);"+
                     "}"
@@ -14478,7 +14452,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid4'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false, position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setAltRowsBg(true); alert(o.getAltRowsBg());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14494,7 +14468,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid5'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false, position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setAltRowsBg(true); alert(o.getAltRowsBg());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14518,7 +14492,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid6'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false, position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setAnimCollapse(true); alert(o.getAnimCollapse());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14534,7 +14508,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid7'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setAnimCollapse(true); alert(o.getAnimCollapse());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14580,7 +14554,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid7.1'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false, position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "alert(o.getCellbyRowCol('row2','col2').value);"+
                     "}"
@@ -14592,7 +14566,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid8.2'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false, position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setColHidable(true); alert(o.getColHidable());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14608,7 +14582,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid9.2'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setColHidable(true); alert(o.getColHidable());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14620,7 +14594,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid8'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false, position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setColMovable(false); alert(o.getColMovable());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14636,7 +14610,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid9'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setColMovable(true); alert(o.getColMovable());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14648,7 +14622,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid10'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false, position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setColResizer(false); alert(o.getColResizer());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14664,7 +14638,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid11'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setColResizer(true); alert(o.getColResizer());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14676,7 +14650,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid12'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false, position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setColSortable(false); alert(o.getColSortable());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14692,7 +14666,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid13'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setColSortable(true); alert(o.getColSortable());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14704,7 +14678,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid14'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setEditable(false); alert(o.getEditable());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14720,7 +14694,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid15'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setEditable(true); alert(o.getEditable());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14732,7 +14706,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid16'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false, position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setHeaderHeight(40); alert(o.getHeaderHeight());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14748,7 +14722,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid17'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setHeaderHeight(40); alert(o.getHeaderHeight());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14760,7 +14734,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid16-1'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false, position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setRowHandlerWidth(40); alert(o.getRowHandlerWidth());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14776,7 +14750,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid17-1'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setRowHandlerWidth(40); alert(o.getRowHandlerWidth());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14788,7 +14762,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid16-2'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false, position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setGridHandlerCaption('tg'); alert(o.getGridHandlerCaption());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14804,7 +14778,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid17-2'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setGridHandlerCaption('tg'); alert(o.getGridHandlerCaption());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14816,7 +14790,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid18'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false, position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setRowHeight(40); alert(o.getRowHeight());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14832,7 +14806,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid19'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setRowHeight(40); alert(o.getRowHeight());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14844,7 +14818,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid20'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setIniFold(false); alert(o.getIniFold());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14860,7 +14834,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid21'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setIniFold(true); alert(o.getIniFold());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14872,7 +14846,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid22'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false, position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setRowResizer(false); alert(o.getRowResizer());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14888,7 +14862,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid23'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setRowResizer(true); alert(o.getRowResizer());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14900,7 +14874,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid124'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false, position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setRowHandler(false); alert(o.getRowHandler());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14916,7 +14890,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid125'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setRowHandler(true); alert(o.getRowHandler());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14928,7 +14902,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid126'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false, position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setSelMode('none'); alert(o.getSelMode());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14944,7 +14918,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid127'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setSelMode('multi'); alert(o.getSelMode());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -14974,7 +14948,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid128'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,iniFold:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "_.asyRun(function(){o.insertRows([{id : 'row_1',cells:['cell_1',1,true,'label1']},{id : 'row_11',cells:['cell_11',1,true,'label1']}],'row4',null,true)},1000);"+
                     "_.asyRun(function(){o.insertRows([{id : 'row_2',cells:['cell_2',1,true,'label1']}],'row4',null,false)},2000);"+
@@ -14992,7 +14966,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid129'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "_.asyRun(function(){o.toggleRow('row4',true)},1000);"+
                     "}"
@@ -15008,7 +14982,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid130-1'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "_.asyRun(function(){o.updateRow('row1',{caption:'new row1',height:100,sub:[]})},1000);"+
                     "}"
@@ -15025,7 +14999,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid130'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "_.asyRun(function(){o.updateCell('c_a',{value:'a a a a'})},1000);"+
                     "}"
@@ -15043,7 +15017,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid131'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "_.asyRun(function(){o.updateCellByRowCol('row1','col1',{value:'b b b b'})},1000);"+
                     "}"
@@ -15055,7 +15029,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid1311'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "_.asyRun(function(){o.setActiveRow('row1')},1000);"+
                     "_.asyRun(function(){alert(o.getActiveRow().id)},1500);"+
@@ -15071,7 +15045,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid1312'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "_.asyRun(function(){o.setActiveRow('row1')},1000);"+
                     "_.asyRun(function(){alert(o.getActiveRow().id)},1500);"+
@@ -15084,7 +15058,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid1313'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative',activeMode:'cell'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "_.asyRun(function(){o.setActiveCell('row1','col1')},1000);"+
                     "_.asyRun(function(){alert(o.getActiveCell().value)},1500);"+
@@ -15101,7 +15075,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid1314'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative',activeMode:'cell'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "_.asyRun(function(){o.setActiveCell('row1','col1')},1000);"+
                     "_.asyRun(function(){alert(o.getActiveCell().value)},1500);"+
@@ -15114,7 +15088,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid32'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false, position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setRowDraggable(false); alert(o.getRowDraggable());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -15130,7 +15104,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid33'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setRowDraggable(true); alert(o.getRowDraggable());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -15145,7 +15119,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid32'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false, position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "_.asyRun(function(){o.setRows([{id : 'row_1',cells:['cell_1',1,true,'label1']},{id : 'row_11',cells:['cell_11',1,true,'label1']}]); alert(o.getRows().length); alert(_.serialize(o.getRows('data'))); alert(_.serialize(o.getRows('min')))});"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -15161,7 +15135,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid33'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "_.asyRun(function(){o.setRows([{id : 'row_1',cells:['cell_1',1,true,'label1']},{id : 'row_11',cells:['cell_11',1,true,'label1']}]); alert(o.getRows().length)});"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -15176,7 +15150,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid34'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false, position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "_.asyRun(function(){alert(o.getHeader().length)});"+
                     "_.asyRun(function(){alert(_.serialize(o.getHeader('data')))});"+
                     "_.asyRun(function(){alert(_.serialize(o.getHeader('min')))});"+
@@ -15194,7 +15168,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid35'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "_.asyRun(function(){alert(o.getHeader().length)});"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -15209,7 +15183,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid35-0'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "_.asyRun(function(){alert(o.getHeaderByColId('col1').id)},1000);"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -15225,7 +15199,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid35-1'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "_.asyRun(function(){o.updateHeader('col1',{caption:'updated',width:100})},1000);"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -15262,7 +15236,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid36'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "_.asyRun(function(){alert(o.getRowbyRowId('row2'))});"+
                     "}"
@@ -15303,7 +15277,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid36-0'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "_.asyRun(function(){alert(o.getSubNodeInGrid('ROW').get().length)});"+
                     "_.asyRun(function(){alert(o.getSubNodeInGrid('ROW','row1').get().length)});"+
@@ -15318,7 +15292,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid37'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false, position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setRowNumbered(true); alert(o.getRowNumbered());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -15334,7 +15308,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid38'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setRowNumbered(true); alert(o.getRowNumbered());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -15346,7 +15320,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid39'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false, position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setShowHeader(false); alert(o.getShowHeader());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -15362,7 +15336,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid40'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setShowHeader(false); alert(o.getShowHeader());"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -15374,7 +15348,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid41'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "o.updateCellByRowCol('row1','col1',{value:'a'}).updateCellByRowCol('row1','col2',{value:5}).updateCellByRowCol('row2','col2',{value:8});"+
                     "_.asyRun(function(){o.resetGridValue()},1000);"+
@@ -15398,7 +15372,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid41-1'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "o.updateCellByRowCol('row1','col1',{value:'a'}).updateCellByRowCol('row1','col2',{value:5}).updateCellByRowCol('row2','col2',{value:8});"+
                     "_.asyRun(function(){o.resetRowValue('row1')},1000);"+
@@ -15415,7 +15389,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid42'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "_.asyRun(function(){o.showColumn('col1',false)},1000);"+
                     "_.asyRun(function(){o.showColumn('col1')},2000);"+
@@ -15428,7 +15402,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid43'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "_.asyRun(function(){o.removeAllRows()},1000);"+
                     "}"
@@ -15443,7 +15417,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid44'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "_.asyRun(function(){o.removeRows(['row1','row2'])},1000);" +
                     "}"
@@ -15459,7 +15433,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid50'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setActiveMode('cell');"+
                     "linb(id).prepend(o);"+
                     "o.beforeCellActive(function(p,c){return false;});" +
@@ -15475,7 +15449,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid51'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setActiveMode('row');"+
                     "linb(id).prepend(o);"+
                     "o.beforeRowActive(function(p,c){return false;});" +
@@ -15491,7 +15465,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid52'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setActiveMode('cell');"+
                     "linb(id).prepend(o);"+
                     "o.afterCellActive(function(p,c){linb.message(c.value);});" +
@@ -15531,7 +15505,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid53'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setActiveMode('row');"+
                     "linb(id).prepend(o);"+
                     "o.afterRowActive(function(p,c){linb.message(c.id);});" +
@@ -15548,7 +15522,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid54'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setColMovable(true);"+
                     "linb(id).prepend(o);"+
                     "o.beforeColMoved(function(p,colId){if(colId=='col1')return false;});" +
@@ -15566,7 +15540,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid55'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setColMovable(true);"+
                     "linb(id).prepend(o);"+
                     "o.beforeColMoved(function(p,colId){if(colId=='col1')return false;});" +
@@ -15597,14 +15571,14 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid56'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setColMovable(true);"+
                     "linb(id).prepend(o);"+
                     "o.beforeColDrag(function(p,colId){if(colId=='col1')return false;});" +
                     "}",
                     "var id='linb.temp.grid57'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s); hash.header[0].colMovable=false; o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s; hash.header[0].colMovable=false; o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setColMovable(true);"+
                     "linb(id).prepend(o);"+
                     "}"
@@ -15622,7 +15596,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid57'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);hash.rows[3].sub=hash.rows[4].sub=true;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;hash.rows[3].sub=hash.rows[4].sub=true;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "o.onGetContent(function(p,row){return row.id=='row4'?[['a',1,true,{type:'checkbox',value:true}]]:[['b',3,false,'#555555']];});" +
                     "}"
@@ -15640,7 +15614,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid58'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "o.onRowSelected(function(p,row){linb.message(row.id)});" +
                     "}"
@@ -15657,7 +15631,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid59'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "o.onDblclickRow(function(p,row){linb.message(row.id)});" +
                     "}"
@@ -15676,7 +15650,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid60'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);hash.header[0].type='button';hash.header[1].type='cmdbox';hash.header[2].type='popbox';o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;hash.header[0].type='button';hash.header[1].type='cmdbox';hash.header[2].type='popbox';o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "o.setEditable(true);"+
                     "linb(id).prepend(o);"+
                     "o.beforeComboPop(function(p,cell){linb.message(cell.value)});" +
@@ -15702,7 +15676,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid60-1'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);hash.header[0].type='button';o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;hash.header[0].type='button';o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "o.onClickCell(function(p,cell){linb.message(cell.value)});" +
                     "}"
@@ -15719,7 +15693,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid60-2'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);hash.header[0].type='button';o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;hash.header[0].type='button';o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "o.onDblclickCell(function(p,cell){linb.message(cell.value)});" +
                     "}"
@@ -15736,7 +15710,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid61-1'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:true,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "o.beforeIniEditor(function(p,cell){if(cell._col.id!='col2')return false;});" +
                     "}"
@@ -15752,7 +15726,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid61'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "o.beforeCellUpdated(function(){linb.message('Cant update cell!');return false;});" +
                     "_.asyRun(function(){o.updateCellByRowCol('row1','col1','abc')},1000);"+
@@ -15769,7 +15743,7 @@ _.set(linb.Locale,["cn","app"], {
                 $snippet:[
                     "var id='linb.temp.grid62'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var o=new linb.UI.TreeGrid({editable:false,position:'relative'});"+
-                    "linb.Ajax('App/js/grid.js','',function(s){var hash=_.unserialize(s);o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
+                    "linb.Ajax('App/js/grid.js','',function(s){var hash=s;o.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();"+
                     "linb(id).prepend(o);"+
                     "o.afterCellUpdated(function(p,cell,hash){linb.message('cell updated!');});" +
                     "_.asyRun(function(){o.updateCellByRowCol('row1','col1','abc')},1000);"+

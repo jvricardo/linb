@@ -205,10 +205,10 @@ Class('App', 'linb.Com',{
             if(SPA._loaded[id])return;
             switch(id){
                 case 'a':
-                    linb.Ajax('App/js/grid1.js','',function(s){var hash=_.unserialize(s);SPA.tg1.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();
+                    linb.Ajax('App/js/grid1.js','',function(s){var hash=s;SPA.tg1.setHeader(hash.header).setRows(hash.rows);},null,null,{asy:false}).start();
                 break;
                 case 'b':
-                    linb.Ajax('App/js/grid2.js','',function(s){var hash=_.unserialize(s);  SPA.tg2data=hash.rows;  SPA.tg2.setHeader(hash.header).setRows(SPA.tg2data.slice(SPA.tg2page*5, (SPA.tg2page+1)*5));},null,null,{asy:false}).start();
+                    linb.Ajax('App/js/grid2.js','',function(s){var hash=s;  SPA.tg2data=hash.rows;  SPA.tg2.setHeader(hash.header).setRows(SPA.tg2data.slice(SPA.tg2page*5, (SPA.tg2page+1)*5));},null,null,{asy:false}).start();
                 break;
                 case 'd':
                     SPA.tg3.setHeader([{

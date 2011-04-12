@@ -603,7 +603,7 @@ Class('App', 'linb.Com',{
 
         _ajax1_onrequestok:function (response, rspType, threadId) {
             //linb.message(SPA);
-            var obj = _.unserialize(response);
+            var obj =response;
             SPA.global_data_order = obj;
 
             var idx = parseInt(SPA.tgd_orders_details.getTag())-1;
@@ -615,7 +615,7 @@ Class('App', 'linb.Com',{
         }, 
         _ajax2_onrequestok:function (response, rspType, threadId) {
             //linb.message(SPA);
-            var obj = _.unserialize(response);
+            var obj = response;
             var a = SPA.pagebar11.getValue().split(':');
             var idx = a[1]-1;
             SPA._bindCustomerData(obj[idx]);

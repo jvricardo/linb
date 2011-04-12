@@ -1431,7 +1431,7 @@ Class('linb.absIO',null,{
 
         //give defalut value to those members
         _.merge(options,{
-            id : options.id || (_()+ '' +(con._id++)),
+            id : options.id || (''+(con._id++)),
             uri : options.uri||'',
             query : options.query||'',
             contentType : options.contentType||'',
@@ -1465,7 +1465,8 @@ Class('linb.absIO',null,{
     Instance:{
         _fun:_.fun(),
         _flag:0,
-        _response:'',
+        _response:false,
+        _txtresponse:'',
         _retryNo:0,
 
         _time:function() {
@@ -1530,9 +1531,6 @@ Class('linb.absIO',null,{
         
         optimized:false,
 
-        //paras in request object
-        type:'type',
-        randkey:'id',
         callback:'callback',
 
         _buildQS:function(hash, flag, post){
@@ -1678,7 +1676,8 @@ Class('linb.Ajax','linb.absIO',{
             with(this){
                 //this is for opera
                 var ns=this,status = ns._XML.status;
-                _response = rspType=='xml'?ns._XML.responseXML:ns._XML.responseText;
+                _txtresponse = rspType=='xml'?ns._XML.responseXML:ns._XML.responseText;
+                _response=rspType=="json"?_.unserialize(_txtresponse):_txtresponse;
                 if(status===undefined || status===0 || status==304 || (status >= 200 && status < 300 ))
                     _onResponse();
                 else
@@ -1711,6 +1710,10 @@ Class('linb.SAjax','linb.absIO',{
             else
                 c._pool[id]=[self];
 
+            c.No["_"+id]=function(rsp){
+                c.$response(rsp,id);                
+            };
+
             var w=c._n=document,
                 _cb=function(){
                     if(!ok){
@@ -1736,7 +1739,6 @@ Class('linb.SAjax','linb.absIO',{
             n.src = uri;
             n.type= 'text/javascript';
             n.charset='utf-8';
-            n.id='linb:script:'+self.id;
             n.onload = n.onreadystatechange = function(){
                 if(ok)
                     return;
@@ -1769,22 +1771,29 @@ Class('linb.SAjax','linb.absIO',{
                 self._flag = _.asyRun(function(){if(self && !self._end){self._time()}}, self.timeout);
         },
         _clear:function(){
-            var self=this, n=self.node, c=self.constructor,_pool=self.constructor._pool;
-            _pool.length=0;
-            delete _pool[self.id];
+            var self=this, n=self.node, c=self.constructor,id=self.id,_pool=c._pool;
+            if(_pool[id]){
+                _pool[id].length=0;
+                delete _pool[id];
+            }
+            delete c.No["_"+id];
+
             if(n){
-                self.node=n.id=n.onload=n.onreadystatechange=n.onerror=null;
+                self.node=n.onload=n.onreadystatechange=n.onerror=null;
 
                 var div=c._n.createElement('div');
                 //in ie + add script with url(remove script immediately) + add the same script(remove script immediately) => crash
                 //so, always clear it later
                 div.appendChild(n.parentNode&&n.parentNode.removeChild(n)||n);
                 if(linb.browser.ie)
-                    _.asyRun(function(){div.innerHTML=n.outerHTML='';n=div=null;});
+                    _.asyRun(function(){div.innerHTML=n.outerHTML='';if(_.isEmpty(_pool))c._id=1;_pool=c=n=div=null;});
                 else{
                     div.innerHTML='';
                     n=div=null;
+                    if(_.isEmpty(_pool))c._id=1;
                 }
+            }else{
+                if(_.isEmpty(_pool))c._id=1;
             }
         },
         _loaded:function(){
@@ -1798,29 +1807,28 @@ Class('linb.SAjax','linb.absIO',{
     Static : {
         $asFunction:1,
         _pool:{},
-        $response:function(obj) {
+        "No":{},
+        $response:function(obj,id) {
             var self=this;
             try{
-                if(obj && (o = self._pool[obj[self.randkey]])){
+                if(obj && (o = self._pool[id])){
                     for(var i=0,l=o.length;i<l;i++){
                         o[i]._response=obj;
                         o[i]._onResponse();
                     }
                 }else
-                    self._onError(new Error("SAjax return value formatting error, or no matched 'id': "+obj));
+                    self._onError(new Error("SAjax return value formatting error: "+obj));
             }catch(e){
                 linb.Debugger && linb.Debugger.trace(e);
             }
         },
         customQS:function(obj){
-            var c=this.constructor, t=c.type, k=c.randkey, b=c.callback,nr=(this.rspType!='script'),rand=nr?k + '=' + this.id + '&type=script&':'';
+            var c=this.constructor,  b=c.callback,nr=(this.rspType!='script');
             if(typeof obj=='string')
-                return (obj && obj + '&') + rand + (nr?b + '=linb.SAjax.$response':'');
+                return (obj||"") + (nr?("&" + b + '=linb.SAjax.No._'+this.id):'');
             else{
                 if(nr){
-                    obj[t]='script';
-                    obj[k]=this.id;
-                    obj[b]="linb.SAjax.$response";
+                    obj[b]="linb.SAjax.No._"+this.id;
                 }
                 return obj;
             }
@@ -1845,6 +1853,7 @@ Class('linb.IAjax','linb.absIO',{
                 c._pool[id].push(self);
             else
                 c._pool[id]=[self];
+                
             //use window.name
             self._onload = onload = function(id){
                 //in some situation, this function will be triggered twice.
@@ -1871,7 +1880,7 @@ Class('linb.IAjax','linb.absIO',{
                         }
                     }
                     var data;
-                    if(self.id==w.name){
+                    if(("linb_IAajax_"+self.id)==w.name){
                         //clear first
                         self._clear();
                         self._onError(new Error('IAjax no return value'));
@@ -1879,7 +1888,7 @@ Class('linb.IAjax','linb.absIO',{
                     }else
                         data=w.name;
 
-                    if(data && (o=_.unserialize(data)) && (t=c._pool[o[c.randkey]]) ){
+                    if(data && (o=_.unserialize(data)) && (t=c._pool[self.id]) ){
                         for(var i=0,l=t.length;i<l;i++){
                             t[i]._response=o;
                             t[i]._onResponse();
@@ -1893,7 +1902,7 @@ Class('linb.IAjax','linb.absIO',{
             };
 
             //create form
-            var a=c._if(document,id, onload);
+            var a=c._if(document,"linb_IAajax_"+id, onload);
             self.node=a[0];
             self.frm=a[1];
             //create form
@@ -1906,7 +1915,7 @@ Class('linb.IAjax','linb.absIO',{
 
             form.action=self.uri;
             form.method=self.method;
-            form.target=id;
+            form.target="linb_IAajax_"+id;
 
             k=self.query||{};
             for(i in k){
@@ -1938,12 +1947,17 @@ Class('linb.IAjax','linb.absIO',{
                 self._flag = _.asyRun(function(){if(self && !self._end){self._time()}}, self.timeout);
         },
         _clear:function(){
-            var self=this, n=self.node,f=self.form, c=self.constructor, div=document.createElement('div');
+            var self=this, n=self.node,f=self.form, c=self.constructor, div=document.createElement('div'),id=self.id,_pool=c._pool;
+            if(_pool[id]){
+                _pool[id].length=0;
+                delete _pool[id];
+            }
 			if(linb.browser.gek&&n)try{n.onload=null;var d=n.contentWindow.document;d.write(" ");d.close()}catch(e){}
             self.form=self.node=self.frm=null;
             if(n)div.appendChild(n.parentNode.removeChild(n));
             if(f)div.appendChild(f.parentNode.removeChild(f));
             div.innerHTML='';
+            if(_.isEmpty(_pool))c._id=1;
             f=div=null;
         }
     },
@@ -2005,9 +2019,8 @@ Class('linb.IAjax','linb.absIO',{
             return '/favicon.ico';
         },
         customQS:function(obj){
-            var s=this,c=s.constructor,t=c.type;
-            obj[t]='iframe';
-            obj[c.randkey]=s.id;
+            var s=this,c=s.constructor,t=c.callback;
+            obj[t]='window.name';
             return obj;
         }
     }

@@ -9,15 +9,26 @@ using Jayrock.Json.Conversion;
 
 namespace SharpLinb
 {
+    public class LINBException : Exception
+    {
+        public LINBException()
+        {
+        }
+        public LINBException(string message)
+            : base(message)
+        {
+        }
+        public LINBException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+    }
+
     public class LINB
     {
         public const string ERR = "error";
         public const string DATA = "data";
-        public const string ID = "id";
-        public const string TYPE = "type";
         public const string CALLBACK = "callback";
-        public const string SCRIPT = "script";
-        public const string IFRAME = "iframe";
 
 
         public static Hashtable getRequestData(HttpContext context)
@@ -55,21 +66,6 @@ namespace SharpLinb
                     LINB.merge(obj, hRequest);
                 }
             }
-            if (hRequest.ContainsKey(TYPE))
-            {
-                string sType = (string)hRequest[TYPE];
-                if (!hRequest.ContainsKey(ID))
-                {
-                    throw new Exception("no "+ID+" para in request");
-                }
-                if (sType.Equals(SCRIPT))
-                {
-                    if (!hRequest.ContainsKey(CALLBACK))
-                    {
-                        throw new Exception("no " + CALLBACK + " para in request");
-                    }
-                }
-            }
 
             return hRequest;
         }
@@ -78,7 +74,6 @@ namespace SharpLinb
         public static void echoResponse(HttpContext context, Hashtable inputData, Object outputData, Boolean ok)
         {
             context.Response.ClearContent();
-            context.Response.ContentType = "text/plain";
             string strOut = "";
 
             Hashtable hResponse = new Hashtable();
@@ -91,36 +86,33 @@ namespace SharpLinb
             {
                 hResponse.Add(ERR, outputData);
             }
+            Object oCallback = inputData[CALLBACK];
             //adjust out string
-            if (inputData!=null && inputData.ContainsKey(TYPE))
+            if (oCallback != null)
             {
-                hResponse.Add(ID, (string)inputData[ID]);
-
-                string sType = (string)inputData[TYPE];
-                if (sType.Equals(IFRAME))
+                string sCallback = "" + oCallback;
+                if ("window.name".Equals(sCallback))
                 {
-
                     context.Response.ContentType = "text/html";
-
                     strOut = "<script type='text' id='json'>"
                         + JsonConvert.ExportToString(hResponse)
                         + "</script><script type='text/javascript'>window.name=document.getElementById('json').innerHTML;</script>";
                 }
-                //script type ajax
                 else
                 {
-                    string sCallback = (string)inputData[CALLBACK];
+                    context.Response.ContentType = "text/plain";
                     strOut = sCallback + "(" + JsonConvert.ExportToString(hResponse) + ")";
                 }
             }
             else
             {
+                context.Response.ContentType = "text/plain";
                 strOut = JsonConvert.ExportToString(hResponse);
             }
-             
 
-            if(inputData!=null)
-                   inputData.Clear();
+
+            if (inputData != null)
+                inputData.Clear();
             context.Response.Write(strOut);
             context.Response.End();
         }

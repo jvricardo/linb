@@ -56,9 +56,7 @@
                 },
                 onOK=function(response){
                     trace(this,'onSuccess');
-                    var obj;
-                    if(typeof response=='string')obj=_.unserialize(response);
-                    else obj=response;
+                    var obj=response;
                     if(obj){
                         setResponse(obj);
                     }else setResponse('There\'s format err in response data:' + response);

@@ -110,7 +110,7 @@ Class('VisualJS.OpenFile', 'linb.Com',{
             ins.busy();
             linb.Thread.observableRun(function(threadid){
                 linb.Ajax('js/ClsSamples.js','',function(txt){
-                    var items = _.unserialize(txt);
+                    var items = txt;
                     if(false===items){
                         linb.message('Data source format error!');
                     }else

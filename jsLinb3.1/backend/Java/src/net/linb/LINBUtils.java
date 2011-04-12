@@ -21,17 +21,11 @@ import javax.servlet.http.HttpServletResponse;
 
 public class LINBUtils {
     // input keys
-	public static final String LINB_KEYWORD_ID = "id";
-	public static final String LINB_KEYWORD_TYPE = "type";
 	public static final String LINB_KEYWORD_CALLBACK = "callback";
 
     // output keys
 	public static final String LINB_KEYWORD_DATA = "data";
 	public static final String LINB_KEYWORD_ERROR = "error";
-
-    // TYPE KEYS
-	public static final String LINB_KEYWORD_SCRIPT = "script";
-	public static final String LINB_KEYWORD_IFRAME = "iframe";
 
 	@SuppressWarnings("unchecked")
 	public static Map<String, Object> getRequestData(HttpServletRequest req)
@@ -59,16 +53,6 @@ public class LINBUtils {
 			}
 		}
 
-		if(hRequestData.containsKey(LINB_KEYWORD_TYPE)){
-            if(!hRequestData.containsKey(LINB_KEYWORD_ID)){
-                throw new Exception("no '"+LINB_KEYWORD_ID+"' para in request");
-            }
-            if(hRequestData.get(LINB_KEYWORD_TYPE).equals(LINB_KEYWORD_SCRIPT)){
-            	if(!hRequestData.containsKey(LINB_KEYWORD_CALLBACK)){
-                    throw new Exception("no '"+LINB_KEYWORD_CALLBACK+"' para  in request");
-                }
-            }
-        }
 		return hRequestData;
 	}
 
@@ -77,41 +61,28 @@ public class LINBUtils {
 	}
 
 	public static void echoResponse(HttpServletRequest req, HttpServletResponse resp, Map<String, Object> hRequestData, Object responseData, boolean ok) throws IOException {
-		String idValue=null;
 		String callbackValue=null;
-		String typeValue=null;
 		
 	    if(hRequestData!=null){
-	    	if(hRequestData.containsKey(LINB_KEYWORD_ID)){
-	    		idValue = ""+hRequestData.get(LINB_KEYWORD_ID); 
-	    	}
 	    	if(hRequestData.containsKey(LINB_KEYWORD_CALLBACK)){
 	    		callbackValue = ""+hRequestData.get(LINB_KEYWORD_CALLBACK); 
-	    	}
-	    	if(hRequestData.containsKey(LINB_KEYWORD_TYPE)){
-	    		typeValue = ""+hRequestData.get(LINB_KEYWORD_TYPE); 
 	    	}
 	    }
 
 	    Map<String, Object> outputDataWrapped = new HashMap<String, Object>();
-	    if(idValue!=null){
-	    	outputDataWrapped.put(LINB_KEYWORD_ID, idValue);
-	    }
 	    if(ok){
 	    	outputDataWrapped.put(LINB_KEYWORD_DATA, responseData);
 	    }else{
 	    	outputDataWrapped.put(LINB_KEYWORD_ERROR, responseData);
 	    }
 	    String strResponse = JSONUtil.toJSON(outputDataWrapped);
-	    if(idValue!=null){
-	    	if(typeValue!=null){
-	    		if(typeValue.equals(LINB_KEYWORD_SCRIPT)){
-	    			strResponse = callbackValue + '(' + strResponse + ')';
-	    		}else{
-	    			strResponse = "<script type='text' id='json'>" + strResponse + "</script><script type='text/javascript'>window.name=document.getElementById('json').innerHTML;</script>";
-	    		}
-	    	}
-	    }
+		if(callbackValue!=null){
+		    if(callbackValue.equals("window.name"){
+		        strResponse = "<script type='text' id='json'>" + strResponse + "</script><script type='text/javascript'>window.name=document.getElementById('json').innerHTML;</script>";
+		    }else{
+		        strResponse = callbackValue + '(' + strResponse + ')';
+		    }
+		}
 
 	    resp.setContentType("text/html;charset=UTF-8");
 		OutputStream out = null;

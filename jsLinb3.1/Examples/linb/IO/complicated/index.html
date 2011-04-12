@@ -50,8 +50,7 @@
                             onSuccess: function(obj,type,threadid){
                                 trace('the first onSuccess',this.threadid);
                                 linb.Dom.byId('response').value +=obj;
-                                
-                                if(typeof obj=='string')obj=_.unserialize(obj);
+
                                 linb.Ajax({
                                     uri:obj.nexturi,
                                     threadid:threadid,
@@ -61,8 +60,6 @@
                                         trace('the second onSuccess',this.threadid);
                                         linb.Dom.byId('response').value += obj + '\n';
 
-                                        if(typeof obj=='string')obj=_.unserialize(obj);
-                                        
                                         linb.Thread.suspend(threadid);
                                         trace('--thread' + threadid +' is suspended here.');
                                         linb.absIO.groupCall({

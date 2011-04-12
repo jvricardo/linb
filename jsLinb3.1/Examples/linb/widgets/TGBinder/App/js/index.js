@@ -209,7 +209,7 @@ Class('App', 'linb.Com',{
         }, 
         iniResource:function (com, threadid) {
             linb.Ajax('App/js/grid2.js',"",function(rsp){
-                com._data=_.unserialize(rsp);
+                com._data=rsp;
             },function(){},threadid).start();
         }, 
         _onready:function (com, threadid) {

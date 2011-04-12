@@ -294,7 +294,7 @@ Class('App', 'linb.Com',{
         }, 
         _ajax1_onrequestok:function (response, rspType, threadId) {
 if(!response)return;
-            var obj = _.unserialize(response);
+            var obj = _response;
             SPA.treegrid2
             .removeAllRows()
             .setHeader(obj.header)

@@ -76,14 +76,6 @@
       const UNIT = "Unit";
 
       /**
-       * request data symbol: id
-       */
-      const SYM_ID = "id";
-      /**
-       * request data symbol: type
-       */
-      const SYM_TYPE = "type";
-      /**
        * request data symbol: callback
        */
       const SYM_CALLBACK = "callback";
@@ -385,8 +377,6 @@
       public static function formatResponse($d, $ok=true){
             $data = self::SYM_DATA;
             $hash = self::SYM_HASH ;
-            $id = self::SYM_ID;
-            $type = self::SYM_TYPE;
             $callback = self::SYM_CALLBACK;
             $err = self::SYM_ERR;
             $key = self::SYM_KEY;
@@ -395,12 +385,9 @@
             $httpdata = &LINB::$data;
             if(isset($httpdata->$callback))
                 $cb=$httpdata->$callback;
-            if(isset($httpdata->$type))
-                $t=$httpdata->$type;
 
             unset($httpdata->$key);
             unset($httpdata->$para);
-            unset($httpdata->$type);
             unset($httpdata->$callback);
             if($ok)
                 $httpdata->$data = $d;
@@ -408,20 +395,19 @@
                 $httpdata->$err = $d;
             $output=LINB::$json->encode($httpdata);
 
-            if(isset($httpdata->$id)){
-             	if(isset($t)){
-             	    //use script tag     	    
-             	    if($t=='script')
-             	        $output = $cb.'('.$output.')';
-             	    else if($t=='iframe')
-             	        $output="<script type='text' id='json'>".$output."</script><script type='text/javascript'>window.name=document.getElementById('json').innerHTML;</script>";
-             	}
-            }
+     	    //use script tag     	    
+     	    if(isset($cb)){
+     	        if($cb=="window.name"){
+     	            $output="<script type='text' id='json'>".$output."</script><script type='text/javascript'>window.name=document.getElementById('json').innerHTML;</script>";
+     	        }else{
+     	            $output = $cb.'('.$output.')';
+     	        }
+     	    }
+
             return $output;
       }
 
       public static function echoException($eid, $e, $file='', $line=-1){
-           $id = LINB::SYM_ID ;
            $msg = LINB::SYM_MESSAGE;
 
       	    if($e instanceof Exception){

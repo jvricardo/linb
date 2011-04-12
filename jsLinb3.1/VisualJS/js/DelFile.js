@@ -24,7 +24,7 @@
                     path:pp.curProject
                 }
             } ,function(txt){
-                var obj = typeof txt=='string'?_.unserialize(txt):txt;
+                var obj = txt;
                 if(!obj || obj.error)
                     linb.message(_.get(obj,['error','message'])||'on response!');
                 else{
@@ -151,7 +151,7 @@
                     path:item.id
                 }
             }),function(txt){
-                var obj = typeof txt=='string'?_.unserialize(txt):txt;
+                var obj = txt;
                 if(obj && !obj.error){
                     var root = ns.properties.parent.buildFileItems(item.id, obj.data);
                     callback(root.sub);

@@ -223,7 +223,7 @@ Class('VisualJS.ProjectPro', 'linb.Com',{
                     }
                 }
             }),function(txt){
-                var obj = typeof txt=='string'?_.unserialize(txt):txt;
+                var obj = txt;
                 if(obj.error)
                     linb.message(obj.error.message);
                 else
@@ -256,7 +256,7 @@ Class('VisualJS.ProjectPro', 'linb.Com',{
                     }
                 }),
                 function(txt){
-                    var obj = typeof txt=='string'?_.unserialize(txt):txt;
+                    var obj = txt;
                     if(!obj || obj.error)
                         linb.message(_.get(obj,['error','message'])||'on response!');
                     else{
@@ -295,7 +295,7 @@ Class('VisualJS.ProjectPro', 'linb.Com',{
                         }
                     }),
                     function(txt){
-                        var obj = typeof txt=='string'?_.unserialize(txt):txt;
+                        var obj = txt;
                         if(!obj || obj.error)
                             linb.message(_.get(obj,['error','message'])||'on response!');
                         else{

@@ -20,7 +20,7 @@ Class('VisualJS.ProjectSelector', 'linb.Com',{
                         }
                     }),
                     function(txt){
-                        var obj = typeof txt=='string'?_.unserialize(txt):txt;
+                        var obj = txt;
                         if(!obj || obj.error)
                             linb.message(_.get(obj,['error','message'])||'on response!');
                         else{
@@ -117,7 +117,7 @@ Class('VisualJS.ProjectSelector', 'linb.Com',{
                     path:this.projectName
                 }
             }),function(txt){
-                var obj = typeof txt=='string'?_.unserialize(txt):txt;
+                var obj = txt;
                 if(!obj || obj.error)
                     linb.message(_.get(obj,['error','message'])||'on response!');
                 else

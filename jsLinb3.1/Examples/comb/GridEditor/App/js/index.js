@@ -79,7 +79,7 @@ Class('App', 'linb.Com',{
         _onready:function(){
             var self=this;
             linb.Ajax("data/data.js",'',function(s){
-                var hash=_.unserialize(s);
+                var hash=s;
                 self.tg.setHeader(hash.header).setRows(hash.rows);
             }).start();
         },

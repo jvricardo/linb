@@ -40,7 +40,7 @@ append((new linb.UI.TreeGrid)
         },
         iniResource:function (com, threadid) {
             linb.Ajax('App/js/grid1.js',"",function(rsp){
-                com._data=_.unserialize(rsp);
+                com._data=rsp;
             },function(){},threadid).start();
         }, 
         _onready:function (com, threadid) {

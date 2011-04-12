@@ -124,7 +124,7 @@ Class('VisualJS', 'linb.Com',{
                             path:prj
                         }
                     }),function(txt){
-                        var obj = typeof txt=='string'?_.unserialize(txt):txt;
+                        var obj = txt;
                         if(obj && !obj.error)
                             page._openproject(prj, obj.data);
                         else linb.message(obj.error.message);
@@ -171,7 +171,7 @@ Class('VisualJS', 'linb.Com',{
                 },
                 file:file
             }),function(txt){
-                var obj = typeof txt=='string'?_.unserialize(txt):txt;
+                var obj = txt;
                 if(obj && !obj.error && obj.data && obj.data.OK){
                         var imagePos;
                         if(type=='/')
@@ -223,7 +223,7 @@ Class('VisualJS', 'linb.Com',{
                     path:a
                 }
             },function(txt){
-                var obj = typeof txt=='string'?_.unserialize(txt):txt;
+                var obj = txt;
                 if(obj && !obj.error && obj.data && obj.data.OK){
                     tree.removeItems(arr);
                     var items = tab.getItems(),b=[];
@@ -282,7 +282,7 @@ Class('VisualJS', 'linb.Com',{
                             path:self.curProject
                         }
                     } ,function(txt){
-                        var obj = typeof txt=='string'?_.unserialize(txt):txt;
+                        var obj = txt;
                         if(!obj || obj.error)
                             linb.message(_.get(obj,['error','message'])||'on response!');
                         else{
@@ -353,7 +353,7 @@ Class('VisualJS', 'linb.Com',{
                     path:item.id
                 }
             }),function(txt){
-                var obj = typeof txt=='string'?_.unserialize(txt):txt;
+                var obj = txt;
                 if(obj && !obj.error){
                     var root = ns.buildFileItems(item.id, obj.data);
                     callback(root.sub);
@@ -393,7 +393,7 @@ Class('VisualJS', 'linb.Com',{
                     //get file content
                     function(threadid){
                         var funOK = function(txt){
-                            txt = typeof txt=='string'?_.unserialize(txt):txt;
+                            txt = txt;
                             if(txt.error){
                                 linb.message(txt.error.message);
                                 return;
@@ -699,7 +699,7 @@ Class('VisualJS', 'linb.Com',{
                                     content:newText
                                 }},
                                 function(txt){
-                                    var obj = typeof txt=='string'?_.unserialize(txt):txt;
+                                    var obj = txt;
                                     if(obj && !obj.error && obj.data && obj.data.OK){
                                         o.$obj.setValue(newText);
                                         tb.markItemCaption(o.id,false,true);

@@ -188,7 +188,7 @@ Class('VisualJS.ServiceTester', 'linb.Com',{
                     }
                     ctrl.setDisabled(true).setCaption("<strong>$VisualJS.spabuilder.st_sending</strong>");
                     linb.request(uri, query, function(rsp){
-                        var rspobj = typeof rsp=="string"?_.unserialize(rsp):rsp;
+                        var rspobj = rsp;
                         if(rspobj){
                             ns.showResult(rspobj);
                         }else{
@@ -225,7 +225,7 @@ Class('VisualJS.ServiceTester', 'linb.Com',{
             var code = 'linb.request("$1", ' + '\n' +
                        '$2, '+ '\n' +
                        'function(rsp){' + '\n' +
-                       '    var rspobj = typeof rsp=="string"?_.unserialize(rsp):rsp;' + '\n' +
+                       '    var rspobj = rsp;' + '\n' +
                        '    if(rspobj){' + '\n' +
                        '        // handle result' + '\n' +    
                        '    }else{' + '\n' +             

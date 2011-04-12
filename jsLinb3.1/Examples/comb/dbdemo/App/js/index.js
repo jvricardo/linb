@@ -154,10 +154,7 @@ Class('App', 'linb.Com',{
                     options={method:'post'};
                 }
                 linb.request('request.php', data, function(rsp){
-                    var obj;
-                    if(typeof rsp=='string')
-                        obj=_.unserialize(rsp);
-                    else obj=rsp;
+                    var obj=rsp;
                     if(obj){
                         if(!obj.error)
                             _.tryF(callback,[obj]);
