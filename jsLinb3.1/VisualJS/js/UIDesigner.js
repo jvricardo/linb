@@ -137,7 +137,7 @@ Class('UIDesigner', 'linb.Com',{
                 com.$iniCode=code.replace('{className}','App');
             },function(){
                 alert(linb.getRes('VisualJS.builder.noexist', com.$dftCodePath));
-            });
+            },null,{rspType:"text"});
 
             if(url){
                 com.$url=url;
