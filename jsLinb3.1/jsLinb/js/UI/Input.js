@@ -847,7 +847,7 @@ Class("linb.UI.Input", ["linb.UI.Widget","linb.absValue"] ,{
                     });
 
                 if(ww||hh)
-                    v1.cssSize({width:ww?(ww-loff-roff):null,height:hh?(hh-toff):null});
+                    v1.cssSize({width:ww?(ww-loff-roff):null,height:hh?(hh-toff-((labelPos=='top'||labelPos=='bottom')?labelSize:0)):null});
 
                 /*for ie6 bug*/
                 if((profile.$border||profile.$shadow||profile.$resizer) && linb.browser.ie)o.ieRemedy();

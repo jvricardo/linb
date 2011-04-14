@@ -1,7 +1,7 @@
 
 Class('App', 'linb.Com',{
     Instance:{
-        events:{"onReady":"_onready"}, 
+        events:{"onReady":"_onready", "onRender":"_onRender"}, 
         _timeline1_ongettasks:function (profile, from, to, minMs, type, callback, threadId) {
             /*
             from=from.getTime();
@@ -172,6 +172,9 @@ Class('App', 'linb.Com',{
             SPA.data_cache=[];
             //set com factory profile
             linb.ComFactory.setProfile(CONF.ComFactoryProfile);
+        }, 
+        _onRender:function () {
+            SPA.timeline1.iniContent();
         }, 
         _timeline1_onclicktask:function (profile, task, event, src) {
             var host=this;
