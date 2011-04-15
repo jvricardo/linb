@@ -5533,7 +5533,8 @@ new function(){
                 }else if(prop.ajaxAutoLoad){
                     if(typeof prop.ajaxAutoLoad=='string')
                         prop.ajaxAutoLoad={url:prop.ajaxAutoLoad};
-                    var hash=prop.ajaxAutoLoad;
+                    var hash=prop.ajaxAutoLoad,options={rspType:"text"};
+                    _.merge(options, hash.options);
                     ins.busy();
                     linb.Ajax(hash.url, hash.query, function(rsp){
                         var n=linb.create("div");
@@ -5543,7 +5544,7 @@ new function(){
                     }, function(err){
                         ins.append("<div>"+err+"</div>");
                         ins.free();
-                    }, null, hash.options).start();
+                    }, null, options).start();
                 }
             }
         }

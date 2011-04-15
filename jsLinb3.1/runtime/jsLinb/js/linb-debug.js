@@ -1620,7 +1620,7 @@ Class('linb.Ajax','linb.absIO',{
                             (rspType=='json'?"application/json;":"")
                         ) + "charset=UTF-8;"
                     ));
-
+                    self._header("X-Requested-With", "XMLHttpRequest"); 
                     if(optimized){
                         try {
                             self._header("User-Agent", null);
@@ -15108,7 +15108,8 @@ new function(){
                 }else if(prop.ajaxAutoLoad){
                     if(typeof prop.ajaxAutoLoad=='string')
                         prop.ajaxAutoLoad={url:prop.ajaxAutoLoad};
-                    var hash=prop.ajaxAutoLoad;
+                    var hash=prop.ajaxAutoLoad,options={rspType:"text"};
+                    _.merge(options, hash.options);
                     ins.busy();
                     linb.Ajax(hash.url, hash.query, function(rsp){
                         var n=linb.create("div");
@@ -15118,7 +15119,7 @@ new function(){
                     }, function(err){
                         ins.append("<div>"+err+"</div>");
                         ins.free();
-                    }, null, hash.options).start();
+                    }, null, options).start();
                 }
             }
         }
@@ -26313,7 +26314,8 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                     }else if(item.ajaxAutoLoad){
                         if(typeof item.ajaxAutoLoad=='string')
                             item.ajaxAutoLoad={url:item.ajaxAutoLoad};
-                        var hash=item.ajaxAutoLoad;
+                        var hash=item.ajaxAutoLoad,options={rspType:"text"};
+                        _.merge(options, hash.options);
                         box.busy(null,null,"PANEL",profile.getSubIdByItemId(item.id));
                         linb.Ajax(hash.url, hash.query, function(rsp){
                             var n=linb.create("div");
@@ -26323,7 +26325,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                         }, function(err){
                             box.getPanel(item.id).append("<div>"+err+"</div>");
                             box.free();
-                        }, null, hash.options).start();
+                        }, null, options).start();
                     }else if(item.html){
                         box.getPanel(item.id).append(item.html);
                     }

@@ -970,7 +970,8 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                     }else if(item.ajaxAutoLoad){
                         if(typeof item.ajaxAutoLoad=='string')
                             item.ajaxAutoLoad={url:item.ajaxAutoLoad};
-                        var hash=item.ajaxAutoLoad;
+                        var hash=item.ajaxAutoLoad,options={rspType:"text"};
+                        _.merge(options, hash.options);
                         box.busy(null,null,"PANEL",profile.getSubIdByItemId(item.id));
                         linb.Ajax(hash.url, hash.query, function(rsp){
                             var n=linb.create("div");
@@ -980,7 +981,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                         }, function(err){
                             box.getPanel(item.id).append("<div>"+err+"</div>");
                             box.free();
-                        }, null, hash.options).start();
+                        }, null, options).start();
                     }else if(item.html){
                         box.getPanel(item.id).append(item.html);
                     }

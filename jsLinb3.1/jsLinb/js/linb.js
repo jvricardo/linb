@@ -1620,7 +1620,7 @@ Class('linb.Ajax','linb.absIO',{
                             (rspType=='json'?"application/json;":"")
                         ) + "charset=UTF-8;"
                     ));
-
+                    self._header("X-Requested-With", "XMLHttpRequest"); 
                     if(optimized){
                         try {
                             self._header("User-Agent", null);
