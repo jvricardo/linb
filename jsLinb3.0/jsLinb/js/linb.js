@@ -1617,6 +1617,7 @@ Class('linb.Ajax','linb.absIO',{
                     self._XML.open(method, uri, asy);
 
                     self._header("Content-type", contentType ? contentType : method=="POST" ? "application/x-www-form-urlencoded;charset=UTF-8" : "text/plain;charset=UTF-8");
+                    self._header("X-Requested-With", "XMLHttpRequest");
                     if(optimized){
                         try {
                             self._header("User-Agent", null);
