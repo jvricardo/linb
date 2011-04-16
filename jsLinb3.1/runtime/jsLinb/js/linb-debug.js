@@ -18917,20 +18917,23 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                 o.cssRegion({
                     left:left + (labelPos=='left'?labelSize:0),
                     top:top + (labelPos=='top'?labelSize:0),
-                    width:ww===null?null:(ww - ((labelPos=='left'||labelPos=='right')?labelSize:0)),
-                    height:hh===null?null:(hh - ((labelPos=='top'||labelPos=='bottom')?labelSize:0))
+                    width:ww===null?null:Math.max(0,(ww - ((labelPos=='left'||labelPos=='right')?labelSize:0))),
+                    height:hh===null?null:Math.max(0,(hh - ((labelPos=='top'||labelPos=='bottom')?labelSize:0)))
                 });
                 
                 if(labelSize)
                     label.cssRegion({
-                        left:ww===null?null:labelPos=='right'?(ww-labelSize+labelGap):0,
-                        top: height===null?null:labelPos=='bottom'?(height-labelSize+labelGap):0, 
-                        width:ww===null?null:((labelPos=='left'||labelPos=='right')?(labelSize-labelGap):ww),
-                        height:height===null?null:((labelPos=='top'||labelPos=='bottom')?(labelSize-labelGap):height)
+                        left:ww===null?null:Math.max(0,labelPos=='right'?(ww-labelSize+labelGap):0),
+                        top: height===null?null:Math.max(0,labelPos=='bottom'?(height-labelSize+labelGap):0), 
+                        width:ww===null?null:Math.max(0,((labelPos=='left'||labelPos=='right')?(labelSize-labelGap):ww)),
+                        height:height===null?null:Math.max(0,((labelPos=='top'||labelPos=='bottom')?(labelSize-labelGap):height))
                     });
 
                 if(ww||hh)
-                    v1.cssSize({width:ww?(ww-loff-roff):null,height:hh?(hh-toff-((labelPos=='top'||labelPos=='bottom')?labelSize:0)):null});
+                    v1.cssSize({
+                        width:ww?Math.max(0,(ww-loff-roff-((labelPos=='left'||labelPos=='right')?labelSize:0))):null,
+                        height:hh?Math.max(0,(hh-toff-((labelPos=='top'||labelPos=='bottom')?labelSize:0))):null
+                    });
 
                 /*for ie6 bug*/
                 if((profile.$border||profile.$shadow||profile.$resizer) && linb.browser.ie)o.ieRemedy();
@@ -20973,14 +20976,14 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
             }
             var iL=left + (labelPos=='left'?labelSize:0),
                 iT=top + (labelPos=='top'?labelSize:0),
-                iW=ww===null?null:(ww - ((labelPos=='left'||labelPos=='right')?labelSize:0)),
-                iH=hh===null?null:(hh - ((labelPos=='top'||labelPos=='bottom')?labelSize:0)),
-                iH2=hh===null?null:(height - ((labelPos=='top'||labelPos=='bottom')?labelSize:0));
+                iW=ww===null?null:Math.max(0,ww - ((labelPos=='left'||labelPos=='right')?labelSize:0)),
+                iH=hh===null?null:Math.max(0,hh - ((labelPos=='top'||labelPos=='bottom')?labelSize:0)),
+                iH2=hh===null?null:Math.max(0,height - ((labelPos=='top'||labelPos=='bottom')?labelSize:0));
 
             if(null!==iW && iW-loff-roff>0)
-                v1.style.width=(iW-loff-roff)+px;
+                v1.style.width=Math.max(0,iW-loff-roff)+px;
             if(null!==iH && iH-toff>0)
-                v1.style.height=(iH-toff)+px;
+                v1.style.height=Math.max(0,iH-toff)+px;
 
             o.cssRegion({
                 left:iL,
@@ -20993,8 +20996,8 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 label.cssRegion({
                     left:ww===null?null:labelPos=='right'?(ww-labelSize+labelGap+bw1+bw2+$hborder*2):0,
                     top: height===null?null:labelPos=='bottom'?(height-labelSize+labelGap):0, 
-                    width:ww===null?null:((labelPos=='left'||labelPos=='right')?(labelSize-labelGap):ww),
-                    height:height===null?null:((labelPos=='top'||labelPos=='bottom')?(labelSize-labelGap):height)
+                    width:ww===null?null:Math.max(0,((labelPos=='left'||labelPos=='right')?(labelSize-labelGap):ww)),
+                    height:height===null?null:Math.max(0,((labelPos=='top'||labelPos=='bottom')?(labelSize-labelGap):height))
                 });
 
             iL += (iW||0) + $hborder*2;
