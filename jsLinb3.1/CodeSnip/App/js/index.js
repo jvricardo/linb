@@ -144,7 +144,7 @@ Class('App', 'linb.Com',{
                     }
                 },function(msg){
                     fail()
-                },threadid).start();
+                },threadid,{rspType:'text'}).start();
             });
 
         }, 
