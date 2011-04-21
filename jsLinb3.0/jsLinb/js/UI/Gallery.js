@@ -50,12 +50,12 @@ Class("linb.UI.Gallery", "linb.UI.List",{
     Static:{
         Appearances:{
             KEY:{
-                overflow:'auto',
-                'overflow-x': 'hidden'
+                overflow:'visible'
             },
             ITEMS:{
                 position:'relative',
-                overflow:'visible',
+                overflow:'auto',
+                'overflow-x': 'hidden',
                 zoom:linb.browser.ie6?1:null
             },
             ITEM:{

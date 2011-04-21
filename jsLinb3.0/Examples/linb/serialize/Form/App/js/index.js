@@ -159,13 +159,6 @@ Class('App', 'linb.Com',{
                             widget.beforeComboPop(o.beforeComboPop);
                         break;
                 }
-
-                if(widget.setValue){
-                    if('value' in o)
-                        widget.setValue(o.value);
-                    if('uiValue' in o)
-                        widget.setUIValue(o.uiValue);
-                }
                 if(widget.setReadonly){
                     if('readonly' in o)
                         widget.setReadonly(o.readonly);
@@ -181,6 +174,10 @@ Class('App', 'linb.Com',{
                     else
                         if(widget.setValueFormat)
                             widget.setValueFormat(o.valueFormat);
+                }
+                if(widget.setValue){
+                    if('value' in o)
+                        widget.setValue(o.value);
                 }
             });
 
