@@ -2535,7 +2535,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                 .setCustomStyle({"KEY":"border-top:solid 1px #CDCDCD;"})
             , 'main');
             if(CONF.designer_editMode != "simple"){
-                host.layoutBase.setDisplay('');
+                host.iconlist.setDisplay('');
             }
         }
     },
