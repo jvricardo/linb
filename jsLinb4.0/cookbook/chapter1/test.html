@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="keywords" content="javascript_UI_Builder, javascript, UI Builder, RIA, SPA, client SOA, linb, jsLinb, IDE, UI, GUI, javascript OOP, opensource, open-source, Ajax, cross-browser, WYSIWYG editor" />
+    <meta name="description" content="Web application created by Visual JS, powered by LINB framework" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="imagetoolbar" content="no" />
+    <meta content="IE=EmulateIE7" http-equiv="X-UA-Compatible">
+    <title>jsLINB_AJAX_Builder -- jsLinb Examples</title>
+</head>
+    <body>
+   
+        
+        
+        <div style="position: absolute; width: 674px; height: 365px; z-index: 1; left: 371px; top: 172px" id="layer1">
+&nbsp;</div>
+        
+        <script type="text/javascript" src="../../runtime/jsLinb/js/linb-all.js"></script>
+        <script type="text/javascript">
+            Class('App', 'linb.Com',{
+                Instance:{
+                    iniComponents:function(){
+                        // [[code created by jsLinb UI Builder
+                        var host=this, children=[], append=function(child){children.push(child.get(0))};
+            
+                        append((new linb.UI.TreeGrid)
+                            .setHost(host,"treegrid4")
+                            .setDock("none")
+                            .setLeft(60)
+                            .setTop(50)
+                            .setRowNumbered(true)
+                            .setGridHandlerCaption("grid")
+                            .setHeader([{"id":"col 1", "width":80, "type":"label", "caption":"col 1"}, {"id":"col 2", "width":80, "type":"label", "caption":"col 2"}, {"id":"col 3", "width":80, "type":"label", "caption":"col 3"}])
+                            .setRows([{"cells":[{"value":"a1"}, {"value":"a2"}, {"value":"a3"}], "id":"j"}, {"cells":[{"value":"b1"}, {"value":"b2"}, {"value":"b3"}], "id":"k"}, {"cells":[{"value":"c1"}, {"value":"c2"}, {"value":"c3"}], "id":"l"}, {"cells":[{"value":"d1"}, {"value":"d2"}, {"value":"d3"}], "id":"m"}, {"cells":[{"value":"e1"}, {"value":"e2"}, {"value":"e3"}], "id":"n"}, {"cells":[{"value":"f1"}, {"value":"f2"}, {"value":"f3"}], "id":"o"}])
+                        );
+            
+                        return children;
+                        // ]]code created by jsLinb UI Builder
+                    }
+                }
+            });
+            linb.main(function(){
+                var ins=new App;
+                ins.iniComponents();
+                linb('layer1').append(ins.getUIComponents());
+            });
+         
+        </script>
+</body>
+</html>
