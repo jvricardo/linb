@@ -212,7 +212,7 @@ _.set(linb.Locale,["en","app"], {
                 $rtn:"Object",
                 $paras:[
                     "hash [Required]: Object, target Object to clone.",
-                    "filter [Optional]: Function, arguments: [hash value, hash key]. to Determines whether or not it clones certain item. Or [true], means to neglect those items which key starts with '_'.",
+                    "filter [Optional]: Function, arguments: [hash value, hash key]. To determine whether or not it clones certain item. Or [true], means to neglect those items which key starts with '_'.",
                     "deep [Optional]: Number, Default is 100."
                 ],
                 $snippet:[
@@ -227,7 +227,7 @@ _.set(linb.Locale,["en","app"], {
                 $rtn:"Object",
                 $paras:[
                     "hash [Required]: Object, target Object to copy.",
-                    "filter [Optional]: Function, arguments: [hash value, hash key]. to Determines whether or not it copy certain item. Or [true], means to neglect those items which key starts with '_'.",
+                    "filter [Optional]: Function, arguments: [hash value, hash key]. To determine whether or not it copy certain item. Or [true], means to neglect those items which key starts with '_'.",
                 ],
                 $memo:"Sees <a href='#_.clone'>_.clone</a>"
             },
@@ -268,7 +268,7 @@ _.set(linb.Locale,["en","app"], {
                 $rtn:"Object",
                 $paras:[
                     "obj [Required]: Object, Object to filter.",
-                    "filter [Optional]: Function, arguments: [hash value, hash key]. to Determines whether or not it keeps certain item. Or [true], means to filter those items which key starts with '_'.",
+                    "filter [Optional]: Function, arguments: [hash value, hash key]. To determine whether or not it keeps certain item. Or [true], means to filter those items which key starts with '_'.",
                     "force [Optional]: Boolean, force to take [obj] as a {}. Default is false."
                 ],
                 $snippet:[
@@ -337,7 +337,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             isArr :{
-                $desc:"To Determines whether or not the target is Array.",
+                $desc:"To determine whether or not the target is Array.",
                 $rtn:"Boolean",
                 $paras:[
                     "target [Required]: any"
@@ -347,7 +347,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             isBool :{
-                $desc:"To Determines whether or not the target is Boolean.",
+                $desc:"To determine whether or not the target is Boolean.",
                 $rtn:"Boolean",
                 $paras:[
                     "target [Required]: any"
@@ -357,7 +357,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             isDate :{
-                $desc:"To Determines whether or not the target is Date.",
+                $desc:"To determine whether or not the target is Date.",
                 $rtn:"Boolean",
                 $paras:[
                     "target [Required]: any"
@@ -367,7 +367,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             isEmpty :{
-                $desc:"To Determines whether or not the target is empty Object.",
+                $desc:"To determine whether or not the target is empty Object.",
                 $rtn:"Boolean",
                 $paras:[
                     "target [Required]: any"
@@ -378,7 +378,7 @@ _.set(linb.Locale,["en","app"], {
                 $memo:"It's only for hash Object"
             },
             isFun :{
-                $desc:"To Determines whether or not the target is a Function.",
+                $desc:"To determine whether or not the target is a Function.",
                 $rtn:"Boolean",
                 $paras:[
                     "target [Required]: any"
@@ -388,7 +388,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             isArguments:{
-                $desc:"To Determines whether or not the target is an arguments Object.",
+                $desc:"To determine whether or not the target is an arguments Object.",
                 $rtn:"Boolean",
                 $paras:[
                     "target [Required]: any"
@@ -398,7 +398,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             isHash:{
-                $desc:"To Determines whether or not the target is a hash Object.",
+                $desc:"To determine whether or not the target is a hash Object.",
                 $rtn:"Boolean",
                 $paras:[
                     "target [Required]: any"
@@ -408,7 +408,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             isNull:{
-                $desc:"To Determines whether or not the target is null.",
+                $desc:"To determine whether or not the target is null.",
                 $rtn:"Boolean",
                 $paras:[
                     "targe [Required]t: any"
@@ -418,7 +418,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             isFinite:{
-                $desc:"To Determines whether or not the target is an valid number.",
+                $desc:"To determine whether or not the target is an valid number.",
                 $rtn:"Boolean",
                 $paras:[
                     "target [Required]: any"
@@ -428,7 +428,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             isNumb:{
-                $desc:"To Determines whether or not the target is Number.",
+                $desc:"To determine whether or not the target is Number.",
                 $rtn:"Boolean",
                 $paras:[
                     "target [Required]: any"
@@ -438,7 +438,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             isObj :{
-                $desc:"To Determines whether or not the target is Object.",
+                $desc:"To determine whether or not the target is Object.",
                 $rtn:"Boolean",
                 $paras:[
                     "target [Required]: any"
@@ -448,7 +448,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             isReg :{
-                $desc:"To Determines whether or not the target is regular expression.",
+                $desc:"To determine whether or not the target is regular expression.",
                 $rtn:"Boolean",
                 $paras:[
                     "target [Required]: any"
@@ -458,7 +458,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             isSet:{
-                $desc:"To Determines whether or not the target is set.",
+                $desc:"To determine whether or not the target is set.",
                 $rtn:"Boolean",
                 $paras:[
                     "target [Required]: any"
@@ -468,7 +468,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             isStr :{
-                $desc:"To Determines whether or not the target is String.",
+                $desc:"To determine whether or not the target is String.",
                 $rtn:"Boolean",
                 $paras:[
                     "target [Required]: any"
@@ -524,7 +524,7 @@ _.set(linb.Locale,["en","app"], {
                 $rtn: "String",
                 $paras:[
                     "obj [Required]: Object, target Object. ",
-                     "filter [Optional]: Function, arguments: [hash value, hash key]. to Determines whether or not it serializes certain item. Or [true], means to neglect those items which key starts with '_'.",
+                     "filter [Optional]: Function, arguments: [hash value, hash key]. To determine whether or not it serializes certain item. Or [true], means to neglect those items which key starts with '_'.",
                     "dateformat  [Optional]: String, 'utc' or 'gmt'. Force to stringify all the [Date]in the target Object into ISO UTC string, ISO GMT string, or the default format( new Date(yyyy,mm,dd,hh,nn,ss,ms) )."
                 ],
                 $snippet:[
@@ -546,7 +546,7 @@ _.set(linb.Locale,["en","app"], {
                 $rtn: "String",
                 $paras:[
                     "obj [Required]: Object, target Object. ",
-                     "filter [Optional]: Function, arguments: [hash value, hash key]. to Determines whether or not it serializes certain item. Or [true], means to neglect those items which key starts with '_'.",
+                     "filter [Optional]: Function, arguments: [hash value, hash key]. To determine whether or not it serializes certain item. Or [true], means to neglect those items which key starts with '_'.",
                     "dateformat  [Optional]: String, 'utc' or 'gmt'. Force to serialize all the [Date]in the target Object into ISO UTC string, ISO GMT string, or the default format( new Date(yyyy,mm,dd,hh,nn,ss,ms) )."
                 ],
                 $snippet:[
@@ -741,7 +741,7 @@ _.set(linb.Locale,["en","app"], {
                 $rtn:"Object",
                 $paras:[
                     "str [Required]: String, string to unserialize.",
-                    "dateformat [Optional]: String, to Determines unserialize Date string representing or not."
+                    "dateformat [Optional]: String, To determine unserialize Date string representing or not."
                 ],
                 $snippet:[
                     "var o={a:[1,{k:1}],s:'s',d:new Date},str; alert(str=_.serialize(o)); var o2=_.unserialize(str); alert(o2.d)",
@@ -1154,7 +1154,7 @@ _.set(linb.Locale,["en","app"], {
             "callback [Optional]: Function, arguments: [threadid]. default callback to call after each function is called.",
             "onStart [Optional]: Function, arguments: [threadid]. this function will be called before the thread triggered the first task.",
             "onEnd [Optional]: Function, arguments: [threadid]. this function will be called after the thread finishes the last task.",
-            "cycle [Optional]: To Determines whether or not the current linb.Thread is in circular mode. Default is false."
+            "cycle [Optional]: To determine whether or not the current linb.Thread is in circular mode. Default is false."
         ],
         $snippet:[
             "var s=1; linb.Thread(null, [function(){linb.message(s)},2000,{task:function(){linb.message(s)}}],200,function(){s++}).start()",
@@ -1373,7 +1373,7 @@ _.set(linb.Locale,["en","app"], {
             ]
         },
         isCrossDomain:{
-            $desc:"To Determines whether  or not the given path is a cross domain URI.",
+            $desc:"To determine whether  or not the given path is a cross domain URI.",
             $rtn:"Boolean",
             $paras:[
                 "uri [Required]: String, URI path String."
@@ -1458,7 +1458,7 @@ _.set(linb.Locale,["en","app"], {
                 "<br>&nbsp;&nbsp;uri: String, The URL of the request target."+
                 "<br>&nbsp;&nbsp;query: Object[Key/value pairs], request data."+
                 "<br>&nbsp;&nbsp;threadid: String, a thread id to be bound to the current request."+
-                "<br>&nbsp;&nbsp;asy: Boolean, to Determines whether or not  the request is asynchronous. Default is [false]."+
+                "<br>&nbsp;&nbsp;asy: Boolean, To determine whether or not  the request is asynchronous. Default is [false]."+
                 "<br>&nbsp;&nbsp;<strong>method: 'GET' or 'POST', the request method. Default is 'GET'.</strong>"+
                 "<br>&nbsp;&nbsp;retry: Number, how many times it is tried when the request is timeout."+
                 "<br>&nbsp;&nbsp;timeout: Number, the timeout time(ms) for this request."+
@@ -1747,7 +1747,7 @@ _.set(linb.Locale,["en","app"], {
         $paras:[
             "path [Required]: String, path name of a class/Object(e.g. 'linb.UI.Button').",
             "callback [Optional]: Function, arguments:[path, code, threadid]. A function to be executed whenever the straight call returns. If returns successfully, [path] will be the [path name], and [this] pointer will be the result class/Object; if fails, [path] will be [null], and [this] pointer will be the inner linb.Ajax/iajax Object.",
-            "isAsy [Optional]: Boolean, to Determines whether or not  the current SC is in asynchronous Mode. If the target class exists, this parameter is invalide. Default is [false].",
+            "isAsy [Optional]: Boolean, To determine whether or not  the current SC is in asynchronous Mode. If the target class exists, this parameter is invalide. Default is [false].",
             "threadid [Optional]: String, a thread id to be bound to the current request. [suspend the thread -> execute the request -> resume the thread]",
             "options [Optional]: Object, a set of key/value pairs that configure the inner linb.Ajax(asynchronous mode) or linb.SAjax(synchronous mode)."
         ],
@@ -1907,9 +1907,9 @@ _.set(linb.Locale,["en","app"], {
             $rtn:'[self]',
             $paras:[
                 "key [Required] : String, keyboard name to be monitored.",
-                "ctrl [Optional] : Boolean, to Determines whether or not it monitors 'CTRL' status. Default is [false].",
-                "shift [Optional] : Boolean, to Determines whether or not it monitors 'SHIFT' status. Default is [false].",
-                "alt [Optional] : Boolean, to Determines whether or not it monitors 'ALT' status. Default is [false].",
+                "ctrl [Optional] : Boolean, To determine whether or not it monitors 'CTRL' status. Default is [false].",
+                "shift [Optional] : Boolean, To determine whether or not it monitors 'SHIFT' status. Default is [false].",
+                "alt [Optional] : Boolean, To determine whether or not it monitors 'ALT' status. Default is [false].",
                 "fun [Optional] : Function, the hook function that will be executed whenever the pre-defined condition is triggered. If you do not specify this parameter, or enter a non-function variable, system will remove the event hook by the [key](keyboard name).",
                 "args [Optional]: Array, arguments for fun. Default is []",
                 "scope [Optional]: Object, [this] pointer for [fun]. Default is [window]"
@@ -1927,9 +1927,9 @@ _.set(linb.Locale,["en","app"], {
             $rtn:'[self]',
             $paras:[
                 "key [Required] : String, keyboard name to be monitored.",
-                "ctrl [Optional] : Boolean, to Determines whether or not it monitors 'CTRL' status. Default is [false].",
-                "shift [Optional] : Boolean, to Determines whether or not it monitors 'SHIFT' status. Default is [false].",
-                "alt [Optional] : Boolean, to Determines whether or not it monitors 'ALT' status. Default is [false].",
+                "ctrl [Optional] : Boolean, To determine whether or not it monitors 'CTRL' status. Default is [false].",
+                "shift [Optional] : Boolean, To determine whether or not it monitors 'SHIFT' status. Default is [false].",
+                "alt [Optional] : Boolean, To determine whether or not it monitors 'ALT' status. Default is [false].",
                 "fun [Optional] : Function, the hook function that will be executed whenever the pre-defined condition is triggered. If you do not specify this parameter, or enter a non-function variable, system will remove the event hook by the [key](keyboard name).",
                 "args [Optional]: Array, arguments for fun. Default is []",
                 "scope [Optional]: Object, [this] pointer for [fun]. Default is [window]"
@@ -2020,7 +2020,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             isEmpty:{
-                $desc:"To Determines if the current linb.absBox Object includes any element.",
+                $desc:"To determine if the current linb.absBox Object includes any element.",
                 $rtn:"Boolean.",
                 $snippet:[
                     "var n=linb(['linb.UI.Layout:a:','btnLang']); alert(n.isEmpty()); alert(linb().isEmpty())"
@@ -4650,7 +4650,7 @@ _.set(linb.Locale,["en","app"], {
         prototype:{
             KEY:{$desc:"Class Name"},
             autoDestroy:{
-                $desc:"Determines whether the first inner UI control's detory will trigger com's destroy or not.",
+                $desc:"To determine whether the first inner UI control's detory will trigger com's destroy or not.",
                 $rtn:"Boolean"
             },
             fireEvent:{
@@ -4724,8 +4724,12 @@ _.set(linb.Locale,["en","app"], {
                     "com.create(function(com){alert(com.getComponents().get(0).alias);});"
                 ]
             },
+            getDataBinders:{
+                $desc:"Gets all DataBinder objects in a specified linb.Com.",
+                $rtn:"Array"
+            },
             getUIComponents:{
-                $desc:"Gets all first layer UI Components in a specified linb.Com Object.",
+                $desc:"Gets all first layer UI Components in a specified linb.Com.",
                 $rtn:"linb.UI",
                 $snippet:[
                     "Class('App1','linb.Com',{" +
@@ -4789,7 +4793,7 @@ _.set(linb.Locale,["en","app"], {
                 $desc:"Appends UI to DOM. If returns false, all the UI components will be appended to DOM by 'show'.",
                 $paras:[
                     "parent [Required] : linb.UI, linb.UI ojbect, Element or linb.Dom Object.",
-                    "subId [Optional] : String, the sub id that Determines the set of UIProfiles will be added to.",
+                    "subId [Optional] : String, the sub id that determines the set of UIProfiles will be added to.",
                     "left [Optional] : Number, the css left value.",
                     "top [Optional] : Number, the css top value."
                 ]
@@ -4813,7 +4817,7 @@ _.set(linb.Locale,["en","app"], {
                 $paras:[
                     "onEnd [Optiona] : Function, the callback function, it will be executed once when the Com is created successfully.",
                     "parent [Optional] : String/Element/linb.Dom, the parent DOM node or linb.UI Object.",
-                    "subId [Optional] : String, this parameter valid when parent is linb.UI only. The sub id that Determines the [target] will be added to which sub DOM node. This parameter can be [false] too, that means the [target] will be appended to DOM only, no link created between the [target] UIProfiles and the parent UIProfile.",
+                    "subId [Optional] : String, this parameter valid when parent is linb.UI only. The sub id that determines the [target] will be added to which sub DOM node. This parameter can be [false] too, that means the [target] will be appended to DOM only, no link created between the [target] UIProfiles and the parent UIProfile.",
                     "threadid [Optional] : String, the inner thread id. If is 'false', system will show the Com in sync mode."
                 ],
                 $snippet:[
@@ -5170,41 +5174,256 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getName:{
-                $desc:"Return the name property of the first databinder profile.",
+                $desc:"Returns the name property of the first databinder profile.",
                 $rtn:'String',
                 $memo:"To see the 'getValue' snippets. "
             },
             
-//*******
-            getValue:{
-                $desc:"Gets a key/value pairs Object from the current databinder, that includes the values of all those bound linb.absValue profiles.",
+            getData:{
+                $desc:"Gets the inner data.",
+                $rtn:"Object, key/value pairs.",
                 $paras:[
-                    "dirtyOnly [Optional] : Boolean, only get dirtied data, Default is [false]",
-                    "reset [Optional] : Boolean, Determines whether to reset all controls' value and clear the diry mark immediately or not, Default is [true]",
-                    "withCaption [Optional] : Boolean, Determines whether include caption(if has this property), Default is [false]",
-                    "returnArr [Optional] : Boolean, Determines whether return array object(for those multi selection absList only),Default is [false]"
-                ],
-                $rtn:"Object, key/value pairs Object.",
-                $snippet:[
-                    "var id='linb.temp.cv'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:10px;\">' + '<br /><button onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
-                    "var db1=new linb.DataBinder,i1=new linb.UI.Input({position:'relative'}), i2=new linb.UI.Input({position:'relative'}); db1.setName('db1'); i1.setValue('aaa').setDataBinder('db1').setDataField('i1'); i2.setValue('bbb').setDataBinder('db1').setDataField('i2');"+
-                    "linb(id).append(i1).append(i2);"+
-                    "alert(db1.getName());"+
-                    "alert(_.serialize(db1.getValue()));"+
-                    "_.asyRun(function(){"+
-                    "   db1.resetValue({i1:'111',i2:'222'});"+
-                    "   alert(_.serialize(db1.getValue()));"+
-                    "},3000);"+
-                    "}"
+                    "key [Optional] : String, if 'key' was specified, only the corresponding value will be returned."
                 ]
             },
-            resetValue:{
-                $desc:"Sets or resets the value of those bound linb.absValue profiles.",
+            setData:{
+                $desc:"Sets the inner data.",
+                $rtn:"[self]",
+                $paras:[
+                    "key [Required] : Object/String, key/value pairs or a string key.",
+                    "value [Optional] : Object, value, only when the parameter 'key' was specified."
+                ]
+            },
+            getDataSourceType:{
+                $desc:"Gets the remoting data source type.",
+                $rtn:"String"
+            },
+            setDataSourceType:{
+                $desc:"Sets the remoting data source type.",
                 $rtn:"[self].",
                 $paras:[
-                    "hash [Optional] : a key/value pairs Object. If this parameter is not specified, the bound linb.absValue profiles will be set to their original values."
-                ],
-                $memo:"To see the 'getValue' snippets. "
+                    "value [Required] : String, data source type. Can be 'none','memory' or 'remoting', the default is 'none'. Those properties(queryURL,queryMethod,queryAsync,queryModel,queryArgs,proxyType,requestType,responseType) can be used only when dataSourceType is 'remoting'.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getQueryURL:{
+                $desc:"Gets the remoting data source's query URL.",
+                $rtn:"String"
+            },
+            setQueryURL:{
+                $desc:"Sets the remoting data source's query URL.",
+                $rtn:"[self].",
+                $paras:[
+                    "value [Required] : String",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getQueryMethod:{
+                $desc:"Gets the query method for this remoting call.",
+                $rtn:"String"
+            },
+            setQueryMethod:{
+                $desc:"Sets the query method for this remoting call.",
+                $rtn:"[self].",
+                $paras:[
+                    "value [Required] : String. 'auto','GET' or 'POST', default value is 'auto.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getQueryAsync:{
+                $desc:"To determine whether the  query action for this remoting call is asynchronous or not.",
+                $rtn:"Boolean"
+            },
+            setQueryAsync:{
+                $desc:"Specifys whether the query action for this remoting call is asynchronous or not.",
+                $rtn:"[self].",
+                $paras:[
+                    "value [Required] : Boolean.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getQueryModel:{
+                $desc:"Gets the name of the Model to tie to this remoting data service.",
+                $rtn:"Boolean"
+            },
+            setQueryModel:{
+                $desc:"Sets the name of the Model to tie to this remoting data service.",
+                $rtn:"[self].",
+                $paras:[
+                    "value [Required] : String.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getQueryArgs:{
+                $desc:"Gets the arguments for this remoting call.",
+                $rtn:"Object"
+            },
+            setQueryArgs:{
+                $desc:"Sets the arguments for this remoting call.",
+                $rtn:"[self].",
+                $paras:[
+                    "value [Required] : Object.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getProxyType:{
+                $desc:"Gets the proxy type for this remoting call.",
+                $rtn:"String"
+            },
+            setProxyType:{
+                $desc:"Sets the proxy type for this remoting call.",
+                $rtn:"[self].",
+                $paras:[
+                    "value [Required] : String. auto/Ajax/SAjax/IAjax之一,默认为auto.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getRequestType:{
+                $desc:"Gets the request data type for this remoting call.",
+                $rtn:"String"
+            },
+            setRequestType:{
+                $desc:"Sets the request data type for this remoting call.",
+                $rtn:"[self].",
+                $paras:[
+                    "value [Required] : String. HTTP,JSON,XML,SOAP 之一",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getResponseType:{
+                $desc:"Gets the response data type for this remoting call.",
+                $rtn:"String"
+            },
+            setResponseType:{
+                $desc:"Sets the response data type for this remoting call.",
+                $rtn:"[self].",
+                $paras:[
+                    "value [Required] : String. JSON,XML,SOAP 之一",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getDirtied:{
+                $desc:"To determine whether the inner data is dirtied or not.",
+                $rtn:"Boolean"
+            },
+            updateDataToUI:{
+                $desc:"Updates data from the inner data to the bound UI.",
+                $rtn:"[self]",
+                $paras:[
+                    "adjustData [Optional] : Function, the adjust function for data( before data is set to UI)."
+                ]
+            },
+            updateDataFromUI:{
+                $desc:"Updates data from the bound UI to inner data.",
+                $rtn:"[self]",
+                $paras:[
+                    "updateUIValue [Optional] : Boolean, to determine whether to reset all controls' value and clear the diry mark immediately or not, Default is [true]",
+                    "withCaption [Optional] : Boolean, to determine whether include caption(if has this property), Default is [false]",
+                    "returnArr [Optional] : Boolean, to determine whether return array object(for those multi selection absList only),Default is [false]",
+                    "adjustData [Optional] : Function, the adjust function for data( before data is set to the innder data property)."
+                ]
+            },
+            invoke:{
+                $desc:"To invoke the remoting call.",
+                $rtn:"[linb.absIO]",
+                $paras:[
+                    "onSuccess [Optional]: Function, arguments:[response Object, response type, threadid]. A function to be executed whenever a request is done successfully.",
+                    "onFail [Optional]: Function, arguments:[response Object, response type, threadid]. A function to be executed whenever a request fails.",
+                    "onStart [Optional]: Function, arguments: [threadid].  onStart function for the call.",
+                    "onEnd [Optional]:  Function, arguments: [threadid].  onEnd function for the call.",
+                    "mode [Optional] : String, the function's mode ,in 'normal'(calls ajax only)/busy(calls and shows busy UI)/return(doesn't call, returns ajax object), the default value is 'normal'.",
+                    "threadid [Optional]: String, a thread id to be bound to the current request. [suspend the thread -> execute request -> resume thread]",
+                    "options [Optional]: Object, a set of key/value pairs that configure the request."
+                ] 
+            },
+            'read':{
+                $desc:"To invoke the remoting call for data reading.",
+                $rtn:"[linb.absIO]",
+                $paras:[
+                    "onSuccess [Optional]: Function, arguments:[response Object, response type, threadid]. A function to be executed whenever a request is done successfully.",
+                    "onFail [Optional]: Function, arguments:[response Object, response type, threadid]. A function to be executed whenever a request fails.",
+                    "onStart [Optional]: Function, arguments: [threadid].  onStart function for the call.",
+                    "onEnd [Optional]:  Function, arguments: [threadid].  onEnd function for the call.",
+                    "mode [Optional] : String, the function's mode ,in 'normal'(calls ajax only)/busy(calls and shows busy UI)/return(doesn't call, returns ajax object), the default value is 'normal'.",
+                    "threadid [Optional]: String, a thread id to be bound to the current request. [suspend the thread -> execute request -> resume thread]",
+                    "options [Optional]: Object, a set of key/value pairs that configure the request.",
+                    "adjustData [Optional] : Function, the adjust function for data( before data is set to the innder data property)."
+                ] 
+            },
+            'write':{
+                $desc:"To invoke the remoting call for data writing.",
+                $rtn:"[linb.absIO]",
+                $paras:[
+                    "onSuccess [Optional]: Function, arguments:[response Object, response type, threadid]. A function to be executed whenever a request is done successfully.",
+                    "onFail [Optional]: Function, arguments:[response Object, response type, threadid]. A function to be executed whenever a request fails.",
+                    "onStart [Optional]: Function, arguments: [threadid].  onStart function for the call.",
+                    "onEnd [Optional]:  Function, arguments: [threadid].  onEnd function for the call.",
+                    "mode [Optional] : String, the function's mode ,in 'normal'(calls ajax only)/busy(calls and shows busy UI)/return(doesn't call, returns ajax object), the default value is 'normal'.",
+                    "threadid [Optional]: String, a thread id to be bound to the current request. [suspend the thread -> execute request -> resume thread]",
+                    "options [Optional]: Object, a set of key/value pairs that configure the request."
+                ] 
+            },
+
+            beforeUpdateDataToUI:{
+                $desc:"Fired before updateDataToUI function is called. For adjusting data. This event function can return adjusted data.",
+                $rtn:"Object",
+                $paras:[
+                    "profile : linb.Profile.",
+                    "dataToUI : Object, the data object to UI."
+                ]
+            },
+            afterUpdateDataFromUI:{
+                $desc:"Fired after updateDataFromUI function is called. For adjusting data. This event function can return adjusted data.",
+                $rtn:"Object",
+                $paras:[
+                    "profile : linb.Profile.",
+                    "dataFromUI : Object, the data object from UI."
+                ]
+            },
+            beforeInvoke:{
+                $desc:"Fired before invoke function is called. If returns false, invoke function will be ignored.",
+                $rtn:"Object",
+                $paras:[
+                    "profile : linb.Profile."
+                ]
+            },
+            afterInvoke:{
+                $desc:"Fired after invoke function is called.",
+                $rtn:"Object",
+                $paras:[
+                    "profile : linb.Profile.",
+                    "rspData : Object, the data from remoting call"
+                ]
+            },
+            beforeRead:{
+                $desc:"Fired before read function is called. If returns false, read function will be ignored.",
+                $rtn:"Object",
+                $paras:[
+                    "profile : linb.Profile."
+                ]
+            },
+            afterRead:{
+                $desc:"Fired after read function is called.",
+                $rtn:"Object",
+                $paras:[
+                    "profile : linb.Profile.",
+                    "rspData : Object, the data from remoting call"
+                ]
+            },
+            beforeWrite:{
+                $desc:"Fired before write function is called. If returns false, write function will be ignored.",
+                $rtn:"Object",
+                $paras:[
+                    "profile : linb.Profile."
+                ]
+            },
+            afterWrite:{
+                $desc:"Fired after write function is called.",
+                $rtn:"Object",
+                $paras:[
+                    "profile : linb.Profile.",
+                    "rspData : Object, the data from remoting call"
+                ]
             }
         }
     });
@@ -6541,7 +6760,7 @@ _.set(linb.Locale,["en","app"], {
                 $rtn:"[self]",
                 $paras:[
                     "target [Required] : a linb.UI ojbect(including a set of linb.UIProfile objects).",
-                    "subId [Optional] : String, the sub id that Determines the [target] will be added to which sub DOM node. This parameter can be [false] too, that means the [target] will be appended to DOM only, no link created between the [target] UIProfiles and the parent UIProfile."
+                    "subId [Optional] : String, the sub id that determines the [target] will be added to which sub DOM node. This parameter can be [false] too, that means the [target] will be appended to DOM only, no link created between the [target] UIProfiles and the parent UIProfile."
                 ],
                 $snippet:[
                     "var id='linb.temp.ui2'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:10px;\">' + '<br /><button onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -6555,7 +6774,7 @@ _.set(linb.Locale,["en","app"], {
                 $desc:"Removes a set of linb.UIProfile objects from each UIProfile.",
                 $rtn:"[self]",
                 $paras:[
-                    "subId [Optional] : String, the sub id that Determines which profile will be removeed."
+                    "subId [Optional] : String, the sub id that determines which profile will be removeed."
                 ],
                 $snippet:[
                     "var id='linb.temp.ui2'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:10px;\">' + '<br /><button onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -6592,7 +6811,7 @@ _.set(linb.Locale,["en","app"], {
                 $paras:[
                     "dragKey [Optional] : String, the dragKey for linb.DragDrop.",
                     "dragData [Optional] : Object, the dragData for linb.DragDrop.",
-                    "key [Optional] : String, a template key in UIProfile that will Determines which elements will be the target elements. Default is 'KEY'.",
+                    "key [Optional] : String, a template key in UIProfile that will determine which elements will be the target elements. Default is 'KEY'.",
                     "options [Optional] : key/value Object. Go <strong>linb.DragDrop.startDrag</strong> for the profile struct detail."
                 ],
                 $snippet:[
@@ -6952,7 +7171,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getDisableTips:{
-                $desc:"Determines whether this UI control disabled tips or not.",
+                $desc:"To determine whether this UI control disabled tips or not.",
                 $rtn:"Boolean"
             },
             setDisableTips:{
@@ -6964,7 +7183,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getDisableClickEffect:{
-                $desc:"Determines whether this UI control disabled mouse click effection or not.",
+                $desc:"To determine whether this UI control disabled mouse click effection or not.",
                 $rtn:"Boolean"
             },
             setDisableClickEffect:{
@@ -6976,7 +7195,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getDisableHoverEffect:{
-                $desc:"Determines whether this UI control disabled mouse hover effection or not.",
+                $desc:"To determine whether this UI control disabled mouse hover effection or not.",
                 $rtn:"Boolean"
             },
             setDisableHoverEffect:{
@@ -6988,7 +7207,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getDisabled:{
-                $desc:"Determines whether this UI control is disabled or not.",
+                $desc:"To determine whether this UI control is disabled or not.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.ui46'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:100px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -7245,7 +7464,7 @@ _.set(linb.Locale,["en","app"], {
                 $rtn:"[self]",
                 $paras:[
                     "parent [Required] : linb.UIProfile, linb.UI ojbect, Element or linb.Dom Object.",
-                    "subId [Optional] : String, the sub id that Determines the set of UIProfiles will be added to.",
+                    "subId [Optional] : String, the sub id that determines the set of UIProfiles will be added to.",
                     "left [Optional] : Number, the css left value.",
                     "top [Optional] : Number, the css top value."
                 ],
@@ -7606,7 +7825,7 @@ _.set(linb.Locale,["en","app"], {
         prototype:{
             KEY:{$desc:"Class Name"},
             getBorder:{
-                $desc:"Determines whether this widget has border.",
+                $desc:"To determine whether this widget has border.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.w1'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;\">' + '<br /><button onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -7630,7 +7849,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getShadow:{
-                $desc:"Determines whether this widget has shadow.",
+                $desc:"To determine whether this widget has shadow.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.w3'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;\">' + '<br /><button onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -7654,7 +7873,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getResizer:{
-                $desc:"Determines whether this widget could be resized by end user.",
+                $desc:"To determine whether this widget could be resized by end user.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.w5'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;\">' + '<br /><button onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -8904,7 +9123,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getMultiLines:{
-                $desc:"Determines whether input box holds single line or multi line",
+                $desc:"To determine whether input box holds single line or multi line",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.input5'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:100px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -9295,7 +9514,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getReadonly:{
-                $desc:"Determines whether editor is read-only or editable.",
+                $desc:"To determine whether editor is read-only or editable.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.TextEditor9'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:100px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -9348,7 +9567,7 @@ _.set(linb.Locale,["en","app"], {
                 $desc:"Resets the group's panel view -- removes all children and fold it.",
                 $rtn:"[self]",
                 $paras:[
-                    "destroyChildren [Optional] : Boolean, determines whether children will be destroyed or not."
+                    "destroyChildren [Optional] : Boolean, To determine whether children will be destroyed or not."
                 ]
             },
             activate:{
@@ -9434,7 +9653,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getToggle:{
-                $desc:"Determines whether group collapses or not.",
+                $desc:"To determine whether group collapses or not.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.fs3'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:100px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -9458,7 +9677,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getToggleBtn:{
-                $desc:"Determines whether toggle button shows or not.",
+                $desc:"To determine whether toggle button shows or not.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.fs3-1'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:100px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -9736,7 +9955,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getCommandBtn:{
-                $desc:"Determines which command button shows up or not.",
+                $desc:"To determine which command button shows up or not.",
                 $rtn:"String",
                 $snippet:[
                     "var id='linb.temp.ci8'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:100px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -10177,7 +10396,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getAdvance:{
-                $desc:"Determines whether advanced chooser shows up on the right side.",
+                $desc:"To determine whether advanced chooser shows up on the right side.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.clr2'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -10197,7 +10416,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getCloseBtn:{
-                $desc:"Determines whether close button shows up or not.",
+                $desc:"To determine whether close button shows up or not.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.clr3'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -10217,7 +10436,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getBarDisplay:{
-                $desc:"Determines whether display bar shows up or not.",
+                $desc:"To determine whether display bar shows up or not.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.clr5'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -10265,7 +10484,7 @@ _.set(linb.Locale,["en","app"], {
                 $rtn:"[self]"
             },
             getTimeInput:{
-                $desc:"Determines whether time input shows up or not.",
+                $desc:"To determine whether time input shows up or not.",
                 $rtn:"Boolean"
             },
             setTimeInput:{
@@ -10301,7 +10520,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getHideWeekLabels:{
-                $desc:"Determines whether week labels shows up or not.",
+                $desc:"To determine whether week labels shows up or not.",
                 $rtn:"Boolean"
             },
             setHideWeekLabels:{
@@ -10325,7 +10544,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },            
             getCloseBtn:{
-                $desc:"Determines whether close button shows up or not.",
+                $desc:"To determine whether close button shows up or not.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.dp1'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -10383,7 +10602,7 @@ _.set(linb.Locale,["en","app"], {
                 $rtn:"[self]"
             },
             getCloseBtn:{
-                $desc:"Determines whether close button shows up or not.",
+                $desc:"To determine whether close button shows up or not.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.tp1'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -10790,7 +11009,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getNoCtrlKey:{
-                $desc:"Determines whether using Ctrl keyboard to help select multi items or not.",
+                $desc:"To determine whether using Ctrl keyboard to help select multi items or not.",
                 $rtn:"Boolean"
             },
             setNoCtrlKey:{
@@ -11234,7 +11453,7 @@ _.set(linb.Locale,["en","app"], {
                 $desc:"Resets the group's panel view -- removes all children and fold it.",
                 $rtn:"[self]",
                 $paras:[
-                    "destroyChildren [Optional] : Boolean, determines whether children will be destroyed or not."
+                    "destroyChildren [Optional] : Boolean, to determine whether children will be destroyed or not."
                 ]
             },
             activate:{
@@ -11251,7 +11470,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getCloseBtn :{
-                $desc:"Determines whether close button shows up or not.",
+                $desc:"To determine whether close button shows up or not.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.panel35'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:100px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -11275,7 +11494,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getPopBtn :{
-                $desc:"Determines whether pop button shows up or not.",
+                $desc:"To determine whether pop button shows up or not.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.panel37'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:100px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -11299,7 +11518,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getOptBtn :{
-                $desc:"Determines whether option button shows up or not",
+                $desc:"To determine whether option button shows up or not",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.panel39'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:100px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -11323,7 +11542,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getInfoBtn :{
-                $desc:"Determines whether help button shows up or not.",
+                $desc:"To determine whether help button shows up or not.",
                 $rtn:"Boolean"
             },
             setInfoBtn :{
@@ -11335,7 +11554,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },            
             getRefreshBtn :{
-                $desc:"Determines whether refresh button shows up or not.",
+                $desc:"To determine whether refresh button shows up or not.",
                 $rtn:"Boolean"
             },
             setRefreshBtn :{
@@ -11347,7 +11566,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getToggleBtn :{
-                $desc:"Determines whether toggle button shows up or not.",
+                $desc:"To determine whether toggle button shows up or not.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.panel41'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:100px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -11755,7 +11974,7 @@ _.set(linb.Locale,["en","app"], {
                 $rtn:"[self]",
                 $paras:[
                     "target [Required] : a linb.UI ojbect(including a set of linb.UIProfile objects).",
-                    "subId [Optional] : String, the sub id that Determines the [target] will be added to which sub DOM node. This parameter can be [false] too, that means the [target] will be appended to DOM only, no link created between the [target] UIProfiles and the parent UIProfile."
+                    "subId [Optional] : String, the sub id that determines the [target] will be added to which sub DOM node. This parameter can be [false] too, that means the [target] will be appended to DOM only, no link created between the [target] UIProfiles and the parent UIProfile."
                 ],
                 $snippet:[
                     "var id='linb.temp.lo0'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:200px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -11768,7 +11987,7 @@ _.set(linb.Locale,["en","app"], {
                 $desc:"Gets the panel DOM according to the specified subId.",
                 $rtn:"linb.Dom",
                 $paras:[
-                    "subId [Optional] : String, the sub id that Determines the result. Default is 'main'."
+                    "subId [Optional] : String, the sub id that determines the result. Default is 'main'."
                 ],
                 $snippet:[
                     "var id='linb.temp.lo1'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:200px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -11889,7 +12108,7 @@ _.set(linb.Locale,["en","app"], {
                 $rtn:"[self]",
                 $paras:[
                     "target [Required] : a linb.UI ojbect(including a set of linb.UIProfile objects).",
-                    "subId [Optional] : String, the sub id that Determines the [target] will be added to which sub DOM node. This parameter can be [false] too, that means the [target] will be appended to DOM only, no link created between the [target] UIProfiles and the parent UIProfile."
+                    "subId [Optional] : String, the sub id that determines the [target] will be added to which sub DOM node. This parameter can be [false] too, that means the [target] will be appended to DOM only, no link created between the [target] UIProfiles and the parent UIProfile."
                 ]
             },
             addPanel:{
@@ -11964,7 +12183,7 @@ _.set(linb.Locale,["en","app"], {
                 $rtn:"[self]",
                 $paras:[
                     "target [Required] : a linb.UI ojbect(including a set of linb.UIProfile objects).",
-                    "subId [Optional] : String, the sub id that Determines the [target] will be added to which sub DOM node. This parameter can be [false] too, that means the [target] will be appended to DOM only, no link created between the [target] UIProfiles and the parent UIProfile."
+                    "subId [Optional] : String, the sub id that determines the [target] will be added to which sub DOM node. This parameter can be [false] too, that means the [target] will be appended to DOM only, no link created between the [target] UIProfiles and the parent UIProfile."
                 ],
                 $snippet:[
                     "var id='linb.temp.tabs0'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:200px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -12135,7 +12354,7 @@ _.set(linb.Locale,["en","app"], {
                 $desc:"Gets the panel DOM according to the specified sub id.",
                 $rtn:"linb.Dom",
                 $paras:[
-                    "subId [Optional] : String, the sub id that Determines the result."
+                    "subId [Optional] : String, the sub id that determines the result."
                 ],
                 $snippet:[
                     "var id='linb.temp.tabs14'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:200px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -12148,7 +12367,7 @@ _.set(linb.Locale,["en","app"], {
                 $desc:"Marks the specified tab's caption.",
                 $rtn:"[self]",
                 $paras:[
-                    "subId [Required] : String, the sub id that Determines the result.",
+                    "subId [Required] : String, the sub id that determines the result.",
                     "mark [Required] : Boolean, to mark is not not. ",
                     "force [Optional]: Boolean, force to mark it. Default is false."
                 ],
@@ -12193,7 +12412,7 @@ _.set(linb.Locale,["en","app"], {
                 $desc:"Removes a panel from the current UI.",
                 $rtn:"[self]",
                 $paras:[
-                    "domId [Optional] : String, the DOM element id that Determines which panel will be removed."
+                    "domId [Optional] : String, the DOM element id that determines which panel will be removed."
                 ],
                 $snippet:[
                     "var id='linb.temp.tabs17'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:10px;\">' + '<br /><button onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -12432,7 +12651,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getHandler:{
-                $desc:"Determines whether this tool bar has a handler",
+                $desc:"To determine whether this tool bar has a handler",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.tool3'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:200px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -12546,7 +12765,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getAutoHide:{
-                $desc:"Determines whether this popup menu hides automatically after showing up for several seconds.",
+                $desc:"To determine whether this popup menu hides automatically after showing up for several seconds.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.pm2'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:200px;width:300px;\">Click blank to pop up menu.' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -12574,7 +12793,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getHideAfterClick:{
-                $desc:"Determines whether this popup menu hides automatically after being clicked.",
+                $desc:"To determine whether this popup menu hides automatically after being clicked.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.pm4'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:200px;width:300px;\">Click blank to pop up menu.' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -12695,7 +12914,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getAutoShowTime:{
-                $desc:"Determines after how many seconds menu shows up automatically.",
+                $desc:"To determine after how many seconds menu shows up automatically.",
                 $rtn:"Number",
                 $snippet:[
                     "var id='linb.temp.menu2'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:200px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -12723,7 +12942,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getHandler:{
-                $desc:"Determines whether menu bar has a hanlder.",
+                $desc:"To determine whether menu bar has a hanlder.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.menu4'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:200px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -12985,7 +13204,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getCloseBtn:{
-                $desc:"Determines whether this control has a close button",
+                $desc:"To determine whether this control has a close button",
                 $rtn:"Boolean",
                 $snippet:[
                     "var dlg=(new linb.UI.Dialog).show(null,false, 100,100); alert(dlg.getCloseBtn());_.asyRun(function(){dlg.setCloseBtn(false);},1000); _.asyRun(function(){dlg.close();},2000);"
@@ -13004,7 +13223,7 @@ _.set(linb.Locale,["en","app"], {
             },
 
             getMinBtn:{
-                $desc:"Determines whether this control has a min button",
+                $desc:"To determine whether this control has a min button",
                 $rtn:"Boolean",
                 $snippet:[
                     "var dlg=(new linb.UI.Dialog).show(null,false, 100,100); alert(dlg.getMinBtn());_.asyRun(function(){dlg.setMinBtn(false);},1000);"
@@ -13022,7 +13241,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getMaxBtn:{
-                $desc:"Determines whether this control has a max button",
+                $desc:"To determine whether this control has a max button",
                 $rtn:"Boolean",
                 $snippet:[
                     "var dlg=(new linb.UI.Dialog).show(null,false, 100,100); alert(dlg.getMaxBtn());_.asyRun(function(){dlg.setMaxBtn(false);},1000);"
@@ -13040,7 +13259,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getPinBtn:{
-                $desc:"Determines whether this control has a pin button",
+                $desc:"To determine whether this control has a pin button",
                 $rtn:"Boolean",
                 $snippet:[
                     "var dlg=(new linb.UI.Dialog).show(null,false, 100,100); alert(dlg.getPinBtn());_.asyRun(function(){dlg.setPinBtn(false);},1000);"
@@ -13058,7 +13277,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getLandBtn:{
-                $desc:"Determines whether this control has a landing button",
+                $desc:"To determine whether this control has a landing button",
                 $rtn:"Boolean",
                 $snippet:[
                     "var dlg=(new linb.UI.Dialog).show(null,false, 100,100); alert(dlg.getLandBtn());_.asyRun(function(){dlg.setLandBtn(true);},1000);"
@@ -13076,7 +13295,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getOptBtn:{
-                $desc:"Determines whether this control has an option button",
+                $desc:"To determine whether this control has an option button",
                 $rtn:"Boolean",
                 $snippet:[
                     "var dlg=(new linb.UI.Dialog).show(null,false, 100,100); alert(dlg.getOptBtn());_.asyRun(function(){dlg.setOptBtn(true);},1000);"
@@ -13094,7 +13313,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getInfoBtn :{
-                $desc:"Determines whether help button shows up or not.",
+                $desc:"To determine whether help button shows up or not.",
                 $rtn:"Boolean"
             },
             setInfoBtn :{
@@ -13106,7 +13325,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },     
             getRefreshBtn :{
-                $desc:"Determines whether refresh button shows up or not.",
+                $desc:"To determine whether refresh button shows up or not.",
                 $rtn:"Boolean"
             },
             setRefreshBtn :{
@@ -13118,7 +13337,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getMovable:{
-                $desc:"Determines whether end user can move this dialog by drag and drop.",
+                $desc:"To determine whether end user can move this dialog by drag and drop.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var dlg=(new linb.UI.Dialog).show(null,false, 100,100); alert(dlg.getMovable());_.asyRun(function(){dlg.setMovable(false);},1000);"
@@ -14125,7 +14344,7 @@ _.set(linb.Locale,["en","app"], {
             },
 
             getAnimCollapse :{
-                $desc:"Determines whether to show animate when a tree node collapses.",
+                $desc:"To determine whether to show animate when a tree node collapses.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.tb1'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -14205,7 +14424,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getIniFold :{
-                $desc:"Determines whether parent node collapses initially",
+                $desc:"To determine whether parent node collapses initially",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.tb7'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -14259,7 +14478,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getNoCtrlKey:{
-                $desc:"Determines whether using Ctrl keyboard to help select multi items or not.",
+                $desc:"To determine whether using Ctrl keyboard to help select multi items or not.",
                 $rtn:"Boolean"
             },
             setNoCtrlKey:{
@@ -14271,7 +14490,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getSingleOpen:{
-                $desc:"Determines whether only one node is allowed to expand at one time",
+                $desc:"To determine whether only one node is allowed to expand at one time",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.tb11'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -14440,7 +14659,7 @@ _.set(linb.Locale,["en","app"], {
         prototype:{
             KEY:{$desc:"Class Name"},
             getActiveMode :{
-                $desc:"Determines grid active mode.",
+                $desc:"To determine grid active mode.",
                 $rtn:"String, 'cell', 'row' or 'none'. ",
                 $snippet:[
                     "var id='linb.temp.grid1'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -14525,7 +14744,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getAltRowsBg :{
-                $desc:"Determines whether to show rows in stripe.",
+                $desc:"To determine whether to show rows in stripe.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.grid4'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -14553,7 +14772,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getDirectInput:{
-                $desc:"Determines whether editor input value into grid cell without pressing 'enter' keyboard.",
+                $desc:"To determine whether editor input value into grid cell without pressing 'enter' keyboard.",
                 $rtn:"Boolean"
             },
             setDirectInput:{
@@ -14639,7 +14858,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getColHidable:{
-                $desc:"Determines whether columns are hidable.",
+                $desc:"To determine whether columns are hidable.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.grid8.2'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -14667,7 +14886,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getColMovable :{
-                $desc:"Determines whether columns are movable.",
+                $desc:"To determine whether columns are movable.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.grid8'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -14695,7 +14914,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getColResizer :{
-                $desc:"Determines whether columns are resizable.",
+                $desc:"To determine whether columns are resizable.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.grid10'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -14723,7 +14942,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getColSortable :{
-                $desc:"Determines whether columns are sortable.",
+                $desc:"To determine whether columns are sortable.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.grid12'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -14751,7 +14970,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getEditable :{
-                $desc:"Determines whether grid are editable or read-only.",
+                $desc:"To determine whether grid are editable or read-only.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.grid14'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -14919,7 +15138,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getRowResizer :{
-                $desc:"Determines whether row can be resized by end user.",
+                $desc:"To determine whether row can be resized by end user.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.grid22'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -14947,7 +15166,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getRowHandler :{
-                $desc:"Determines whether row has handle in the front.",
+                $desc:"To determine whether row has handle in the front.",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.grid124'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -15003,7 +15222,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getNoCtrlKey:{
-                $desc:"Determines whether using Ctrl keyboard to help select multi items or not.",
+                $desc:"To determine whether using Ctrl keyboard to help select multi items or not.",
                 $rtn:"Boolean"
             },
             setNoCtrlKey:{
@@ -15161,7 +15380,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getRowDraggable :{
-                $desc:"Determines whether rows are draggable by end user",
+                $desc:"To determine whether rows are draggable by end user",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.grid32'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -15393,7 +15612,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             getShowHeader :{
-                $desc:"Determiness whether grid header shows up or not",
+                $desc:"To determines whether grid header shows up or not",
                 $rtn:"Boolean",
                 $snippet:[
                     "var id='linb.temp.grid39'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -15461,7 +15680,7 @@ _.set(linb.Locale,["en","app"], {
                 $rtn:"[self]",
                 $paras:[
                     "colId [Required] : String, the column id.",
-                    "flag [Optional] : Boolean, Determiness to show or hide the specified column. Default is true(to show)."
+                    "flag [Optional] : Boolean, to determine to show or hide the specified column. Default is true(to show)."
                 ],
                 $snippet:[
                     "var id='linb.temp.grid42'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -16541,7 +16760,7 @@ _.set(linb.Locale,["en","app"], {
                 $rtn:"Boolean"
             },
             setCover:{
-                $desc:"Determines whether Flash has a cover on it or not.",
+                $desc:"To determine whether Flash has a cover on it or not.",
                 $rtn:"[self]",
                 $paras:[
                     "value [Required] : Boolean.",
@@ -16599,7 +16818,7 @@ _.set(linb.Locale,["en","app"], {
                 $rtn:'Boolean'
             },
             setFC_eventHandler:{
-                $desc:"Determines whether FusionChart has event handler or not.",
+                $desc:"To determine whether FusionChart has event handler or not.",
                 $rtn:"[self]",
                 $paras:[
                     "value [Required] : Boolean.",
@@ -16708,7 +16927,7 @@ _.set(linb.Locale,["en","app"], {
         prototype:{
             KEY:{$desc:"Class Name"},
             hasRendered:{
-                $desc:"Determines whether FusionChart is rendered or not.",
+                $desc:"To determine whether FusionChart is rendered or not.",
                 $rtn:"Boolean"
             },
             getXML:{

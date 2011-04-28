@@ -1,6 +1,6 @@
 Added TagEditor, FoldingTabs Widgets
 -----------------------------------
-Added properties to linb.DataBinder: data,dataSourceType,queryURL,queryMethod,queryAsync,queryModel,queryArgs,proxyType,requestType,responsType
+Added properties to linb.DataBinder: data,dataSourceType,queryURL,queryMethod,queryAsync,queryModel,queryArgs,proxyType,requestType,responseType
 Removed functions from linb.DataBinder: getValue,resetValue
 Added functions to linb.DataBinder: getDirtied,updateDataToUI,updateDataFromUI; invoke,read,write
 Added events to linb.DataBinder: beforeUpdateDataToUI,afterUpdateDataFromUI,beforeInvoke,afterInvoke,beforeRead,afterRead,beforeWrite,afterWrite

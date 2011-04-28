@@ -186,6 +186,7 @@ Class('VisualJS.ServiceTester', 'linb.Com',{
                     if(method!='auto'){
                         options.method = method;
                     }
+                    ctrl.getRoot().onMouseout(true);
                     ctrl.setDisabled(true).setCaption("<strong>$VisualJS.spabuilder.st_sending</strong>");
                     linb.request(uri, query, function(rsp){
                         var rspobj = rsp;
@@ -211,7 +212,7 @@ Class('VisualJS.ServiceTester', 'linb.Com',{
         },
         showResult:function(obj){
             var ns=this;
-            ns.ctl_result.setValue(linb.Coder.formatText(_.serialize(obj)), true);
+            ns.ctl_result.setValue(linb.Coder.formatText(_.stringify(obj)), true);
         },
         _ctl_sbutton26_onclick : function (profile, e, src, value) {
             var ns = this;
