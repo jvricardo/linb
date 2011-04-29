@@ -6626,11 +6626,16 @@ type:4
                 if(_.isDefined(o))
                     _t.push('<textarea name="'+i+'">'+(typeof o=='object'?_.serialize(o):o)+'</textarea>');
             });
-            if(!_.isEmpty(data))_t.push('<input type="hidden" name="rnd" value="'+_()+'">');
-            var d=_.str.toDom('<form target="'+target+'" action="'+action+'" method="'+method  + (enctype?'" enctype="' +enctype:'') +  '">'+_t.join('')+'</form>');
-            linb.Dom.getEmptyDiv().append(d);
-            d.get(0).submit();
-            d.remove();
+            if(!_.isEmpty(data)){
+                _t.push('<input type="hidden" name="rnd" value="'+_()+'">');
+                _t=_.str.toDom('<form target="'+target+'" action="'+action+'" method="'+method  + (enctype?'" enctype="' +enctype:'') +  '">'+_t.join('')+'</form>');
+                linb.Dom.getEmptyDiv().append(_t);
+                _t.get(0).submit();
+                _t.remove();
+                _t=null;
+            }else{
+                window.open(action);
+            }
         },
         busy:function(label){
             linb.Dom.setCover(true,label);
