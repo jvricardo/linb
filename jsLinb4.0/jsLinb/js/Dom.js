@@ -1723,8 +1723,9 @@ type:4
                 _t.push('<input type="hidden" name="rnd" value="'+_()+'">');
                 _t=_.str.toDom('<form target="'+target+'" action="'+action+'" method="'+method  + (enctype?'" enctype="' +enctype:'') +  '">'+_t.join('')+'</form>');
                 linb.Dom.getEmptyDiv().append(_t);
-                d.get(0).submit();
-                d.remove();
+                _t.get(0).submit();
+                _t.remove();
+                _t=null;
             }else{
                 window.open(action);
             }
