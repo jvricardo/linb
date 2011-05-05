@@ -5,12 +5,15 @@ Class('linb.UI.Calendar', 'linb.UI.DatePicker', {
             if(node.get(0)){
                 node.get(0).innerHTML=value;
             }
+            return this;
         },
         addContents : function(index,node){
             this.getSubNode('DC',""+index).append(node);
+            return this;
         },
         clearContents : function(index){
             this.getSubNode('DC',""+index).empty();
+            return this;
         }
     },
     Initialize:function(){
@@ -20,7 +23,7 @@ Class('linb.UI.Calendar', 'linb.UI.DatePicker', {
             cls=linb.UI.$CLS,
             key=self.KEY;
 
-        self.addTemplateKeys(['H', 'W','COL','DH','DAYBOX','DC','TBODY', 'THEADER', 'TD','DF1','DF2','DF3']);
+        self.addTemplateKeys(['H', 'W','COL','DH','DAYBOX','DC','TBODY', 'THEADER', 'TD','DF1','DF2','DF3','DF4']);
         var colgroup = '<colgroup id="'+key+'-COL:'+id+':"  class="'+tag+'COL_CS'+tag+'"  style="'+tag+'COL_CS'+tag+'"><col width="2%"/><col width="14%"/><col width="14%"/><col width="14%"/><col width="14%"/><col width="14%"/><col width="14%"/><col width="14%"/></colgroup>',
             thead1='<thead ID="'+key+'-THEADER:'+id+':" class="'+tag+'THEADER_CS'+tag+'"  style="'+tag+'THEADER_CS'+tag+'" ><tr height="1%"><th id="'+key+'-H:'+id+':7" class="'+cls+'-h '+tag+'H_CC'+tag+'"  style="'+tag+'H_CS'+tag+'"></th>',
             thead2='</tr></thead>',
