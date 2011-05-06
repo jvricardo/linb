@@ -288,7 +288,8 @@ Class("VisualJS.CodeEditor", ["linb.UI.Widget","linb.absValue"] ,{
                 +"<script>"
                 +"_=window._=parent._;"
                 +"Class=window.Class=parent.Class;"
-                +"linb=window.linb=_.clone(parent.linb,function(o,i){return i!=='Locale'},6);"
+                +"linb=window.linb=parent.linb;"
+                +"dompack=function(){var o=new linb.Dom(false),d=document.createElement('div');d.id='abc';document.appendChild(div);o._nodes=[document.getElementById('abc')];return o};"
                 +"window['"+ns.$temppool+"']=parent['"+ns.$temppool+"'];"
                 // "var b=arguments.callee;" for fix firefox 3.5 bug
                 +"parent['"+ns.$tempsandbox+"']=/*@cc_on !@*/0?this:{eval:function(s){return (function(){var b=arguments.callee;return window.eval.call(window,s)})()}};"
@@ -298,7 +299,11 @@ Class("VisualJS.CodeEditor", ["linb.UI.Widget","linb.absValue"] ,{
             wnd.document.close();
             try{
  //console.log(code);
+                // avoid dom affected
+                var bak=linb.Dom.pack;
+                linb.Dom.pack=wnd.dompack;
                 result = window[ns.$tempsandbox].eval(isjson?("("+code+")"):code);
+                linb.Dom.pack=bak;
 
                 type = (result===wnd || result===wnd.content)? 'window' :
                        result===wnd.history ? 'history' :
@@ -316,6 +321,7 @@ Class("VisualJS.CodeEditor", ["linb.UI.Widget","linb.absValue"] ,{
             }finally{
                 wnd.Class=wnd._=wnd.linb=wnd[ns.$temppool]=null;
                 window[ns.$tempsandbox]=undefined;
+                window[ns.$tempdiv]=undefined;
 
                 if(!name)
                     document.body.removeChild(iframe);
@@ -766,6 +772,8 @@ Class("VisualJS.CodeEditor", ["linb.UI.Widget","linb.absValue"] ,{
                 else
                     type='linb.Dom.prototype';
             }
+            else if(code.indexOf("linb.alert(")==0 || code.indexOf("linb.prompt(")==0|| code.indexOf("linb.pop(")==0|| code.indexOf("linb.confirm(")==0)
+                type='linb.UI.Dialog.prototype';
             else if(code.indexOf("linb(")==0 || code.indexOf("linb.use(")==0)
                 type='linb.Dom.prototype';
             else if(code.indexOf("linb.Thread(")==0 || code.indexOf("linb.Ajax(")==0
