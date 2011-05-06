@@ -24937,7 +24937,10 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                 if(p.toggleBtn)
                     profile.getSubNode('TOGGLE').tagClass('-checked', !!value);
 
-                profile.getRoot().height(profile.getSubNode('BORDER').height());
+                var h=profile.getSubNode('BORDER').height();
+                if(h)
+                    profile.getRoot().height(h);
+
                 if(value){
                     if(ins.afterExpend)
                         ins.afterExpend(profile);
