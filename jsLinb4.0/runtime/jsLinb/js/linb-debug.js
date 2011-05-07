@@ -307,7 +307,7 @@ _.merge(_,{
         var m=Math.abs(number),
             s=''+Math.round(m * Math.pow(10, digits)),
             v, t, start, end;
-        if(/\D/.test(s)){ 
+        if(/\D/.test(s)){
           v = ""+m;
         }else{
             while(s.length<1+digits)s='0'+s;
@@ -441,11 +441,11 @@ _.merge(_,{
     isDate:function(target)  {return Object.prototype.toString.call(target)==='[object Date]' && isFinite(+target)},
     isFun:function(target)   {return Object.prototype.toString.call(target)==='[object Function]'},
     isArr:function(target)   {return Object.prototype.toString.call(target)==='[object Array]'},
-    isHash:function(target)  {return !!target && typeof target=='object' && (target.constructor==Object || 
-            (target.constructor 
-                && Object.prototype.toString.call(target)=='[object Object]' 
+    isHash:function(target)  {return !!target && typeof target=='object' && (target.constructor==Object ||
+            (target.constructor
+                && Object.prototype.toString.call(target)=='[object Object]'
                 && /^\s*function\s+Object\(\s*\)/.test(target.constructor.toString())
-            ))}, 
+            ))},
     isReg:function(target)   {return Object.prototype.toString.call(target)==='[object RegExp]'},
     isStr:function(target)   {return typeof target == "string"},
     isArguments:function(target)   {return !!(target && target.callee && target.callee.arguments===target)},
@@ -799,12 +799,12 @@ _.merge(linb,{
         : (options&&options.method&&options.method.toLowerCase()=='post') ?  linb.absIO.isCrossDomain(uri) ? linb.IAjax  : linb.Ajax
         // get : crossdomain => SAjax, else Ajax
         : linb.absIO.isCrossDomain(uri) ? linb.SAjax : linb.Ajax
-        
+
         ).apply(null, arguments).start()
     },
     include:function(id,path,onSuccess,onFail,sync){
         if(id&&linb.SC.get(id))
-            _.tryF(onSuccess); 
+            _.tryF(onSuccess);
         else{
             if(!sync)
                 linb.SAjax(path,'',onSuccess,onFail,0,{rspType:'script',checkKey:id}).start()
@@ -968,8 +968,8 @@ _.merge(linb,{
          for(i=0;i<bak.length;)
              delete proMap[bak[i++]];
          //clear dom content
-		 //while(node.firstChild)
-		 //   node.removeChild(node.firstChild);
+         //while(node.firstChild)
+         //   node.removeChild(node.firstChild);
          node.innerHTML='';
     },
 
@@ -1026,9 +1026,9 @@ new function(){
         isLinux:/linux/.test(u),
         isSecure:location.href.toLowerCase().indexOf("https")==0
     },v=function(k,s){return k + (b.ver=u.split(s)[1].split('.')[0])};
-    
+
     linb.$secureUrl=b.isSecure&&b.ie?'javascript:""':'about:blank';
-    
+
     _.filter(b,function(o){return !!o});
     if(b.ie){
         b[v('ie','msie ')]=true;
@@ -1436,6 +1436,8 @@ Class('linb.absIO',null,{
         _.merge(options,{
             id : options.id || (''+(con._id++)),
             uri : options.uri||'',
+            username:options.username||undefined,
+            password:options.password||undefined,
             query : options.query||'',
             contentType : options.contentType||'',
             Accept : options.Accept||'',
@@ -1535,7 +1537,7 @@ Class('linb.absIO',null,{
         reqType:'form',
         //json, text or xml
         rspType:'json',
-        
+
         optimized:false,
 
         callback:'callback',
@@ -1621,17 +1623,19 @@ Class('linb.Ajax','linb.absIO',{
                             uri = uri.split("?")[0] + "?" + query;
                         query=null;
                     }
+                    if(username&&password)
+                        self._XML.open(method, uri, asy, username, password);
+                    else
+                        self._XML.open(method, uri, asy);
 
-                    self._XML.open(method, uri, asy);
-
-                    self._header("Accept", Accept ? Accept : 
-                        (rspType=='xml' ? "text/xml;" : rspType=='json' ? "application/json;" : "default")
+                    self._header("Accept", Accept ? Accept :
+                        (rspType=='xml' ? "text/xml; " : rspType=='json' ? "application/json; " : "default; ")
                     );
                     self._header("Content-type", contentType ? contentType : (
-                        (reqType=='xml' ? "text/xml;" : reqType=='json' ? "application/json;" : method=="POST" ? "application/x-www-form-urlencoded;":"")
-                         + "charset=UTF-8;" 
+                        (reqType=='xml' ? "text/xml; " : reqType=='json' ? "application/json; " : method=="POST" ? "application/x-www-form-urlencoded; ":"")
+                         + "charset=UTF-8"
                     ));
-                    self._header("X-Requested-With", "XMLHttpRequest"); 
+                    self._header("X-Requested-With", "XMLHttpRequest");
                     if(optimized){
                         try {
                             self._header("User-Agent", null);
@@ -1640,12 +1644,14 @@ Class('linb.Ajax','linb.absIO',{
                             self._header("Keep-Alive", null);
                             self._header("Cookie", null);
                             self._header("Cookie", "");
-                        } catch(e) {}                        
+                        } catch(e) {}
                     }
-                    if(_.isHash(header))
-                        _.each(header,function(i,o){
-                            self._header(i, o);
-                        });
+                    try {
+                        if(_.isHash(header))
+                            _.each(header,function(i,o){
+                                self._header(i, o);
+                            });
+                    } catch(e) {}
 
                     if(false===_.tryF(self.beforeSend,[self._XML],self)){
                         self._onEnd();
@@ -1721,7 +1727,7 @@ Class('linb.SAjax','linb.absIO',{
                 c._pool[id]=[self];
 
             c.No["_"+id]=function(rsp){
-                c.$response(rsp,id);                
+                c.$response(rsp,id);
             };
 
             var w=c._n=document,
@@ -1741,14 +1747,14 @@ Class('linb.SAjax','linb.absIO',{
                     }
                 };
             n = self.node = w.createElement("script");
-            
+
             var uri = self.uri;
             if(self.query)
                 uri = uri.split("?")[0]  + "?" + self.query;
 
             n.src = uri;
             n.type= 'text/javascript';
-            n.charset='utf-8';
+            n.charset='UTF-8';
             n.onload = n.onreadystatechange = function(){
                 if(ok)
                     return;
@@ -1865,7 +1871,7 @@ Class('linb.IAjax','linb.absIO',{
                 c._pool[id].push(self);
             else
                 c._pool[id]=[self];
-                
+
             //use window.name
             self._onload = onload = function(id){
                 //in some situation, this function will be triggered twice.
@@ -1964,7 +1970,7 @@ Class('linb.IAjax','linb.absIO',{
                 _pool[id].length=0;
                 delete _pool[id];
             }
-			if(linb.browser.gek&&n)try{n.onload=null;var d=n.contentWindow.document;d.write(" ");d.close()}catch(e){}
+            if(linb.browser.gek&&n)try{n.onload=null;var d=n.contentWindow.document;d.write(" ");d.close()}catch(e){}
             self.form=self.node=self.frm=null;
             if(n)div.appendChild(n.parentNode.removeChild(n));
             if(f)div.appendChild(f.parentNode.removeChild(f));
@@ -2335,7 +2341,7 @@ new function(){
         return 'null'
     };
     T[F]=function(x){return x.$path?x.$path:String(x)};
-    
+
     //serialize object to string (bool/string/number/array/hash/simple function)
     _.serialize = function (obj,filter,dateformat){
         return T[typeof obj](obj,filter,dateformat||(linb&&linb.$dateFormat))||'';
@@ -3007,7 +3013,7 @@ Class('linb.absObj',"linb.absBox",{
 
             self._nodes.push(profile);
             profile._cacheInstance=self;
-            
+
             return self;
         },
         destroy:function(){
@@ -3094,7 +3100,7 @@ Class('linb.absObj',"linb.absBox",{
                 if(_.isHash(mapb))hash=mapb;
                 mapb=null;
             }
-            
+
 
             _.merge(prf.properties.data,hash,'all');
 
@@ -3143,7 +3149,7 @@ Class('linb.absObj',"linb.absBox",{
                     _.tryF(b.setCaption,[c,true],b);
             });
             _.merge(prop.data,vs,'all');
-            
+
             return ns;
         },
 
@@ -3156,12 +3162,15 @@ Class('linb.absObj',"linb.absBox",{
 
         invoke:function(onSuccess, onFail, onStart, onEnd, mode, threadid, options){
             var ns=this,
+                con=ns.constructor,
                 prf=ns.get(0),
                 prop=prf.properties,
                 dsType=prop.dataSourceType,
                 responseType=prop.responseType,
                 hashModel=_.isSet(prop.queryModel) && prop.queryModel!=="",
-                queryURL=(hashModel?prop.queryURL.replace(/[\/]*$/,'\/'):prop.queryURL)+ (hashModel?prop.queryModel:""),
+                queryURL=(hashModel?(((prop.queryURL.lastIndexOf("/")!=prop.queryURL.length-1)?(prop.queryURL+"/"):prop.queryURL)+prop.queryModel):prop.queryURL),
+                queryUserName=prop.queryUserName;
+                queryPasswrod=prop.queryPasswrod;
                 queryArgs=_.copy(prop.queryArgs);
             if(dsType!="remoting")return;
 
@@ -3171,6 +3180,28 @@ Class('linb.absObj',"linb.absBox",{
 
             // for auto adjusting options
             var proxyType,rMap={};
+            if(responseType=='SOAP'||requestType=='SOAP'){
+                // for wsdl
+                if(!con.WDSLCache)con.WDSLCache={};
+                if(!con.WDSLCache[queryURL]){
+                    // sync call for wsdl
+                    linb.Ajax(queryURL+'?wsdl',null,function(rspData){
+                        // wsdl
+                        con.WDSLCache[queryURL] = rspData;
+                    },function(rspData){
+                       if(prf.afterInvoke)
+                            prf.boxing().afterInvoke(prf, rspData);
+                        _.tryF(onFail,arguments,this);
+                        _.tryF(onEnd,arguments,this);
+                        // stop the further call
+                        return;
+                    },null,{
+                        method:'GET',
+                        rspType:'xml',
+                        asy:false
+                    }).start();
+                }
+            }
             switch(responseType){
                 case "JSON":
                     rMap.rspType="json";
@@ -3182,6 +3213,10 @@ Class('linb.absObj',"linb.absBox",{
                 case "SOAP":
                     proxyType="ajax";
                     rMap.rspType="xml";
+                    var namespace=linb.SOAP.getNameSpace(con.WDSLCache[queryURL]),
+                        action = ((namespace.lastIndexOf("/")!=namespace.length-1)?namespace+"/":namespace)+(queryArgs.methodName||"");
+                    rMap.header=rMap.header||{};
+                    rMap.header["SOAPAction"]=action;
                 break;
             }
             switch(prop.requestType){
@@ -3191,7 +3226,7 @@ Class('linb.absObj',"linb.absBox",{
                 break;
                 case "JSON":
                     rMap.reqType="json";
-                    
+
                     if(prop.queryMethod=="auto")
                         rMap.method="POST";
                     // ensure string
@@ -3201,6 +3236,12 @@ Class('linb.absObj',"linb.absBox",{
                     rMap.reqType="xml";
                     proxyType="ajax";
                     rMap.method="POST";
+                    if(queryUserName && queryPassword){
+                        rMap.username=queryUserName;
+                        rMap.password=queryPassword;
+                        rMap.header=rMap.header||{};
+                        rMap.header["Authorization"]="Basic "+con._toBase64(queryUserName+":"+queryPassword);
+                    }
                     // ensure string
                     queryArgs = typeof queryArgs=='string'?queryArgs:linb.XMLRPC.wrapRequest(queryArgs);
                 break;
@@ -3208,9 +3249,14 @@ Class('linb.absObj',"linb.absBox",{
                     rMap.reqType="xml";
                     proxyType="ajax";
                     rMap.method="POST";
-                    // TODO: GET WDSL
+                    if(queryUserName && queryPassword){
+                        rMap.username=queryUserName;
+                        rMap.password=queryPassword;
+                        rMap.header=rMap.header||{};
+                        rMap.header["Authorization"]="Basic "+con._toBase64(queryUserName+":"+queryPassword);
+                    }
                     // ensure string
-                    queryArgs = typeof queryArgs=='string'?queryArgs:linb.SOAP.wrapRequest(queryArgs);
+                    queryArgs = typeof queryArgs=='string'?queryArgs:linb.SOAP.wrapRequest(queryArgs, con.WDSLCache[queryURL]);
                 break;
             }
 
@@ -3235,7 +3281,7 @@ Class('linb.absObj',"linb.absBox",{
                 options.onStart=onStart;
 
             _.merge(options, rMap, 'all');
-            
+
             var ajax=(
                 // specify
                 proxyType ? (proxyType=="sajax"?linb.SAjax:proxyType=="iajax"?linb.IAjax:linb.Ajax)
@@ -3246,8 +3292,8 @@ Class('linb.absObj',"linb.absBox",{
                 // get : crossdomain => SAjax, else Ajax
                 : linb.absIO.isCrossDomain(queryURL) ? linb.SAjax : linb.Ajax
              ).apply(null, [
-                queryURL, 
-                queryArgs, 
+                queryURL,
+                queryArgs,
                 function(rspData){
                     var mapb;
 
@@ -3262,7 +3308,7 @@ Class('linb.absObj',"linb.absBox",{
                         if(responseType=="XML")
                             rspData=linb.XMLRPC.parseResponse(rspData);
                         else if(responseType=="SOAP")
-                            rspData=linb.SOAP.parseResponse(rspData);
+                            rspData=linb.SOAP.parseResponse(rspData, queryArgs.methodName, con.WDSLCache[queryURL]);
                     }
 
                     _.tryF(onSuccess,arguments,this);
@@ -3289,7 +3335,7 @@ Class('linb.absObj',"linb.absBox",{
                 prop=prf.properties,
                 dsType=prop.dataSourceType;
             if(dsType=='none'||dsType=='memory')return;
-            
+
             if(prf.beforeRead && false===prf.boxing().beforeRead(prf))
                 return;
 
@@ -3346,6 +3392,7 @@ Class('linb.absObj',"linb.absBox",{
         }
     },
     Static:{
+        WDSLCache:{},
         $nameTag:"databinder_",
         _pool:{},
         destroyAll:function(){
@@ -3355,6 +3402,25 @@ Class('linb.absObj',"linb.absBox",{
         getFromName:function(name){
             var o=this._pool[name];
             return o && o.boxing();
+        },
+        _toBase64:function(str){
+            var keyStr="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+                arr=[],
+                i=0,
+                c1,c2,c3,e1,e2,e3,e4;
+            do {
+                c1=str.charCodeAt(i++);
+                c2=str.charCodeAt(i++);
+                c3=str.charCodeAt(i++);
+                e1=c1>>2;
+                e2=((c1&3)<<4)|(c2>>4);
+                e3=((c2&15)<<2)|(c3>>6);
+                e4=c3&63;
+                if (isNaN(c2))e3=e4=64;
+                else if(isNaN(c3))e4=64;
+                arr.push(keyStr.charAt(e1)+keyStr.charAt(e2)+keyStr.charAt(e3)+keyStr.charAt(e4));
+            }while(i<str.length);
+            return arr.join('');
         },
         _bind:function(name, profile){
             var t,v,o=this._pool[name];
@@ -3404,6 +3470,8 @@ Class('linb.absObj',"linb.absBox",{
             }
             if(p.dataSourceType=='none' && p.dataSourceType=='memory'){
                 delete p.queryURL;
+                delete p.queryUserName;
+                delete p.queryPassword;
                 delete p.queryModel;
                 delete p.queryArgs;
                 delete p.proxyType;
@@ -3427,6 +3495,12 @@ Class('linb.absObj',"linb.absBox",{
                 listbox:["none","memory","remoting"]
             },
             queryURL:{
+                ini:""
+            },
+            queryUserName:{
+                ini:""
+            },
+            queryPassword:{
                 ini:""
             },
             queryModel:"",

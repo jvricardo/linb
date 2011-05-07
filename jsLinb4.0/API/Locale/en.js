@@ -5202,7 +5202,7 @@ _.set(linb.Locale,["en","app"], {
                 $desc:"Sets the remoting data source type.",
                 $rtn:"[self].",
                 $paras:[
-                    "value [Required] : String, data source type. Can be 'none','memory' or 'remoting', the default is 'none'. Those properties(queryURL,queryMethod,queryAsync,queryModel,queryArgs,proxyType,requestType,responseType) can be used only when dataSourceType is 'remoting'.",
+                    "value [Required] : String, data source type. Can be 'none','memory' or 'remoting', the default is 'none'. Those properties(queryURL,queryUserName,queryPassowrd,queryMethod,queryAsync,queryModel,queryArgs,proxyType,requestType,responseType) can be used only when dataSourceType is 'remoting'.",
                     "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
                 ]
             },
@@ -5212,6 +5212,30 @@ _.set(linb.Locale,["en","app"], {
             },
             setQueryURL:{
                 $desc:"Sets the remoting data source's query URL.",
+                $rtn:"[self].",
+                $paras:[
+                    "value [Required] : String",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getQueryUserName:{
+                $desc:"Gets the remoting data source's query user name.",
+                $rtn:"String"
+            },
+            setQueryUserName:{
+                $desc:"Sets the remoting data source's query user name.",
+                $rtn:"[self].",
+                $paras:[
+                    "value [Required] : String",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getQueryPassword:{
+                $desc:"Gets the remoting data source's query password.",
+                $rtn:"String"
+            },
+            setQueryPassword:{
+                $desc:"Sets the remoting data source's query password.",
                 $rtn:"[self].",
                 $paras:[
                     "value [Required] : String",

@@ -34,7 +34,7 @@ Class("linb.DataBinder","linb.absObj",{
 
             self._nodes.push(profile);
             profile._cacheInstance=self;
-            
+
             return self;
         },
         destroy:function(){
@@ -121,7 +121,7 @@ Class("linb.DataBinder","linb.absObj",{
                 if(_.isHash(mapb))hash=mapb;
                 mapb=null;
             }
-            
+
 
             _.merge(prf.properties.data,hash,'all');
 
@@ -170,7 +170,7 @@ Class("linb.DataBinder","linb.absObj",{
                     _.tryF(b.setCaption,[c,true],b);
             });
             _.merge(prop.data,vs,'all');
-            
+
             return ns;
         },
 
@@ -183,12 +183,15 @@ Class("linb.DataBinder","linb.absObj",{
 
         invoke:function(onSuccess, onFail, onStart, onEnd, mode, threadid, options){
             var ns=this,
+                con=ns.constructor,
                 prf=ns.get(0),
                 prop=prf.properties,
                 dsType=prop.dataSourceType,
                 responseType=prop.responseType,
                 hashModel=_.isSet(prop.queryModel) && prop.queryModel!=="",
-                queryURL=(hashModel?prop.queryURL.replace(/[\/]*$/,'\/'):prop.queryURL)+ (hashModel?prop.queryModel:""),
+                queryURL=(hashModel?(((prop.queryURL.lastIndexOf("/")!=prop.queryURL.length-1)?(prop.queryURL+"/"):prop.queryURL)+prop.queryModel):prop.queryURL),
+                queryUserName=prop.queryUserName;
+                queryPasswrod=prop.queryPasswrod;
                 queryArgs=_.copy(prop.queryArgs);
             if(dsType!="remoting")return;
 
@@ -198,6 +201,28 @@ Class("linb.DataBinder","linb.absObj",{
 
             // for auto adjusting options
             var proxyType,rMap={};
+            if(responseType=='SOAP'||requestType=='SOAP'){
+                // for wsdl
+                if(!con.WDSLCache)con.WDSLCache={};
+                if(!con.WDSLCache[queryURL]){
+                    // sync call for wsdl
+                    linb.Ajax(queryURL+'?wsdl',null,function(rspData){
+                        // wsdl
+                        con.WDSLCache[queryURL] = rspData;
+                    },function(rspData){
+                       if(prf.afterInvoke)
+                            prf.boxing().afterInvoke(prf, rspData);
+                        _.tryF(onFail,arguments,this);
+                        _.tryF(onEnd,arguments,this);
+                        // stop the further call
+                        return;
+                    },null,{
+                        method:'GET',
+                        rspType:'xml',
+                        asy:false
+                    }).start();
+                }
+            }
             switch(responseType){
                 case "JSON":
                     rMap.rspType="json";
@@ -209,6 +234,10 @@ Class("linb.DataBinder","linb.absObj",{
                 case "SOAP":
                     proxyType="ajax";
                     rMap.rspType="xml";
+                    var namespace=linb.SOAP.getNameSpace(con.WDSLCache[queryURL]),
+                        action = ((namespace.lastIndexOf("/")!=namespace.length-1)?namespace+"/":namespace)+(queryArgs.methodName||"");
+                    rMap.header=rMap.header||{};
+                    rMap.header["SOAPAction"]=action;
                 break;
             }
             switch(prop.requestType){
@@ -218,7 +247,7 @@ Class("linb.DataBinder","linb.absObj",{
                 break;
                 case "JSON":
                     rMap.reqType="json";
-                    
+
                     if(prop.queryMethod=="auto")
                         rMap.method="POST";
                     // ensure string
@@ -228,6 +257,12 @@ Class("linb.DataBinder","linb.absObj",{
                     rMap.reqType="xml";
                     proxyType="ajax";
                     rMap.method="POST";
+                    if(queryUserName && queryPassword){
+                        rMap.username=queryUserName;
+                        rMap.password=queryPassword;
+                        rMap.header=rMap.header||{};
+                        rMap.header["Authorization"]="Basic "+con._toBase64(queryUserName+":"+queryPassword);
+                    }
                     // ensure string
                     queryArgs = typeof queryArgs=='string'?queryArgs:linb.XMLRPC.wrapRequest(queryArgs);
                 break;
@@ -235,9 +270,14 @@ Class("linb.DataBinder","linb.absObj",{
                     rMap.reqType="xml";
                     proxyType="ajax";
                     rMap.method="POST";
-                    // TODO: GET WDSL
+                    if(queryUserName && queryPassword){
+                        rMap.username=queryUserName;
+                        rMap.password=queryPassword;
+                        rMap.header=rMap.header||{};
+                        rMap.header["Authorization"]="Basic "+con._toBase64(queryUserName+":"+queryPassword);
+                    }
                     // ensure string
-                    queryArgs = typeof queryArgs=='string'?queryArgs:linb.SOAP.wrapRequest(queryArgs);
+                    queryArgs = typeof queryArgs=='string'?queryArgs:linb.SOAP.wrapRequest(queryArgs, con.WDSLCache[queryURL]);
                 break;
             }
 
@@ -262,7 +302,7 @@ Class("linb.DataBinder","linb.absObj",{
                 options.onStart=onStart;
 
             _.merge(options, rMap, 'all');
-            
+
             var ajax=(
                 // specify
                 proxyType ? (proxyType=="sajax"?linb.SAjax:proxyType=="iajax"?linb.IAjax:linb.Ajax)
@@ -273,8 +313,8 @@ Class("linb.DataBinder","linb.absObj",{
                 // get : crossdomain => SAjax, else Ajax
                 : linb.absIO.isCrossDomain(queryURL) ? linb.SAjax : linb.Ajax
              ).apply(null, [
-                queryURL, 
-                queryArgs, 
+                queryURL,
+                queryArgs,
                 function(rspData){
                     var mapb;
 
@@ -289,7 +329,7 @@ Class("linb.DataBinder","linb.absObj",{
                         if(responseType=="XML")
                             rspData=linb.XMLRPC.parseResponse(rspData);
                         else if(responseType=="SOAP")
-                            rspData=linb.SOAP.parseResponse(rspData);
+                            rspData=linb.SOAP.parseResponse(rspData, queryArgs.methodName, con.WDSLCache[queryURL]);
                     }
 
                     _.tryF(onSuccess,arguments,this);
@@ -316,7 +356,7 @@ Class("linb.DataBinder","linb.absObj",{
                 prop=prf.properties,
                 dsType=prop.dataSourceType;
             if(dsType=='none'||dsType=='memory')return;
-            
+
             if(prf.beforeRead && false===prf.boxing().beforeRead(prf))
                 return;
 
@@ -373,6 +413,7 @@ Class("linb.DataBinder","linb.absObj",{
         }
     },
     Static:{
+        WDSLCache:{},
         $nameTag:"databinder_",
         _pool:{},
         destroyAll:function(){
@@ -382,6 +423,25 @@ Class("linb.DataBinder","linb.absObj",{
         getFromName:function(name){
             var o=this._pool[name];
             return o && o.boxing();
+        },
+        _toBase64:function(str){
+            var keyStr="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+                arr=[],
+                i=0,
+                c1,c2,c3,e1,e2,e3,e4;
+            do {
+                c1=str.charCodeAt(i++);
+                c2=str.charCodeAt(i++);
+                c3=str.charCodeAt(i++);
+                e1=c1>>2;
+                e2=((c1&3)<<4)|(c2>>4);
+                e3=((c2&15)<<2)|(c3>>6);
+                e4=c3&63;
+                if (isNaN(c2))e3=e4=64;
+                else if(isNaN(c3))e4=64;
+                arr.push(keyStr.charAt(e1)+keyStr.charAt(e2)+keyStr.charAt(e3)+keyStr.charAt(e4));
+            }while(i<str.length);
+            return arr.join('');
         },
         _bind:function(name, profile){
             var t,v,o=this._pool[name];
@@ -431,6 +491,8 @@ Class("linb.DataBinder","linb.absObj",{
             }
             if(p.dataSourceType=='none' && p.dataSourceType=='memory'){
                 delete p.queryURL;
+                delete p.queryUserName;
+                delete p.queryPassword;
                 delete p.queryModel;
                 delete p.queryArgs;
                 delete p.proxyType;
@@ -454,6 +516,12 @@ Class("linb.DataBinder","linb.absObj",{
                 listbox:["none","memory","remoting"]
             },
             queryURL:{
+                ini:""
+            },
+            queryUserName:{
+                ini:""
+            },
+            queryPassword:{
                 ini:""
             },
             queryModel:"",

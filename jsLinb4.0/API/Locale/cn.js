@@ -5214,7 +5214,7 @@ _.set(linb.Locale,["cn","app"], {
                 $desc:"设置数据源的类型.",
                 $rtn:"[self].",
                 $paras:[
-                    "value [必需参数] : String, 数据源的类型. 'none','memory','remoting' 之一,默认为none. 只有设置为'remoting', queryURL,queryMethod,queryAsync,queryModel,queryArgs,proxyType,requestType,responseType等属性才会有效.",
+                    "value [必需参数] : String, 数据源的类型. 'none','memory','remoting' 之一,默认为none. 只有设置为'remoting', queryURL,queryUserName, queryPassword, queryMethod,queryAsync,queryModel,queryArgs,proxyType,requestType,responseType等属性才会有效.",
                     "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为 [false]."
                 ]
             },
@@ -5224,6 +5224,30 @@ _.set(linb.Locale,["cn","app"], {
             },
             setQueryURL:{
                 $desc:"设置远程数据源的URL请求地址.",
+                $rtn:"[self].",
+                $paras:[
+                    "value [必需参数] : String",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为 [false]."
+                ]
+            },
+            getQueryUserName:{
+                $desc:"获取远程数据源的URL请求用户名.",
+                $rtn:"String"
+            },
+            setQueryUserName:{
+                $desc:"设置远程数据源的URL请求用户名.",
+                $rtn:"[self].",
+                $paras:[
+                    "value [必需参数] : String",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为 [false]."
+                ]
+            },
+            getQueryPassword:{
+                $desc:"获取远程数据源的URL请求密码.",
+                $rtn:"String"
+            },
+            setQueryPassword:{
+                $desc:"设置远程数据源的URL请求密码.",
                 $rtn:"[self].",
                 $paras:[
                     "value [必需参数] : String",
