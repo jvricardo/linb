@@ -1633,7 +1633,7 @@ Class('linb.Ajax','linb.absIO',{
                     );
                     self._header("Content-type", contentType ? contentType : (
                         (reqType=='xml' ? "text/xml; " : reqType=='json' ? "application/json; " : method=="POST" ? "application/x-www-form-urlencoded; ":"")
-                         + "charset=UTF-8"
+                         + "charset=" + (self.charset||"UTF-8")
                     ));
                     self._header("X-Requested-With", "XMLHttpRequest");
                     if(optimized){
@@ -1754,7 +1754,7 @@ Class('linb.SAjax','linb.absIO',{
 
             n.src = uri;
             n.type= 'text/javascript';
-            n.charset='UTF-8';
+            n.charset=self.charset||'UTF-8';
             n.onload = n.onreadystatechange = function(){
                 if(ok)
                     return;
