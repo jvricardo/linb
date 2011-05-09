@@ -1,5 +1,20 @@
 var examplesSetting = [
     {
+        id:"Google -- Search",
+        url:"http://ajax.googleapis.com/ajax/services/search/web",
+        args:{
+            v:"1.0",
+            q:"jsLinb"
+        }
+    },
+    {
+        id:"Google -- Calendar",
+        url:"http://www.google.com/calendar/feeds/developer-calendar@google.com/public/full",
+        args:{
+            alt:"json"
+        }
+    },
+    {
         id:"Google -- Shopping",
         url:"https://www.googleapis.com/shopping/search/v1/public/products",
         args:{
@@ -15,7 +30,7 @@ var examplesSetting = [
             key : "AIzaSyCFI3UIj7SSUwxZg7t5DQYA0KKncCEJTqk",
             source:"en",
             target:"zh-CN",
-            q:"english words"
+            q:"UI builder"
         }
     },
     {

@@ -8999,6 +8999,420 @@ Class("linb.Cookies", null,{
             return dom;
         }
     }
+});Class('linb.XMLRPC',null,{
+    Static:{
+        //wrapRequest(hash)
+        // or wrapRequest(string, hash)
+        wrapRequest:function(methodName,params){
+            if(typeof methodName=="object"){
+                params=methodName.params;
+                methodName=methodName.methodName;
+            }
+
+            if(!methodName)return null;
+            if(params && !params instanceof Array)return null;
+
+            var ns=this,
+                xml = ['<?xml version="1.0"?><methodCall><methodName>'+ methodName+'</methodName>'];
+            if(params){
+                xml.push('<params>');
+                for(var i=0,j=params.length;i<j;i++)
+                    xml.push('<param>'+ns._wrapParam(params[i])+'</param>');
+                xml.push('</params>');
+            }
+            xml.push('</methodCall>');
+            return xml.join('');
+        },
+        parseResponse:function(xmlObj){
+            if(!xmlObj || !xmlObj.documentElement)return null;
+            var doc=xmlObj.documentElement;
+            if(doc.nodeName!='methodResponse')return null;
+            var ns=this,
+                json={},
+                err,elem;
+       
+            elem = doc.getElementsByTagName('value')[0];
+            if(elem.parentNode.nodeName=='param'&&elem.parentNode.parentNode.nodeName=='params'){
+                json.result=ns._parseElem(elem);
+            }
+            else if(elem.parentNode.nodeName=='fault'){
+                err=ns._parseElem(elem);
+                json.error = {
+                    code:err.faultCode,
+                    message:err.faultString
+                };
+            }
+            else return null;
+
+            if(!json.result && !json.error)
+                return null;
+            return json;
+        },
+        _dateMatcher:/^(?:(\d\d\d\d)-(\d\d)(?:-(\d\d)(?:T(\d\d)(?::(\d\d)(?::(\d\d)(?:\.(\d+))?)?)?)?)?)$/,
+        _parseElem:function(elem){
+            var ns=this, 
+                nodes=elem.childNodes,
+                typeElem, dateElem, name, value, tmp;
+            if(nodes.length==1&&nodes.item(0).nodeType==3)
+                return nodes.item(0).nodeValue;
+
+            for(var i=0,l=nodes.length;i<l;i++){
+                if(nodes.item(i).nodeType==1){
+                    typeElem=nodes.item(i);
+                    switch(typeElem.nodeName.toLowerCase()){
+                        case 'i4':
+                        case 'int':
+                            value=parseInt(typeElem.firstChild.nodeValue);
+                            return isNaN(value)?null:value;
+                        case 'double':
+                            value=parseFloat(typeElem.firstChild.nodeValue);
+                            return isNaN(value)?null:value;
+                        case 'boolean':
+                            return Boolean(parseInt(typeElem.firstChild.nodeValue)!==0);
+                        case 'string':
+                            return typeElem.firstChild?typeElem.firstChild.nodeValue:"";
+                        case 'datetime.iso8601':
+                            if(tmp=typeElem.firstChild.nodeValue.match(ns._dateMatcher)){
+                                value = new Date;
+                                if(tmp[1]) value.setUTCFullYear(parseInt(tmp[1]));
+                                if(tmp[2]) value.setUTCMonth(parseInt(tmp[2]-1));
+                                if(tmp[3]) value.setUTCDate(parseInt(tmp[3]));
+                                if(tmp[4]) value.setUTCHours(parseInt(tmp[4]));
+                                if(tmp[5]) value.setUTCMinutes(parseInt(tmp[5]));
+                                if(tmp[6]) value.setUTCSeconds(parseInt(tmp[6]));
+                                if(tmp[7]) value.setUTCMilliseconds(parseInt(tmp[7]));
+                                return value;
+                            }
+                            return null;
+                        case 'base64':
+                            return null;
+                        case 'nil':
+                            return null;
+                        case 'struct':
+                            value = {};
+                            for(var mElem,j=0;mElem=typeElem.childNodes.item(j);j++){
+                                if(mElem.nodeType==1&&mElem.nodeName=='member'){
+                                    name='';
+                                    elem=null;
+                                    for(var child,k=0;child=mElem.childNodes.item(k);k++){
+                                        if(child.nodeType==1){
+                                            if(child.nodeName=='name')
+                                                name=child.firstChild.nodeValue;
+                                            else if(child.nodeName=='value')
+                                                elem = child;
+                                        }
+                                    }
+                                    if(name&&elem)
+                                       value[name] = ns._parseElem(elem);
+                                }
+                            }
+                            return value;
+                        case 'array':
+                                value = [];
+                                dateElem=typeElem.firstChild;
+                                while(dateElem&&(dateElem.nodeType!=1||dateElem.nodeName!='data'))
+                                    dateElem = dateElem.nextSibling;
+                                if(!dateElem)
+                                    return null;
+                                elem=dateElem.firstChild;
+                                while(elem){
+                                    if(elem.nodeType==1)
+                                        value.push(elem.nodeName=='value'?ns._parseElem(elem):null);
+                                    elem=elem.nextSibling;
+                                }
+                                return value;
+                        default:
+                                return null;
+                    }
+                }
+            }
+            return null;
+        },
+        _map:{
+            "<":"&lt;",
+            ">":"&gt;",
+            "&":"&amp;",
+            '"':"&quot;",
+            "'":"&apos;"
+        },
+        _date2utc:function(d){
+            var ns=this,r=this._zeroPad;
+            return d.getUTCFullYear()+'-'+
+               r(d.getUTCMonth()+1)+'-'+
+               r(d.getUTCDate())+'T'+
+               r(d.getUTCHours())+':'+
+               r(d.getUTCMinutes())+':'+
+               r(d.getUTCSeconds())+'.'+
+               r(d.getUTCMilliseconds(), 3);
+        },
+        _zeroPad:function(v,w){
+            if(!w)w=2;
+            v=((!v&&v!==0)?'':(''+v));
+            while(v.length<w)v='0'+v;
+            return v;
+        },
+        _wrapParam:function(value){
+            var ns=this,
+                map=ns._map,
+                hashOwn={}.hasOwnProperty?1:0,
+                xml=['<value>'],sign;
+            switch(typeof value){
+                case 'number':
+                    xml.push(!isFinite(value)?'<nil/>':
+                        parseInt(value)===Math.ceil(value)?('<int>'+value+'</int>'):
+                        ('<double>'+value+'</double>')
+                    );
+                    break;
+                case 'boolean':
+                    xml.push('<boolean>'+(value?'1':'0')+'</boolean>');
+                    break;
+                case 'string':
+                    xml.push('<string>'+value.replace(/[<>&"']/g, function(a){return map[a]})+'</string>');
+                    break;
+                case 'undefined':
+                    xml.push('<nil/>');
+                case 'function':
+                    xml.push('<string>'+(""+value).replace(/[<>&"']/g, function(a){return map[a]})+'</string>');
+                case 'object':
+                    sign=Object.prototype.toString.call(value);
+                    if(value===null)
+                        xml.push('<nil/>');
+                    else if(sign==='[object Array]'){
+                        xml.push('<array><data>');
+                        for(var i=0,j=value.length;i<j;i++)
+                            xml.push(ns._wrapParam(value[i]));
+                        xml.push('</data></array>');
+                    }
+                    else if(sign==='[object Date]' && isFinite(+value)){
+                        xml.push('<dateTime.iso8601>' + ns._date2utc(value) + '</dateTime.iso8601>');
+                    }
+                    else {
+                        xml.push('<struct>');
+                        for(var key in value)
+                            if(!hashOwn||value.hasOwnProperty(key))
+                                xml.push('<member>'+'<name>'+key+'</name>'+ns._wrapParam(value[key])+'</member>');
+                        xml.push('</struct>');
+                    }
+                    break;
+            }
+            xml.push('</value>');
+            return xml.join('');
+        }
+    }
+});Class('linb.SOAP',null,{
+    Static:{
+        RESULT_NODE_NAME:"return",
+
+        getNameSpace:function(wsdl){
+            var ns=wsdl.documentElement.attributes["targetNamespace"];
+            return ns===undefined?wsdl.documentElement.attributes.getNamedItem("targetNamespace").nodeValue:ns.value;
+        },
+        wrapRequest:function(methodName, params, wsdl){
+            if(typeof methodName=="object"){
+                wsdl=params;
+                params=methodName.params;
+                methodName=methodName.methodName;
+            }
+            var ns=this, namespace=ns.getNameSpace(wsdl);
+            //return "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
+            return  "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">" +
+                    "<soap:Body>" +
+                    "<" + methodName + " xmlns=\""+namespace+"\">" +
+                    ns._wrapParams(params) +
+                    "</"+methodName+"></soap:Body></soap:Envelope>";
+        },
+        parseResponse:function(xmlObj, methodName, wsdl){
+            if(typeof methodName=="object"){
+                methodName=methodName.methodName;
+            }
+            var ns=this,
+                hash={},
+                nd=xmlObj.getElementsByTagName(methodName+"Result");
+            if(!nd.length)
+                nd=xmlObj.getElementsByTagName(ns.RESULT_NODE_NAME);
+            if(!nd.length){
+                hash.fault={
+                    faultcode:xmlObj.getElementsByTagName("faultcode")[0].childNodes[0].nodeValue,
+                    faultstring:xmlObj.getElementsByTagName("faultstring")[0].childNodes[0].nodeValue
+                };
+            }else{
+                hash.result=ns._rsp2Obj(nd[0],wsdl);
+            }
+            return hash;
+        },
+        _rsp2Obj:function(xmlNode, wsdl){
+            var ns=this,
+                types=ns._getTypesFromWsdl(wsdl);
+            return ns._node2obj(xmlNode,types);
+        },
+        _getTypesFromWsdl:function(wsdl){
+            var types=[],
+                ell,useNamedItem;
+
+            ell=wsdl.getElementsByTagName("s:element");
+            if(ell.length){
+                useNamedItem=true;
+            }else{
+                ell=wsdl.getElementsByTagName("element");
+                useNamedItem=false;
+            }
+            for(var i=0,l=ell.length;i<l;i++){
+                if(useNamedItem){
+                    if(ell[i].attributes.getNamedItem("name") != null && ell[i].attributes.getNamedItem("type") != null)
+                        types[ell[i].attributes.getNamedItem("name").nodeValue] = ell[i].attributes.getNamedItem("type").nodeValue;
+                }else{
+                    if(ell[i].attributes["name"] != null && ell[i].attributes["type"] != null)
+                        types[ell[i].attributes["name"].value] = ell[i].attributes["type"].value;
+                }
+            }
+            return types;
+        },
+        _getTypeFromWsdl:function(elems, types){
+            return types[elems]==undefined?"":types[elems];
+        },
+        _node2obj:function(xmlNode, types){
+            if(xmlNode==null)return null;
+            var ns=this,value,tmp;
+            if(xmlNode.nodeType==3||xmlNode.nodeType==4){
+                value=xmlNode.nodeValue;
+                switch(ns._getTypeFromWsdl(xmlNode.parentNode.nodeName, types).toLowerCase()){
+                    case "s:boolean":
+                        return value+""=="true";
+                    case "s:int":
+                    case "s:long":
+                        return value===null?0:parseInt(value+"", 10);
+                    case "s:double":
+                        return value===null?0:parseFloat(value+"");
+                    case "s:datetime":
+                        if(value == null)
+                            return null;
+                        else{
+                            if(tmp=value.match(ns._dateMatcher)){
+                                var d = new Date;
+                                if(tmp[1]) d.setUTCFullYear(parseInt(tmp[1]));
+                                if(tmp[2]) d.setUTCMonth(parseInt(tmp[2]-1));
+                                if(tmp[3]) d.setUTCDate(parseInt(tmp[3]));
+                                if(tmp[4]) d.setUTCHours(parseInt(tmp[4]));
+                                if(tmp[5]) d.setUTCMinutes(parseInt(tmp[5]));
+                                if(tmp[6]) d.setUTCSeconds(parseInt(tmp[6]));
+                                if(tmp[7]) d.setUTCMilliseconds(parseInt(tmp[7]));
+                                return d;
+                            }
+                            return null;
+                        }
+                    //case "s:string":
+                    default:
+                        return value===null?"":(value+"");
+                }
+            }else if(xmlNode.childNodes.length==1&&(xmlNode.childNodes[0].nodeType==3||xmlNode.childNodes[0].nodeType==4))
+                return ns._node2obj(xmlNode.childNodes[0], types);
+            else{
+                if(ns._getTypeFromWsdl(xmlNode.nodeName, types).toLowerCase().indexOf("arrayof") == -1){
+                    var obj=xmlNode.hasChildNodes()?{}:null;
+                    for(var i=0,l=xmlNode.childNodes.length;i<l;i++)
+                        obj[xmlNode.childNodes[i].nodeName]=ns._node2obj(xmlNode.childNodes[i], types);
+                    return obj;
+                }else{
+                    var arr =[];
+                    for(var i=0,l=xmlNode.childNodes.length;i<l;i++)
+                        arr.push(ns._node2obj(xmlNode.childNodes[i], types));
+                    return arr;
+                }
+            }
+            return null;
+        },
+         _wrapParams:function(params){
+            var ns=this,arr=[];
+            for(var p in params){
+                switch(typeof(params[p])){
+                    case "string":
+                    case "number":
+                    case "boolean":
+                    case "object":
+                        arr.push("<" + p + ">" + ns._wrapParam(params[p]) + "</" + p + ">");
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+            return arr.join('');
+        },
+        _map:{
+            "<":"&lt;",
+            ">":"&gt;",
+            "&":"&amp;",
+            '"':"&quot;",
+            "'":"&apos;"
+        },
+        _wrapParam:function(param){
+            var ns=this,
+                s="",
+                map=ns._map,
+                sign,sign2,type,value;
+            switch(typeof(param)){
+                case "string":
+                    s += param.replace(/[<>&"']/g, function(a){return map[a]});
+                    break;
+                case "number":
+                case "boolean":
+                    s += param+"";
+                    break;
+                case "object":
+                    sign=Object.prototype.toString.call(param);
+                    // Date
+                    if(sign==='[object Date]' && isFinite(+param)){
+                        s += ns._date2utc(param);
+                    }else if(sign==='[object Array]'){
+                        for(var p in param){
+                            value=param[p];
+                            switch(typeof value){
+                                case 'number':
+                                    type=parseInt(value)===Math.ceil(value)?'int':'double';
+                                    break;
+                                case 'boolean':
+                                    type='bool';
+                                    break;
+                                case 'string':
+                                    type='string';
+                                    break;
+                                case 'object':
+                                    sign2=Object.prototype.toString.call(value);
+                                    if(sign2==='[object Array]'){
+                                        type="Array";
+                                    }else if(sign2==='[object Date]' && isFinite(+value)){
+                                        type="DateTime";
+                                    }else
+                                        type="object";
+                                    break;
+                            }
+                            s += "<"+type+">"+ns._wrapParam(param[p])+"</"+type+">";
+                        }
+                    }else{
+                        for(var p in param)
+                            s += "<"+p+">"+ns._wrapParam(param[p])+"</"+p+">";
+                    }
+                    break;
+            }
+            return s;
+        },
+        _date2utc:function(d){
+            var ns=this,r=this._zeroPad;
+            return d.getUTCFullYear()+'-'+
+               r(d.getUTCMonth()+1)+'-'+
+               r(d.getUTCDate())+'T'+
+               r(d.getUTCHours())+':'+
+               r(d.getUTCMinutes())+':'+
+               r(d.getUTCSeconds())+'.'+
+               r(d.getUTCMilliseconds(), 3);
+        },
+        _zeroPad:function(v,w){
+            if(!w)w=2;
+            v=((!v&&v!==0)?'':(''+v));
+            while(v.length<w)v='0'+v;
+            return v;
+        }
+    }
 });/*
 profile input:
 ===========================

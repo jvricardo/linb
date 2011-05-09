@@ -289,7 +289,7 @@ Class("VisualJS.CodeEditor", ["linb.UI.Widget","linb.absValue"] ,{
                 +"_=window._=parent._;"
                 +"Class=window.Class=parent.Class;"
                 +"linb=window.linb=parent.linb;"
-                +"dompack=function(){var o=new linb.Dom(false),d=document.createElement('div');d.id='abc';document.appendChild(div);o._nodes=[document.getElementById('abc')];return o};"
+                +"dompack=window.dompack=function(){var o=new linb.Dom(false),d=document.createElement('div');d.id='abc';document.appendChild(div);o._nodes=[document.getElementById('abc')];return o};"
                 +"window['"+ns.$temppool+"']=parent['"+ns.$temppool+"'];"
                 // "var b=arguments.callee;" for fix firefox 3.5 bug
                 +"parent['"+ns.$tempsandbox+"']=/*@cc_on !@*/0?this:{eval:function(s){return (function(){var b=arguments.callee;return window.eval.call(window,s)})()}};"
@@ -297,13 +297,12 @@ Class("VisualJS.CodeEditor", ["linb.UI.Widget","linb.absValue"] ,{
                 +"<\/script><span></span>"
             );
             wnd.document.close();
+            var bak=linb.Dom.pack;
             try{
  //console.log(code);
                 // avoid dom affected
-                var bak=linb.Dom.pack;
                 linb.Dom.pack=wnd.dompack;
                 result = window[ns.$tempsandbox].eval(isjson?("("+code+")"):code);
-                linb.Dom.pack=bak;
 
                 type = (result===wnd || result===wnd.content)? 'window' :
                        result===wnd.history ? 'history' :
@@ -319,9 +318,9 @@ Class("VisualJS.CodeEditor", ["linb.UI.Widget","linb.absValue"] ,{
                 if(!_.isSet(line) && /.*at line ([\d]+).*/.test(errmsg))
                     line=errmsg.replace(/.*at line ([\d]+).*/,'$1');
             }finally{
+                linb.Dom.pack=bak;
                 wnd.Class=wnd._=wnd.linb=wnd[ns.$temppool]=null;
                 window[ns.$tempsandbox]=undefined;
-                window[ns.$tempdiv]=undefined;
 
                 if(!name)
                     document.body.removeChild(iframe);

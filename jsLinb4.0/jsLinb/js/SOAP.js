@@ -71,7 +71,7 @@ Class('linb.SOAP',null,{
         },
         _node2obj:function(xmlNode, types){
             if(xmlNode==null)return null;
-            var ns=this,value;
+            var ns=this,value,tmp;
             if(xmlNode.nodeType==3||xmlNode.nodeType==4){
                 value=xmlNode.nodeValue;
                 switch(ns._getTypeFromWsdl(xmlNode.parentNode.nodeName, types).toLowerCase()){
@@ -86,13 +86,18 @@ Class('linb.SOAP',null,{
                         if(value == null)
                             return null;
                         else{
-                            value = value + "";
-                            value = value.substring(0, (value.lastIndexOf(".") == -1 ? value.length : value.lastIndexOf(".")));
-                            value = value.replace(/T/gi," ");
-                            value = value.replace(/-/gi,"/");
-                            var d = new Date();
-                            d.setTime(Date.parse(value));
-                            return d;
+                            if(tmp=value.match(ns._dateMatcher)){
+                                var d = new Date;
+                                if(tmp[1]) d.setUTCFullYear(parseInt(tmp[1]));
+                                if(tmp[2]) d.setUTCMonth(parseInt(tmp[2]-1));
+                                if(tmp[3]) d.setUTCDate(parseInt(tmp[3]));
+                                if(tmp[4]) d.setUTCHours(parseInt(tmp[4]));
+                                if(tmp[5]) d.setUTCMinutes(parseInt(tmp[5]));
+                                if(tmp[6]) d.setUTCSeconds(parseInt(tmp[6]));
+                                if(tmp[7]) d.setUTCMilliseconds(parseInt(tmp[7]));
+                                return d;
+                            }
+                            return null;
                         }
                     //case "s:string":
                     default:
@@ -132,69 +137,79 @@ Class('linb.SOAP',null,{
             }
             return arr.join('');
         },
+        _map:{
+            "<":"&lt;",
+            ">":"&gt;",
+            "&":"&amp;",
+            '"':"&quot;",
+            "'":"&apos;"
+        },
         _wrapParam:function(param){
-            var ns=this,s="";
+            var ns=this,
+                s="",
+                map=ns._map,
+                sign,sign2,type,value;
             switch(typeof(param)){
                 case "string":
-                    s += param.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    s += param.replace(/[<>&"']/g, function(a){return map[a]});
                     break;
                 case "number":
                 case "boolean":
                     s += param+"";
                     break;
                 case "object":
+                    sign=Object.prototype.toString.call(param);
                     // Date
-                    if(param.constructor.toString().indexOf("function Date()") > -1){
-                        var year = param.getFullYear().toString();
-                        var month = (param.getMonth() + 1).toString(); month = (month.length == 1) ? "0" + month : month;
-                        var date = param.getDate().toString(); date = (date.length == 1) ? "0" + date : date;
-                        var hours = param.getHours().toString(); hours = (hours.length == 1) ? "0" + hours : hours;
-                        var minutes = param.getMinutes().toString(); minutes = (minutes.length == 1) ? "0" + minutes : minutes;
-                        var seconds = param.getSeconds().toString(); seconds = (seconds.length == 1) ? "0" + seconds : seconds;
-                        var milliseconds = param.getMilliseconds().toString();
-                        var tzminutes = Math.abs(param.getTimezoneOffset());
-                        var tzhours = 0;
-                        while(tzminutes >= 60){
-                            tzhours++;
-                            tzminutes -= 60;
-                        }
-                        tzminutes = (tzminutes.toString().length == 1) ? "0" + tzminutes.toString() : tzminutes.toString();
-                        tzhours = (tzhours.toString().length == 1) ? "0" + tzhours.toString() : tzhours.toString();
-                        var timezone = ((param.getTimezoneOffset() < 0) ? "+" : "-") + tzhours + ":" + tzminutes;
-                        s += year + "-" + month + "-" + date + "T" + hours + ":" + minutes + ":" + seconds + "." + milliseconds + timezone;
-                    }
-                    // Array
-                    else if(param.constructor.toString().indexOf("function Array()") > -1){
+                    if(sign==='[object Date]' && isFinite(+param)){
+                        s += ns._date2utc(param);
+                    }else if(sign==='[object Array]'){
                         for(var p in param){
-                            if(!isNaN(p)){
-                                (/function\s+(\w*)\s*\(/ig).exec(param[p].constructor.toString());
-                                var type = RegExp.$1;
-                                switch(type)
-                                {
-                                    case "":
-                                        type = typeof(param[p]);
-                                    case "String":
-                                        type = "string"; break;
-                                    case "Number":
-                                        type = "int"; break;
-                                    case "Boolean":
-                                        type = "bool"; break;
-                                    case "Date":
-                                        type = "DateTime"; break;
-                                }
-                                s += "<" + type + ">" + ns._wrapParam(param[p]) + "</" + type + ">"
+                            value=param[p];
+                            switch(typeof value){
+                                case 'number':
+                                    type=parseInt(value)===Math.ceil(value)?'int':'double';
+                                    break;
+                                case 'boolean':
+                                    type='bool';
+                                    break;
+                                case 'string':
+                                    type='string';
+                                    break;
+                                case 'object':
+                                    sign2=Object.prototype.toString.call(value);
+                                    if(sign2==='[object Array]'){
+                                        type="Array";
+                                    }else if(sign2==='[object Date]' && isFinite(+value)){
+                                        type="DateTime";
+                                    }else
+                                        type="object";
+                                    break;
                             }
-                            else    // associative array
-                                s += "<" + p + ">" + ns._wrapParam(param[p]) + "</" + p + ">"
+                            s += "<"+type+">"+ns._wrapParam(param[p])+"</"+type+">";
                         }
-                    }
-                    // Object or custom function
-                    else
+                    }else{
                         for(var p in param)
-                            s += "<" + p + ">" + ns._wrapParam(param[p]) + "</" + p + ">";
+                            s += "<"+p+">"+ns._wrapParam(param[p])+"</"+p+">";
+                    }
                     break;
             }
             return s;
+        },
+        _date2utc:function(d){
+            var ns=this,r=this._zeroPad;
+            return d.getUTCFullYear()+'-'+
+               r(d.getUTCMonth()+1)+'-'+
+               r(d.getUTCDate())+'T'+
+               r(d.getUTCHours())+':'+
+               r(d.getUTCMinutes())+':'+
+               r(d.getUTCSeconds())+'.'+
+               r(d.getUTCMilliseconds(), 3);
+        },
+        _zeroPad:function(v,w){
+            if(!w)w=2;
+            v=((!v&&v!==0)?'':(''+v));
+            while(v.length<w)v='0'+v;
+            return v;
         }
     }
 });
