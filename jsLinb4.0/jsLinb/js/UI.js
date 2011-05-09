@@ -827,7 +827,7 @@ Class("linb.UI",  "linb.absObj", {
             });
         },
         clone:function(){
-            return this.arguments.callee.apply(this,["domId"]);
+            return arguments.callee.upper.apply(this,["domId"]);
         },
         refresh:function(remedy){
             var para,node,b,p,s,$linbid,serialId,fun,box,children,uiv;

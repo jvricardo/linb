@@ -3167,6 +3167,7 @@ Class('linb.absObj',"linb.absBox",{
                 prop=prf.properties,
                 dsType=prop.dataSourceType,
                 responseType=prop.responseType,
+                requestType=prop.requestType,
                 hashModel=_.isSet(prop.queryModel) && prop.queryModel!=="",
                 queryURL=(hashModel?(((prop.queryURL.lastIndexOf("/")!=prop.queryURL.length-1)?(prop.queryURL+"/"):prop.queryURL)+prop.queryModel):prop.queryURL),
                 queryUserName=prop.queryUserName;
@@ -3184,22 +3185,17 @@ Class('linb.absObj',"linb.absBox",{
                 // for wsdl
                 if(!con.WDSLCache)con.WDSLCache={};
                 if(!con.WDSLCache[queryURL]){
-                    // sync call for wsdl
-                    linb.Ajax(queryURL+'?wsdl',null,function(rspData){
-                        // wsdl
-                        con.WDSLCache[queryURL] = rspData;
-                    },function(rspData){
+                    var wsdl=linb.SOAP.getWsdl(queryURL,function(rspData){
                        if(prf.afterInvoke)
                             prf.boxing().afterInvoke(prf, rspData);
                         _.tryF(onFail,arguments,this);
                         _.tryF(onEnd,arguments,this);
+                    });
+                    if(wsdl)
+                        con.WDSLCache[queryURL] = wsdl;
+                    else
                         // stop the further call
                         return;
-                    },null,{
-                        method:'GET',
-                        rspType:'xml',
-                        asy:false
-                    }).start();
                 }
             }
             switch(responseType){
@@ -3219,7 +3215,7 @@ Class('linb.absObj',"linb.absBox",{
                     rMap.header["SOAPAction"]=action;
                 break;
             }
-            switch(prop.requestType){
+            switch(requestType){
                 case "HTTP":
                     // ensure object
                     queryArgs = typeof queryArgs=='string'?_.unserialize(queryArgs):queryArgs;
@@ -9207,6 +9203,22 @@ Class("linb.Cookies", null,{
             var ns=wsdl.documentElement.attributes["targetNamespace"];
             return ns===undefined?wsdl.documentElement.attributes.getNamedItem("targetNamespace").nodeValue:ns.value;
         },
+        getWsdl:function(queryURL,onFail){
+            var rst=false;
+
+            // sync call for wsdl
+            linb.Ajax(queryURL+'?wsdl',null,function(rspData){
+                rst=rspData;
+            },function(rspData){
+                _.tryF(onFail,[rspData],this);
+            },null,{
+                method:'GET',
+                rspType:'xml',
+                asy:false
+            }).start();
+
+            return rst;
+        },
         wrapRequest:function(methodName, params, wsdl){
             if(typeof methodName=="object"){
                 wsdl=params;
@@ -11886,7 +11898,7 @@ Class("linb.UI",  "linb.absObj", {
             });
         },
         clone:function(){
-            return this.arguments.callee.apply(this,["domId"]);
+            return arguments.callee.upper.apply(this,["domId"]);
         },
         refresh:function(remedy){
             var para,node,b,p,s,$linbid,serialId,fun,box,children,uiv;

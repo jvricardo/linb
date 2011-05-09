@@ -5,31 +5,10 @@ Class('App', 'linb.Com',{
             var host=this, children=[], append=function(child){children.push(child.get(0))};
             
             append(
-                (new linb.UI.Panel)
-                .setHost(host,"ctl_panel4")
-                .setDock("none")
-                .setLeft(50)
-                .setTop(70)
-                .setWidth(210)
-                .setHeight(430)
-                .setZIndex(1)
-                .setCaption("JSON Webservices")
-            );
-            
-            host.ctl_panel4.append(
-                (new linb.UI.List)
-                .setHost(host,"ctl_list")
-                .setDirtyMark(false)
-                .setDock("fill")
-                .setBorderType("none")
-                .onItemSelected("_ctl_list5_onitemselected")
-            );
-            
-            append(
                 (new linb.UI.Group)
                 .setHost(host,"ctl_group1")
-                .setLeft(280)
-                .setTop(120)
+                .setLeft(40)
+                .setTop(110)
                 .setWidth(430)
                 .setHeight(96)
                 .setCaption("Example Request Object")
@@ -46,14 +25,14 @@ Class('App', 'linb.Com',{
                 .setHeight(70)
                 .setLabelCaption("")
                 .setMultiLines(true)
+                .setValue('{\n\t"methodName" : "getUserInfo",\n\t"params" : {\n\t\t"bgin" : "3", \n\t\t"limit" : "323", \n\t\t"a" : 1, \n\t\t"b" : new Date(2011,4,9,12,31,55,434), \n\t\t"c" : 2.33, \n\t\t"d" : [1,[1,2],{ "da" : 1 }], \n\t\t"e" : { "e1" : 1, "d3" : "s" } \n\t} \n}')
             );
             
             append(
                 (new linb.UI.SButton)
                 .setHost(host,"ctl_do")
-                .setDisabled(true)
-                .setLeft(330)
-                .setTop(230)
+                .setLeft(90)
+                .setTop(220)
                 .setWidth(340)
                 .setCaption("Invoke")
                 .onClick("_ctl_do_onclick")
@@ -62,8 +41,8 @@ Class('App', 'linb.Com',{
             append(
                 (new linb.UI.Group)
                 .setHost(host,"ctl_group2")
-                .setLeft(280)
-                .setTop(260)
+                .setLeft(40)
+                .setTop(250)
                 .setWidth(430)
                 .setHeight(240)
                 .setCaption("Response Object")
@@ -85,8 +64,8 @@ Class('App', 'linb.Com',{
             append(
                 (new linb.UI.SLabel)
                 .setHost(host,"ctl_slabel10")
-                .setLeft(280)
-                .setTop(84)
+                .setLeft(40)
+                .setTop(74)
                 .setWidth(54)
                 .setCaption("WS URL")
             );
@@ -95,18 +74,19 @@ Class('App', 'linb.Com',{
                 (new linb.UI.Input)
                 .setHost(host,"ctl_url")
                 .setReadonly(true)
-                .setLeft(350)
-                .setTop(80)
+                .setLeft(110)
+                .setTop(70)
                 .setWidth(350)
                 .setLabelCaption("")
+                .setValue("../../../backend/test/rpc/server.php")
             );
             
             append(
                 (new linb.UI.Block)
                 .setHost(host,"ctl_block6")
-                .setLeft(50)
-                .setTop(30)
-                .setWidth(660)
+                .setLeft(30)
+                .setTop(20)
+                .setWidth(440)
                 .setHeight(30)
                 .setBorderType("ridge")
             );
@@ -114,10 +94,10 @@ Class('App', 'linb.Com',{
             host.ctl_block6.append(
                 (new linb.UI.Label)
                 .setHost(host,"ctl_slabel7")
-                .setLeft(181)
+                .setLeft(111)
                 .setTop(6)
-                .setWidth(261)
-                .setCaption("LINB JSON Webservice Client")
+                .setWidth(181)
+                .setCaption("LINB SOAP Client")
                 .setFontSize("14px")
                 .setFontWeight("bold")
             );
@@ -125,37 +105,31 @@ Class('App', 'linb.Com',{
             return children;
             // ]]code created by jsLinb UI Builder
         },
-        _com_onready : function (com, threadid) {
-            var ns=this;
-            var items=_.copy(examplesSetting);
-            items.push({id:"custom"});
-            ns.ctl_list.setItems(items);
-        },
         events : {"onReady":"_com_onready"},
-        _ctl_list5_onitemselected : function (profile, item, e, src, type) {
-            var ns = this;
-
-            ns.ctl_url.setReadonly(item.id!="custom");
-            
-            ns.ctl_url.setValue(item.url || "http://");
-            ns.ctl_request.setValue(item.args ? _.stringify(item.args) : "");
-            ns.ctl_do.setDisabled(false);
-            
-            ns.ctl_response.setValue("");
-        },
         _ctl_do_onclick : function (profile, e, src, value) {
             var ns = this,
                 uri = ns.ctl_url.getValue(),
                 args = _.unserialize(ns.ctl_request.getValue());
             if(uri && args){
                 ns.ctl_response.setValue("Asynchronous calling...");
-                linb.Thread.observableRun(function(threadid){
-                    linb.request(uri, args, function(rsp){
-                        ns.ctl_response.setValue(linb.Coder.formatText(_.stringify(rsp)));
-                    }, function(msg){
-                        ns.ctl_response.setValue(msg);
-                    }, threadid);
-                });
+                
+                var wsdl = linb.SOAP.getWsdl("../../../backend/test/soap/soap.php");
+                if(wsdl)
+                    linb.Thread.observableRun(function(threadid){
+                        linb.request("../../../backend/test/soap/soap.php",
+                            linb.SOAP.wrapRequest(args, wsdl),
+                            function(rsp){
+                                ns.ctl_response.setValue(linb.Coder.formatText(_.stringify(linb.SOAP.parseResponse(rsp, args.methodName, wsdl))));
+                            },
+                            function(msg){
+                                ns.ctl_response.setValue(msg);
+                            },threadid,{
+                            method:'POST',
+                            proxyType:'ajax',
+                            reqType:'XML',
+                            rspType:'XML'
+                        });
+                    });
             }
         }
     }

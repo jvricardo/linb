@@ -6,6 +6,22 @@ Class('linb.SOAP',null,{
             var ns=wsdl.documentElement.attributes["targetNamespace"];
             return ns===undefined?wsdl.documentElement.attributes.getNamedItem("targetNamespace").nodeValue:ns.value;
         },
+        getWsdl:function(queryURL,onFail){
+            var rst=false;
+
+            // sync call for wsdl
+            linb.Ajax(queryURL+'?wsdl',null,function(rspData){
+                rst=rspData;
+            },function(rspData){
+                _.tryF(onFail,[rspData],this);
+            },null,{
+                method:'GET',
+                rspType:'xml',
+                asy:false
+            }).start();
+
+            return rst;
+        },
         wrapRequest:function(methodName, params, wsdl){
             if(typeof methodName=="object"){
                 wsdl=params;

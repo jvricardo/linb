@@ -188,6 +188,7 @@ Class("linb.DataBinder","linb.absObj",{
                 prop=prf.properties,
                 dsType=prop.dataSourceType,
                 responseType=prop.responseType,
+                requestType=prop.requestType,
                 hashModel=_.isSet(prop.queryModel) && prop.queryModel!=="",
                 queryURL=(hashModel?(((prop.queryURL.lastIndexOf("/")!=prop.queryURL.length-1)?(prop.queryURL+"/"):prop.queryURL)+prop.queryModel):prop.queryURL),
                 queryUserName=prop.queryUserName;
@@ -205,22 +206,17 @@ Class("linb.DataBinder","linb.absObj",{
                 // for wsdl
                 if(!con.WDSLCache)con.WDSLCache={};
                 if(!con.WDSLCache[queryURL]){
-                    // sync call for wsdl
-                    linb.Ajax(queryURL+'?wsdl',null,function(rspData){
-                        // wsdl
-                        con.WDSLCache[queryURL] = rspData;
-                    },function(rspData){
+                    var wsdl=linb.SOAP.getWsdl(queryURL,function(rspData){
                        if(prf.afterInvoke)
                             prf.boxing().afterInvoke(prf, rspData);
                         _.tryF(onFail,arguments,this);
                         _.tryF(onEnd,arguments,this);
+                    });
+                    if(wsdl)
+                        con.WDSLCache[queryURL] = wsdl;
+                    else
                         // stop the further call
                         return;
-                    },null,{
-                        method:'GET',
-                        rspType:'xml',
-                        asy:false
-                    }).start();
                 }
             }
             switch(responseType){
@@ -240,7 +236,7 @@ Class("linb.DataBinder","linb.absObj",{
                     rMap.header["SOAPAction"]=action;
                 break;
             }
-            switch(prop.requestType){
+            switch(requestType){
                 case "HTTP":
                     // ensure object
                     queryArgs = typeof queryArgs=='string'?_.unserialize(queryArgs):queryArgs;
