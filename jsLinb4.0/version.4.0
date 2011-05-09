@@ -1,4 +1,6 @@
 Added TagEditor, FoldingTabs Widgets
+Added XMLRPC/SOAP client wrappers
+
 -----------------------------------
 Added properties to linb.DataBinder: data,dataSourceType,queryURL,queryMethod,queryAsync,queryModel,queryArgs,proxyType,requestType,responseType
 Removed functions from linb.DataBinder: getValue,resetValue
@@ -31,10 +33,14 @@ Modified all backend code according according to the updated linb.absIO.
 Modified Ajax to return object(plain text in previous version) by default;
 
 -----------------------------------
+Added some new code examples
+-----------------------------------
+-----------------------------------
 Builder
 -----------------------------------
-
+-----------------------------------
 Allowed pre-configured widgets in the "Tool Box"
+
 
 ===================================
 
@@ -43,8 +49,7 @@ To enhance the Builder
 To add some useful wizard for the Builder
 To add several linb.UI widgets
 To add svg based(linb.SVG) Line/Shape/... widgets
-To add some backend interface (linb.DataSet...)
-To add a flowchart Application demo
+?To add a flowchart Application demo
 To add a UI demo
 
 To rebuild a new Code Editor based on codemirror 2. It's faster.
