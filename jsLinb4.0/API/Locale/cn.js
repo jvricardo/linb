@@ -14636,6 +14636,18 @@ _.set(linb.Locale,["cn","app"], {
             offEditor:{
                 $desc:"解除单元格的编辑模式."
             },
+            autoRowHeight:{
+                $desc:"自动适应行高.",
+                $paras:[
+                    "rowId [可选参数] : String, 行id. 没有行id表示自动适应所有的行高."
+                ]
+            },
+            autoColWidth:{
+                $desc:"自动适应列宽.",
+                $paras:[
+                    "colId [可选参数] : String, 列id. 没有列id表示自动适应所有的列宽."
+                ]
+            },
             editCell:{
                 $desc:"将单元格绑定到指定的编辑器上.",
                 $paras:[

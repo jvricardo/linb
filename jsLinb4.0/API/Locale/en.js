@@ -14713,6 +14713,18 @@ _.set(linb.Locale,["en","app"], {
             offEditor:{
                 $desc:"To off the cell's edit mode."
             },
+            autoRowHeight:{
+                $desc:"To auto adjust row height for a certain row or all rows.",
+                $paras:[
+                    "rowId [Optional] : String, row id."
+                ]
+            },
+            autoColWidth:{
+                $desc:"To auto adjust column width for a certain column or all columns.",
+                $paras:[
+                    "colId [Optional] : String, col id."
+                ]
+            },
             editCell:{
                 $desc:"To bind a specified cell to a specified editor.",
                 $paras:[

@@ -162,6 +162,30 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     self.toggleRow(o.id, expend);
                 });
         },
+        autoRowHeight:function(rowId){
+            return this.each(function(prf){
+                if(prf.renderId ){
+                    if(rowId && prf.rowMap2[rowId])
+                        prf.getSubNode('FHANDLER',prf.rowMap2[rowId]).onDblclick(true);
+                    else
+                        _.each(prf.rowMap,function(o,i){
+                            prf.getSubNode('FHANDLER',i).onDblclick(true);
+                        });
+                }
+            });
+        },
+        autoColWidth:function(colId){
+            return this.each(function(prf){
+                if(prf.renderId){
+                    if(colId && prf.colMap2[colId])
+                        prf.getSubNode('HHANDLER',prf.colMap2[colId]).onDblclick(true);
+                    else
+                        _.each(prf.colMap,function(o,i){
+                            prf.getSubNode('HHANDLER',i).onDblclick(true);
+                        });
+                }
+            });
+        },
         isDirtied:function(){
             var dirty=false;
             _.each(this.get(0).cellMap,function(v){
@@ -2728,7 +2752,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                 f1=me._f1=(me._f1=function(v,profile,cell){
                     return v ? linb.Date.getText(v, getPro(profile, cell, 'dateEditorTpl')||'ymd') : "";
                 }),
-                f2=me._f2=(me._f2=function(v){return v?(v.split('\n')[0]||"").replace(/ /g,'&nbsp;').replace(reg1,'&lt;'):""}),
+                f2=me._f2=(me._f2=function(v){return v?(v+'').replace(reg1,'&lt;').replace(/\t/g,'&nbsp;&nbsp;&nbsp;&nbsp;').replace(/ /g,'&nbsp;').replace(/(\r\n|\n|\r)/g,"<br />"):""}),
                 f3=me._f3=(me._f3=function(v){return (v||v===0) ? ((v.toFixed(4)*100)+'%') : ""}),
                 f5=me._f5=(me._f5=function(v,profile,cell){
                     if(v||v===0){
