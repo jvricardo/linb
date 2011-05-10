@@ -1,49 +1,58 @@
+===================================
+Code
+===================================
 Added TagEditor, FoldingTabs Widgets
 Added XMLRPC/SOAP client wrappers
-
 -----------------------------------
-Added properties to linb.DataBinder: data,dataSourceType,queryURL,queryMethod,queryAsync,queryModel,queryArgs,proxyType,requestType,responseType
-Removed functions from linb.DataBinder: getValue,resetValue
-Added functions to linb.DataBinder: getDirtied,updateDataToUI,updateDataFromUI; invoke,read,write
-Added events to linb.DataBinder: beforeUpdateDataToUI,afterUpdateDataFromUI,beforeInvoke,afterInvoke,beforeRead,afterRead,beforeWrite,afterWrite
-
-Added property dataBindLoadType to linb.Com
-Added function getDataBinders to linb.Com
-
-Added offEditor function to linb.UI.TreeGrid.
-
-Added labelSize/labelPos/labelGap/labelCaption/labelHAlign properties to linb.UI.Input.
-
-Added onLabelClick/onLabelDblClick/onLabelActive events to linb.UI.Input.
-
-Moved getProperties/setProperties/getEvents/setEvents from linb.UI to linb.absObj.
-
-Added checkBox property to linb.UI.RadioBox.
-
-Removed fixedWidth from linb.UI.TimeLine.
-
-Added valueSeparator property to linb.UI.absList/linb.UI.TreeGrid.
-
-Added overflow property to linb.UI.Span/linb.UI.Div/linb.UI.Block/linb.UI.Dilalog/linb.UI.Tabs/linb.UI.Layout.
-
-Removed "type" and "randKey" from linb.absIO(linb.Ajax/linb.SAjax/linb.IAjax);
-
-Modified all backend code according according to the updated linb.absIO.
-
+Added properties to linb.DataBinder: 
+    data, dataSourceType, queryURL, queryMethod, queryAsync, queryModel, queryArgs, proxyType, requestType, responseType
+Removed functions from linb.DataBinder: 
+    getValue, resetValue
+Added functions to linb.DataBinder: 
+    getDirtied, updateDataToUI, updateDataFromUI, invoke, read, write
+Added events to linb.DataBinder: 
+    beforeUpdateDataToUI, afterUpdateDataFromUI, beforeInvoke, afterInvoke, beforeRead, afterRead, beforeWrite, afterWrite
+Added property to linb.Com:
+    dataBindLoadType
+Added functions to linb.Com:
+    getDataBinders
+Added functions to linb.UI.TreeGrid:
+    offEditor, autoRowHeight, autoColWidth
+Added properties to linb.UI.Input:
+    labelSize, labelPos, labelGap, labelCaption, labelHAlign 
+Added events to linb.UI.Input:
+    onLabelClick, onLabelDblClick, onLabelActive 
+Moved functions from linb.UI to linb.absObj:
+    getProperties, setProperties, getEvents, setEvents
+Added properties to linb.UI.RadioBox:
+    checkBox
+Removed functions from linb.UI.TimeLine:
+    fixedWidth
+Added properties to linb.UI.absList/linb.UI.TreeGrid:
+    valueSeparator
+Added properties to linb.UI.Span/linb.UI.Div/linb.UI.Block/linb.UI.Dilalog/linb.UI.Tabs/linb.UI.Layout:
+    overflow
+Removed keys from linb.absIO(linb.Ajax/linb.SAjax/linb.IAjax):
+    "type" and "randKey"
+Added keys to linb.absIO options:
+    "proxyType", "Accept", "contentType", "header"
+    "username" and "password" (for linb.Ajax only)
+    
 Modified Ajax to return object(plain text in previous version) by default;
-
+Modified all backend code according according to the updated linb.absIO.
 -----------------------------------
 Added some new code examples
------------------------------------
------------------------------------
+
+===================================
 Builder
------------------------------------
------------------------------------
+===================================
 Allowed pre-configured widgets in the "Tool Box"
+-----------------------------------
 
 
 ===================================
-
+TODO
+===================================
 To enhance some widgets
 To enhance the Builder
 To add some useful wizard for the Builder
