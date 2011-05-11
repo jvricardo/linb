@@ -9150,7 +9150,6 @@ Class("linb.Cookies", null,{
         _wrapParam:function(value){
             var ns=this,
                 map=ns._map,
-                hashOwn={}.hasOwnProperty?1:0,
                 xml=['<value>'],sign;
             switch(typeof value){
                 case 'number':
@@ -9185,7 +9184,7 @@ Class("linb.Cookies", null,{
                     else {
                         xml.push('<struct>');
                         for(var key in value)
-                            if(!hashOwn||value.hasOwnProperty(key))
+                            if(value.hasOwnProperty(key))
                                 xml.push('<member>'+'<name>'+key+'</name>'+ns._wrapParam(value[key])+'</member>');
                         xml.push('</struct>');
                     }
@@ -9402,7 +9401,8 @@ Class("linb.Cookies", null,{
                         }
                     }else{
                         for(var p in param)
-                            s += "<"+p+">"+ns._wrapParam(param[p])+"</"+p+">";
+                            if(param.hasOwnProperty(p))
+                                s += "<"+p+">"+ns._wrapParam(param[p])+"</"+p+">";
                     }
                     break;
             }

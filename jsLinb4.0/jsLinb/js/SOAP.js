@@ -205,7 +205,8 @@ Class('linb.SOAP',null,{
                         }
                     }else{
                         for(var p in param)
-                            s += "<"+p+">"+ns._wrapParam(param[p])+"</"+p+">";
+                            if(param.hasOwnProperty(p))
+                                s += "<"+p+">"+ns._wrapParam(param[p])+"</"+p+">";
                     }
                     break;
             }

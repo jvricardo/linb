@@ -153,7 +153,6 @@ Class('linb.XMLRPC',null,{
         _wrapParam:function(value){
             var ns=this,
                 map=ns._map,
-                hashOwn={}.hasOwnProperty?1:0,
                 xml=['<value>'],sign;
             switch(typeof value){
                 case 'number':
@@ -188,7 +187,7 @@ Class('linb.XMLRPC',null,{
                     else {
                         xml.push('<struct>');
                         for(var key in value)
-                            if(!hashOwn||value.hasOwnProperty(key))
+                            if(value.hasOwnProperty(key))
                                 xml.push('<member>'+'<name>'+key+'</name>'+ns._wrapParam(value[key])+'</member>');
                         xml.push('</struct>');
                     }

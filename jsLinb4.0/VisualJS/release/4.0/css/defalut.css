@@ -17,9 +17,9 @@
 
 .CodeMirror-line-numbers div{
     font-family: "courier New", courier, monospace; 
-    font-size: 12px;
-    line-height:14px;
-    height:14px;
+    font-size: 13px;
+    line-height:15px;
+    height:15px;
     white-space:nowrap;
     text-align:right;
 }

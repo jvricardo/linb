@@ -5123,6 +5123,9 @@ _.set(linb.Locale,["cn","app"], {
     _.set(linb.Locale,["cn","doc","linb","DataBinder"], {
         KEY:{$desc:"本类名"},
         $desc:"linb.DataBinder 类",
+        WDSLCache:{
+            $desc:"SOAP的WDSL缓存."
+        },
         constructor:{
             $desc:"生成一个databinder对象."
         },

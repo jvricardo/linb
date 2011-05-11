@@ -5110,6 +5110,9 @@ _.set(linb.Locale,["en","app"], {
     _.set(linb.Locale,["en","doc","linb","DataBinder"], {
         KEY:{$desc:"Class Name"},
         $desc:"linb.DataBinder Class",
+        WDSLCache:{
+            $desc:"SOAP's WDSL cache."
+        },
         constructor:{
             $desc:"Creates a databinder Object."
         },
