@@ -855,7 +855,25 @@ Class('VisualJS.JSEditor', 'linb.Com',{
             var ns=this;
             ns.codeeditor.replaceCode(code);
         },
+        ensureInstanceExpand:function(){
+            var ns=this;
+            var pid="b:1",
+                index=0,
+                id;
+            while(++index){
+                id=pid+"_"+index;
+                key=ns.codeeditor.findFunctionInfo(id);
+                if(!key[0])
+                    break;
+                if(key[0]=="Instance"){
+                    ns.codeeditor.expandBraces(id);
+                    return;
+                }
+            }
+        },
         addCodeToInstance:function(code){
+            this.ensureInstanceExpand();
+            
             var ns=this;
             var pid="b:1",
                 index=0,
@@ -880,6 +898,8 @@ Class('VisualJS.JSEditor', 'linb.Com',{
             }
         },
         tryToLocale:function(arr){
+            this.ensureInstanceExpand();
+            
             var ns=this;
             var index=0,id,key;
             var pid="b:1", pid2;

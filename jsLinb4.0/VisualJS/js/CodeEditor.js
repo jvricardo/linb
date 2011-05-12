@@ -44,6 +44,18 @@ Class("VisualJS.CodeEditor", ["linb.UI.Widget","linb.absValue"] ,{
                 cm.focus();
             }
         },
+        expandBraces:function(id){
+            var profile = this.get(0),
+                cm=profile.$codemirror,
+                scroller=cm.lineNumbers.firstChild,
+                cld=scroller.children;
+                    
+            _.each(this.get(0)._$foldingMap,function(a){
+                if(id.indexOf("b:"+a[0])==0 && a[3]){
+                    cld[a[2]].onclick();
+                }
+            });
+        },
         // locate to {}
         locateTo:function(id){
             var profile = this.get(0),

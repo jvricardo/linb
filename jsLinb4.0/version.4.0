@@ -37,7 +37,7 @@ Removed keys from linb.absIO(linb.Ajax/linb.SAjax/linb.IAjax):
 Added keys to linb.absIO options:
     "proxyType", "Accept", "contentType", "header"
     "username" and "password" (for linb.Ajax only)
-    
+
 Modified Ajax to return object(plain text in previous version) by default;
 Modified all backend code according according to the updated linb.absIO.
 -----------------------------------
@@ -53,12 +53,6 @@ Allowed pre-configured widgets in the "Tool Box"
 ===================================
 TODO
 ===================================
-To enhance some widgets
-To enhance the Builder
 To add some useful wizard for the Builder
-To add several linb.UI widgets
 To add svg based(linb.SVG) Line/Shape/... widgets
-?To add a flowchart Application demo
-To add a UI demo
-
-To fast Code Editor
+To add a flowchart Application demo
