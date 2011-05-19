@@ -30412,6 +30412,8 @@ Class("linb.UI.ColLayout",["linb.UI","linb.absList"],{
 
             if(prf && prf!=basePrf){
 
+                var flag,items=profile.children;
+
                 // add to collayout, or move to the right container first
                 if(prf.parent!=profile || prf.childrenId != col){
                     this.append(prf, col);
@@ -30419,7 +30421,6 @@ Class("linb.UI.ColLayout",["linb.UI","linb.absList"],{
                 }
                 
                 var node,
-                    flag,
                     tnode=prf.getRootNode();
 
                 // reposition
@@ -30434,12 +30435,28 @@ Class("linb.UI.ColLayout",["linb.UI","linb.absList"],{
                     if(node.prev().isEmpty() || node.prev().id()!=tnode.id){
                         node.addPrev(tnode);
                         flag=1;
+                        
+                        var i1=_.arr.subIndexOf(items,'0',basePrf),
+                            i2=_.arr.subIndexOf(items,'0',prf);
+                        if(i1!=-1){
+                            var item=items[i2];
+                            _.arr.removeFrom(items, i2);
+                            _.arr.insertAny(items, item, i1, true);
+                        }
                     }
                 }else{
                     node=basePrf.getRoot();
                     if(node.next().isEmpty() || node.next().id()!=tnode.id){
                         node.addNext(tnode);
                         flag=1;
+
+                        var i1=_.arr.subIndexOf(items,'0',basePrf),
+                            i2=_.arr.subIndexOf(items,'0',prf);
+                        if(i1!=-1 && i1 > items.length){
+                            var item=items[i2];
+                            _.arr.removeFrom(items, i2);
+                            _.arr.insertAny(items, item, i1+1, true);
+                        }
                     }
                 }
 
