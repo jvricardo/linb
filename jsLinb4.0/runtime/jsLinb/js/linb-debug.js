@@ -26482,6 +26482,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
         Templates:{
             tagName : 'div',
             style:'{_style};',
+            className:'{_className}',
             LIST:{
                 $order:0,
                 tagName : 'div',
