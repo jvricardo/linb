@@ -23507,16 +23507,16 @@ Class("linb.UI.Group", "linb.UI.Div",{
                     if(itemId){
                         var o = getN(item,itemId);
                         if(o){
-                            var top = o.offsetTop(),
+                            var items = profile.getSubNode('ITEMS'),
+                                offset = o.offset(null, items),
+                                top = offset?offset.top:0,
                                 height = o.offsetHeight(),
-                                items = getN('ITEMS'),
                                 sh=items.scrollHeight(),
                                 st=items.scrollTop(),
                                 hh=items.height();
                             if(sh > hh)
                                 if(top<st || (top+height)>(st+hh))
                                     items.scrollTop(top);
-
                         }
                     }
                 }else if(p.selMode=='multi'||p.selMode=='multibycheckbox'){
@@ -26721,16 +26721,16 @@ Class("linb.UI.TreeBar",["linb.UI","linb.absList","linb.absValue"],{
                     //scroll
                         var o = profile.getSubNode('ITEM',itemId);
                         if(o){
-                            var top = o.offsetTop(),
+                            var items = profile.getSubNode('BOX'),
+                                offset = o.offset(null, items),
+                                top = offset?offset.top:0,
                                 height = o.offsetHeight(),
-                                items = profile.getSubNode('BOX'),
                                 sh=items.scrollHeight(),
                                 st=items.scrollTop(),
                                 hh=items.height();
                             if(sh > hh)
                                 if(top<st || (top+height)>(st+hh))
                                     items.scrollTop(top);
-
                         }
                     }
                 }else if(selmode=='multi'||selmode=='multibycheckbox'){
