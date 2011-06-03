@@ -301,7 +301,7 @@ Class("VisualJS.CodeEditor", ["linb.UI.Widget","linb.absValue"] ,{
                 +"_=window._=parent._;"
                 +"Class=window.Class=parent.Class;"
                 +"linb=window.linb=parent.linb;"
-                +"dompack=window.dompack=function(){var o=new linb.Dom(false),d=document.createElement('div');d.id='abc';document.appendChild(div);o._nodes=[document.getElementById('abc')];return o};"
+                +"dompack=window.dompack=function(){var o=new linb.Dom(false),d=document.createElement('div');d.id='abc';document.appendChild(d);o._nodes=[document.getElementById('abc')];return o};"
                 +"window['"+ns.$temppool+"']=parent['"+ns.$temppool+"'];"
                 // "var b=arguments.callee;" for fix firefox 3.5 bug
                 +"parent['"+ns.$tempsandbox+"']=/*@cc_on !@*/0?this:{eval:function(s){return (function(){var b=arguments.callee;return window.eval.call(window,s)})()}};"
