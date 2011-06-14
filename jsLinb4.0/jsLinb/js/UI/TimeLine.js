@@ -29,7 +29,7 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                 if(target<p.dateStart || target>date.add(p.dateStart,'ms',p.width*p._rate)){
                     p.dateStart=target;
                     var k=p.$UIvalue;
-                    this.refresh().setUIValue(k);
+                    this.refresh().setUIValue(k,true);
                 }
             }
             return this;
@@ -1938,23 +1938,30 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                     items = ins.getItems('data'),
                     bak_s = pro._smallLabelStart,
                     bak_e = pro._smallLabelEnd,
-                    offset;
+                    offset, uivalue;
                 this._refresh(profile);
                 offset = bak_s - pro._smallLabelStart;
 
+                if(!pro.multiTasks)
+                    uivalue=pro.$UIvalue;
+
                 // reset all items
                 ins.setItems(items);
-
-                var arr=[];
-                // filter tasks
-                _.arr.each(pro.items,function(o){
-                    if(o._left >= pro._band_width ||  (o._left+o._width) <= 0){
-                        //delete from lines
-                        delete pro._lines[o._line][o.id];
-                        arr.push(o.id);
-                    }
-                });
-                ins.removeItems(arr);
+                
+                if(!pro.multiTasks){
+                    ins.setUIValue(uivalue, true);
+                }else{
+                    var arr=[];
+                    // filter tasks
+                    _.arr.each(pro.items,function(o){
+                        if(o._left >= pro._band_width ||  (o._left+o._width) <= 0){
+                            //delete from lines
+                            delete pro._lines[o._line][o.id];
+                            arr.push(o.id);
+                        }
+                    });
+                    ins.removeItems(arr);
+                }
 
                 if(offset>0){
                     // first time, call iniContent
@@ -1970,7 +1977,10 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
             }
         },
         _refresh:function(profile,force){
-            var pro=profile.properties, ins=profile.boxing(), nodes;
+            var pro=profile.properties, ins=profile.boxing(), nodes, uivalue;
+
+            if(!pro.multiTasks)
+                uivalue=pro.$UIvalue;
 
             //clear items first
             ins.clearItems();
@@ -1990,14 +2000,13 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
             profile.getSubNode('VIEW').left(pro._band_left).width(pro._band_width);
 
             //if singleTask, setUIValue
-            if(!pro.multiTasks)
-                ins.setUIValue(pro.$UIvalue);
+            if(!pro.multiTasks){
+                ins.setUIValue(uivalue, true);
             //if multiTasks, call iniContent to get tasks
-            else{
+            }else{
                 if(force)
                     ins.iniContent();
             }
-
             return this;
         }
     }

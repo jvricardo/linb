@@ -1,7 +1,7 @@
 
 Class('App', 'linb.Com',{
     Instance:{
-        events:{"onReady":"_onready"}, 
+        events:{"onReady":"_onready", "onRender":"_onrender"}, 
         iniComponents:function(){
             // [[code created by jsLinb UI Builder
             var host=this, children=[], append=function(child){children.push(child.get(0))};
@@ -152,6 +152,9 @@ Class('App', 'linb.Com',{
         _date1_afteruivalueset:function (profile, oldValue, newValue) {
             this.timeline1.setDateStart(newValue);
         }, 
+        _onrender:function(){
+            SPA.date1.setUIValue(new Date);
+        },
         _onready:function () {
             SPA=this;
             linb.CSS.addStyleSheet('.gridbutton button{border:0} .hcenter{margin:0 auto;}')
@@ -168,14 +171,14 @@ Class('App', 'linb.Com',{
                 from:linb.Date.add(d,'d',1).getTime(),
                 to:linb.Date.add(d,'d',4).getTime(),
                 value:'Module 1',
-                location:'[Beijing Yejian Hotlel]',
+                location:'[Beijing xxx Hotel]',
                 renderer:renderer
             },{
                 id:_.id(),
                 from:linb.Date.add(d,'d',1).getTime(),
                 to:linb.Date.add(d,'d',4).getTime(),
                 value:'Module 1',
-                location:'[Shanghai xx Hotlel]',
+                location:'[Shanghai xx Hotel]',
                 background:'#00ff00;',
                 renderer:renderer
             },{
@@ -183,14 +186,14 @@ Class('App', 'linb.Com',{
                 from:linb.Date.add(d,'d',5).getTime(),
                 to:linb.Date.add(d,'d',8).getTime(),
                 value:'Module 2',
-                location:'[Beijing Yejian Hotlel]',
+                location:'[Beijing xxx Hotel]',
                 renderer:renderer
             },{
                 id:_.id(),
                 from:linb.Date.add(d,'d',10).getTime(),
                 to:linb.Date.add(d,'d',13).getTime(),
                 value:'Module 3',
-                location:'[Beijing Yejian Hotlel]',
+                location:'[Beijing xxx Hotel]',
                 renderer:renderer
             });
         }, 

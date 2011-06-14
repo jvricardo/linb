@@ -4164,8 +4164,8 @@ Class("linb.absValue", "linb.absObj",{
 
             var cv=this._getCtrlValue(),v;
             if(!prf.box._checkValid || false!==prf.box._checkValid(prf,cv))
-                prf.$UIvalue=cv;
-            v=prf.$UIvalue;
+                prop.$UIvalue=cv;
+            v=prop.$UIvalue;
             
             if(prf.box.$valuemode=='multi')
                 if(returnArr)

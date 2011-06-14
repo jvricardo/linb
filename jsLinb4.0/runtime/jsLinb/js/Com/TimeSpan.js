@@ -58,16 +58,17 @@ Class('linb.Com.TimeSpan', 'linb.Com',{
             iniTo=aj[2];
 
             var a=date.offsetTimeZone(iniFrom, tz),
-                b=date.offsetTimeZone(iniTo, tz)
-            ;
+                b=date.offsetTimeZone(iniTo, tz);
+
                 if(a && b && !self.$lock){
                     self.$lock=1;
-                    timeline[key](a.getTime()+":"+b.getTime(),true);
 
                     if(ns._timeEnd)
                         timeline.setMaxDate(ns._timeEnd);
                     if(ns._timeStart)
                         timeline.setMinDate(ns._timeStart);
+
+                    timeline[key](a.getTime()+":"+b.getTime(),true);
 
                     ns.dateFrom[key](date.getTimSpanStart(a,'d').getTime(),true);
                     ns.dateTo[key](date.getTimSpanStart(b,'d').getTime(),true);
@@ -75,7 +76,7 @@ Class('linb.Com.TimeSpan', 'linb.Com',{
                     ns.timeTo[key](date.get(b,'h')+':'+date.get(b,'n'), true);
                     _.asyRun(function(){
                         timeline.visibleTask();
-                    });
+                    },100);
                     self.$lock=0;
                 }
         },
@@ -175,12 +176,11 @@ Class('linb.Com.TimeSpan', 'linb.Com',{
             
             host.panelMain.append((new linb.UI.TimeLine)
                 .setHost(host,"timeline")
-                .setHeight(129)
+                .setHeight(130)
                 .setWidth(390)
-                .setItems([])
                 .setPosition("relative")
                 .setTabindex("2")
-                .setLeft("10")
+                .setLeft(10)
                 .beforeUIValueSet("_5")
             );
             
