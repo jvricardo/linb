@@ -25099,29 +25099,29 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                     uiv = box.getUIValue(),
                     p = profile.properties,
                     itemId = profile.getSubIdByItemId(uiv),
-                    item,
-                    temp,t
-                    ;
-                    if(uiv && profile.getSubIdByItemId(uiv)){
-                        profile.getSubNodes(['ITEM','BOX'],itemId).tagClass('-checked',false);
+                    item=profile.getItemByItemId(uiv),
+                    nitemId, nItem,
+                    temp,t;
 
-                        if(!p.noPanel)
-                            // hide pane
-                            //box.getPanel(uiv).hide();
-                            box.getPanel(uiv).css('display','none');
-                    }
-                    itemId = profile.getSubIdByItemId(value);
-                    item=profile.getItemByItemId(value);
+                    if(value===uiv)
+                        return;
                     if(itemId){
-                        // to show the seleted one
-                        _.tryF(profile.box._adjustScroll,[profile,value],profile.box);
-
-                        profile.getSubNodes(['ITEM','BOX'],itemId).tagClass('-checked');
-
                         if(!p.noPanel){
-                            // show pane
-                            //box.getPanel(value).css('position','relative').show('auto','auto');
+                            item._scrollTop=box.getPanel(uiv).get(0).scrollTop||0;
+                            if(item._scrollTop)
+                                box.getPanel(uiv).get(0).scrollTop=0;
+                            box.getPanel(uiv).css('display','none');
+                        }
+                    }
+
+                    nitemId = profile.getSubIdByItemId(value);
+                    nItem=profile.getItemByItemId(value);
+                    if(nitemId){
+                        if(!p.noPanel){
+                            // to show the seleted one
                             box.getPanel(value).css('display','block');
+                            if(nItem._scrollTop)
+                                box.getPanel(value).get(0).scrollTop=nItem._scrollTop;
 
                             t=profile.getRootNode().style;
                             //reset width and height
@@ -25179,48 +25179,62 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                                 }
                             }
 
-                            if(!item._$ini)
-                                if(box.onIniPanelView){
-                                    if(box.onIniPanelView(profile,item)!==false)
-                                        item._$ini=true;
-                                    if(item.iframeAutoLoad){
-                                        box.getPanel(item.id).css('overflow','hidden');
+                            if(!nItem._$ini){
+                                if(box.onIniPanelView(profile,nItem)!==false)
+                                    nItem._$ini=true;
+                                if(nItem.iframeAutoLoad){
+                                    box.getPanel(nItem.id).css('overflow','hidden');
 
-                                        if(typeof item.iframeAutoLoad=='string')
-                                            item.iframeAutoLoad={url:item.iframeAutoLoad};
-                                        var hash=item.iframeAutoLoad,
-                                            ifr=document.createElement("iframe");
-                                        item.iframeAutoLoad.frameName=ifr.id=ifr.name="diframe:"+_();
-                                        ifr.src=hash.url;
-                                        ifr.frameBorder='0';
-                                        ifr.marginWidth='0';
-                                        ifr.marginHeight='0';
-                                        ifr.vspace='0';
-                                        ifr.hspace='0';
-                                        ifr.allowTransparency='true';
-                                        ifr.width='100%';
-                                        ifr.height='100%';
-                                        box.getPanel(item.id).append(ifr);
-                                        linb.Dom.submit(hash.url, hash.query, hash.method, ifr.name, hash.enctype);
-                                    }else if(item.ajaxAutoLoad){
-                                        if(typeof item.ajaxAutoLoad=='string')
-                                            item.ajaxAutoLoad={url:item.ajaxAutoLoad};
-                                        var hash=item.ajaxAutoLoad;
-                                        box.busy(null,null,"PANEL",profile.getSubIdByItemId(item.id));
-                                        linb.Ajax(hash.url, hash.query, function(rsp){
-                                            var n=linb.create("div");
-                                            n.html(rsp,false,true);
-                                            box.getPanel(item.id).append(n.children());
-                                            box.free();
-                                        }, function(err){
-                                            box.getPanel(item.id).append("<div>"+err+"</div>");
-                                            box.free();
-                                        }, null, hash.options).start();
-                                    }else if(item.html){
-                                        box.getPanel(item.id).append(item.html);
-                                    }
+                                    if(typeof nItem.iframeAutoLoad=='string')
+                                        nItem.iframeAutoLoad={url:nItem.iframeAutoLoad};
+                                    var hash=nItem.iframeAutoLoad,
+                                        id="diframe_"+_(),
+                                        e=linb.browser.ie && parseInt(linb.browser.ver)<9,
+                                        ifr=document.createElement(e?"<iframe name='"+id+"'>":"iframe");
+
+                                    nItem.iframeAutoLoad.frameName=ifr.id=ifr.name=id;
+                                    ifr.src=hash.url;
+                                    ifr.frameBorder='0';
+                                    ifr.marginWidth='0';
+                                    ifr.marginHeight='0';
+                                    ifr.vspace='0';
+                                    ifr.hspace='0';
+                                    ifr.allowTransparency='true';
+                                    ifr.width='100%';
+                                    ifr.height='100%';
+                                    box.getPanel(nItem.id).append(ifr);
+                                    linb.Dom.submit(hash.url, hash.query, hash.method, id, hash.enctype);
+                                }else if(nItem.ajaxAutoLoad){
+                                    if(typeof nItem.ajaxAutoLoad=='string')
+                                        nItem.ajaxAutoLoad={url:nItem.ajaxAutoLoad};
+                                    var hash=nItem.ajaxAutoLoad;
+                                    box.busy(null,null,"PANEL",profile.getSubIdByItemId(nItem.id));
+                                    linb.Ajax(hash.url, hash.query, function(rsp){
+                                        var n=linb.create("div");
+                                        n.html(rsp,false,true);
+                                        box.getPanel(nItem.id).append(n.children());
+                                        box.free();
+                                    }, function(err){
+                                        box.getPanel(nItem.id).append("<div>"+err+"</div>");
+                                        box.free();
+                                    }, null, hash.options).start();
+                                }else if(nItem.html){
+                                    box.getPanel(nItem.id).append(nItem.html);
                                 }
+                            }
                         }
+                    }
+                    
+                    if(itemId){
+                        // hide pane
+                        //box.getPanel(uiv).hide();
+                        profile.getSubNodes(['ITEM','BOX'],itemId).tagClass('-checked',false);
+                    }
+                    if(nitemId){
+                        // show pane
+                        //box.getPanel(value).css('position','relative').show('auto','auto');
+                        profile.getSubNodes(['ITEM','BOX'],nitemId).tagClass('-checked');
+                        _.tryF(profile.box._adjustScroll,[profile,value],profile.box);
                     }
             });
         },
