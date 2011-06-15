@@ -1039,7 +1039,8 @@ Class('linb.UIProfile','linb.Profile', {
             return r;
         },
         getSubNodes:function(arr,subId){
-            var a=[],s1=typeof arr=='string',s2=typeof subId=='string',o,v;
+            if(!subId)subId=true;
+            var a=[],s1=typeof arr=='string',s2=typeof subId=='string'||subId===true,o,v;
             if(s1){
                 if(s2)
                     Array.prototype.push.apply(a,this.getSubNode(arr,subId).get());
@@ -1052,24 +1053,6 @@ Class('linb.UIProfile','linb.Profile', {
                         Array.prototype.push.apply(a,this.getSubNode(o,subId).get());
                     else
                         for(var j=0;v=subId[j++];)
-                            Array.prototype.push.apply(a,this.getSubNode(o,v).get());
-                }
-            return linb(a);
-        },
-        getSubNodes:function(arr,subId){
-            var i=0,j=0,a=[],o,v;
-            if(typeof subId=='string'){
-                if(typeof subId=='string')
-                    Array.prototype.push.apply(a,this.getSubNode(arr,subId).get());
-                else
-                    for(;v=subId[j++];)
-                        Array.prototype.push.apply(a,this.getSubNode(arr,v).get());
-            }else
-                for(;o=arr[i++];){
-                    if(typeof subId=='string')
-                        Array.prototype.push.apply(a,this.getSubNode(o,subId).get());
-                    else
-                        for(;v=subId[j++];)
                             Array.prototype.push.apply(a,this.getSubNode(o,v).get());
                 }
             return linb(a);
