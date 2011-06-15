@@ -4217,8 +4217,8 @@ _.set(linb.Locale,["cn","app"], {
                 $desc:"按照给定的一组[key]和subId来获取控件中特定一组DOM节点.",
                 $rtn:"linb.Dom",
                 $paras:[
-                    "arr [必需参数] : Array, 一组key.",
-                    "subId [可选参数] : String/Boolean. 如果是 [true] 代表得到给定键的所有节点；如果是字符串代表只得到 subId 为给定的值的DOM节点."
+                    "arr [必需参数] : String/Array, 一组key.",
+                    "subId [可选参数] : String/Array/Boolean. 如果是 [true] 代表得到给定键的所有节点；如果是字符串或字符串数组代表只得到 subId 为给定的值的DOM节点. 默认为[true]"
                 ],
                 $snippet:[
                     "var profile=linb.UIProfile.getFromDom('linb.UI.TreeBar:a:'); alert(profile.getSubNodes(['KEY','BORDER']).get().length);"+

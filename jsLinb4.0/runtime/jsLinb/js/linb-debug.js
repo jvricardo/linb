@@ -11483,7 +11483,8 @@ Class('linb.UIProfile','linb.Profile', {
             return r;
         },
         getSubNodes:function(arr,subId){
-            var a=[],s1=typeof arr=='string',s2=typeof subId=='string',o,v;
+            if(!subId)subId=true;
+            var a=[],s1=typeof arr=='string',s2=typeof subId=='string'||subId===true,o,v;
             if(s1){
                 if(s2)
                     Array.prototype.push.apply(a,this.getSubNode(arr,subId).get());

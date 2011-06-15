@@ -4212,8 +4212,8 @@ _.set(linb.Locale,["en","app"], {
                 $desc:"Gets a set of specified inner DOM elements(in the root DOM element) according to the given [arr] and [subId].",
                 $rtn:"linb.Dom",
                 $paras:[
-                    "arr [Required] : Array, a set of key string.",
-                    "subId [Optional] : String or [true]. [true] for getting all the sub nodes with the specified [key]."
+                    "arr [Required] : String/Array, a set of key string.",
+                    "subId [Optional] : String/Array/Boolean. [true] for getting all the sub nodes with the specified [key]. Default is [true]."
                 ],
                 $snippet:[
                     "var profile=linb.UIProfile.getFromDom('linb.UI.TreeBar:a:'); alert(profile.getSubNodes(['KEY','BORDER']).get().length);"+
