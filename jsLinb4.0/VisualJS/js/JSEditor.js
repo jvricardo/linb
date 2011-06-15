@@ -616,6 +616,8 @@ Class('VisualJS.JSEditor', 'linb.Com',{
                 .setHost(host,"paneCode")
                 .setVisibility('hidden')
                 .setDock("fill")
+                .setDockIgnore(true)
+                .setLeft(-1000)
             );
             host.paneMain.append(
                 (new linb.UI.Pane)
@@ -720,8 +722,8 @@ Class('VisualJS.JSEditor', 'linb.Com',{
                     ns._designer.resetCodeFromDesigner();
                     ns._dirty=true;
                 }
-                ns.paneCode.setVisibility('visible').setZIndex(100);
                 ns.paneDesign.setDisplay('none').setZIndex(1);
+                ns.paneCode.setDockIgnore(false).setVisibility('visible').setZIndex(100).reLayout();
             }else if(nv=='design'){
 
                 if(!VisualJS.ClassTool.getClassName(ns.codeeditor.getUIValue()||"")){
@@ -757,14 +759,16 @@ Class('VisualJS.JSEditor', 'linb.Com',{
 
                     if(needRef)
                         ns._designer.refreshView(obj.ok);
-
                     ns.paneCode
+                        .setDockIgnore(true)
+                        .setLeft(-10000)
                         .setVisibility('hidden')
                         .setZIndex(1);
                     ns.paneDesign
                         .setDisplay('')
                         .setVisibility('visible')
-                        .setZIndex(100);
+                        .setZIndex(100)
+                        .reLayout(true);
                 }else{
                     linb.message(linb.getRes('VisualJS.JSEditor.codeerr', obj.ko));
                     ns.errlink.getRoot().onClick();

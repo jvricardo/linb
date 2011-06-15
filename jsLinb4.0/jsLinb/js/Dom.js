@@ -1727,7 +1727,7 @@ type:4
                 _t.remove();
                 _t=null;
             }else{
-                window.open(action);
+                window.open(action, target||"_blank");
             }
         },
         busy:function(label){

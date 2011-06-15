@@ -412,9 +412,21 @@ Class('linb.UIProfile','linb.Profile', {
             return r;
         },
         getSubNodes:function(arr,subId){
-            var i=0,a=[],o;
-            for(;o=arr[i++];)
-                Array.prototype.push.apply(a,this.getSubNode(o,subId).get());
+            var a=[],s1=typeof arr=='string',s2=typeof subId=='string',o,v;
+            if(s1){
+                if(s2)
+                    Array.prototype.push.apply(a,this.getSubNode(arr,subId).get());
+                else
+                    for(var j=0;v=subId[j++];)
+                        Array.prototype.push.apply(a,this.getSubNode(arr,v).get());
+            }else
+                for(var i=0;o=arr[i++];){
+                    if(s2)
+                        Array.prototype.push.apply(a,this.getSubNode(o,subId).get());
+                    else
+                        for(var j=0;v=subId[j++];)
+                            Array.prototype.push.apply(a,this.getSubNode(o,v).get());
+                }
             return linb(a);
         },
         getSubNodeByItemId:function(key, itemId){
@@ -1150,16 +1162,20 @@ Class("linb.UI",  "linb.absObj", {
         },
         adjustDock:function(force){
             return this.each(function(o){
-                if(o.properties.dock && o.properties.dock!='none'){
-                    if(force){
-                        // ensure force 1
-                        o.getRootNode().style.width=0;
-                        o.getRootNode().style.height=0;
-                        // ensure force 2
-                        o._resize_h=-1;
-                        o._resize_w=-1;
+                if(o.properties.dock && o.properties.dock!='none' && o.renderId){
+                    var n=o.getRootNode();
+                    // ensure display
+                    if(n.clientHeight){
+                        if(force){
+                            // ensure force 1
+                            n.style.width=0;
+                            n.style.height=0;
+                            // ensure force 2
+                            o._resize_h=-1;
+                            o._resize_w=-1;
+                        }
+                        linb.UI.$dock(o,true,true);
                     }
-                    linb.UI.$dock(o,true,true);
                 }
             });
         }
@@ -4869,7 +4885,7 @@ new function(){
                     ifr.width='100%';
                     ifr.height='100%';
                     ins.append(ifr);
-                    linb.Dom.submit(hash.url, hash.query, hash.method, ifr.name, hash.enctype);
+                    linb.Dom.submit(hash.url, hash.query, hash.method, id, hash.enctype);
                 }else if(prop.ajaxAutoLoad){
                     if(typeof prop.ajaxAutoLoad=='string')
                         prop.ajaxAutoLoad={url:prop.ajaxAutoLoad};

@@ -23,13 +23,21 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
             var profile=this.get(0),
                 p=profile.properties,
                 date=linb.Date,
-                items=p.items;
-            if(items.length && !p.multiTasks){
-                target=new Date(items[0].from);
-                if(target<p.dateStart || target>date.add(p.dateStart,'ms',p.width*p._rate)){
-                    p.dateStart=target;
-                    var k=p.$UIvalue;
-                    this.refresh().setUIValue(k,true);
+                items=p.items,sv,target;
+
+            if(!p.multiTasks){
+                sv=items.length?items[0].from:p.$UIvalue?p.$UIvalue.split(':')[0]:0;
+                if(sv){
+                    target=new Date(+sv);
+                    if(profile.renderId){
+                        if(target<p.dateStart || target>date.add(p.dateStart,'ms',p.width*p._rate)){
+                            p.dateStart=target;
+                            var k=p.$UIvalue;
+                            this.refresh().setUIValue(k,true);
+                        }
+                    }else{
+                        p.dateStart=target;
+                    }
                 }
             }
             return this;

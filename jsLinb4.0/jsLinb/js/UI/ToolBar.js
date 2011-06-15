@@ -202,6 +202,7 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
                 'font-size':0,
                 'line-height':0,
                 position:'absolute',
+                overflow:'hidden',
                 left:0,
                 top:0
             },

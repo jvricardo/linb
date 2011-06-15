@@ -2407,6 +2407,7 @@ Class('VisualJS.Designer', 'linb.Com',{
             host.layoutBase.append(
                 (new linb.UI.ToolBar)
                 .setHost(host,"toolbar")
+                .setItems([])
                 .onClick("$toolbar_onclick")
             , 'main');
             

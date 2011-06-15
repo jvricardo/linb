@@ -74,9 +74,9 @@ Class('linb.Com.TimeSpan', 'linb.Com',{
                     ns.dateTo[key](date.getTimSpanStart(b,'d').getTime(),true);
                     ns.timeFrom[key](date.get(a,'h')+':'+date.get(a,'n'), true);
                     ns.timeTo[key](date.get(b,'h')+':'+date.get(b,'n'), true);
-                    _.asyRun(function(){
-                        timeline.visibleTask();
-                    },100);
+                    
+                    timeline.visibleTask();
+
                     self.$lock=0;
                 }
         },
