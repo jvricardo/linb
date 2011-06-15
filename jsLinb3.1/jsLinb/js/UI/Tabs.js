@@ -8,56 +8,81 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                     prop = profile.properties,
                     dm=profile.box.$DataModel,
 
-                    fold=function(itemId){
-                        var subId = profile.getSubIdByItemId(itemId);
+                    fold=function(itemId, arr){
+                        var subId = profile.getSubIdByItemId(itemId),
+                            item = profile.getItemByItemId(itemId);
                         if(subId){
-                            profile.getSubNode('ITEM',subId).tagClass('-checked',false);
-                            if(!dm.hasOwnProperty("noPanel") || !prop.noPanel)
+                            arr.push(subId);
+                            
+                            if(!dm.hasOwnProperty("noPanel") || !prop.noPanel){
                                 // hide pane
-                                //box.getPanel(uiv).hide();
-                                box.getPanel(uiv).css('display','none');                            
+                                //box.getPanel(itemId).hide();
+                                item._scrollTop=box.getPanel(itemId).get(0).scrollTop||0;
+                                if(item._scrollTop)
+                                    box.getPanel(itemId).get(0).scrollTop=0;
+                                box.getPanel(itemId).css('display','none');
+                            }
                         }
                     },
-                    expand = function(itemId){
+                    expand = function(itemId, arr){
                         var subId = profile.getSubIdByItemId(itemId),
                             item=profile.getItemByItemId(itemId);
                         if(subId){
-                            // to show the seleted one
-                            _.tryF(profile.box._adjustScroll,[profile,value],profile.box);
-    
-                            profile.getSubNode('ITEM',subId).tagClass('-checked');
-    
+                            arr.push(subId);
+
                             if(!dm.hasOwnProperty("noPanel") || !prop.noPanel){
                                 // show pane
                                 //box.getPanel(value).css('position','relative').show('auto','auto');
-                                box.getPanel(value).css('display','block');
-    
+                                box.getPanel(itemId).css('display','block');
+                                if(item._scrollTop)
+                                    box.getPanel(itemId).get(0).scrollTop=item._scrollTop;
+
                                 var t=profile.getRootNode().style;
                                 //reset width and height
                                 linb.UI.$tryResize(profile, t.width, t.height, true, value);
                                 t=null;
-    
+
                                 profile.box._forLazzyAppend(profile, item, value);
                                 profile.box._forIniPanelView(profile, item, value);
                             }
                         }
                     };
-                if(dm.hasOwnProperty("selMode") && 
-                    dm.hasOwnProperty("noPanel") && 
+                var arr1=[],arr2=[];
+                if(dm.hasOwnProperty("selMode") &&
+                    dm.hasOwnProperty("noPanel") &&
                     prop.noPanel &&
                     prop.selMode=="multi"){
+
                     uiv = uiv?uiv.split(prop.valueSeparator):[];
                     _.arr.each(uiv,function(key){
-                        fold(key);
+                        fold(key, arr1);
                     });
                     value = value?value.split(prop.valueSeparator):[];
+                    var lastV="";
                     _.arr.each(value,function(key){
-                        expand(key);
+                        var l=arr2.length;
+                        expand(key, arr2);
+                        // the last one
+                        if(l<arr2.length)
+                            lastV=key;
                     });
+
+                    if(lastV)
+                        _.tryF(profile.box._adjustScroll,[profile,lastV],profile.box);
                 }else{
-                    fold(uiv);
-                    expand(value);
-                }                   
+                    fold(uiv, arr1);
+                    expand(value, arr2);
+                    
+                    if(arr2.length)
+                        _.tryF(profile.box._adjustScroll,[profile,value],profile.box);
+                }
+
+                if(arr1.length)
+                    profile.getSubNodes('ITEM',arr1).tagClass('-checked',false);
+                if(arr2.length){
+                    profile.getSubNodes('ITEM',arr2).tagClass('-checked');
+                }
+
             });
         },
         append:function(target,subId){
@@ -535,12 +560,12 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
 
                     //for some input onblur event
                     profile.getSubNode('HANDLE', itemId).focus();
-    
-                    if(dm.hasOwnProperty("selMode") && 
-                        dm.hasOwnProperty("noPanel") && 
+
+                    if(dm.hasOwnProperty("selMode") &&
+                        dm.hasOwnProperty("noPanel") &&
                         prop.noPanel &&
                         prop.selMode=="multi"){
-    
+
                         var value = box.getUIValue(),
                             arr = value?value.split(prop.valueSeparator):[],
                             checktype=1,
@@ -554,10 +579,10 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                                 checktype=-1
                             }else
                                 arr.push(item.id);
-    
+
                             arr.sort();
                             value = arr.join(prop.valueSeparator);
-    
+
                             //update string value only for setCtrlValue
                             if(box.getUIValue() == value)
                                 rt=false;
@@ -568,7 +593,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                             }
                             return rt;
                         }
-                        
+
                     }
                     // for single selection
                     if(box.getUIValue() != item.id){
@@ -639,7 +664,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                 onClick:function(profile, e, src){
                     var properties = profile.properties,
                         item = profile.getItemByDom(src),
-                        uiv=properties.$UIvalue,                        
+                        uiv=properties.$UIvalue,
                         bak;
 
                     if(properties.disabled || item.disabled)return;
@@ -926,7 +951,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                             box.append(linb(o),value);
                         });
                 }
-                
+
                 arr=profile.excoms;
                 if(arr && arr.length){
                     a=[];
@@ -946,46 +971,46 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
         _forIniPanelView:function(profile, item, value){
             var prop=profile.properties,box=profile.boxing();
             if(!item._$ini){
-                if(profile.onIniPanelView){
-                    if(box.onIniPanelView(profile,item)!==false)
-                        item._$ini=true;
-                    if(item.iframeAutoLoad){
-                        box.getPanel(item.id).css('overflow','hidden');
+                if(box.onIniPanelView(profile,item)!==false)
+                    item._$ini=true;
+                if(item.iframeAutoLoad){
+                    box.getPanel(item.id).css('overflow','hidden');
 
-                        if(typeof item.iframeAutoLoad=='string')
-                            item.iframeAutoLoad={url:item.iframeAutoLoad};
-                        var hash=item.iframeAutoLoad,
-                            ifr=document.createElement("iframe");
-                        item.iframeAutoLoad.frameName=ifr.id=ifr.name="diframe:"+_();
-                        ifr.src=hash.url;
-                        ifr.frameBorder='0';
-                        ifr.marginWidth='0';
-                        ifr.marginHeight='0';
-                        ifr.vspace='0';
-                        ifr.hspace='0';
-                        ifr.allowTransparency='true';
-                        ifr.width='100%';
-                        ifr.height='100%';
-                        box.getPanel(item.id).append(ifr);
-                        linb.Dom.submit(hash.url, hash.query, hash.method, ifr.name, hash.enctype);
-                    }else if(item.ajaxAutoLoad){
-                        if(typeof item.ajaxAutoLoad=='string')
-                            item.ajaxAutoLoad={url:item.ajaxAutoLoad};
-                        var hash=item.ajaxAutoLoad,options={rspType:"text"};
-                        _.merge(options, hash.options);
-                        box.busy(null,null,"PANEL",profile.getSubIdByItemId(item.id));
-                        linb.Ajax(hash.url, hash.query, function(rsp){
-                            var n=linb.create("div");
-                            n.html(rsp,false,true);
-                            box.getPanel(item.id).append(n.children());
-                            box.free();
-                        }, function(err){
-                            box.getPanel(item.id).append("<div>"+err+"</div>");
-                            box.free();
-                        }, null, options).start();
-                    }else if(item.html){
-                        box.getPanel(item.id).append(item.html);
-                    }
+                    if(typeof item.iframeAutoLoad=='string')
+                        item.iframeAutoLoad={url:item.iframeAutoLoad};
+                    var hash=item.iframeAutoLoad,
+                        id="diframe_"+_(),
+                        e=linb.browser.ie && parseInt(linb.browser.ver)<9,
+                        ifr=document.createElement(e?"<iframe name='"+id+"'>":"iframe");
+                    item.iframeAutoLoad.frameName=ifr.id=ifr.name=id;
+                    ifr.src=hash.url;
+                    ifr.frameBorder='0';
+                    ifr.marginWidth='0';
+                    ifr.marginHeight='0';
+                    ifr.vspace='0';
+                    ifr.hspace='0';
+                    ifr.allowTransparency='true';
+                    ifr.width='100%';
+                    ifr.height='100%';
+                    box.getPanel(item.id).append(ifr);
+                    linb.Dom.submit(hash.url, hash.query, hash.method, id, hash.enctype);
+                }else if(item.ajaxAutoLoad){
+                    if(typeof item.ajaxAutoLoad=='string')
+                        item.ajaxAutoLoad={url:item.ajaxAutoLoad};
+                    var hash=item.ajaxAutoLoad,options={rspType:"text"};
+                    _.merge(options, hash.options);
+                    box.busy(null,null,"PANEL",profile.getSubIdByItemId(item.id));
+                    linb.Ajax(hash.url, hash.query, function(rsp){
+                        var n=linb.create("div");
+                        n.html(rsp,false,true);
+                        box.getPanel(item.id).append(n.children());
+                        box.free();
+                    }, function(err){
+                        box.getPanel(item.id).append("<div>"+err+"</div>");
+                        box.free();
+                    }, null, options).start();
+                }else if(item.html){
+                    box.getPanel(item.id).append(item.html);
                 }
             }
         },

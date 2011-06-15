@@ -1039,9 +1039,39 @@ Class('linb.UIProfile','linb.Profile', {
             return r;
         },
         getSubNodes:function(arr,subId){
-            var i=0,a=[],o;
-            for(;o=arr[i++];)
-                Array.prototype.push.apply(a,this.getSubNode(o,subId).get());
+            var a=[],s1=typeof arr=='string',s2=typeof subId=='string',o,v;
+            if(s1){
+                if(s2)
+                    Array.prototype.push.apply(a,this.getSubNode(arr,subId).get());
+                else
+                    for(var j=0;v=subId[j++];)
+                        Array.prototype.push.apply(a,this.getSubNode(arr,v).get());
+            }else
+                for(var i=0;o=arr[i++];){
+                    if(s2)
+                        Array.prototype.push.apply(a,this.getSubNode(o,subId).get());
+                    else
+                        for(var j=0;v=subId[j++];)
+                            Array.prototype.push.apply(a,this.getSubNode(o,v).get());
+                }
+            return linb(a);
+        },
+        getSubNodes:function(arr,subId){
+            var i=0,j=0,a=[],o,v;
+            if(typeof subId=='string'){
+                if(typeof subId=='string')
+                    Array.prototype.push.apply(a,this.getSubNode(arr,subId).get());
+                else
+                    for(;v=subId[j++];)
+                        Array.prototype.push.apply(a,this.getSubNode(arr,v).get());
+            }else
+                for(;o=arr[i++];){
+                    if(typeof subId=='string')
+                        Array.prototype.push.apply(a,this.getSubNode(o,subId).get());
+                    else
+                        for(;v=subId[j++];)
+                            Array.prototype.push.apply(a,this.getSubNode(o,v).get());
+                }
             return linb(a);
         },
         getSubNodeByItemId:function(key, itemId){

@@ -7,55 +7,64 @@ Class("linb.UI.FoldingTabs", "linb.UI.Tabs",{
                     uiv = box.getUIValue(),
                     prop = profile.properties,
 
-                    fold=function(itemId){
-                        var subId = profile.getSubIdByItemId(itemId);
-                        if(subId){
-                            profile.getSubNode('TOGGLE',subId).tagClass('-checked',false);
-                            var itemnode=profile.getSubNode('ITEM',subId),
-                                nodenext;
-                            if(itemnode){
-                                itemnode.tagClass('-checked',false);
-                                if(nodenext=itemnode.next()){
-                                    nodenext.tagClass('-prechecked',false);
-                                }
-                            }
-                            profile.getSubNode('BODY', subId).css('display','none');
-                        }
-                    },
-                    expand = function(itemId){
+                    fold=function(itemId, arr){
                         var subId = profile.getSubIdByItemId(itemId),
                             item=profile.getItemByItemId(itemId);
                         if(subId){
-                            profile.getSubNode('TOGGLE',subId).tagClass('-checked');
-                            var itemnode=profile.getSubNode('ITEM',subId),
-                                nodenext;
-                            if(itemnode){
-                                itemnode.tagClass('-checked');
-                                if(nodenext=itemnode.next()){
-                                    nodenext.tagClass('-prechecked');
-                                }
+                            arr.push(subId);
+                            
+                            var itemnode=profile.getSubNode('BODY',subId);
+                            if(itemnode.css('display')!='none'){
+                                item._scrollTop=itemnode.get(0).scrollTop||0;
+                                if(item._scrollTop)
+                                    itemnode.get(0).scrollTop=0;
+                                itemnode.css('display','none');
                             }
-                             // show pane
-                            //box.getPanel(value).css('position','relative').show('auto','auto');
-                            profile.getSubNode('BODY', subId).css('display','block');
+                        }
+                    },
+                    expand = function(itemId, arr){
+                        var subId = profile.getSubIdByItemId(itemId),
+                            item=profile.getItemByItemId(itemId);
+                        if(subId){
+                            arr.push(subId);
+                            
+                            var itemnode=profile.getSubNode('BODY',subId);
+                            if(itemnode.css('display')=='none'){
+                                 // show pane
+                                //box.getPanel(itemId).css('position','relative').show('auto','auto');
+                                itemnode.css('display','block');
+                                if(item._scrollTop)
+                                    itemnode.get(0).scrollTop=item._scrollTop;
     
-                            profile.box._forLazzyAppend(profile, item, value);
-                            profile.box._forIniPanelView(profile, item, value);
+                                profile.box._forLazzyAppend(profile, item, itemId);
+                                profile.box._forIniPanelView(profile, item, itemId);
+                            }
                         }
                     };
-
+                var arr1=[], arr2=[];
                 if(prop.selMode=="multi"){
                     uiv = uiv?uiv.split(prop.valueSeparator):[];
-                    _.arr.each(uiv,function(key){
-                        fold(key);
-                    });
                     value = value?value.split(prop.valueSeparator):[];
+
+                    _.arr.each(uiv,function(key){
+                        if(_.arr.indexOf(value,key)==-1)
+                            fold(key, arr1);
+                    });
                     _.arr.each(value,function(key){
-                        expand(key);
+                        if(_.arr.indexOf(uiv,key)==-1)
+                            expand(key, arr2);
                     });
                 }else{
-                    fold(uiv);
-                    expand(value);
+                    fold(uiv, arr1);
+                    expand(value, arr2);
+                }
+                if(arr1.length){
+                    profile.getSubNodes(['ITEM','TOGGLE'],arr1).tagClass('-checked',false);
+                    profile.getSubNodes('ITEM',arr1).next().tagClass('-prechecked',false);
+                }
+                if(arr2.length){
+                    profile.getSubNodes(['ITEM','TOGGLE'],arr2).tagClass('-checked');
+                    profile.getSubNodes('ITEM',arr2).next().tagClass('-prechecked');
                 }
 
                 var t=profile.getRootNode().style;
