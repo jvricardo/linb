@@ -2386,6 +2386,9 @@ Class('VisualJS.Designer', 'linb.Com',{
                 }
             }
         },
+        reLayout:function(force){
+            this.toolbar.reLayout(force);
+        },
         iniComponents:function(){
             // [[code created by jsLinb UI Builder
             var host=this, children=[], append=function(child){children.push(child.get(0))};

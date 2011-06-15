@@ -769,6 +769,8 @@ Class('VisualJS.JSEditor', 'linb.Com',{
                         .setVisibility('visible')
                         .setZIndex(100)
                         .reLayout(true);
+                     
+                     ns._designer.reLayout(true);
                 }else{
                     linb.message(linb.getRes('VisualJS.JSEditor.codeerr', obj.ko));
                     ns.errlink.getRoot().onClick();
