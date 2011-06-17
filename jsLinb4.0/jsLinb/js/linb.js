@@ -1549,8 +1549,8 @@ Class('linb.absIO',null,{
             return obj;
         },
         _if:function(doc,id,onLoad){
-            var e=linb.browser.ie && parseInt(linb.browser.ver)<9,n = doc.createElement(e?"<iframe name='"+id+"' "+(onLoad?"onload='linb.IAjax._o(\""+id+"\")'":"")+">":"iframe"),w;
-            if(id)n.id=n.name=id;
+            var e=linb.browser.ie && parseInt(linb.browser.ver)<9,n = doc.createElement(e?"<iframe "+(id?("name='"+"linb_IAajax_"+id+"'"):"")+(onLoad?(" onload='linb.IAjax._o(\""+id+"\")'"):"")+">":"iframe"),w;
+            if(id)n.id=n.name="linb_IAajax_"+id;
             if(!e&&onLoad)n.onload=onLoad;
             n.style.display = "none";
             doc.body.appendChild(n);
@@ -1920,7 +1920,7 @@ Class('linb.IAjax','linb.absIO',{
             };
 
             //create form
-            var a=c._if(document,"linb_IAajax_"+id, onload);
+            var a=c._if(document,id, onload);
             self.node=a[0];
             self.frm=a[1];
             //create form

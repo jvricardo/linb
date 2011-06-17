@@ -1549,8 +1549,8 @@ Class('linb.absIO',null,{
             return obj;
         },
         _if:function(doc,id,onLoad){
-            var e=linb.browser.ie && parseInt(linb.browser.ver)<9,n = doc.createElement(e?"<iframe name='"+id+"' "+(onLoad?"onload='linb.IAjax._o(\""+id+"\")'":"")+">":"iframe"),w;
-            if(id)n.id=n.name=id;
+            var e=linb.browser.ie && parseInt(linb.browser.ver)<9,n = doc.createElement(e?"<iframe "+(id?("name='"+"linb_IAajax_"+id+"'"):"")+(onLoad?(" onload='linb.IAjax._o(\""+id+"\")'"):"")+">":"iframe"),w;
+            if(id)n.id=n.name="linb_IAajax_"+id;
             if(!e&&onLoad)n.onload=onLoad;
             n.style.display = "none";
             doc.body.appendChild(n);
@@ -1920,7 +1920,7 @@ Class('linb.IAjax','linb.absIO',{
             };
 
             //create form
-            var a=c._if(document,"linb_IAajax_"+id, onload);
+            var a=c._if(document,id, onload);
             self.node=a[0];
             self.frm=a[1];
             //create form
@@ -10573,7 +10573,7 @@ Class("linb.Tips", null,{
         		if(linb.browser.ie) {
         			if(self._lastFI=='')self._lastFI = '#';
     
-                    if(parseInt(linb.browser.ver)<8) {
+                    if(parseInt(linb.browser.ver)<9) {
                         var n=document.createElement("div");
                         n.style.display = "none";
                         document.body.appendChild(n);
@@ -10612,7 +10612,7 @@ Class("linb.Tips", null,{
     	    }
 
     		if(linb.browser.ie) {
-		        if(parseInt(linb.browser.ver)<8) {
+		        if(parseInt(linb.browser.ver)<9) {
         		    var ihistory = document.getElementById(self._fid), 
         		        iframe = ihistory.contentWindow.document;
         		    hash = iframe.location.hash;
@@ -10677,7 +10677,7 @@ Class("linb.Tips", null,{
             if(self._lastFI == '#' + fi)return false;
 
     		if(linb.browser.ie) {
-    		    if(parseInt(linb.browser.ver)<8) {
+    		    if(parseInt(linb.browser.ver)<9) {
         			var ihistory = document.getElementById(self._fid), iframe = ihistory.contentWindow.document;
                     iframe.open();
         			iframe.close();
@@ -15893,7 +15893,7 @@ new function(){
                 KEY:{
                    // overflow:(linb.browser.gek && !linb.browser.gek3)?'auto':null,
                     outline:linb.browser.gek?'none':null,
-                    zoom:linb.browser.ie6?'1':null,
+                    zoom:(linb.browser.ie && linb.browser.ver<9)?'1':null,
                     background:linb.browser.ie?'url('+linb.ini.img_bg+') no-repeat left top':null
                 }
             },
@@ -30369,7 +30369,8 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
                         return false;
                     }
                 });
-                profile.getSubNodeByItemId('GROUP', grpId).css('display',value===false?'none':'');
+                var n=profile.getSubNodeByItemId('GROUP', grpId);
+                n.css('display',value===false?'none':'');    
                 if(profile.renderId && profile.getRootNode().offsetWidth)
                     linb.UI.$dock(profile,true,true);
             });
@@ -30486,7 +30487,8 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
             GROUP:{
                 'font-size':0,
                 'line-height':0,
-                position:'relative',
+                // crack for: The IE 'non-disappearing content' bug
+                position:'static',
                 padding:'2px 4px 0px 2px',
                 'vertical-align':'middle'
             },
@@ -30590,18 +30592,6 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
         },
         EventHandlers:{
             onClick:function(profile, item, group, e, src){}
-        },
-        RenderTrigger:function(){
-            // crack for: The IE 'non-disappearing content' bug
-            // you have to set the ITEMS and GROUP to diffrent position(static and relative)
-            if(linb.browser.ie && linb.browser.ver<9){
-                this.getSubNode('GROUP',true).each(function(n){
-                    if(n.style.display=='none'){
-                        n.style.position='absolute';
-                        n.style.position='';
-                    }
-                });
-            }
         },
         _adjustItems:function(arr){
             if(!arr)arr=[_()+''];

@@ -91,7 +91,8 @@ Class('App', 'linb.Com',{
                 }).start();
             }else{
                 linb.Ajax("xml/data.xml","",function(rsp){
-                    var data = linb.XML.xml2json(linb.XML.parseXML(rsp));
+                    if(!rsp)return;
+                    var data = linb.XML.xml2json(rsp);
                     if(!data)alert("no data");
                     else{
                         if(data.data.header)
@@ -99,7 +100,7 @@ Class('App', 'linb.Com',{
                         if(data.data.rows)
                             ns.treegrid2.setRows(data.data.rows);             
                     }
-                }).start();
+                },null,null,{rspType:'xml'}).start();
             }
         }
     }

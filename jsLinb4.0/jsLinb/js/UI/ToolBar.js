@@ -113,7 +113,8 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
                         return false;
                     }
                 });
-                profile.getSubNodeByItemId('GROUP', grpId).css('display',value===false?'none':'');
+                var n=profile.getSubNodeByItemId('GROUP', grpId);
+                n.css('display',value===false?'none':'');    
                 if(profile.renderId && profile.getRootNode().offsetWidth)
                     linb.UI.$dock(profile,true,true);
             });
@@ -230,7 +231,8 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
             GROUP:{
                 'font-size':0,
                 'line-height':0,
-                position:'relative',
+                // crack for: The IE 'non-disappearing content' bug
+                position:'static',
                 padding:'2px 4px 0px 2px',
                 'vertical-align':'middle'
             },
@@ -334,18 +336,6 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
         },
         EventHandlers:{
             onClick:function(profile, item, group, e, src){}
-        },
-        RenderTrigger:function(){
-            // crack for: The IE 'non-disappearing content' bug
-            // you have to set the ITEMS and GROUP to diffrent position(static and relative)
-            if(linb.browser.ie && linb.browser.ver<9){
-                this.getSubNode('GROUP',true).each(function(n){
-                    if(n.style.display=='none'){
-                        n.style.position='absolute';
-                        n.style.position='';
-                    }
-                });
-            }
         },
         _adjustItems:function(arr){
             if(!arr)arr=[_()+''];

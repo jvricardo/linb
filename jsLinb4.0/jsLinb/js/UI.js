@@ -4822,7 +4822,7 @@ new function(){
                 KEY:{
                    // overflow:(linb.browser.gek && !linb.browser.gek3)?'auto':null,
                     outline:linb.browser.gek?'none':null,
-                    zoom:linb.browser.ie6?'1':null,
+                    zoom:(linb.browser.ie && linb.browser.ver<9)?'1':null,
                     background:linb.browser.ie?'url('+linb.ini.img_bg+') no-repeat left top':null
                 }
             },
