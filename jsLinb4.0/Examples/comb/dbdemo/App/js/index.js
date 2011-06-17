@@ -7,130 +7,130 @@ Class('App', 'linb.Com',{
             var host=this, children=[], append=function(child){children.push(child.get(0))};
             
             append((new linb.UI.Block)
-                   .setHost(host,"block3")
-                   .setLeft(50)
-                   .setTop(50)
-                   .setWidth(260)
-                   .setHeight(290)
-                   .setBorder(true)
-                  );
+               .setHost(host,"block3")
+               .setLeft(50)
+               .setTop(50)
+               .setWidth(260)
+               .setHeight(290)
+               .setBorder(true)
+            );
             
             host.block3.append((new linb.UI.TreeGrid)
-                               .setHost(host,"treegrid")
-                               .setRowHandler(false)
-                               .setHeader([{"id":"key", "caption":"key", "width":80, "type":"label"}, {"id":"value", "caption":"value", "width":160, "type":"label"}])
-                               .afterRowActive("_treegrid_afterrowactive")
-                              );
+               .setHost(host,"treegrid")
+               .setRowHandler(false)
+               .setHeader([{"id":"key", "caption":"key", "width":80, "type":"label"}, {"id":"value", "caption":"value", "width":160, "type":"label"}])
+               .afterRowActive("_treegrid_afterrowactive")
+            );
             
             append((new linb.UI.Group)
-                   .setHost(host,"group1")
-                   .setLeft(360)
-                   .setTop(80)
-                   .setWidth(260)
-                   .setHeight(120)
-                   .setCaption("update")
-                   .setToggleBtn(false)
-                  );
+               .setHost(host,"group1")
+               .setLeft(360)
+               .setTop(80)
+               .setWidth(270)
+               .setHeight(120)
+               .setCaption("update")
+               .setToggleBtn(false)
+           );
             
             host.group1.append((new linb.UI.Input)
-                               .setHost(host,"iKey")
-                               .setDisabled(true)
-                               .setLeft(70)
-                               .setTop(10)
-                               .setWidth(180)
-                              );
+               .setHost(host,"iKey")
+               .setDisabled(true)
+               .setLeft(70)
+               .setTop(10)
+               .setWidth(180)
+           );
             
             host.group1.append((new linb.UI.Input)
-                               .setHost(host,"iValue")
-                               .setLeft(70)
-                               .setTop(40)
-                               .setWidth(180)
-                              );
+               .setHost(host,"iValue")
+               .setLeft(70)
+               .setTop(40)
+               .setWidth(180)
+            );
             
             host.group1.append((new linb.UI.Button)
-                               .setHost(host,"btnU")
-                               .setDisabled(true)
-                               .setLeft(70)
-                               .setTop(70)
-                               .setWidth(180)
-                               .setCaption("Update")
-                               .onClick("_btnu_onclick")
-                              );
+               .setHost(host,"btnU")
+               .setDisabled(true)
+               .setLeft(70)
+               .setTop(70)
+               .setWidth(180)
+               .setCaption("Update")
+               .onClick("_btnu_onclick")
+            );
             
             host.group1.append((new linb.UI.Label)
-                               .setHost(host,"label23")
-                               .setLeft(10)
-                               .setTop(10)
-                               .setWidth(50)
-                               .setCaption("key")
-                              );
+               .setHost(host,"label23")
+               .setLeft(10)
+               .setTop(10)
+               .setWidth(50)
+               .setCaption("key")
+            );
             
             host.group1.append((new linb.UI.Label)
-                               .setHost(host,"label24")
-                               .setLeft(10)
-                               .setTop(40)
-                               .setWidth(50)
-                               .setCaption("value")
-                              );
+               .setHost(host,"label24")
+               .setLeft(10)
+               .setTop(40)
+               .setWidth(50)
+               .setCaption("value")
+            );
             
             append((new linb.UI.Group)
-                   .setHost(host,"group2")
-                   .setLeft(360)
-                   .setTop(220)
-                   .setWidth(260)
-                   .setHeight(120)
-                   .setCaption("create")
-                   .setToggleBtn(false)
-                  );
+               .setHost(host,"group2")
+               .setLeft(360)
+               .setTop(220)
+               .setWidth(270)
+               .setHeight(120)
+               .setCaption("create")
+               .setToggleBtn(false)
+            );
             
             host.group2.append((new linb.UI.Input)
-                               .setHost(host,"iKey2")
-                               .setLeft(70)
-                               .setTop(10)
-                               .setWidth(180)
-                              );
+               .setHost(host,"iKey2")
+               .setLeft(70)
+               .setTop(10)
+               .setWidth(180)
+            );
             
             host.group2.append((new linb.UI.Input)
-                               .setHost(host,"iValue2")
-                               .setLeft(70)
-                               .setTop(40)
-                               .setWidth(180)
-                              );
+               .setHost(host,"iValue2")
+               .setLeft(70)
+               .setTop(40)
+               .setWidth(180)
+            );
             
             host.group2.append((new linb.UI.Button)
-                               .setHost(host,"btnC")
-                               .setLeft(70)
-                               .setTop(70)
-                               .setWidth(180)
-                               .setCaption("Add a Row")
-                               .onClick("_btnc_onclick")
-                              );
+               .setHost(host,"btnC")
+               .setLeft(70)
+               .setTop(70)
+               .setWidth(180)
+               .setCaption("Add a Row")
+               .onClick("_btnc_onclick")
+            );
             
             host.group2.append((new linb.UI.Label)
-                               .setHost(host,"label3")
-                               .setLeft(10)
-                               .setTop(10)
-                               .setWidth(50)
-                               .setCaption("key")
-                              );
+               .setHost(host,"label3")
+               .setLeft(10)
+               .setTop(10)
+               .setWidth(50)
+               .setCaption("key")
+            );
             
             host.group2.append((new linb.UI.Label)
-                               .setHost(host,"label4")
-                               .setLeft(10)
-                               .setTop(40)
-                               .setWidth(50)
-                               .setCaption("value")
-                              );
+               .setHost(host,"label4")
+               .setLeft(10)
+               .setTop(40)
+               .setWidth(50)
+               .setCaption("value")
+            );
             
             append((new linb.UI.Button)
-                   .setHost(host,"btnD")
-                   .setDisabled(true)
-                   .setLeft(360)
-                   .setTop(50)
-                   .setWidth(260)
-                   .setCaption("Delete")
-                   .onClick("_btnd_onclick")
-                  );
+               .setHost(host,"btnD")
+               .setDisabled(true)
+               .setLeft(360)
+               .setTop(50)
+               .setWidth(260)
+               .setCaption("Delete")
+               .onClick("_btnd_onclick")
+           );
             
             return children;
             // ]]code created by jsLinb UI Builder
@@ -196,25 +196,29 @@ Class('App', 'linb.Com',{
             SPA.iKey2.resetValue();
             SPA.iValue2.resetValue();
             SPA.request({action:'create', key:key, value:value},
-                        function(rsp){
-                            if(rsp.data=='ok'){
-                                SPA.treegrid.insertRows([[key,value]]);
-                            }
-                        });
+                function(rsp){
+                    if(rsp.data=='ok'){
+                        SPA.treegrid.insertRows([[key,value]]);
+                        SPA.iKey2.updateValue();
+                        SPA.iValue2.updateValue();
+                    }
+                }
+            );
         }, 
         _btnd_onclick:function (profile, e, src, value) {
             if(!SPA.$row)return;
             var row=SPA.$row;
             
             SPA.request({action:'delete', key:row.cells[0].value},
-                        function(rsp){
-                            if(rsp.data=='ok')
-                                SPA.treegrid.removeRows([row.id]);
-                        },function(){},function(){
-                            delete SPA.$row;
-                            SPA.btnD.setDisabled(true);
-                            SPA.btnU.setDisabled(true);
-                        });
+                function(rsp){
+                    if(rsp.data=='ok')
+                        SPA.treegrid.removeRows([row.id]);
+                },function(){},function(){
+                    delete SPA.$row;
+                    SPA.btnD.setDisabled(true);
+                    SPA.btnU.setDisabled(true);
+                }
+            );
         }, 
         _btnu_onclick:function (profile, e, src, value) {
             if(!SPA.$row)return;
@@ -232,10 +236,13 @@ Class('App', 'linb.Com',{
                 return;
             }
             SPA.request({action:'update', key:key, value:value},
-                        function(rsp){
-                            if(rsp.data=='ok')
-                                SPA.treegrid.updateCell(cells[1],value,false);
-                        });
+                function(rsp){
+                    if(rsp.data=='ok'){
+                        SPA.treegrid.updateCell(cells[1],value,false);
+                        SPA.iValue.updateValue()
+                    }
+                }
+            );
         }, 
         _refreshList:function(rowId){
             SPA.treegrid.setRows([]);

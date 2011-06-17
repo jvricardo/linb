@@ -510,7 +510,7 @@ Class('VisualJS.Designer', 'linb.Com',{
 
                     _.arr.each(arr,function(o){
                         if(!(m=o[0].getRoot()).isEmpty()){
-                            if(o[0].children.length)
+                            if((o[0].children).length)
                                 if(rt=me(o[0].children, ep, m))
                                     return false;
                             pos=m.offset(null,parent);
@@ -2126,7 +2126,7 @@ Class('VisualJS.Designer', 'linb.Com',{
         getWidgets:function(flag){
             if(!flag)
                 this._clearSelect(this.canvas.get(0));
-            var arr=[], c = this.canvas.get(0).children;
+            var arr=[], c = this.canvas.get(0).children || this.canvas.get(0).childNodes;
             _.arr.each(c,function(o){
                 arr.push(o[0]);
             });

@@ -48,7 +48,7 @@ Class("VisualJS.CodeEditor", ["linb.UI.Widget","linb.absValue"] ,{
             var profile = this.get(0),
                 cm=profile.$codemirror,
                 scroller=cm.lineNumbers.firstChild,
-                cld=scroller.children;
+                cld=scroller.children || scroller.childNodes;
                     
             _.each(this.get(0)._$foldingMap,function(a){
                 if(id.indexOf("b:"+a[0])==0 && a[3]){
@@ -1598,7 +1598,7 @@ Class("VisualJS.CodeEditor", ["linb.UI.Widget","linb.absValue"] ,{
 
                 // show line numbers
                 var refreshLineNumbers=function(dirtyfrom){
-                    var cld=scroller.children,
+                    var cld=scroller.children || scroller.childNodes,
                         l=cld.length+1,
                         conf,elem,uid;
                     if(dirtyfrom<0)dirtyfrom=0;

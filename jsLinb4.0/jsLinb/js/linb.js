@@ -441,11 +441,8 @@ _.merge(_,{
     isDate:function(target)  {return Object.prototype.toString.call(target)==='[object Date]' && isFinite(+target)},
     isFun:function(target)   {return Object.prototype.toString.call(target)==='[object Function]'},
     isArr:function(target)   {return Object.prototype.toString.call(target)==='[object Array]'},
-    isHash:function(target)  {return !!target && typeof target=='object' && (target.constructor==Object ||
-            (target.constructor
-                && Object.prototype.toString.call(target)=='[object Object]'
-                && /^\s*function\s+Object\(\s*\)/.test(target.constructor.toString())
-            ))},
+    _ht:/^\s*function\s+Object\(\s*\)/,
+    isHash:function(target)  {return !!target && Object.prototype.toString.call(target)=='[object Object]' && target.constructor && _._ht.test(target.constructor.toString())},
     isReg:function(target)   {return Object.prototype.toString.call(target)==='[object RegExp]'},
     isStr:function(target)   {return typeof target == "string"},
     isArguments:function(target)   {return !!(target && target.callee && target.callee.arguments===target)},

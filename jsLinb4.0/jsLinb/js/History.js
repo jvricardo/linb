@@ -26,7 +26,7 @@ Class("linb.History",null,{
             		}else{
             		    location.hash = hash;
             		}
-        		}else if(linb.browser.kde) {
+        		}else if(linb.browser.kde && !linb.browser.isChrome) {
         			// etablish back/forward stacks
         			self.backStack = [];
         			self.backStack.length = history.length;
@@ -67,7 +67,7 @@ Class("linb.History",null,{
         				self._callback(hash.replace(/^#/, ''));
         			}
 		        }    			
-    		}else if(linb.browser.kde) {
+    		}else if(linb.browser.kde && !linb.browser.isChrome) {
     			if(!self.dontCheck) {
     			    var backStack=self.backStack,
     			        forwardStack=self.forwardStack,
@@ -125,7 +125,7 @@ Class("linb.History",null,{
     		    }else{
     		        location.hash=self._lastFI = '#' + fi;
         		}
-    		}else if(linb.browser.kde) {
+    		}else if(linb.browser.kde && !linb.browser.isChrome) {
     			self.dontCheck = true;
         		self.backStack.push(fi);
         		self.forwardStack.length = 0;

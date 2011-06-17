@@ -32,10 +32,10 @@ Class("linb.UI.FusionChartFree", "linb.UI.Flash",{
                     // from outside
                     if(prop.FC_demoDataPath){
                         linb.Ajax(prop.FC_demoDataPath + v +".xml", {rnd:_()},function(rsp){
-                            prop.FC_data=linb.XML.xml2json(linb.XML.parseXML(rsp),null,function(s){
+                            prop.FC_data=linb.XML.xml2json(rsp,null,function(s){
                                 return ns.box.replaceSpecialChars(x);
                             });
-                        },null,null,{asy:false}).start();
+                        },null,null,{asy:false,rspType:'xml'}).start();
                     }
                     prop.src=prop.FC_swfPath + this.box._FC_SWFFILEPRETAG + prop.FC_chartType + ".swf",
  
@@ -2682,6 +2682,9 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                 f('SCROLL').top(h2).height(t+h2);
                 profile.getSubNodes(['BG','ITEMS','SCROLL']).height(t);
                 this._ajustHeight(profile);
+                
+                if(linb.browser.ie6)
+                    f('ACTIVE').height(f('VIEW').height()+2);
             }
             if(width && profile._$w != width){
                 // special: modified widget width here

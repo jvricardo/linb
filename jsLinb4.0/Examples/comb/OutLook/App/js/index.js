@@ -293,8 +293,8 @@ Class('App', 'linb.Com',{
             }
         }, 
         _ajax1_onrequestok:function (response, rspType, threadId) {
-if(!response)return;
-            var obj = _response;
+            if(!response)return;
+            var obj = response;
             SPA.treegrid2
             .removeAllRows()
             .setHeader(obj.header)

@@ -21,7 +21,7 @@ Class('App', 'linb.Com',{
                 .setDirtyMark(false)
                 .setLeft(10)
                 .setTop(0)
-                .setWidth(410)
+                .setWidth(400)
                 .setHeight(70)
                 .setLabelCaption("")
                 .setMultiLines(true)

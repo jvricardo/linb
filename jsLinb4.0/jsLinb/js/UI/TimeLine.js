@@ -1938,6 +1938,9 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                 f('SCROLL').top(h2).height(t+h2);
                 profile.getSubNodes(['BG','ITEMS','SCROLL']).height(t);
                 this._ajustHeight(profile);
+                
+                if(linb.browser.ie6)
+                    f('ACTIVE').height(f('VIEW').height()+2);
             }
             if(width && profile._$w != width){
                 // special: modified widget width here

@@ -32,10 +32,10 @@ Class("linb.UI.FusionChartFree", "linb.UI.Flash",{
                     // from outside
                     if(prop.FC_demoDataPath){
                         linb.Ajax(prop.FC_demoDataPath + v +".xml", {rnd:_()},function(rsp){
-                            prop.FC_data=linb.XML.xml2json(linb.XML.parseXML(rsp),null,function(s){
+                            prop.FC_data=linb.XML.xml2json(rsp,null,function(s){
                                 return ns.box.replaceSpecialChars(x);
                             });
-                        },null,null,{asy:false}).start();
+                        },null,null,{asy:false,rspType:'xml'}).start();
                     }
                     prop.src=prop.FC_swfPath + this.box._FC_SWFFILEPRETAG + prop.FC_chartType + ".swf",
  

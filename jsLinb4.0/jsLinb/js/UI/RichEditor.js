@@ -270,10 +270,13 @@ Class("linb.UI.RichEditor", ["linb.UI","linb.absValue"],{
                                             }
 
                                             // crack for ie7/8 eat focus
-                                            var status=doc.designMode;
-                                            doc.designMode="off";
-                                            doc.designMode="on";
-                                            doc.designMode=status;
+                                            // error raise in ie6
+                                            try{
+                                                var status=doc.designMode;
+                                                doc.designMode="off";
+                                                doc.designMode="on";
+                                                doc.designMode=status;
+                                            }catch(e){}
 
                                             win._gekfix=undefined;
 

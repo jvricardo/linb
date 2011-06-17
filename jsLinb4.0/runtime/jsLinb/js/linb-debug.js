@@ -441,11 +441,8 @@ _.merge(_,{
     isDate:function(target)  {return Object.prototype.toString.call(target)==='[object Date]' && isFinite(+target)},
     isFun:function(target)   {return Object.prototype.toString.call(target)==='[object Function]'},
     isArr:function(target)   {return Object.prototype.toString.call(target)==='[object Array]'},
-    isHash:function(target)  {return !!target && typeof target=='object' && (target.constructor==Object ||
-            (target.constructor
-                && Object.prototype.toString.call(target)=='[object Object]'
-                && /^\s*function\s+Object\(\s*\)/.test(target.constructor.toString())
-            ))},
+    _ht:/^\s*function\s+Object\(\s*\)/,
+    isHash:function(target)  {return !!target && Object.prototype.toString.call(target)=='[object Object]' && target.constructor && _._ht.test(target.constructor.toString())},
     isReg:function(target)   {return Object.prototype.toString.call(target)==='[object RegExp]'},
     isStr:function(target)   {return typeof target == "string"},
     isArguments:function(target)   {return !!(target && target.callee && target.callee.arguments===target)},
@@ -10586,7 +10583,7 @@ Class("linb.Tips", null,{
             		}else{
             		    location.hash = hash;
             		}
-        		}else if(linb.browser.kde) {
+        		}else if(linb.browser.kde && !linb.browser.isChrome) {
         			// etablish back/forward stacks
         			self.backStack = [];
         			self.backStack.length = history.length;
@@ -10627,7 +10624,7 @@ Class("linb.Tips", null,{
         				self._callback(hash.replace(/^#/, ''));
         			}
 		        }    			
-    		}else if(linb.browser.kde) {
+    		}else if(linb.browser.kde && !linb.browser.isChrome) {
     			if(!self.dontCheck) {
     			    var backStack=self.backStack,
     			        forwardStack=self.forwardStack,
@@ -10685,7 +10682,7 @@ Class("linb.Tips", null,{
     		    }else{
     		        location.hash=self._lastFI = '#' + fi;
         		}
-    		}else if(linb.browser.kde) {
+    		}else if(linb.browser.kde && !linb.browser.isChrome) {
     			self.dontCheck = true;
         		self.backStack.push(fi);
         		self.forwardStack.length = 0;
@@ -20064,10 +20061,13 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                                             }
 
                                             // crack for ie7/8 eat focus
-                                            var status=doc.designMode;
-                                            doc.designMode="off";
-                                            doc.designMode="on";
-                                            doc.designMode=status;
+                                            // error raise in ie6
+                                            try{
+                                                var status=doc.designMode;
+                                                doc.designMode="off";
+                                                doc.designMode="on";
+                                                doc.designMode=status;
+                                            }catch(e){}
 
                                             win._gekfix=undefined;
 
