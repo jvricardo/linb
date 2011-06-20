@@ -67,7 +67,7 @@ _.set(linb.Locale,["en","app"], {
                 $desc:"To dstroy a Class."
             }
         },
-        _:{
+        "_":{
             $desc:"Tools functions' Namespace. <br />Can be used as a function to get local time stamp too.",
             $rtn:"Integer",
             $snippet:["alert(_()); linb.message(_())"],
@@ -227,7 +227,7 @@ _.set(linb.Locale,["en","app"], {
                 $rtn:"Object",
                 $paras:[
                     "hash [Required]: Object, target Object to copy.",
-                    "filter [Optional]: Function, arguments: [hash value, hash key]. To determine whether or not it copy certain item. Or [true], means to neglect those items which key starts with '_'.",
+                    "filter [Optional]: Function, arguments: [hash value, hash key]. To determine whether or not it copy certain item. Or [true], means to neglect those items which key starts with '_'."
                 ],
                 $memo:"Sees <a href='#_.clone'>_.clone</a>"
             },

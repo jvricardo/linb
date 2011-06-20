@@ -761,6 +761,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                                     else
                                         t.selectObject.call(t,profile, profile.getRoot().parent());
                                 });
+                                page.profileGrid.offEditor();
                             }
                         };
                         profile.$afterRefresh=function(profile){
@@ -773,8 +774,8 @@ Class('VisualJS.Designer', 'linb.Com',{
                                     else
                                         t.selectObject.call(t,profile, profile.getRoot().parent());
                                 });
+                                page.profileGrid.offEditor();
                             }
-                            
                         };
                     }
 

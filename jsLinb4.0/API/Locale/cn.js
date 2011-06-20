@@ -68,7 +68,7 @@ _.set(linb.Locale,["cn","app"], {
                 $desc:"销毁一个类"
             }
         },
-        _:{
+        "_":{
             $desc:"工具方法的集合.<br />当做函数用是得到本地的时间戳.",
             $rtn:"Number",
             $snippet:["alert(_()); linb.message(_())"],
@@ -228,7 +228,7 @@ _.set(linb.Locale,["cn","app"], {
                 $rtn:"Object",
                 $paras:[
                     "hash [必需参数]: Object, 要拷贝的对象.",
-                    "filter [可选参数]: Function, 参数: [值, 键]. 判断是否拷贝该项. 也可以是 [true],表示会忽略以'_'开头的项",
+                    "filter [可选参数]: Function, 参数: [值, 键]. 判断是否拷贝该项. 也可以是 [true],表示会忽略以'_'开头的项"
                 ],
                 $memo:"请参见 <a href='#_.clone'>_.clone</a>"
             },
