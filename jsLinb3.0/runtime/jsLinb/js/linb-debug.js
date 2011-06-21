@@ -25107,9 +25107,10 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                         return;
                     if(itemId){
                         if(!p.noPanel){
-                            item._scrollTop=box.getPanel(uiv).get(0).scrollTop||0;
-                            if(item._scrollTop)
-                                box.getPanel(uiv).get(0).scrollTop=0;
+                            var pn=box.getPanel(uiv).get(0);
+                            if(pn && (item._scrollTop=pn.scrollTop||0))
+                                pn.scrollTop=0;
+
                             box.getPanel(uiv).css('display','none');
                         }
                     }
