@@ -399,7 +399,7 @@ Class('linb.DragDrop',null,{
                 d.$ondragstart=doc.ondragstart;
                 d.$onselectstart=doc.body.onselectstart;
                 doc.ondragstart = doc.body.onselectstart = null;
-                if(doc.selection)_.tryF(doc.selection.empty);
+                if(doc.selection && doc.selection.empty)doc.selection.empty();
             }
 
             //avoid select

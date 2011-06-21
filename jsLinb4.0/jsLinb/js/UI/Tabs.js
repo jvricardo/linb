@@ -17,9 +17,10 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                             if(!dm.hasOwnProperty("noPanel") || !prop.noPanel){
                                 // hide pane
                                 //box.getPanel(itemId).hide();
-                                item._scrollTop=box.getPanel(itemId).get(0).scrollTop||0;
-                                if(item._scrollTop)
-                                    box.getPanel(itemId).get(0).scrollTop=0;
+                                var pn=box.getPanel(itemId).get(0);
+                                if(pn && (item._scrollTop=pn.scrollTop||0))
+                                    pn.scrollTop=0;
+
                                 box.getPanel(itemId).css('display','none');
                             }
                         }

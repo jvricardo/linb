@@ -1008,15 +1008,17 @@ _.merge(linb,{
 */
 new function(){
     //browser sniffer
-    var w=window, u = navigator.userAgent.toLowerCase(), d=document, b=linb.browser={
+    var w=window, u=navigator.userAgent.toLowerCase(), d=document, dm=d.documentMode, b=linb.browser={
         kde:/webkit/.test(u),
         opr:/opera/.test(u),
         ie:/msie/.test(u) && !/opera/.test(u),
         gek:/mozilla/.test(u) && !/(compatible|webkit)/.test(u),
 
         isStrict:d.compatMode=="CSS1Compat",
+        isWebKit:/webkit/.test(u),
         isChrome:/chrome/.test(u),
-        isSafari:/safari/.test(u),
+        isSafari:(!/chrome/.test(u)) && /safari/.test(u),
+
         isWin:/(windows|win32)/.test(u),
         isMac:/(macintosh|mac os x)/.test(u),
         isAir:/adobeair/.test(u),
@@ -1028,7 +1030,10 @@ new function(){
 
     _.filter(b,function(o){return !!o});
     if(b.ie){
-        b[v('ie','msie ')]=true;
+        if(_.isNumb(dm))
+            b["ie"+(b.ver=dm)]=true;
+        else
+            v('ie','msie ');
         if(b.ie6){
             //ex funs for ie6
             try {document.execCommand('BackgroundImageCache', false, true)}catch(e){}
@@ -1038,8 +1043,16 @@ new function(){
         b[v('gek',/.+\//)]=true;
     else if(b.opr)
         b[v('opr','opera/')]=true;
-    else if(b.kde)
+    else if(b.kde){
         b[v('kde','webkit/')]=true;
+        if(b.isSafari){
+           if(/applewebkit\/4/.test(u))
+                b["safari"+(b.ver=2)]=true;
+           else
+                b[v('safari','version/')]=true;
+        }else if(b.isChrome)
+            b[v('chrome','chrome/')]=true;
+    }
 
     b.contentBox = function(n){
         return (b.ie||b.opr) ?
@@ -1546,9 +1559,13 @@ Class('linb.absIO',null,{
             return obj;
         },
         _if:function(doc,id,onLoad){
-            var e=linb.browser.ie && parseInt(linb.browser.ver)<9,n = doc.createElement(e?"<iframe "+(id?("name='"+"linb_IAajax_"+id+"'"):"")+(onLoad?(" onload='linb.IAjax._o(\""+id+"\")'"):"")+">":"iframe"),w;
+            var ie8=linb.browser.ie && parseInt(linb.browser.ver)<9,
+                scr=ie8
+                    ? ("<iframe "+(id?("name='"+"linb_IAajax_"+id+"'"):"")+(onLoad?(" onload='linb.IAjax._o(\""+id+"\")'"):"")+">")
+                    : "iframe";
+            var n=doc.createElement(scr),w;
             if(id)n.id=n.name="linb_IAajax_"+id;
-            if(!e&&onLoad)n.onload=onLoad;
+            if(!ie8 && onLoad)n.onload=onLoad;
             n.style.display = "none";
             doc.body.appendChild(n);
             w=frames[frames.length-1];
@@ -9823,7 +9840,7 @@ Class('linb.DragDrop',null,{
                 d.$ondragstart=doc.ondragstart;
                 d.$onselectstart=doc.body.onselectstart;
                 doc.ondragstart = doc.body.onselectstart = null;
-                if(doc.selection)_.tryF(doc.selection.empty);
+                if(doc.selection && doc.selection.empty)doc.selection.empty();
             }
 
             //avoid select
@@ -26222,9 +26239,10 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                             if(!dm.hasOwnProperty("noPanel") || !prop.noPanel){
                                 // hide pane
                                 //box.getPanel(itemId).hide();
-                                item._scrollTop=box.getPanel(itemId).get(0).scrollTop||0;
-                                if(item._scrollTop)
-                                    box.getPanel(itemId).get(0).scrollTop=0;
+                                var pn=box.getPanel(itemId).get(0);
+                                if(pn && (item._scrollTop=pn.scrollTop||0))
+                                    pn.scrollTop=0;
+
                                 box.getPanel(itemId).css('display','none');
                             }
                         }
