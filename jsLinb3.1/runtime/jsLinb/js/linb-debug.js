@@ -28046,7 +28046,7 @@ Class("linb.UI.TreeView","linb.UI.TreeBar",{
                     return profile.box._onkeydownbar(profile,e,linb.use(src).parent().linbid());
                 }
             },
-            MARK2:{
+            MARK:{
                 onClick:function(profile, e, src){
                    return profile.box._onclickbar(profile,e,linb.use(src).parent().linbid());
                 }
