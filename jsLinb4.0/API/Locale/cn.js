@@ -1454,6 +1454,68 @@ _.set(linb.Locale,["cn","app"], {
         }
     });
 
+    _.set(linb.Locale,["cn","doc","linb","XMLRPC"], {
+        KEY:{$desc:"本类名"},
+        $desc:"linb.XMLRPC 类(静态类)",
+        wrapRequest:{
+            $desc:"为一次XML RPC调用包装XML字符串.",
+            $rtn:"String",
+            $paras:[
+                "methodName [必需参数] : String, 要调用的 XML RPC 方法名",
+                "params [必需参数] : Object, XML RPC 的调用参数"
+            ]
+        },
+        parseResponse:{
+            $desc:"把从XML RPC返回的文档对象解析到JSON变量",
+            $rtn:"Object",
+            $paras:[
+                "xmlObj [必需参数] : Object, XML 文档对象"
+            ]
+        }
+    });
+
+    _.set(linb.Locale,["cn","doc","linb","SOAP"], {
+        KEY:{$desc:"本类名"},
+        $desc:"linb.SOAP 类(静态类)",
+        RESULT_NODE_NAME:{
+            $desc:"SOAP返回的根节点名字（可自定义）.",
+            $snippet:["alert(linb.SOAP.RESULT_NODE_NAME)"]
+        },
+        wrapRequest:{
+            $desc:"为一次SOAP调用包装XML字符串.",
+            $rtn:"String",
+            $paras:[
+                "methodName [必需参数] : String, 要调用的 SOAP 方法名",
+                "params [必需参数] : Object, SOAP 的调用参数",
+                "wsdl  [必需参数] : Object, SOAP 的wsdl文档"
+            ]
+        },
+        parseResponse:{
+            $desc:"把从XML RPC返回的文档对象解析到JSON变量",
+            $rtn:"Object",
+            $paras:[
+                "xmlObj [必需参数] : Object, XML 文档对象",
+                "methodName [必需参数] : String, 调用的 SOAP 方法名",
+                "wsdl  [必需参数] : Object, SOAP 的wsdl文档"
+            ]
+        },
+        getWsdl:{
+            $desc:"得到SOAP调用的WSDL文档（同步方式）",
+            $rtn:"Object",
+            $paras:[
+                "queryURL [必需参数] : String, SOAP服务地址",
+                "onFail [必需参数] : Function, 失败时调用的回调函数"
+            ]
+        },
+        getNameSpace:{
+            $desc:"得到wsdl文档的命名空间",
+            $rtn:"String",
+            $paras:[
+                "wsdl  [必需参数] : Object, SOAP 的wsdl文档"
+            ]
+        }
+    });
+
     _.set(linb.Locale,["cn","doc","linb","Ajax"], {
         KEY:{$desc:"本类名"},
         $desc:"linb.Ajax类.用函数调用的方式（不要使用 new linb.Ajax ）来创造linb.Ajax对象.<br />函数调用：生成一个linb.Ajax对象. <strong>linb.Ajax对象可以处理当前域的GET/POST请求; linb.Ajax 也是唯一一个能够处理同步请求的Ajax类.</strong>",
@@ -12496,6 +12558,151 @@ _.set(linb.Locale,["cn","app"], {
         }
     });
 
+    _.set(linb.Locale,["cn","doc","linb","UI","FoldingTabs"], {
+        KEY:{$desc:"本类名"},
+        $desc:"linb.UI.FoldingTabs 类",
+        constructor:{
+            $desc:"生成一个linb.UI.FoldingTabs对象."
+        }
+    });
+    
+    _.set(linb.Locale,["cn","doc","linb","UI","TagEditor"], {
+        KEY:{$desc:"本类名"},
+        $desc:"linb.UI.TagEditor 类",
+        constructor:{
+            $desc:"生成一个linb.UI.TagEditor对象."
+        },
+        prototype:{
+            activate:{
+                $desc:"激活当前控件(获取焦点状态).",
+                $rtn:"[self]"
+            },
+            getTagInput:{
+                $desc:"获取某个标签对应的input控件.",
+                $rtn:"linb.UI.Input",
+                $paras:[
+                    "index [必需参数] : Integer, 索引号."
+                ]
+            },
+            getBorderType:{
+                $desc:"获取块控件的边框种类.",
+                $rtn:"String"
+            },
+            setBorderType:{
+                $desc:"设置块控件的边框种类.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : String, 'none','inset','outset',或 'flat'.",
+                    "force [可选参数] : 强制设置该属性值,即使属性已经设置为该值 默认为 [false]."
+                ]
+            },
+            getPadding:{
+                $desc:"获取标签控件的内边框距离.",
+                $rtn:"String"
+            },
+            setPadding:{
+                $desc:"设置标签控件的内边框距离.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : String",
+                    "force [可选参数] : 强制设置该属性值,即使属性已经设置为该值 默认为 [false]."
+                ]
+            },
+            getRequired:{
+                $desc:"获取是否至少输入一个标签.",
+                $rtn:"Boolean"
+            },
+            setRequired:{
+                $desc:"设置是否至少输入一个标签.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : Boolean",
+                    "force [可选参数] : 强制设置该属性值,即使属性已经设置为该值 默认为 [false]."
+                ]
+            },
+            getTagCount:{
+                $desc:"获取可以输入的标签数量.",
+                $rtn:"Integer"
+            },
+            setTagCount:{
+                $desc:"设置可以输入的标签数量.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : Integer",
+                    "force [可选参数] : 强制设置该属性值,即使属性已经设置为该值 默认为 [false]."
+                ]
+            },
+            getTagMaxlength:{
+                $desc:"获取标签input控件里可以输入的最大字符数量.",
+                $rtn:"Integer"
+            },
+            setTagMaxlength:{
+                $desc:"设置标签input控件里可以输入的最大字符数量.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : Integer",
+                    "force [可选参数] : 强制设置该属性值,即使属性已经设置为该值 默认为 [false]."
+                ]
+            },
+            getTagInputWidth:{
+                $desc:"获取标签input控件的宽度.",
+                $rtn:"Integer"
+            },
+            setTagInputWidth:{
+                $desc:"设置标签input控件的宽度.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : Integer",
+                    "force [可选参数] : 强制设置该属性值,即使属性已经设置为该值 默认为 [false]."
+                ]
+            },
+            getTagInputHeight:{
+                $desc:"获取标签input控件的高度.",
+                $rtn:"Integer"
+            },
+            setTagInputHeight:{
+                $desc:"设置标签input控件的高度.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : Integer",
+                    "force [可选参数] : 强制设置该属性值,即使属性已经设置为该值 默认为 [false]."
+                ]
+            },
+            getTagSpacing:{
+                $desc:"获取标签input控件间的距离.",
+                $rtn:"Integer"
+            },
+            setTagSpacing:{
+                $desc:"设置标签input控件间的距离.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : Integer",
+                    "force [可选参数] : 强制设置该属性值,即使属性已经设置为该值 默认为 [false]."
+                ]
+            },
+            getValueFormat:{
+                $desc:"获取标签input控件的有效输入的模式（正则表达式）.",
+                $rtn:"String"
+            },
+            setValueFormat:{
+                $desc:"设置标签input控件有效输入的模式（正则表达式）.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : String.",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值 默认为 [false]."
+                ]
+            },
+            getValueSeparator:{
+                $desc:"获取多个标签字符串值的分隔符.默认为“,”",
+                $rtn:"String"
+            },
+            setValueSeparator:{
+                $desc:"设置多个标签字符串值的分隔符.",
+                $rtn:"[self]"
+            }
+        }
+    });
+    
     _.set(linb.Locale,["cn","doc","linb","UI","Calendar"], {
         KEY:{$desc:"本类名"},
         $desc:"linb.UI.Calendar 类",

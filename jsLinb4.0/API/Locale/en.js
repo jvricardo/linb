@@ -1442,6 +1442,69 @@ _.set(linb.Locale,["en","app"], {
         }
     });
 
+
+    _.set(linb.Locale,["en","doc","linb","XMLRPC"], {
+        KEY:{$desc:"Class Name"},
+        $desc:"linb.XMLRPC Class(static)",
+        wrapRequest:{
+            $desc:"Wraps the XML string for XML RPC.",
+            $rtn:"String",
+            $paras:[
+                "methodName [Required] : String, XML RPC method name",
+                "params [Required] : Object, XML RPC parameters"
+            ]
+        },
+        parseResponse:{
+            $desc:"Converts a XML RPC respose(XML Document) to JSON object",
+            $rtn:"Object",
+            $paras:[
+                "xmlObj [Required] : Object, XML Document"
+            ]
+        }
+    });
+
+    _.set(linb.Locale,["en","doc","linb","SOAP"], {
+        KEY:{$desc:"Class Name"},
+        $desc:"linb.SOAP Class(static)",
+        RESULT_NODE_NAME:{
+            $desc:"The result node name of a SOAP response.",
+            $snippet:["alert(linb.SOAP.RESULT_NODE_NAME)"]
+        },
+        wrapRequest:{
+            $desc:"Wraps the XML string for SOAP.",
+            $rtn:"String",
+            $paras:[
+                "methodName [Required] : String, SOAP method name",
+                "params [Required] : Object, SOAP parameters",
+                "wsdl  [Required] : Object, wdsl document for SOAP "
+            ]
+        },
+        parseResponse:{
+            $desc:"Converts a SOAP respose(XML Document) to JSON object",
+            $rtn:"Object",
+            $paras:[
+                "xmlObj [Required] : Object, XML Document",
+                "methodName [Required] : String, SOAP parameters",
+                "wsdl  [Required] : Object, wdsl document for SOAP "
+            ]
+        },
+        getWsdl:{
+            $desc:"Gets the WSDL document for SOAP",
+            $rtn:"Object",
+            $paras:[
+                "queryURL [Required] : String, SOAP service url",
+                "onFail [Required] : Function, the fail callback function"
+            ]
+        },
+        getNameSpace:{
+            $desc:"Gets the name space from wsdl document",
+            $rtn:"String",
+            $paras:[
+                "wsdl  [Required] : Object, wsdl document"
+            ]
+        }
+    });
+    
     _.set(linb.Locale,["en","doc","linb","Ajax"], {
         KEY:{$desc:"Class Name"},
         $desc:"linb.Ajax Class. Dont use 'new' but 'function call' to create an instance. <br />Call function : to Create a linb.Ajax Object. <strong>linb.Ajax can handle GET/POST request in the current domain; linb.Ajax is the only one can handle the synchronous request.</strong>",
@@ -12571,6 +12634,151 @@ _.set(linb.Locale,["en","app"], {
         }
     });
 
+    _.set(linb.Locale,["en","doc","linb","UI","FoldingTabs"], {
+        KEY:{$desc:"Class Name"},
+        $desc:"linb.UI.FoldingTabs Class",
+        constructor:{
+            $desc:"Creates a linb.UI.FoldingTabs Object."
+        }
+    });
+    
+    _.set(linb.Locale,["en","doc","linb","UI","TagEditor"], {
+       KEY:{$desc:"Class Name"},
+        $desc:"linb.UI.TagEditor Class",
+        constructor:{
+            $desc:"Creates a linb.UI.TagEditor Object."
+        },
+        prototype:{
+            activate:{
+                $desc:"Activates the current UI Object.",
+                $rtn:"[self]"
+            },
+            getTagInput:{
+                $desc:"Gets the tag input control by index.",
+                $rtn:"linb.UI.Input",
+                $paras:[
+                    "index [Required] : Integer, the index number."
+                ]
+            },
+            getBorderType:{
+                $desc:"Gets border type of the TagEditor.",
+                $rtn:"String"
+            },
+            setBorderType:{
+                $desc:"Sets border type of the TagEditor.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : String, 'none','inset','outset' or 'flat'.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getPadding:{
+                $desc:"Gets the padding setting of the TagEditor.",
+                $rtn:"String"
+            },
+            setPadding:{
+                $desc:"Sets the padding setting of the TagEditor.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : String",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getRequired:{
+                $desc:"Gets the required property (input at least one tag).",
+                $rtn:"Boolean"
+            },
+            setRequired:{
+                $desc:"Sets the required property (input at least one tag).",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : Boolean",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getTagCount:{
+                $desc:"Gets the number of tags can be input.",
+                $rtn:"Integer"
+            },
+            setTagCount:{
+                $desc:"Sets the number of tags can be input.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : Integer",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getTagMaxlength:{
+                $desc:"Gets the maximum number of characters in a tag.",
+                $rtn:"Integer"
+            },
+            setTagMaxlength:{
+                $desc:"Sets the maximum number of characters in a tag.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : Integer",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getTagInputWidth:{
+                $desc:"Gets the tag input control's width.",
+                $rtn:"Integer"
+            },
+            setTagInputWidth:{
+                $desc:"Sets the tag input control's width.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : Integer",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getTagInputHeight:{
+                $desc:"Gets the tag input control's height.",
+                $rtn:"Integer"
+            },
+            setTagInputHeight:{
+                $desc:"Sets the tag input control's height.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : Integer",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getTagSpacing:{
+                $desc:"Gets the spacing between tag inputs.",
+                $rtn:"Integer"
+            },
+            setTagSpacing:{
+                $desc:"Sets the spacing between tag inputs.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : Integer",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getValueFormat:{
+                $desc:"Gets value format of the tag input control. Format is pattern which can be accepted by input box.",
+                $rtn:"String"
+            },
+            setValueFormat:{
+                $desc:"Sets value format of the tag input control.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : String",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getValueSeparator:{
+                $desc:"Gets the separator for tags value; Default is ','.",
+                $rtn:"String"
+            },
+            setValueSeparator:{
+                $desc:"Sets the separator for tags string value.",
+                $rtn:"[self]"
+            }
+        }
+    });
+    
     _.set(linb.Locale,["en","doc","linb","UI","Calendar"], {
         KEY:{$desc:"Class Name"},
         $desc:"linb.UI.Calendar Class",

@@ -71,7 +71,6 @@ Class("linb.UI.FoldingTabs", "linb.UI.Tabs",{
                 linb.UI.$tryResize(profile, t.width, t.height, true);
             });
         },
-        getCurPanel:null,
         _afterInsertItems:null
     },
     Static:{
@@ -417,9 +416,6 @@ Class("linb.UI.FoldingTabs", "linb.UI.Tabs",{
                 ini:'single',
                 listbox:['single', 'multi']
             }
-        },
-        EventHandlers:{
-            onItemSelected:function(profile, item, e, src, type){}
         },
         _prepareItems:function(profile, arr, pid){
             if(arr.length)
