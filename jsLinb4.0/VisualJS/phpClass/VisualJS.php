@@ -60,7 +60,7 @@ class VisualJS extends Unit
             break;
         case 'downloadhtml':
             $template = $io->getString(self::TEMPLATE_SINHTML);
-            $template = LINB::parseTemplate($template, array("libpath"=>"http://jslinb.appspot.com/","clsName" => $hash->clsName, "content"=>$hash->content, "theme"=>$hash->theme, "lang"=>$hash->lang));
+            $template = LINB::parseTemplate($template, array("libpath"=>"http://www.linb.net/","clsName" => $hash->clsName, "content"=>$hash->content, "theme"=>$hash->theme, "lang"=>$hash->lang));
 
     		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
     		header("Cache-Control: private",false);
