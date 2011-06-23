@@ -11848,7 +11848,8 @@ _.set(linb.Locale,["en","app"], {
             beforePop:{
                 $desc:"Fired before user click pop button. If returns false, pop function will be ignored.",
                 $paras:[
-                    "profile : linb.UIProfile."
+                    "profile : linb.UIProfile.",
+                    "options : Object. the following keys: parent, host, properties, events, host, theme, CS, CC, CB, CF"
                 ]
             },
             beforeClose:{
@@ -12542,7 +12543,8 @@ _.set(linb.Locale,["en","app"], {
                 $desc:"Fired before user clicked the pop button. If returns false, the tab won't be poped.",
                 $paras:[
                     "profile : linb.UIProfile.",
-                    "item: Object, the current item."
+                    "item: Object, the current item.",
+                    "options : Object. the following keys: parent, host, properties, events, host, theme, CS, CC, CB, CF"
                 ]
             },
             beforePageClose:{
@@ -13787,6 +13789,14 @@ _.set(linb.Locale,["en","app"], {
                     "var dlg=new linb.UI.Dialog({optBtn:true}); "+
                     "dlg.onShowOptions(function(){alert('onShowOptions');});"+
                     "dlg.show(null,false, 100,100);"
+                ]
+            },
+            onLand:{
+                $desc:"Fired when user click the land button.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "e: DOM event Object.",
+                    "src : String, the event source DOM element's linbid."
                 ]
             }
 

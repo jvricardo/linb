@@ -11773,7 +11773,8 @@ _.set(linb.Locale,["cn","app"], {
             beforePop:{
                 $desc:"在面板被弹出前调用. 返回false可阻止面板被弹出.",
                 $paras:[
-                    "profile : linb.UIProfile."
+                    "profile : linb.UIProfile.",
+                    "options : Object. 可以包括以下键值: parent, host, properties, events, host, theme, CS, CC, CB, CF"
                 ]
             },
             beforeClose:{
@@ -12466,7 +12467,8 @@ _.set(linb.Locale,["cn","app"], {
                 $desc:"当用户点击POP按钮前调用. 返回false可以阻止页面POP.",
                 $paras:[
                     "profile : linb.UIProfile.",
-                    "item: Object, 当前标签项."
+                    "item: Object, 当前标签项.",
+                    "options : Object. 可以包括以下键值: parent, host, properties, events, host, theme, CS, CC, CB, CF"
                 ]
             },
             beforePageClose:{
@@ -13712,6 +13714,14 @@ _.set(linb.Locale,["cn","app"], {
                     "var dlg=new linb.UI.Dialog({optBtn:true}); "+
                     "dlg.onShowOptions(function(){alert('onShowOptions');});"+
                     "dlg.show(null,false, 100,100);"
+                ]
+            },
+            onLand:{
+                $desc:"在用户单击LAND按钮时调用.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "e : Event, DOM事件元素.",
+                    "src: String, 事件所属DOM元素的linbid."
                 ]
             }
 

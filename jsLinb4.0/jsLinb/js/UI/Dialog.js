@@ -459,6 +459,11 @@ if(linb.browser.ie){
                 onClick:function(profile, e, src){
                     profile.boxing().close();
                 }
+            },
+            LAND:{
+                onClick:function(profile, e, src){
+                    profile.boxing().onLand(profile, e, src);
+                }
             }
         },
         DataModel:{
@@ -603,7 +608,8 @@ if(linb.browser.ie){
             onShow:function(profile){},
             beforeClose:function(profile){},
             onShowInfo:function(profile, e, src){},
-            onShowOptions:function(profile, e, src){}
+            onShowOptions:function(profile, e, src){},
+            onLand:function(profile, e, src){}
         },
         RenderTrigger:function(){
             this.destroyTrigger = function(){

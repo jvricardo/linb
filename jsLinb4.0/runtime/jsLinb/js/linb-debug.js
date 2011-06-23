@@ -25597,23 +25597,29 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                 onClick:function(profile, e, src){
                     var properties=profile.properties;
                     if(properties.disabled)return;
-                    var pos = profile.getRoot().offset(), size=profile.getRoot().cssSize();
+                    var pos = profile.getRoot().offset(), size=profile.getRoot().cssSize(),
+                        options={parent:null,host:null,properties:null,events:null,CS:null,CC:null,CB:null,CF:null};
 
-                    if(profile.beforePop && false==profile.boxing().beforePop(profile))
+                    if(profile.beforePop && false==profile.boxing().beforePop(profile,options))
                         return false;
                         
                     var pro = _.copy(linb.UI.Dialog.$DataStruct);
-                    _.merge(pro, properties, 'with');
                     _.merge(pro,{
                         dock:'none',
                         width:Math.max(size.width,200),
                         height:Math.max(size.height,100),
                         left:pos.left,
-                        top:pos.top
+                        top:pos.top,
+                        landBtn:true
                     },'all');
-                    var dialog = new linb.UI.Dialog(pro),arr=[];
-                    linb('body').append(dialog);
+                    _.merge(pro, properties, 'with');
+                     if(options.properties)
+                        _.merge(pro, options.properties, 'with');
+                    var dialog = new linb.UI.Dialog(pro,options.events||null,options.host||profile.host,options.CS||null,options.CC||null,options.CB||null,options.CF||null);
+                    
+                    (options.parent||linb('body')).append(dialog);
 
+                    var arr=[];
                     _.arr.each(profile.children,function(o){
                         arr.push(o[0]);
                     });
@@ -25720,7 +25726,7 @@ Class("linb.UI.Panel", "linb.UI.Div",{
         },
         EventHandlers:{
             onRefresh:function(profile){},
-            beforePop:function(profile){},
+            beforePop:function(profile, options){},
             beforeClose:function(profile){},
             onIniPanelView:function(profile){},
             beforeFold:function(profile){},
@@ -26927,19 +26933,19 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                 onClick:function(profile, e, src){
                     var properties = profile.properties,
                         item = profile.getItemByDom(src),
+                        options={parent:null,host:null,properties:null,events:null,CS:null,CC:null,CB:null,CF:null},
                         id=item.id;
 
                     if(properties.disabled || item.disabled)return;
                     if(properties.readonly || item.readonly)return false;
 
-                     if(profile.beforePagePop && false==profile.boxing().beforePagePop(profile,item))
+                    if(profile.beforePagePop && false==profile.boxing().beforePagePop(profile,item,options))
                         return false;
 
                     var panel = profile.boxing().getPanel(id),
                         pos = profile.getRoot().offset(),
                         size=profile.getRoot().cssSize(),
                         pro = _.copy(linb.UI.Dialog.$DataStruct);
-                    _.merge(pro, item, 'with');
                     _.merge(pro,{
                         dragKey: item.dragkey || properties.dragKey ,
                         dock:'none',
@@ -26947,10 +26953,14 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                         width:Math.max(size.width,200),
                         height:Math.max(size.height,100),
                         left:pos.left,
-                        top:pos.top
+                        top:pos.top,
+                        landBtn:true
                     },'all');
-                    var dialog = new linb.UI.Dialog(pro);
-                    linb('body').append(dialog);
+                    _.merge(pro, item, 'with');
+                    if(options.properties)
+                        _.merge(pro, options.properties, 'with');
+                    var dialog = new linb.UI.Dialog(pro,options.events||null,options.host||profile.host,options.CS||null,options.CC||null,options.CB||null,options.CF||null);
+                    (options.parent||linb('body')).append(dialog);
 
                     var arr=[];
                     _.arr.each(profile.children,function(o){
@@ -27100,7 +27110,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
         },
         EventHandlers:{
             onIniPanelView:function(profile, item){},
-            beforePagePop:function(profile, item){},
+            beforePagePop:function(profile, item, options){},
             beforePageClose:function(profile, item, src){},
             afterPageClose:function(profile, item){},
             onShowOptions:function(profile,item,e,src){},
@@ -36970,6 +36980,11 @@ if(linb.browser.ie){
                 onClick:function(profile, e, src){
                     profile.boxing().close();
                 }
+            },
+            LAND:{
+                onClick:function(profile, e, src){
+                    profile.boxing().onLand(profile, e, src);
+                }
             }
         },
         DataModel:{
@@ -37114,7 +37129,8 @@ if(linb.browser.ie){
             onShow:function(profile){},
             beforeClose:function(profile){},
             onShowInfo:function(profile, e, src){},
-            onShowOptions:function(profile, e, src){}
+            onShowOptions:function(profile, e, src){},
+            onLand:function(profile, e, src){}
         },
         RenderTrigger:function(){
             this.destroyTrigger = function(){

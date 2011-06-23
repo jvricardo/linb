@@ -237,23 +237,29 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                 onClick:function(profile, e, src){
                     var properties=profile.properties;
                     if(properties.disabled)return;
-                    var pos = profile.getRoot().offset(), size=profile.getRoot().cssSize();
+                    var pos = profile.getRoot().offset(), size=profile.getRoot().cssSize(),
+                        options={parent:null,host:null,properties:null,events:null,CS:null,CC:null,CB:null,CF:null};
 
-                    if(profile.beforePop && false==profile.boxing().beforePop(profile))
+                    if(profile.beforePop && false==profile.boxing().beforePop(profile,options))
                         return false;
                         
                     var pro = _.copy(linb.UI.Dialog.$DataStruct);
-                    _.merge(pro, properties, 'with');
                     _.merge(pro,{
                         dock:'none',
                         width:Math.max(size.width,200),
                         height:Math.max(size.height,100),
                         left:pos.left,
-                        top:pos.top
+                        top:pos.top,
+                        landBtn:true
                     },'all');
-                    var dialog = new linb.UI.Dialog(pro),arr=[];
-                    linb('body').append(dialog);
+                    _.merge(pro, properties, 'with');
+                     if(options.properties)
+                        _.merge(pro, options.properties, 'with');
+                    var dialog = new linb.UI.Dialog(pro,options.events||null,options.host||profile.host,options.CS||null,options.CC||null,options.CB||null,options.CF||null);
+                    
+                    (options.parent||linb('body')).append(dialog);
 
+                    var arr=[];
                     _.arr.each(profile.children,function(o){
                         arr.push(o[0]);
                     });
@@ -360,7 +366,7 @@ Class("linb.UI.Panel", "linb.UI.Div",{
         },
         EventHandlers:{
             onRefresh:function(profile){},
-            beforePop:function(profile){},
+            beforePop:function(profile, options){},
             beforeClose:function(profile){},
             onIniPanelView:function(profile){},
             beforeFold:function(profile){},
