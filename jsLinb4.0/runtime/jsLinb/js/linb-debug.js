@@ -25603,7 +25603,9 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                     if(profile.beforePop && false==profile.boxing().beforePop(profile,options))
                         return false;
                         
-                    var pro = _.copy(linb.UI.Dialog.$DataStruct);
+                    var pro = _.copy(linb.UI.Dialog.$DataStruct),
+                        events={};
+                    _.merge(pro, properties, 'with');
                     _.merge(pro,{
                         dock:'none',
                         width:Math.max(size.width,200),
@@ -25612,20 +25614,27 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                         top:pos.top,
                         landBtn:true
                     },'all');
-                    _.merge(pro, properties, 'with');
                      if(options.properties)
                         _.merge(pro, options.properties, 'with');
-                    var dialog = new linb.UI.Dialog(pro,options.events||null,options.host||profile.host,options.CS||null,options.CC||null,options.CB||null,options.CF||null);
+
+                    if(options.events)
+                        _.merge(events, options.events, 'all');
+                    if(!events.onRender){
+                        var arr=[];
+                        _.arr.each(profile.children,function(o){
+                            arr.push(o[0]);
+                        });
+                        if(arr.length)
+                            events.onRender=function(){
+                                dialog.append(linb.UI.pack(arr,false));
+                            };
+                    }                    
+
+                    var dialog = new linb.UI.Dialog(pro,events,options.host||profile.host,options.CS||null,options.CC||null,options.CB||null,options.CF||null);
                     
                     (options.parent||linb('body')).append(dialog);
 
-                    var arr=[];
-                    _.arr.each(profile.children,function(o){
-                        arr.push(o[0]);
-                    });
-                    dialog.append(linb.UI.pack(arr,false));
-
-                    profile.boxing().destroy();
+                    profile.boxing().removeChildren().destroy();
 
                     //for design mode in firefox
                     return false;
@@ -26945,7 +26954,10 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                     var panel = profile.boxing().getPanel(id),
                         pos = profile.getRoot().offset(),
                         size=profile.getRoot().cssSize(),
-                        pro = _.copy(linb.UI.Dialog.$DataStruct);
+                        pro = _.copy(linb.UI.Dialog.$DataStruct),
+                        events={};
+                    
+                    _.merge(pro, item, 'with');
                     _.merge(pro,{
                         dragKey: item.dragkey || properties.dragKey ,
                         dock:'none',
@@ -26956,22 +26968,29 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                         top:pos.top,
                         landBtn:true
                     },'all');
-                    _.merge(pro, item, 'with');
                     if(options.properties)
                         _.merge(pro, options.properties, 'with');
-                    var dialog = new linb.UI.Dialog(pro,options.events||null,options.host||profile.host,options.CS||null,options.CC||null,options.CB||null,options.CF||null);
+                    
+                    if(options.events)
+                        _.merge(events, options.events, 'all');
+                    if(!events.onRender){
+                        var arr=[];
+                        _.arr.each(profile.children,function(o){
+                            if(o[1]==id){
+                                // removed the lazy render flag
+                                delete o[0]['parent:'+profile.$linbid];
+                                arr.push(o[0]);
+                            }
+                        });
+                        if(arr.length)
+                            events.onRender=function(){
+                                dialog.append(linb.UI.pack(arr,false));
+                            };
+                    }
+                    var dialog = new linb.UI.Dialog(pro,events,options.host||profile.host,options.CS||null,options.CC||null,options.CB||null,options.CF||null);
                     (options.parent||linb('body')).append(dialog);
 
-                    var arr=[];
-                    _.arr.each(profile.children,function(o){
-                        if(o[1]==id)
-                            arr.push(o[0]);
-                    },null,true);
-
-                    if(arr.length)
-                        dialog.append(linb.UI.pack(arr,false));
-
-                    profile.boxing().removeItems(id);
+                    profile.boxing().removeChildren(id).removeItems(id);
 
                     //for design mode in firefox
                     return false;

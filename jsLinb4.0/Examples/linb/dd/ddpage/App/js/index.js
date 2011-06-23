@@ -232,7 +232,9 @@ Class('App', 'linb.Com',{
                 source = data.profile.boxing(),
                 para = source.getPanelPara(data.domId),
                 children = source.getPanelChildren(data.domId)
-
+            
+            para.popBtn=para.popBtn||para.landBtn;
+            
             if(target.addPanel(para, children, item))
                 source.removePanel(data.domId);
         } 
