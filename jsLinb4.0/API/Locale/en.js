@@ -1109,7 +1109,7 @@ _.set(linb.Locale,["en","app"], {
             ]
         },
         publish:{
-            $desc:"Publishes message to subscribers.",
+            $desc:"Publishes system message to subscribers.",
             $rtn:"undefined",
             $paras:[
                 "topic [Optional]: String, the topic. If it was not specified, the message will be published to all subscribers.", 
@@ -1118,7 +1118,7 @@ _.set(linb.Locale,["en","app"], {
             ]
         },
         getSubscribers:{
-            $desc:"Gets subscribers info.",
+            $desc:"Gets system subscribers info.",
             $rtn:"Object",
             $paras:[
                 "topic [Optional]: String, the topic. If it was not specified, all subscribers will be returned.",
@@ -1453,6 +1453,58 @@ _.set(linb.Locale,["en","app"], {
                 $desc:'To abort a linb.absIO process.',
                 $snippet:[
                     "//var a=linb.Ajax('uri').start(); \n //a.abort();"
+                ]
+            }
+        }
+    });
+
+    _.set(linb.Locale,["en","doc","linb","MessageService"], {
+        KEY:{$desc:"Class Name"},
+        $desc:"linb.MessageService Class",
+        prototype:{
+            subscribe:{
+                $desc:"Subscribes message.",
+                $rtn:"Integer",
+                $paras:[
+                    "topic [Required]: String, the topic.", 
+                    "subscriber [Required]: String, the unique id for subscriber.", 
+                    "receiver [Required]: Function, The subscriber's message receiver(callback function). If it returns [false], all the later subscribers will be ignored.", 
+                    "asy [Optional]: Boolean, asynchronous or not, the default value is [false]."
+                ],
+                $snippet:[
+                    "var jsm=new linb.MessageService();"+
+                    "jsm.subscribe('topic1','id1', function(msg){alert('subscriber 1th got a message: '+msg)},true);"+
+                    "jsm.subscribe('topic1','id2', function(msg){alert('subscriber 2th got a message: '+msg);return false});"+
+                    "jsm.subscribe('topic1','id3', function(msg){alert('subscriber 3th got a message: '+msg)});"+
+                    "jsm.publish('topic1',['The topic1 was published!']);"+
+                    "jsm.unsubscribe('topic1');"+
+                    "jsm.publish('topic1');"+
+                    "jsm.unsubscribe();"
+                ]
+            },
+            unsubscribe:{
+                $desc:"Unsubscribes message.",
+                $rtn:"undefined",
+                $paras:[
+                    "topic [Optional]: String, the topic. If it was not specified, all subscribers will be unsubscribed.", 
+                    "subscriber [Optional]: String, the unique id for subscriber. If it was not specified, all subscribers in the topic will be unsubscribed."
+                ]
+            },
+            publish:{
+                $desc:"Publishes message to subscribers.",
+                $rtn:"undefined",
+                $paras:[
+                    "topic [Optional]: String, the topic. If it was not specified, the message will be published to all subscribers.", 
+                    "args [Optional]: Array, arguments for the callback function.", 
+                    "scope [Optional]: Object, the callback function's scope."
+                ]
+            },
+            getSubscribers:{
+                $desc:"Gets subscribers info.",
+                $rtn:"Object",
+                $paras:[
+                    "topic [Optional]: String, the topic. If it was not specified, all subscribers will be returned.",
+                    "subscriber [Optional]: String, the unique id for subscriber.If it was not specified, all subscribers in the topic will be returned."
                 ]
             }
         }

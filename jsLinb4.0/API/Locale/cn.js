@@ -1471,6 +1471,58 @@ _.set(linb.Locale,["cn","app"], {
         }
     });
 
+    _.set(linb.Locale,["cn","doc","linb","MessageService"], {
+        KEY:{$desc:"本类名"},
+        $desc:"linb.MessageService 类",
+        prototype:{
+            subscribe:{
+                $desc:"订阅消息.",
+                $rtn:"Integer",
+                $paras:[
+                    "topic [必需参数]: String, 订阅的主题.", 
+                    "subscriber [必需参数]: String, 订阅者的唯一标识id.", 
+                    "receiver [必需参数]: Function, 订阅者的消息接收器. 同步的回调函数如返回false，会阻止消息发布到以后订阅者.", 
+                    "asy [可选参数]: Boolean, 是否异步订阅, 默认为[false]."
+                ],
+                $snippet:[
+                    "var jsm=new linb.MessageService();"+
+                    "jsm.subscribe('topic1','id1', function(msg){alert('subscriber 1th got a message: '+msg)},true);"+
+                    "jsm.subscribe('topic1','id2', function(msg){alert('subscriber 2th got a message: '+msg);return false});"+
+                    "jsm.subscribe('topic1','id3', function(msg){alert('subscriber 3th got a message: '+msg)});"+
+                    "jsm.publish('topic1',['The topic1 was published!']);"+
+                    "jsm.unsubscribe('topic1');"+
+                    "jsm.publish('topic1');"+
+                    "jsm.unsubscribe();"
+                ]
+            },
+            unsubscribe:{
+                $desc:"退订消息.",
+                $rtn:"undefined",
+                $paras:[
+                    "topic [可选参数]: String, 订阅的主题. 如不指定该参数会退订所有的订阅.", 
+                    "subscriber [可选参数]: String, 订阅者的唯一标识id. 如不指定该参数会退订所有topic下的订阅."
+                ]
+            },
+            publish:{
+                $desc:"发布消息.",
+                $rtn:"undefined",
+                $paras:[
+                    "topic [可选参数]: String, 发布消息的主题. 如不指定该参数会对所有发布消息.", 
+                    "args [可选参数]: Array, 发布消息的参数.", 
+                    "scope [可选参数]: Object, 发布消息所调用函数的scope."
+                ]
+            },
+            getSubscribers:{
+                $desc:"得到消息订阅情况.",
+                $rtn:"Object",
+                $paras:[
+                    "topic [可选参数]: String, 订阅的主题. 如不指定该参数会返回所有的订阅.", 
+                    "subscriber [可选参数]: String, 订阅者的唯一标识id. 如不指定该参数会返回所有topic下的订阅."
+                ]
+            }
+        }
+    });
+
     _.set(linb.Locale,["cn","doc","linb","XML"], {
         KEY:{$desc:"本类名"},
         $desc:"linb.XML 类(静态类)",
