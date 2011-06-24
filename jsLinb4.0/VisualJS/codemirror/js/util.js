@@ -50,7 +50,7 @@ function insertAfter(newNode, oldNode) {
 }
 
 function removeElement(node) {
-  if (node.parentNode)
+  if(node && node.parentNode)
     node.parentNode.removeChild(node);
 }
 

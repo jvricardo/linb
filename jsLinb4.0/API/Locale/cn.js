@@ -1250,6 +1250,9 @@ _.set(linb.Locale,["cn","app"], {
                 "linb.Thread('_bb',[function(){linb.message(1)},function(){linb.Thread.suspend('_bb');_.asyRun(function(){linb.Thread.resume('_bb')},3000)},function(){linb.message(2)}]).start();"
             ]
         },
+        getStatus:{
+            $desc:"得到线程的状态"
+        },
         resume:{
             $desc:"继续执行识别号为给定值的线程",
             $paras:[

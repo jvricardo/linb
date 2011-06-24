@@ -13,6 +13,10 @@ Class("VisualJS.CodeEditor", ["linb.UI.Widget","linb.absValue"] ,{
                 profile.$editor.focus();
             return this;
         },
+        clearHistory:function(){
+            var obj=this.get(0).$editor;
+            return obj.editor.history.clear();
+        },
         callEditor:function(name,args){
             var obj=this.get(0).$editor;
             return obj[name].apply(obj,args||[]);
@@ -32,7 +36,7 @@ Class("VisualJS.CodeEditor", ["linb.UI.Widget","linb.absValue"] ,{
                 }
             }            
         },
-        replaceCode:function(code){
+        replaceCode:function(code, crack){
             var profile = this.get(0),
                 cm=profile.$editor;
             if(cm){
@@ -41,6 +45,15 @@ Class("VisualJS.CodeEditor", ["linb.UI.Widget","linb.absValue"] ,{
                     delete cm.editor.selectionSnapshot;
 
                 cm.replaceSelection(code);
+                // crack for codemirror deleted <br> bug
+                if(crack){
+                    var pos=cm.cursorPosition();
+                    var br=cm.nextLine(pos.line);
+                    // remove the extra <br>
+                    if(br)
+                        br.parentNode.removeChild(br);
+                    cm.editor.history.reset();
+                }
                 cm.focus();
             }
         },
@@ -57,7 +70,8 @@ Class("VisualJS.CodeEditor", ["linb.UI.Widget","linb.absValue"] ,{
             });
         },
         // locate to {}
-        locateTo:function(id){
+        // crack is [true], for replaceSelection action
+        locateTo:function(id, crack){
             var profile = this.get(0),
                 cm=profile.$editor;
             if(cm){
@@ -67,7 +81,17 @@ Class("VisualJS.CodeEditor", ["linb.UI.Widget","linb.absValue"] ,{
                 elem2=win.document.getElementById('e'+id.slice(1));
                 if(elem && elem2){
                     cm.focus();
+                    
+                    // crack for codemirror deleted <br> bug
+                    if(crack){
+                        // add an extra <br>
+                        cm.insertIntoLine(elem2,0," \n");
+                        cm.editor.highlightDirty();
+                        elem2=elem2.nextSibling;
+                    }
+                    
                     cm.selectLines(elem.previousSibling, 0, elem2, 0);
+
                 }
                 var doc=win.document;
                 if(doc.body.scrollLeft)doc.body.scrollLeft=0;
@@ -91,6 +115,11 @@ Class("VisualJS.CodeEditor", ["linb.UI.Widget","linb.absValue"] ,{
                     if(te.className=="whitespace"){
                         length=te.currentText.length;
                         space=_.str.repeat(' ',length);
+                    }else if(!te.className){
+                        if(te.currentText){
+                            length=te.currentText.length - _.str.ltrim(te.currentText).length;
+                            space=_.str.repeat(' ',length);
+                        }
                     }
 
                     cm.insertIntoLine(elem,0,code.replace(/\n/g, "\n"+space));

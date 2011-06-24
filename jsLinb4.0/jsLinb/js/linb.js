@@ -1162,7 +1162,7 @@ Class('linb.Thread',null,{
             onStart:onStart,
             onEnd:onEnd,
             cache:{},
-            status:"run",
+            status:"ini",
             cycle:!!cycle
         });
     },
@@ -1178,54 +1178,55 @@ Class('linb.Thread',null,{
         },
         _task:function(){
             var self=this,p=self.profile;
-            if(!p.tasks)return;
 
-            var t={args:[]}, value=p.tasks[p.index],r,i,type=typeof value;
+            // maybe abort or no task
+            if(!p||!p.status||!p.tasks)
+                return;
+            // reset the asy flag
             p._asy=-1;
 
-            //maybe aborted
-            if(!p.status)return;
+            var t={}, value=p.tasks[p.index],r,i,type=typeof value;
 
             //function
             if(type=='function') t.task=value;
             //hash
             else if(type=='object')
                 for(i in value) t[i]=value[i];
-            //others, give all default
 
-            //defalut task
-            if(typeof t.task!='function')t.task=self._fun;
             //default callback
-            if(typeof t.callback!='function')t.callback=p.callback
+            if(typeof t.callback!='function')
+                t.callback=p.callback
 
-            //last arg is threadid
-            t.args.push(p.id);
-            //to next pointer
+            if(typeof t.task=='function'){
+                t.args=t.args||[];
+                //last arg is threadid
+                t.args.push(p.id);                
+            }
+
+            // to next pointer
             p.index++;
             p.time=_();
-            //if error raise in the process, abort the thread
-            //try{
-                r = _.tryF(t.task, t.args || [p.id], t.scope||self, null);
-                //called abort in [task]
-                if(!p.status)return;
 
-                //cache return value
-                if(t.id)p.cache[t.id] = r;
-                // call back function
-                // if callback return false, stop.
-                if(t.callback)
-                    if(false===_.tryF(t.callback, [p.id], self, true)){
-                      self.abort();
-                      return;
-                    }
-                //called suspend in [task]
-                if(p.status!=="run")return;
-            //}catch(e){
-           //     self.abort();
-            //    linb.Debugger && linb.Debugger.trace(e);
-           // }
-            // if set Sleep at t.task or t.callback , stop continue running
-            if(!p || p.status!=="run")return;
+            // the real task
+            if(typeof t.task=='function')
+                r = _.tryF(t.task, t.args || [p.id], t.scope||self, null);
+
+            // maybe abort called in abover task
+            if(!p.status)
+                return;
+
+            // cache return value
+            if(t.id)
+                p.cache[t.id] = r;
+
+            // if callback return false, stop.
+            if(t.callback && false===_.tryF(t.callback, [p.id], self, true))
+                return self.abort();
+
+            // if set suspend at t.task or t.callback , stop continue running
+            if(p.status!=="run")
+                return;
+
             self.start();
         },
         start:function(time){
@@ -1236,19 +1237,29 @@ Class('linb.Thread',null,{
                 if(false===_.tryF(p.onStart,[p.id],self))
                     return self.abort();
             }
-            if(!p.tasks.length)return self.abort();
-            if(p.index>=p.tasks.length)
+            if(p.status!="run")
+                p.status="run";
+
+            if(!p.tasks.length)
+                return self.abort();
+
+            if(p.index>=p.tasks.length){
                 if(p.cycle===true)
                     self.profile.index = 0;
                 else
                     return self.abort();
+            }
             task=p.tasks[p.index];
 
-            delay=typeof task=='number'?task:typeof task.delay=='number'?task.delay:p.delay;
+            delay=typeof task=='number' ? task : (task && typeof task.delay=='number') ? task.delay : p.delay;
             p._left= (time || time===0)?time:delay;
 
-            if(p._asy!=-1)clearTimeout(p._asy);
+            // clear the mistake trigger task
+            if(p._asy!=-1)
+                clearTimeout(p._asy);
+            
             p._asy = _.asyRun(self._task, p._left, [], self);
+            
             p.time=_();
             return self;
         },
@@ -1320,6 +1331,9 @@ Class('linb.Thread',null,{
         },
         isAlive:function(){
             return !!linb.$cache.thread[this.id];
+        },
+        getStatus:function(){
+            return this.profile.status;
         }
     },
     After:function(){
@@ -1406,7 +1420,7 @@ Class('linb.Thread',null,{
             }],0,null,onStart,onEnd);
         },
         repeat:function(task, interval, onStart, onEnd){
-            return linb.Thread(null,[_.fun()],interval||0,task,onStart,onEnd,true).start();
+            return linb.Thread(null,[null],interval||0,task,onStart,onEnd,true).start();
         }
     }
 });

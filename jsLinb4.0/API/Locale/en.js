@@ -1238,6 +1238,9 @@ _.set(linb.Locale,["en","app"], {
                 "linb.Thread('_bb',[function(){linb.message(1)},function(){linb.Thread.suspend('_bb');_.asyRun(function(){linb.Thread.resume('_bb')},3000)},function(){linb.message(2)}]).start();"
             ]
         },
+        getStatus:{
+            $desc:"Gets the thread's status."
+        },
         resume:{
             $desc:"Resumes to execute a thread that is suspended.",
             $paras:[

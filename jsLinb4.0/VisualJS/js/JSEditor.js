@@ -6,6 +6,10 @@ Class('VisualJS.JSEditor', 'linb.Com',{
         events:{onDestroy:"_ondestroy"},
         _ondestroy:function(){
             var ns=this,name="editor.iframe."+ns.$linbid;
+            if(ns.$tasksthread){
+                ns.$tasksthread.abort();
+                ns.$tasksthread=null;
+            }
             if(document.getElementById(name)){
                 document.body.removeChild(document.getElementById(name));
                 try{delete frames[name]}catch(e){}
@@ -535,44 +539,32 @@ Class('VisualJS.JSEditor', 'linb.Com',{
             designer.setEvents('onValueChanged',function(ipage, profile){
                 ns.fireEvent('onValueChanged', [ns, true]);
             });
-            designer.startTransaction=function(){
+            designer.resetTaskList=function(){
                 ns._disable();
-                ns.$transThread=new linb.Thread();
+                ns.$transTaskList=[];
             };
-            designer.submitTransaction=function(onEnd){
-                ns.$transThread.insert(function(){
-                    ns._enable();
-                },-1);
-
-                if(onEnd)
-                    ns.$transThread.insert(onEnd,-1);
-
-                if(ns.codeeditor.isReady()){
-                    ns.$transThread.start();
-                }
+            designer.addTask=function(task){
+                ns.$transTaskList.push(task);
+            };
+            designer.startTaskList=function(){
+                ns.checkRenderStatus(ns);
             };
             designer.resetCode=function(pkey, key, code, syn){
-                var fun=function(){
-                    if(ns.tryToLocale([pkey,key])){
-                        ns.replaceCode(code);
+                if(ns.tryToLocale([pkey,key], true)){
+                    ns.replaceCode(code, true);
 
-                        if(pkey=='Instance' && key=='iniComponents'){
-                            ns._uicode=""+(new Function([],code.slice(code.indexOf('{')+1, code.lastIndexOf('}'))));
-                            ns._uicode=ns._uicode.slice(ns._uicode.indexOf('{')+1, ns._uicode.lastIndexOf('}'));
+                    if(pkey=='Instance' && key=='iniComponents'){
+                        ns._uicode=""+(new Function([],code.slice(code.indexOf('{')+1, code.lastIndexOf('}'))));
+                        ns._uicode=ns._uicode.slice(ns._uicode.indexOf('{')+1, ns._uicode.lastIndexOf('}'));
 
 //console.log("reset ui code:", ns._uicode);
-                            _.resetRun(ns.KEY+":"+ns.$linbid+":onBlockAdded", function(){
-                                ns._buildNameSpace(true);
-                            });
-                        }
-                    }else{
-                        designer.addCode(pkey, key, key+" : "+code, syn);
+                        _.resetRun(ns.KEY+":"+ns.$linbid+":onBlockAdded", function(){
+                            ns._buildNameSpace(true);
+                        });
                     }
-                };
-                if(syn){
-                    fun();
-                }else
-                    ns.$transThread.insert(fun,-1);
+                }else{
+                    designer.addCode(pkey, key, key+" : "+code, syn);
+                }
             };
             designer.addCode=function(pkey, key, code, syn){
                 var fun=function(){
@@ -582,14 +574,16 @@ Class('VisualJS.JSEditor', 'linb.Com',{
                 if(syn){
                     fun();
                 }else
-                    ns.$transThread.insert(fun,-1);
+                    ns.$transTaskList.push(fun);
             };
             designer.focusEditor=function(pkey, key){
                 ns.showPage('code');
+                ns._enable();
                 ns.tryToLocale([pkey,key]);
             };
             designer.searchInEditor=function(code){
                 ns.showPage('code');
+                ns._enable();
                 var cursor = ns.codeeditor.searchCode(code);
             };
             designer.refreshFromCode=function(){
@@ -598,6 +592,12 @@ Class('VisualJS.JSEditor', 'linb.Com',{
                     this.refreshView(obj.ok);
                     linb.message(linb.getRes('VisualJS.designer.refreshOK'));
                 }
+            };
+            designer.buildNameSpace=function(force){
+                var fun=function(){
+                    ns._buildNameSpace(force);
+                };
+                ns.$transTaskList.push(fun);
             };
             ns.paneDesign.append(designer);
         },
@@ -726,6 +726,9 @@ Class('VisualJS.JSEditor', 'linb.Com',{
                 ns.paneCode.setDockIgnore(false).setVisibility('visible').setZIndex(100).reLayout();
             }else if(nv=='design'){
 
+                // must clear it first
+                ns.codeeditor.clearHistory();
+
                 if(!VisualJS.ClassTool.getClassName(ns.codeeditor.getUIValue()||"")){
                     linb.message(linb.getRes('VisualJS.classtool.noClass'));
                     return false;
@@ -790,12 +793,16 @@ Class('VisualJS.JSEditor', 'linb.Com',{
             var ns=this;
             var id=ns.KEY+":"+ns.$linbid+":progress";
             _.resetRun(id, function(){
-                ns.codeeditor.setReadonly(true);
-
-                ns.toolbar4.setDisabled(true);
-                ns.treebarClass.setDisabled(true);
-
-                if(ns.imgProgress)ns.imgProgress.setDisplay('');
+                if(!ns.__disabledUI){
+                    ns.codeeditor.setReadonly(true);
+    
+                    ns.toolbar4.setDisabled(true);
+                    ns.treebarClass.setDisabled(true);
+    
+                    if(ns.imgProgress)ns.imgProgress.setDisplay('');
+                    
+                    ns.__disabledUI=true;
+                }
             });
         },
         _enable:function(){
@@ -803,26 +810,40 @@ Class('VisualJS.JSEditor', 'linb.Com',{
             var id=ns.KEY+":"+ns.$linbid+":progress";
             _.resetRun(id);
 
+            delete ns.__disabledUI;
+
             ns.codeeditor.setReadonly(false);
             ns.toolbar4.setDisabled(false);
             ns.treebarClass.setDisabled(false);
 
             if(ns.imgProgress)ns.imgProgress.setDisplay('none');
         },
+        checkRenderStatus:function(ns){
+            if(ns._renderStatus &&  ns.$transTaskList &&  ns.$transTaskList.length){
+                var fun=ns.$transTaskList.shift();
+                _.tryF(fun);
+            }
+            return true;
+        },
         _codeeditor_onrender:function(profile, finished){
             var ns=this;
             if(finished){
                 ns._enable();
                 if(!ns.$initializd){
+                    // start a repeat thread
+                    ns.$tasksthread=linb.Thread.repeat(function(){
+                        ns.checkRenderStatus(ns);
+                    },50);
+                    ns.$tasksthread.start();
+                    
                     ns.$initializd=true;
                     ns.showPage(ns.$dftpage);
                 }
 
-                if(ns.$transThread && ns.$transThread.isAlive())
-                    ns.$transThread.start();
             }else{
                 ns._disable();
             }
+            ns._renderStatus=finished;
         },
         _codeeditor_onChange:function(profile){
            this._dirty=true;
@@ -857,9 +878,9 @@ Class('VisualJS.JSEditor', 'linb.Com',{
                 }
             }
         },
-        replaceCode:function(code){
+        replaceCode:function(code, reset){
             var ns=this;
-            ns.codeeditor.replaceCode(code);
+            ns.codeeditor.replaceCode(code, reset);
         },
         ensureInstanceExpand:function(){
             var ns=this;
@@ -903,7 +924,7 @@ Class('VisualJS.JSEditor', 'linb.Com',{
                 });
             }
         },
-        tryToLocale:function(arr){
+        tryToLocale:function(arr, crack){
             this.ensureInstanceExpand();
             
             var ns=this;
@@ -917,7 +938,7 @@ Class('VisualJS.JSEditor', 'linb.Com',{
                         break;
                     }
                     if(key[0]==arr[0]){
-                        ns.codeeditor.locateTo(id);
+                        ns.codeeditor.locateTo(id, crack);
                         return true;
                         break;
                     }
@@ -943,7 +964,7 @@ Class('VisualJS.JSEditor', 'linb.Com',{
                             break;
                         }
                         if(key[0]==arr[1]){
-                            ns.codeeditor.locateTo(id);
+                            ns.codeeditor.locateTo(id, crack);
                             return true;
                             break;
                         }

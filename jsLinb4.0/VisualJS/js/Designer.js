@@ -116,7 +116,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                     }
 
                     var v=obj['get'+_.str.initial(key)]();
-                    
+
                     if(linb.UI.$ps[key]){
                         t=parseInt(profile.getRoot().css(key))||0;
                         if(t!=v){
@@ -151,7 +151,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                             if(profile.properties.disabled)return;
                             // not resizable or drag
                             if(!profile.properties.dragKey)return;
-        
+
                             // avoid nodraggable keys
                             if(profile.behavior.NoDraggableKeys){
                                 var sk = profile.getKey(linb.Event.getSrc(e).id || "").split('-')[1];
@@ -320,22 +320,18 @@ Class('VisualJS.Designer', 'linb.Com',{
         isDirty:function(){
             return !!this._dirty;
         },
-        resetCodeFromDesigner:function(syn){
+        resetCodeFromDesigner:function(){
             var page=this;
             if(page._dirty){
-                if(!syn)
-                    page.startTransaction();
-
+                
                 var nodes = page.getWidgets(true);
                 // reset iniComponents code
                 var code = ('{\n' + page.getJSCode(nodes) ).replace(/\n/g, '\n'+_.str.repeat(' ',12))
                     + '\n'+_.str.repeat(' ',8)+ '}';
-                page.resetCode("Instance", "iniComponents", code, syn);
-                
-                if(!syn)
-                    page.submitTransaction();
+                page.resetCode("Instance", "iniComponents", code);
+
                 page._dirty=false;
-            }                    
+            }
         },
         _createResizer:function(){
             var page=this;
@@ -480,14 +476,16 @@ Class('VisualJS.Designer', 'linb.Com',{
                     var arr = this.tempSelected;
                     if(arr.length){
                         var o = linb.getObject(arr[0]);
-                        page.startTransaction();
+                        page.resetTaskList();
                         // if dirty
                         if(page._dirty)
-                            page.resetCodeFromDesigner(true);
-                            
-                        page.submitTransaction(function(){
+                            page.resetCodeFromDesigner();
+
+                        page.addTask(function(){
                             page.searchInEditor(".setHost(host,\""+o.alias+"\")");
                         });
+                        
+                        page.startTaskList();
                     }
                 }
             })
@@ -637,7 +635,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                 self=this;
             //change
             self._giveHandler(profile);
-            
+
             profile.$inDesign=true;
 
             var t=profile.behavior.PanelKeys;
@@ -651,7 +649,7 @@ Class('VisualJS.Designer', 'linb.Com',{
             //for UI refresh itself
             profile.$refreshTrigger=function(profile){
                 me.call(self,profile);
-                
+
                 //off editor
                 self.profileGrid.offEditor();
             };
@@ -750,7 +748,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                             }
                             return false;
                         });
-                        
+
                         profile.$onDock=function(profile){
                             var t;
                             if((t=profile.parent) && t.reSelectObject &&_.arr.indexOf(page.tempSelected, profile.$linbid)!=-1){
@@ -891,7 +889,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                                 }
                                 target.setZIndex(1);
                                 target.render();
-                            
+
                                 var pro = target.get(0);
 
                                 page._designable(pro);
@@ -906,7 +904,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                                 //_.tryF(page.afterAddWidget, [target, profile.$linbid], page);
 
                                 profile.setSelectFromPanel.call(profile, src, ids);
-                    
+
                             }
                         };
                         fun.page=page;
@@ -1135,7 +1133,7 @@ Class('VisualJS.Designer', 'linb.Com',{
             var page=this,
                 data=page._cls;
             page.profileGrid.removeAllRows();
-            
+
             // for the com
             if(!ids || !ids.length){
                 var pro = this.canvas.get(0),
@@ -1147,7 +1145,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                     var $fun = function(profile, cell){
                         var o = cell.$tagVar;
                         if(!o)return;
-                        
+
                         var funname;
                         if(!cell.value){
                             funname='_'+o.widgetName.toLowerCase().replace(/\./g,'_')+'_'+o.key.toLowerCase();
@@ -1155,18 +1153,23 @@ Class('VisualJS.Designer', 'linb.Com',{
                         }else{
                             funname=cell.value;
                         }
-                        
-                        page.startTransaction();
-                        
+
+                        page.resetTaskList();
+
                         if(!page._cls.Instance[funname]){
                             // reset
                             page.resetCode("Instance","events",_.stringify(page._cls.Instance.events));
+
                             page.addCode("Instance", funname, (funname + " : " + o.ini.toString().replace(/\s*\}$/,'\n\n}')) );
+
+                            page.buildNameSpace(true);
                         }
-                        
-                        page.submitTransaction(function(){
+
+                        page.addTask(function(){
                             page.focusEditor("Instance", funname);
                         });
+                        
+                        page.startTaskList();
                         
                         page._dirty=false;
                     },
@@ -1232,13 +1235,13 @@ Class('VisualJS.Designer', 'linb.Com',{
                       uis = pro.boxing();
                   }
 
-                  rows.push({id:'key', tipk:'class', caption:'<strong>class</strong>', 
-                    tips:CONF.designer_editMode != "simple"?linb.getRes('VisualJS.designer.openapi'):"", 
-                    cells:[{disabled:true, value:'<strong>'+pro.key+'</strong>',type:'label', 
-                        
+                  rows.push({id:'key', tipk:'class', caption:'<strong>class</strong>',
+                    tips:CONF.designer_editMode != "simple"?linb.getRes('VisualJS.designer.openapi'):"",
+                    cells:[{disabled:true, value:'<strong>'+pro.key+'</strong>',type:'label',
+
                         tips:CONF.designer_editMode != "simple"?linb.getRes('VisualJS.designer.openapi'):""}] });
                   rows.push({id:'alias',tipk:'fun', tipv:'alias',caption:'<strong>alias</strong>',cells:[{value:pro.alias,type:uis._nodes.length===1?'input':'label'}] });
-                  
+
                   if(CONF.designer_editMode != "simple"){
                       if(pro.domId){
                           rows.push({id:'theme',tipk:'fun', tipv:'theme',caption:'<strong>theme</strong>',cells:[{value:pro.theme, type:'input'}] });
@@ -1689,12 +1692,12 @@ Class('VisualJS.Designer', 'linb.Com',{
             //for properties
             if(id=='properties' || id=='special'){
                 _.each(target.box.$DataStruct,function(o,i){
-                    
+
                     if(CONF.widgets_hideProps && CONF.widgets_hideProps[i])
                         return;
-                    
+
                     caption=cellEx=null;
-                    
+
                     $tagVar=null;
                     if(i.charAt(0)=='_'||i.charAt(0)=='$') return;
                     if(dm[i].hidden) return;
@@ -1755,7 +1758,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                         type='popbox';
                         editorReadonly=true;
                         cv=caption='[<strong> custom </strong>]';
-                        
+
                         if(_.isFun(dm[i].customIniCell)){
                             type='label';
                             cv='';
@@ -1853,7 +1856,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                         $fun = function(profile, cell, pro){
                             var o = cell.$tagVar;
                             if(!o)return;
-                            
+
                             _.tryF(o.trigger,null,o.profile.boxing());
                         };
                         $tagVar = {
@@ -1972,8 +1975,8 @@ Class('VisualJS.Designer', 'linb.Com',{
                     }else{
                         funname=cell.value;
                     }
-                    
-                    page.startTransaction();
+
+                    page.resetTaskList();
 
                     if(page._dirty){
                         var nodes = page.getWidgets(true);
@@ -1982,17 +1985,22 @@ Class('VisualJS.Designer', 'linb.Com',{
                             + '\n'+_.str.repeat(' ',8)+ '}';
                         page.resetCode(o.path, "iniComponents", code);
                     }
-                    
+
                     if(!page._cls.Instance[funname]){
-                         var code = funname + " : " + o.ini.toString().replace(/\s*\}$/,'') + 
+                         var code = funname + " : " + o.ini.toString().replace(/\s*\}$/,'') +
                              '\n'+_.str.repeat(' ',4) + "var ns = this, uictrl = profile.boxing();"+
                              '\n}';
-                         page.addCode(o.path, funname, code);
+                        page.addCode(o.path, funname, code);
+
+                        page.buildNameSpace(true);
                     }
-                    
-                    page.submitTransaction(function(){
+
+                    page.addTask(function(){
                         page.focusEditor(o.path, funname);
                     });
+                    
+                    page.startTaskList();
+                    
                     page._dirty=false;
                 };
 
@@ -2326,13 +2334,13 @@ Class('VisualJS.Designer', 'linb.Com',{
                     _.arr.each(n2,function(target){
                         self.iconlist.insertItems([{id:target.$linbid, image:linb.ini.img_bg, tips:target.key, imgStyle:'background:url(' + CONF.mapWidgets[target.box.KEY].image + ') '+ CONF.mapWidgets[target.box.KEY].imagePos}],null,false);
                     });
-    
+
                     var t=self.layoutBase.reBoxing();
                     if(t.css('display')=='none'){
                         t.css('display','block');
                         t.parent().css('background','');
                     }
-    
+
                     _.asyRun(function(){
                         linb.UI.pack(nodes, false).adjustDock();
                     });
@@ -2345,7 +2353,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                     linb.message(String(e));
                 }
                 linb.Dom.setCover(false);
-            
+
                // self.profileGrid.reLayout();
             }
 
@@ -2393,35 +2401,35 @@ Class('VisualJS.Designer', 'linb.Com',{
         iniComponents:function(){
             // [[code created by jsLinb UI Builder
             var host=this, children=[], append=function(child){children.push(child.get(0))};
-            
+
             append(
                 (new linb.UI.PopMenu)
                 .setHost(host,"popViewSize")
                 .setItems([{"id":"800", "caption":"800 &#215 600"}, {"id":"1024", "caption":"1024 &#215 768"}, {"id":"1280", "caption":"1280 &#215 1024"}])
                 .onMenuSelected("_popvs_onmenusel")
             );
-            
+
             append(
                 (new linb.UI.Layout)
                 .setHost(host,"layoutBase")
                 .setItems([{"id":"before", "pos":"before", "locked":false, "cmd":true, "size":170, "min":100, "max":300, "hide":false, "folded":false, "hidden":false}, {"id":"main", "min":10}, {"id":"after", "pos":"after", "locked":false, "cmd":false, "size":265, "min":100, "max":350, "hide":false, "folded":false, "hidden":false}])
                 .setType("horizontal")
             );
-            
+
             host.layoutBase.append(
                 (new linb.UI.ToolBar)
                 .setHost(host,"toolbar")
                 .setItems([])
                 .onClick("$toolbar_onclick")
             , 'main');
-            
+
             host.layoutBase.append(
                 (new linb.UI.Panel)
                 .setHost(host,"panelRigth")
                 .setCaption("$VisualJS.designer.configwnd")
                 .setCustomStyle({"PANEL":"overflow:hidden"})
             , 'after');
-            
+
             host.panelRigth.append(
                 (new linb.UI.ComboInput)
                 .setHost(host,"listObject")
@@ -2431,7 +2439,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                 .setInputReadonly(true)
                 .beforeComboPop("$listobject_onlistshow")
             );
-            
+
             host.panelRigth.append(
                 (new linb.UI.TreeGrid)
                 .setHost(host,"profileGrid")
@@ -2446,21 +2454,21 @@ Class('VisualJS.Designer', 'linb.Com',{
                 .beforeCellUpdated("$profilegrid_beforecellvalueset")
                 .onDblclickRow("$tg_click")
             );
-            
+
             host.layoutBase.append(
                 (new linb.UI.Panel)
                 .setHost(host,"panelLeft")
                 .setCaption("$VisualJS.designer.toolsbox")
                 .setCustomStyle({"PANEL":"overflow:hidden"})
             , 'before');
-            
+
             host.panelLeft.append(
                 (new linb.UI.TreeBar)
                 .setHost(host,"treebarCom")
                 .setSelMode("none")
                 .setDragKey("___iDesign")
             );
-            
+
             host.layoutBase.append(
                 (new linb.UI.Div)
                 .setHost(host,"panelDiv")
@@ -2468,7 +2476,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                 .setCustomStyle({"KEY":"overflow:auto;"})
                 .setCustomClass({"KEY":"linbdesign"})
             , 'main');
-            
+
             host.panelDiv.append(
                 (new linb.UI.Div)
                 .setHost(host,"panelBG")
@@ -2478,7 +2486,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                 .setHeight(100)
                 .setCustomStyle({"KEY":"background-color:#FFFEF6;"})
             );
-            
+
             host.panelBG.append(
                 (new linb.UI.Div)
                 .setHost(host,"panelBGl")
@@ -2486,7 +2494,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                 .setHeight(100)
                 .setCustomStyle({"KEY":"font-size:0;line-height:0;position:absolute;left:0;top:0;width:10px;height:100%;background:url(img/designer/left.gif) left top"})
             );
-            
+
             host.panelBG.append(
                 (new linb.UI.Div)
                 .setHost(host,"panelBGb")
@@ -2494,7 +2502,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                 .setHeight(100)
                 .setCustomStyle({"KEY":"font-size:0;line-height:0;position:absolute;left:0;bottom:0;height:10px;width:100%;background:url(img/designer/top.gif) left bottom"})
             );
-            
+
             host.panelBG.append(
                 (new linb.UI.Div)
                 .setHost(host,"panelBGt")
@@ -2502,7 +2510,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                 .setHeight(100)
                 .setCustomStyle({"KEY":"font-size:0;line-height:0;position:absolute;left:0;top:0;height:10px;width:100%;background:url(img/designer/top.gif) left top"})
             );
-            
+
             host.panelBG.append(
                 (new linb.UI.Div)
                 .setHost(host,"panelBGr")
@@ -2510,7 +2518,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                 .setHeight(100)
                 .setCustomStyle({"KEY":"font-size:0;line-height:0;position:absolute;right:0;top:0;width:10px;height:100%;background:url(img/designer/left.gif) top right"})
             );
-            
+
             host.panelDiv.append(
                 (new linb.UI.Pane)
                 .setHost(host,"canvas")
@@ -2521,7 +2529,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                 .setZIndex(10)
                 .setCustomStyle({"KEY":"overflow:hidden"})
             );
-            
+
             return children;
             // ]]code created by jsLinb UI Builder
         },
