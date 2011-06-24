@@ -1081,6 +1081,50 @@ _.set(linb.Locale,["en","app"], {
                 "linb.prompt('title','caption', 'content content ',function(str){alert(str)})"
             ]
         },
+        subscribe:{
+            $desc:"Subscribes system message.",
+            $rtn:"Integer",
+            $paras:[
+                "topic [Required]: String, the topic.", 
+                "subscriber [Required]: String, the unique id for subscriber.", 
+                "receiver [Required]: Function, The subscriber's message receiver(callback function). If it returns [false], all the later subscribers will be ignored.", 
+                "asy [Optional]: Boolean, asynchronous or not, the default value is [false]."
+            ],
+            $snippet:[
+                "linb.subscribe('topic1','id1', function(msg){alert('subscriber 1th got a message: '+msg)},true);"+
+                "linb.subscribe('topic1','id2', function(msg){alert('subscriber 2th got a message: '+msg);return false});"+
+                "linb.subscribe('topic1','id3', function(msg){alert('subscriber 3th got a message: '+msg)});"+
+                "linb.publish('topic1',['The topic1 was published!']);"+
+                "linb.unsubscribe('topic1');"+
+                "linb.publish('topic1');"+
+                "linb.unsubscribe();"
+            ]
+        },
+        unsubscribe:{
+            $desc:"Unsubscribes system message.",
+            $rtn:"undefined",
+            $paras:[
+                "topic [Optional]: String, the topic. If it was not specified, all subscribers will be unsubscribed.", 
+                "subscriber [Optional]: String, the unique id for subscriber. If it was not specified, all subscribers in the topic will be unsubscribed."
+            ]
+        },
+        publish:{
+            $desc:"Publishes message to subscribers.",
+            $rtn:"undefined",
+            $paras:[
+                "topic [Optional]: String, the topic. If it was not specified, the message will be published to all subscribers.", 
+                "args [Optional]: Array, arguments for the callback function.", 
+                "scope [Optional]: Object, the callback function's scope."
+            ]
+        },
+        getSubscribers:{
+            $desc:"Gets subscribers info.",
+            $rtn:"Object",
+            $paras:[
+                "topic [Optional]: String, the topic. If it was not specified, all subscribers will be returned.",
+                "subscriber [Optional]: String, the unique id for subscriber.If it was not specified, all subscribers in the topic will be returned."
+            ]
+        },
         getDateFormat:{
             $desc:"Gets the Date object's serialize format.",
             $rtn:"String",
