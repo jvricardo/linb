@@ -1768,7 +1768,7 @@ Class('linb.Ajax','linb.absIO',{
                 var ns=this,obj,status = ns._XML.status;
                 _txtresponse = rspType=='xml'?ns._XML.responseXML:ns._XML.responseText;
                 // try to get js object, or the original
-                _response=rspType=="json"?((obj=_.unserialize(_txtresponse)===false?_txtresponse:obj)):_txtresponse;
+                _response=rspType=="json"?((obj=_.unserialize(_txtresponse))===false?_txtresponse:obj):_txtresponse;
                 if(status===undefined || status===0 || status==304 || (status >= 200 && status < 300 ))
                     _onResponse();
                 else
