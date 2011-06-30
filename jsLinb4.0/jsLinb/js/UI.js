@@ -3774,6 +3774,7 @@ Class("linb.UI",  "linb.absObj", {
                     item.$linbid=t.$linbid;
                     t.$item=item;
                     t.$holder=profile;
+                    if(!t.host||t.host===t)t.boxing().setHost(profile.host,t.alias);
                     if(!profile.$attached)profile.$attached=[];
                     profile.$attached.push(t);
                 }else{
