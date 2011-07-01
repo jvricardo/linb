@@ -3265,7 +3265,7 @@ Class("linb.UI",  "linb.absObj", {
         getTheme:function(){
             return this.$theme;
         },
-        setTheme:function(key, refresh){
+        setTheme:function(key, refresh, onSucess, onFail){
             key=key||'default';
             var ns=this;
             if(key!=ns.$theme){
@@ -3283,8 +3283,10 @@ Class("linb.UI",  "linb.absObj", {
                     ns.$CSSCACHE={};
                     var count=0;
                     _.asyRun(function(){
-                        if(count>10)
-                            throw new Error('errLoadTheme:'+key);
+                        if(count>10){
+                            if(false!==_.tryF(onFail))
+                                throw new Error('errLoadTheme:'+key);
+                        }
                         count++;
                         var s;
                         try{
@@ -3292,6 +3294,7 @@ Class("linb.UI",  "linb.absObj", {
                         }catch(e){}finally{
                             if(s==key || key=='default'){
                                 linb.UI.getAll().reLayout(true);
+                                _.tryF(onSucess);
                                 count=null;
                             }else
                                 _.asyRun(arguments.callee,200*count);
