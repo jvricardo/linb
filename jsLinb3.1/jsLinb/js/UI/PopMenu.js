@@ -240,7 +240,7 @@ Class("linb.UI.PopMenu",["linb.UI.Widget","linb.absList"],{
             },
             'items.button':{
                 ITEM:{
-                    tabindex: 1,
+                    tabindex: -1,
                     className: '{itemClass} {disabled}',
                     style:'{itemStyle}{itemDisplay}',
                     ICON:{
@@ -267,7 +267,7 @@ Class("linb.UI.PopMenu",["linb.UI.Widget","linb.absList"],{
             },
             'items.checkbox':{
                 ITEM:{
-                    tabindex: 1,
+                    tabindex: -1,
                     className: '{itemClass} {disabled}',
                     style:'{itemStyle}{itemDisplay}',
                     CHECKBOX:{
@@ -292,7 +292,7 @@ Class("linb.UI.PopMenu",["linb.UI.Widget","linb.absList"],{
             },
             'items.radiobox':{
                 ITEM:{
-                    tabindex: 1,
+                    tabindex: -1,
                     className: '{itemClass} {disabled}',
                     style:'{itemStyle}{itemDisplay}',
                     RADIOBOX:{

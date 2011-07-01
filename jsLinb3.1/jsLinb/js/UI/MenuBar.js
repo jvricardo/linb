@@ -163,7 +163,8 @@ Class("linb.UI.MenuBar",["linb.UI","linb.absList" ],{
                 height:0,
                 visibility:'hidden',
                 position:'absolute',
-                left:'-10000px'
+                left:'-10000px',
+                top:'-10000px'
             },
             BORDER:{
                 left:0,
