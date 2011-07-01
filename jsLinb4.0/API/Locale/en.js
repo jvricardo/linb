@@ -6679,7 +6679,9 @@ _.set(linb.Locale,["en","app"], {
             $rtn:"[self]",
             $paras:[
                 "key [Optional] : String, the theme key.",
-                "refresh [Optional] : Boolean, to determine whether refresh UI controls or not. Default is [true]."
+                "refresh [Optional] : Boolean, to determine whether refresh UI controls or not. Default is [true].",
+                "onSuccess [Optional]: Function, if it's success, call this function. ",
+                "onFail [Optional]: Function, if it's fail, call this function."
             ],
             $snippet:[
                 "//linb.UI.setTheme('xp')"

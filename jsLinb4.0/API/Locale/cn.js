@@ -6701,7 +6701,9 @@ _.set(linb.Locale,["cn","app"], {
             $rtn:"[self]",
             $paras:[
                 "key [可选参数] : String, 皮肤键字符串.",
-                "refresh [可选参数] : Boolean, 是否要刷新所有界面控件. 默认是 [true]."
+                "refresh [可选参数] : Boolean, 是否要刷新所有界面控件. 默认是 [true].",
+                "onSuccess [可选参数]: Function, 成功时触发的回调函数. ",
+                "onFail [可选参数]: Function, 失败时触发的回调函数."
             ],
             $snippet:[
                 "//linb.UI.setTheme('xp')"
