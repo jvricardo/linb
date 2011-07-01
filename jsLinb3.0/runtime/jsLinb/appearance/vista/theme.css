@@ -202,7 +202,7 @@ html, .uibg-base{
     border: solid 1px #C6C9CF;
 }
 .linb-input-readonly .linb-input-box, .linb-comboinput-readonly .linb-comboinput-box{
-    background:none;
+    background:#eee;
 }
 
 .linb-input-box-focus, .linb-input-box-mouseover, .linb-comboinput-box-focus, .linb-comboinput-box-mouseover{
