@@ -570,16 +570,22 @@ html, .uibg-base{
 
 /*linb.UI.StatusButtons*/
 .linb-statusbuttons-item-none{
-    background: url(Public/icons.gif) no-repeat -12px -130px;
+    background-image: url(Public/icons.gif);
+    background-repeat: no-repeat;
+    background-position: -12px -130px;
     border-left:solid 1px #7C9CBC;
     border-right:solid 1px #7C9CBC;
 }
 .linb-statusbuttons-item-left{
-    background: url(Public/icons.gif) no-repeat left -130px;
+    background-image: url(Public/icons.gif);
+    background-repeat: no-repeat;
+    background-position: left -130px;
     border-right:solid 1px #7C9CBC;
 }
 .linb-statusbuttons-item-right{
-    background: url(Public/icons.gif) no-repeat right -130px;
+    background-image: url(Public/icons.gif);
+    background-repeat: no-repeat;
+    background-position: right -130px;
     border-left:solid 1px #7C9CBC;
 }
 .linb-statusbuttons-item-left-mouseover{
@@ -605,7 +611,7 @@ html, .uibg-base{
 }
 .linb-statusbuttons-item-right-mousedown{
     background-position: right -176px;
-},
+}
 .linb-statusbuttons-item-right-checked{
     background-position: right -176px;
 }
