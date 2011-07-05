@@ -10133,6 +10133,19 @@ _.set(linb.Locale,["en","app"], {
                 ],
                 $memo:"You have to use this function before the UIProfile is rendered."
             },
+            getPopCtrlEvents:{
+                $desc:"Gets events of the standard pop control('combobox,listbox,helpinput,date,time,datetime,color').",
+                $rtn:"Object"
+            },
+            setPopCtrlEvents:{
+                $desc:"Sets events to the standard pop control('combobox,listbox,helpinput,date,time,datetime,color').",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : Object.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ],
+                $memo:"You have to use this function before the UIProfile is rendered."
+            },
             getCurrencyTpl:{
                 $desc:"Gets the currency template",
                 $rtn:"String"

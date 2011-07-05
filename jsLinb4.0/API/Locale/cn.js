@@ -10059,6 +10059,19 @@ _.set(linb.Locale,["cn","app"], {
                 ],
                 $memo:"需要在控件产生前调用"
             },
+            getPopCtrlEvents:{
+                $desc:"得到固定弹出窗口('combobox,listbox,helpinput,date,time,datetime,color')的事件.",
+                $rtn:"Object"
+            },
+            setPopCtrlEvents:{
+                $desc:"设置固定弹出窗口('combobox,listbox,helpinput,date,time,datetime,color')的事件.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : Object.",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为 [false]."
+                ],
+                $memo:"需要在控件产生前调用"
+            },
             getCurrencyTpl:{
                 $desc:"得到货币的显示模板",
                 $rtn:"String"

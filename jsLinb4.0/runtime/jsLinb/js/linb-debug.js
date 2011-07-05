@@ -20884,10 +20884,6 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                         case 'helpinput':
                             o = linb.create('List').render();
                             o.setHost(profile).setDirtyMark(false).setItems(_.copy(pro.items)).setListKey(pro.listKey||'');
-                            if(_.isHash(pro.popCtrlProp)){
-                                o.setProperties(pro.popCtrlProp);
-                            }
-
                             o.setWidth(pro.dropListWidth || (pro.width-(pro.labelSize||0)));
                             if(pro.dropListHeight)
                                 o.setHeight(pro.dropListHeight);
@@ -20914,9 +20910,6 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                         case 'timepicker':
                             o = linb.create('TimePicker').render();
                             o.setHost(profile);
-                            if(_.isHash(pro.popCtrlProp)){
-                                o.setProperties(pro.popCtrlProp);
-                            }
                             o.beforeClose(function(){this.boxing().activate()._cache();return false});
                             o.beforeUIValueSet(function(p, o, v){
                                 var b2=this.boxing();
@@ -20934,9 +20927,6 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                                 o.setTimeInput(true);
 
                             o.setHost(profile);
-                            if(_.isHash(pro.popCtrlProp)){
-                                o.setProperties(pro.popCtrlProp);
-                            }
                             o.beforeClose(function(){this.boxing().activate()._cache();return false});
                             o.beforeUIValueSet(function(p, o, v){
                                 var b2=this.boxing();
@@ -20950,9 +20940,6 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                         case 'colorpicker':
                             o = linb.create('ColorPicker').render();
                             o.setHost(profile);
-                            if(_.isHash(pro.popCtrlProp)){
-                                o.setProperties(pro.popCtrlProp);
-                            }
                             o.beforeClose(function(){this.boxing().activate()._cache();return false});
                             o.beforeUIValueSet(function(p, o, v){
                                 var b2=this.boxing();
@@ -20962,6 +20949,10 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                             });
                             break;
                     }
+                    if(_.isHash(pro.popCtrlProp) && !_.isEmpty(pro.popCtrlProp))
+                        o.setProperties(pro.popCtrlProp);
+                    if(_.isHash(pro.popCtrlEvents) && !_.isEmpty(pro.popCtrlEvents))
+                        o.setEvents(pro.popCtrlEvents);
 
                     profile.$drop = o.get(0);
 
@@ -21372,7 +21363,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
             }
         },
 
-        _objectProp:{tagVar:1,popCtrlProp:1},
+        _objectProp:{tagVar:1,popCtrlProp:1,popCtrlEvents:1},
         Behaviors:{
             HoverEffected:{BOX:'BOX',BTN:'BTN',SBTN:'SBTN',R1:'R1',R2:'R2'},
             ClickEffected:{BTN:'BTN',SBTN:'SBTN',R1:'R1',R2:'R2'},
@@ -21631,6 +21622,9 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
             // yyyy/mm/dd
             dateEditorTpl:"",
             popCtrlProp:{
+                ini:{}
+            },
+            popCtrlEvents:{
                 ini:{}
             },
             currencyTpl:{
