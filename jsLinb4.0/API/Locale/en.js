@@ -1017,7 +1017,8 @@ _.set(linb.Locale,["en","app"], {
                 "left [Optional] : Number, left value.",
                 "top [Optional] : Number, top value.",
                 "parent [Optional] : linb.Dom Object, or linb.UI Object. the parent node. Default is linb('body').",
-                "subId [Optional] : String, the sub id"
+                "subId [Optional] : String, the sub id",
+                "noCache [Optional] : Boolean, to determine to use the cached alert dialog or not, Default is [false]."
             ],
             $snippet:[
                 "linb.alert('title','content',function(){alert('ok')})",
@@ -1037,7 +1038,8 @@ _.set(linb.Locale,["en","app"], {
                 "left [Optional] : Number, left value.",
                 "top [Optional] : Number, top value.",
                 "parent [Optional] : linb.Dom Object, or linb.UI Object. the parent node. Default is linb('body').",
-                "subId [Optional] : String, the sub id"
+                "subId [Optional] : String, the sub id",
+                "noCache [Optional] : Boolean, to determine to use the cached confirm dialog or not, Default is [false]."
             ],
             $snippet:[
                 "linb.confirm('title','content',function(){alert('yes')},function(){alert('no')})",
@@ -1075,7 +1077,8 @@ _.set(linb.Locale,["en","app"], {
                 "left [Optional] : Number, left value.",
                 "top [Optional] : Number, top value.",
                 "parent [Optional] : linb.Dom Object, or linb.UI Object. the parent node. Default is linb('body').",
-                "subId [Optional] : String, the sub id"
+                "subId [Optional] : String, the sub id",
+                "noCache [Optional] : Boolean, to determine to use the cached prompt dialog or not, Default is [false]."
             ],
             $snippet:[
                 "linb.prompt('title','caption', 'content content ',function(str){alert(str)})"
@@ -13418,7 +13421,8 @@ _.set(linb.Locale,["en","app"], {
                 "left [Optional] : Number, left value.",
                 "top [Optional] : Number, top value.",
                 "parent [Optional] : linb.Dom Object, or linb.UI Object. the parent node. Default is linb('body').",
-                "subId [Optional] : String, the sub id"
+                "subId [Optional] : String, the sub id",
+                "noCache [Optional] : Boolean, to determine to use the cached alert dialog or not, Default is [false]."
             ],
             $snippet:[
                 "linb.UI.Dialog.alert('title','content',function(){alert('ok')})",
@@ -13438,7 +13442,8 @@ _.set(linb.Locale,["en","app"], {
                 "left [Optional] : Number, left value.",
                 "top [Optional] : Number, top value.",
                 "parent [Optional] : linb.Dom Object, or linb.UI Object. the parent node. Default is linb('body').",
-                "subId [Optional] : String, the sub id"
+                "subId [Optional] : String, the sub id",
+                "noCache [Optional] : Boolean, to determine to use the cached confirm dialog or not, Default is [false]."
             ],
             $snippet:[
                 "linb.UI.Dialog.confirm('title','content',function(){alert('yes')},function(){alert('no')})",
@@ -13476,7 +13481,8 @@ _.set(linb.Locale,["en","app"], {
                 "left [Optional] : Number, left value.",
                 "top [Optional] : Number, top value.",
                 "parent [Optional] : linb.Dom Object, or linb.UI Object. the parent node. Default is linb('body').",
-                "subId [Optional] : String, the sub id"
+                "subId [Optional] : String, the sub id",
+                "noCache [Optional] : Boolean, to determine to use the cached prompt dialog or not, Default is [false]."
             ],
             $snippet:[
                 "linb.UI.Dialog.prompt('title','caption', 'content content ',function(str){alert(str)})"

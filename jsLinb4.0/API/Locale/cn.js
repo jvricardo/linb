@@ -1014,7 +1014,8 @@ _.set(linb.Locale,["cn","app"], {
                 "left [可选参数] : Number, 对话框左边坐标.",
                 "top [可选参数] : Number, 对话框上边坐标.",
                 "parent [可选参数] : linb.Dom, 或linb.UI对象.",
-                "subId [可选参数] : String, 容器的 sub id"
+                "subId [可选参数] : String, 容器的 sub id",
+                "noCache [可选参数] : Boolean, 是否用缓存的alert窗口,默认为[false]."
             ],
             $snippet:[
                 "linb.alert('title','content',function(){alert('ok')})",
@@ -1034,7 +1035,8 @@ _.set(linb.Locale,["cn","app"], {
                 "left [可选参数] : Number, 对话框左边坐标.",
                 "top [可选参数] : Number, 对话框上边坐标.",
                 "parent [可选参数] : linb.Dom, 或linb.UI对象.",
-                "subId [可选参数] : String, 容器的 sub id"
+                "subId [可选参数] : String, 容器的 sub id",
+                "noCache [可选参数] : Boolean, 是否用缓存的confirm窗口,默认为[false]."
             ],
             $snippet:[
                 "linb.confirm('title','content',function(){alert('yes')},function(){alert('no')})",
@@ -1072,7 +1074,8 @@ _.set(linb.Locale,["cn","app"], {
                 "left [可选参数] : Number, 对话框左边坐标.",
                 "top [可选参数] : Number, 对话框上边坐标.",
                 "parent [可选参数] : linb.Dom, 或linb.UI对象.",
-                "subId [可选参数] : String, 容器的 sub id"
+                "subId [可选参数] : String, 容器的 sub id",
+                "noCache [可选参数] : Boolean, 是否用缓存的prompt窗口,默认为[false]."
             ],
             $snippet:[
                 "linb.prompt('title','caption', 'content content ',function(str){alert(str)})"
@@ -13344,7 +13347,8 @@ _.set(linb.Locale,["cn","app"], {
                 "left [可选参数] : Number, 对话框左边坐标.",
                 "top [可选参数] : Number, 对话框上边坐标.",
                 "parent [可选参数] : linb.Dom, 或linb.UI对象.",
-                "subId [可选参数] : String, 容器的 sub id"
+                "subId [可选参数] : String, 容器的 sub id",
+                "noCache [可选参数] : Boolean, 是否用缓存的alert窗口,默认为[false]."
             ],
             $snippet:[
                 "linb.UI.Dialog.alert('title','content',function(){alert('ok')})",
@@ -13364,7 +13368,8 @@ _.set(linb.Locale,["cn","app"], {
                 "left [可选参数] : Number, 对话框左边坐标.",
                 "top [可选参数] : Number, 对话框上边坐标.",
                 "parent [可选参数] : linb.Dom, 或linb.UI对象.",
-                "subId [可选参数] : String, 容器的 sub id"
+                "subId [可选参数] : String, 容器的 sub id",
+                "noCache [可选参数] : Boolean, 是否用缓存的confirm窗口,默认为[false]."
             ],
             $snippet:[
                 "linb.UI.Dialog.confirm('title','content',function(){alert('yes')},function(){alert('no')})",
@@ -13402,7 +13407,8 @@ _.set(linb.Locale,["cn","app"], {
                 "parent [可选参数] : linb.Dom, 或linb.UI对象.",
                 "subId [可选参数] : String, 容器的 sub id",
                 "parent [可选参数] : linb.Dom, 或linb.UI对象.",
-                "subId [可选参数] : String, 容器的 sub id"
+                "subId [可选参数] : String, 容器的 sub id",
+                "noCache [可选参数] : Boolean, 是否用缓存的prompt窗口,默认为[false]."
             ],
             $snippet:[
                 "linb.UI.Dialog.prompt('title','caption', 'content content ',function(str){alert(str)})"

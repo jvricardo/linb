@@ -956,20 +956,22 @@ if(linb.browser.ie){
             dialog.$cmd.reBoxing().left((size.width + 30 - dialog.$cmd.reBoxing().width())/2);
             return {width:w, height:h};
         },
-        alert:function(title, content, onClose, btnCap, left, top, parent, subId){
+        alert:function(title, content, onClose, btnCap, left, top, parent, subId, noCache){
             var me=arguments.callee, dialog;
-            if(!(dialog=me.dialog) || !dialog.get(0) || (!dialog.get(0).renderId)){
-                dialog = me.dialog = new linb.UI.Dialog({
+            if(noCache || !(dialog=me.dialog) || !dialog.get(0) || (!dialog.get(0).renderId)){
+                dialog = new linb.UI.Dialog({
                     minBtn:false,
                     maxBtn:false,
                     pinBtn:false,
                     resizer:false
                 },{
                     beforeClose:function(){
-                        _.tryF(me.onClose);
-                        dialog.hide();
-                        me.onClose=null;
-                        return false;
+                        _.tryF(dialog._$onClose);
+                        dialog._$onClose=null;
+                        if(!noCache){
+                            dialog.hide();
+                            return false;
+                        }
                     }
                 });
 
@@ -995,8 +997,11 @@ if(linb.browser.ie){
                     top:10
                 });
                 dialog.append(cmd).append(div).render();
+                
+                if(!noCache)
+                    me.dialog = dialog;
             }
-            me.onClose=onClose;
+            dialog._$onClose=onClose;
             
             dialog.$btn.setCaption(btnCap || linb.wrapRes('$inline.ok'));
 
@@ -1013,21 +1018,23 @@ if(linb.browser.ie){
             });
             return dialog;
         },
-        confirm:function(title, caption, onYes, onNo, btnCapYes, btnCapNo, left, top, parent, subId){
+        confirm:function(title, caption, onYes, onNo, btnCapYes, btnCapNo, left, top, parent, subId, noCache){
             var me=arguments.callee, dialog;
 
-            if(!(dialog=me.dialog) || !dialog.get(0) || (!dialog.get(0).renderId)){
-                dialog = me.dialog = new linb.UI.Dialog({
+            if(noCache || !(dialog=me.dialog) || !dialog.get(0) || (!dialog.get(0).renderId)){
+                dialog = new linb.UI.Dialog({
                     minBtn:false,
                     maxBtn:false,
                     pinBtn:false,
                     resizer:false
                 },{
                     beforeClose:function(){
-                        dialog.hide();
-                        _.tryF(me.onNo,['close']);
-                        me.onYes=me.onNo=null;
-                        return false;
+                        _.tryF(dialog._$onNo,['close']);
+                        dialog._$onYes=dialog._$onNo=null;
+                        if(!noCache){
+                            dialog.hide();
+                            return false;
+                        }
                     }
                 });
 
@@ -1043,7 +1050,7 @@ if(linb.browser.ie){
                 },
                 {
                     onClick:function(){
-                        _.tryF(me.onYes);
+                        _.tryF(dialog._$onYes);
                         dialog.close();
                     }
                 });
@@ -1056,7 +1063,7 @@ if(linb.browser.ie){
                 },
                 {
                     onClick:function(){
-                        _.tryF(me.onNo,['no']);
+                        _.tryF(dialog._$onNo,['no']);
                         dialog.close();
                     }
                 });
@@ -1067,9 +1074,12 @@ if(linb.browser.ie){
                     top:10
                 });
                 dialog.append(cmd).append(div).render();
+
+                if(!noCache)
+                    me.dialog = dialog;
             }
-            me.onYes=onYes;
-            me.onNo=onNo;
+            dialog._$onYes=onYes;
+            dialog._$onNo=onNo;
             dialog.$btn1.setCaption(btnCapYes || linb.wrapRes('$inline.yes'));
             dialog.$btn2.setCaption(btnCapNo || linb.wrapRes('$inline.no'));
             var size=linb.UI.Dialog._adjust(dialog, title, caption);
@@ -1134,11 +1144,11 @@ if(linb.browser.ie){
             });
             return dialog;
         },
-        prompt:function(title, caption, content, onYes, onNo, btnCapYes, btnCapNo, left, top, parent, subId){
+        prompt:function(title, caption, content, onYes, onNo, btnCapYes, btnCapNo, left, top, parent, subId, noCache){
             var dialog,
                 me=arguments.callee;
-            if(!(dialog=me.dialog) || !dialog.get(0) || (!dialog.get(0).renderId)){
-                var dialog = me.dialog = new linb.UI.Dialog({
+            if(noCache || !(dialog=me.dialog) || !dialog.get(0) || (!dialog.get(0).renderId)){
+                dialog = new linb.UI.Dialog({
                     minBtn:false,
                     maxBtn:false,
                     pinBtn:false,
@@ -1149,18 +1159,20 @@ if(linb.browser.ie){
                     height:130
                 },{
                     beforeClose:function(){
-                        if(!me._clickYes)
-                        _.tryF(me.onNo);
+                        if(!dialog._$_clickYes)
+                        _.tryF(dialog._$onNo);
                         else
-                            delete me._clickYes;
+                            delete dialog._$_clickYes;
 
-                        me.$inp.setValue('');
-                        me.onYes=me.onNo=null;
-                        me.dialog.hide();
-                        return false;
+                        dialog._$inp.setValue('');
+                        dialog._$onYes=dialog._$onNo=null;
+                        if(!noCache){
+                            dialog.hide();
+                            return false;
+                        }
                     }
                 });
-                var con = me.$con = new linb.UI.Div({
+                var con = dialog._$con = new linb.UI.Div({
                     top:4,
                     left:10,
                     width:270,
@@ -1179,8 +1191,8 @@ if(linb.browser.ie){
                 },
                 {
                     onClick:function(){
-                        if(false!==_.tryF(me.onYes,[me.$inp.getUIValue()])){
-                            me._clickYes=1;
+                        if(false!==_.tryF(dialog._$onYes,[dialog._$inp.getUIValue()])){
+                            dialog._$_clickYes=1;
                             dialog.close();
                         }
                     }
@@ -1196,7 +1208,7 @@ if(linb.browser.ie){
                         dialog.close();
                     }
                 }));
-                var inp=me.$inp=new linb.UI.Input({
+                var inp=dialog._$inp=new linb.UI.Input({
                     left:10,
                     top:22,
                     width:270,
@@ -1204,13 +1216,15 @@ if(linb.browser.ie){
                     multiLines:true
                 })
                 dialog.append(con).append(cmd).append(inp).render();
+                if(!noCache)
+                    me.dialog = dialog;
             }
             dialog.setCaption(title||'Prompt');
-            me.$con.setHtml(caption||"");
-            me.$inp.setValue(content||"",true);
-            me.onYes=onYes;
-            me.onNo=onNo;
-            delete me._clickYes;
+            dialog._$con.setHtml(caption||"");
+            dialog._$inp.setValue(content||"",true);
+            dialog._$onYes=onYes;
+            dialog._$onNo=onNo;
+            delete dialog._$_clickYes;
             dialog.$btn1.setCaption(btnCapYes || linb.wrapRes('$inline.ok'));
             dialog.$btn2.setCaption(btnCapNo || linb.wrapRes('$inline.cancel'));
 
@@ -1221,7 +1235,7 @@ if(linb.browser.ie){
 
             dialog.show(parent, true, left, top);
             _.resetRun("dlg_focus:"+dialog.get(0).$linbid,function(){
-                me.$inp.activate();
+                dialog._$inp.activate();
             });
             return dialog;
         },
