@@ -2247,7 +2247,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                                     sa.push(o[i]);
                                     break;
                                 case 'string':
-                                    sa.push("'"+o[i]+"'");
+                                    sa.push('"'+o[i]+'"');
                                     break;
                             }
                         }
