@@ -24683,8 +24683,13 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                     profile.getSubNode('TOGGLE').tagClass('-checked', !!value);
                 
                 var h=profile.getSubNode('BORDER').height();
-                if(h)
+                if(h){
                     profile.getRoot().height(h);
+                }
+                // display-none + ctrl's height is 'auto' => reset 'auto'
+                else if(o.height=='auto' || !parseInt(o.height)){
+                    profile.getRootNode().style.height='auto';
+                }
 
                 if(value){
                     if(ins.afterExpend)
