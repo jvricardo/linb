@@ -1,4 +1,4 @@
-Class("linb.UI.Panel", "linb.UI.Div",{
+﻿Class("linb.UI.Panel", "linb.UI.Div",{
     Instance:{
         activate:function(flag){
             var profile, cls=this.constructor;
@@ -466,8 +466,10 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                     profile.getSubNode('TOGGLE').tagClass('-checked', !!value);
 
                 var h=profile.getSubNode('BORDER').height();
-                if(h)
-                    profile.getRoot().height(h);
+                // display => adjust ctrl's height to border's
+                // display-none => adjust ctrl's height to p.height(expand) or 'auto'(fold)
+                profile.getRoot().height(h?h:p.toggle?p.height:'auto');
+
                 if(value){
                     if(ins.afterExpend)
                         ins.afterExpend(profile);
