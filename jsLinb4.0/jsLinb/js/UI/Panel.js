@@ -1,4 +1,4 @@
-﻿Class("linb.UI.Panel", "linb.UI.Div",{
+Class("linb.UI.Panel", "linb.UI.Div",{
     Instance:{
         activate:function(flag){
             var profile, cls=this.constructor;
