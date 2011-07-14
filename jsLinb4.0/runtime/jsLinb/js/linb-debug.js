@@ -36650,7 +36650,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
             }
         }
     }
-});﻿Class("linb.UI.Dialog","linb.UI.Widget",{
+});Class("linb.UI.Dialog","linb.UI.Widget",{
     Instance:{
         showModal:function(parent, left, top){
             this.show(parent, true, left, top);
@@ -37681,7 +37681,10 @@ if(linb.browser.ie){
                     resizer:false
                 },{
                     beforeClose:function(){
-                        _.tryF(dialog._$onNo,['close']);
+                        if(!dialog._$_clicked)
+                            _.tryF(dialog._$onNo,['close']);
+                        else
+                            delete dialog._$_clicked;
                         dialog._$onYes=dialog._$onNo=null;
                         if(!noCache){
                             dialog.hide();
@@ -37703,6 +37706,7 @@ if(linb.browser.ie){
                 {
                     onClick:function(){
                         _.tryF(dialog._$onYes);
+                        dialog._$_clicked=1;
                         dialog.close();
                     }
                 });
@@ -37716,6 +37720,7 @@ if(linb.browser.ie){
                 {
                     onClick:function(){
                         _.tryF(dialog._$onNo,['no']);
+                        dialog._$_clicked=1;
                         dialog.close();
                     }
                 });
@@ -37732,6 +37737,7 @@ if(linb.browser.ie){
             }
             dialog._$onYes=onYes;
             dialog._$onNo=onNo;
+            delete dialog._$_clicked;
             dialog.$btn1.setCaption(btnCapYes || linb.wrapRes('$inline.yes'));
             dialog.$btn2.setCaption(btnCapNo || linb.wrapRes('$inline.no'));
             var size=linb.UI.Dialog._adjust(dialog, title, caption);
@@ -37820,8 +37826,7 @@ if(linb.browser.ie){
                         dialog._$onYes=dialog._$onNo=null;
                         if(!noCache){
                             dialog.hide();
-                            return false;
-                        }
+                            return false;                        }
                     }
                 });
                 var con = dialog._$con = new linb.UI.Div({
