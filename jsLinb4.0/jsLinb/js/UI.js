@@ -3919,7 +3919,7 @@ Class("linb.absList", "linb.absObj",{
                 remove(profile, p.items, arr, data);
                 // clear value
                 if(v=p.$UIvalue){
-                    if((v=v.split(p.valueSeparator)).length>1){
+                    if((v=(''+v).split(p.valueSeparator)).length>1){
                         _.filter(v,function(o){
                             return _.arr.indexOf(arr,o)==-1;
                         });
@@ -4014,7 +4014,7 @@ Class("linb.absList", "linb.absObj",{
                             t.replace(sub);
                     }
                     if(typeof self.setUIValue=='function'){
-                        var uiv=profile.properties.$UIvalue||"", arr=uiv.split(profile.properties.valueSeparator);
+                        var uiv=profile.properties.$UIvalue||"", arr=(''+uiv).split(profile.properties.valueSeparator);
                         if(arr.length && _.arr.indexOf(arr, subId)!=-1){
                             if(nid)_.arr.removeValue(arr,subId);
                             self.setUIValue(arr.join(profile.properties.valueSeparator), true);
@@ -4392,7 +4392,7 @@ Class("linb.absValue", "linb.absObj",{
         _ensureValue:function(profile,value){
             if(profile.box.$DataModel.selMode && (profile.properties.selMode=='multi'||profile.properties.selMode=='multibycheckbox')){
                 if(!_.isArr(value)){
-                    value = (value||"").split(profile.properties.valueSeparator);
+                    value = (value?(''+value):'').split(profile.properties.valueSeparator);
                 }
                 value.sort();
                 return value.join(profile.properties.valueSeparator);

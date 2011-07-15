@@ -21,7 +21,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                             return map1[i];
                         else{
                             if(!i)return;
-                            var r=i.split('|');
+                            var r=(''+i).split('|');
                             return _.get(profile.rowMap,[map1[r[0]],'_cells',r[1]]);
                         }
                     };
@@ -50,8 +50,8 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                         }
                     }*/
                 }else if(p.selMode=='multi'||p.selMode=='multibycheckbox'){
-                    uiv = uiv?uiv.split(p.valueSeparator):[];
-                    value = value?value.split(p.valueSeparator):[];
+                    uiv = uiv?(''+uiv).split(p.valueSeparator):[];
+                    value = value?(''+value).split(p.valueSeparator):[];
                     //check all
                     _.arr.each(uiv,function(o){
                         getN(k, getI(o)).tagClass('-checked',false)
@@ -332,7 +332,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     ns.removeRows([id]);
                     
                     if(profile.properties.activeMode=='row'){
-                        var uiv=profile.properties.$UIvalue||"", arr=uiv.split(profile.properties.valueSeparator);
+                        var uiv=profile.properties.$UIvalue||"", arr=(''+uiv).split(profile.properties.valueSeparator);
                         if(arr.length && _.arr.indexOf(arr, rowId)!=-1){
                             if(nid)
                                 _.arr.removeValue(arr, rowId);
@@ -518,7 +518,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             });
             // clear UI value
             if(v=p.$UIvalue){
-                if((v=v.split(p.valueSeparator)).length>1){
+                if((v=(''+v).split(p.valueSeparator)).length>1){
                     _.filter(v,function(o){
                         return _.arr.indexOf(ids,o)==-1;
                     });
@@ -2772,8 +2772,8 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                             v=v.toFixed(precision);
                         else v=v+"";
 
-                        v= v.split(".");
-                        v[0]=v[0].split("").reverse().join("").replace(/(\d{3})(?=\d)/g, "$1,").split("").reverse().join("");
+                        v= (''+v).split(".");
+                        v[0]=(''+v[0]).split("").reverse().join("").replace(/(\d{3})(?=\d)/g, "$1,").split("").reverse().join("");
                         return v.join(".")
                     }else 
                         return "";
@@ -3187,7 +3187,7 @@ editorDropListHeight
         },
         _ensureValue:function(profile,value){
             if(profile.properties.selMode=='multi'||profile.properties.selMode=='multibycheckbox'){
-                var arr = (value||"").split(profile.properties.valueSeparator);
+                var arr = (value?(''+value):'').split(profile.properties.valueSeparator);
                 arr.sort();
                 return arr.join(profile.properties.valueSeparator);
             }else
@@ -3219,7 +3219,7 @@ editorDropListHeight
                 }
             case 'multi':
                 var value = box.getUIValue(),
-                    arr = value?value.split(properties.valueSeparator):[],
+                    arr = value?(''+value).split(properties.valueSeparator):[],
                     checktype=1;
                 if(arr.length&&(ks.ctrlKey||ks.shiftKey||properties.noCtrlKey)){
                     //todo: give cell multi selection function
