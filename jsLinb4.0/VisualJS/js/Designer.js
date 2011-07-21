@@ -1160,7 +1160,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                             // reset
                             page.resetCode("Instance","events",_.stringify(page._cls.Instance.events));
 
-                            page.addCode("Instance", funname, (funname + " : " + o.ini.toString().replace(/\s*\}$/,'\n\n}')) );
+                            page.addCode("Instance", funname,  o.ini.toString().replace(/\s*\}$/,'\n\n}') );
 
                             page.buildNameSpace(true);
                         }
@@ -1987,7 +1987,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                     }
 
                     if(!page._cls.Instance[funname]){
-                         var code = funname + " : " + o.ini.toString().replace(/\s*\}$/,'') +
+                         var code = o.ini.toString().replace(/\s*\}$/,'') +
                              '\n'+_.str.repeat(' ',4) + "var ns = this, uictrl = profile.boxing();"+
                              '\n}';
                         page.addCode(o.path, funname, code);
