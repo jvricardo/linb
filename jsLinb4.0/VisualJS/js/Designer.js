@@ -320,7 +320,7 @@ Class('VisualJS.Designer', 'linb.Com',{
         isDirty:function(){
             return !!this._dirty;
         },
-        resetCodeFromDesigner:function(){
+        resetCodeFromDesigner:function(sync){
             var page=this;
             if(page._dirty){
                 
@@ -328,7 +328,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                 // reset iniComponents code
                 var code = ('{\n' + page.getJSCode(nodes) ).replace(/\n/g, '\n'+_.str.repeat(' ',12))
                     + '\n'+_.str.repeat(' ',8)+ '}';
-                page.resetCode("Instance", "iniComponents", code);
+                page.resetCode("Instance", "iniComponents", code, !!sync);
 
                 page._dirty=false;
             }

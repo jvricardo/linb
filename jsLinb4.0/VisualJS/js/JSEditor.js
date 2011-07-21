@@ -25,6 +25,9 @@ Class('VisualJS.JSEditor', 'linb.Com',{
             ns.$keysMap={};
             ns.$BracesMap={};
 
+            ns.$transTaskList=[];
+            ns.$transTaskListCached={};
+
             ns._ovalue="";
             ns._dirty=false;
 
@@ -564,6 +567,7 @@ Class('VisualJS.JSEditor', 'linb.Com',{
                      if(ns.tryToLocale([pkey,key], true)){
                         ns._renderStatus=false;
                         ns.replaceCode(code, true);
+                        ns.$transTaskListCached[pkey+":"+key]=code;
 
                         if(pkey=='Instance' && key=='iniComponents'){
                             ns._uicode=""+(new Function([],code.slice(code.indexOf('{')+1, code.lastIndexOf('}'))));
@@ -573,8 +577,9 @@ Class('VisualJS.JSEditor', 'linb.Com',{
                         }
                     }else{
                         ns.addCodeToInstance(key, code);
+                        ns.$transTaskListCached[pkey+":"+key]=code;
                     }
-                    ns.$transTaskListCached[pkey+":"+key]=code;
+                    
                 };
 
                 if(syn){
@@ -588,8 +593,8 @@ Class('VisualJS.JSEditor', 'linb.Com',{
                         return;
 
                     ns.addCodeToInstance(key, code);
-
                     ns.$transTaskListCached[pkey+":"+key]=code;
+
                 };
 
                 if(syn){
