@@ -302,6 +302,7 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
             },
             'DATA div':{
                 'padding-top':'3px',
+                'height':'20px',
                 'clear':'both'
             },
             TXT:{
@@ -346,7 +347,7 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
                 'border-right':'none'
             },
             TOP:{
-                height:'90px',
+                height:'92px',
                 position:'relative'
             },
             LIST :{

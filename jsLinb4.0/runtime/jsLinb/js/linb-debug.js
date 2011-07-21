@@ -22561,6 +22561,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
             },
             'DATA div':{
                 'padding-top':'3px',
+                'height':'20px',
                 'clear':'both'
             },
             TXT:{
@@ -22605,7 +22606,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 'border-right':'none'
             },
             TOP:{
-                height:'90px',
+                height:'92px',
                 position:'relative'
             },
             LIST :{
