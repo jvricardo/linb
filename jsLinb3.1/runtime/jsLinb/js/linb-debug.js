@@ -18955,7 +18955,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                 if((profile.$border||profile.$shadow||profile.$resizer) && linb.browser.ie)o.ieRemedy();
         }
     }
-});Class("linb.UI.RichEditor", ["linb.UI","linb.absValue"],{
+});﻿Class("linb.UI.RichEditor", ["linb.UI","linb.absValue"],{
     Initialize:function(){
         this.addTemplateKeys(['TOOLBARBTN']);
     },
@@ -19227,10 +19227,13 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                                             }
 
                                             // crack for ie7/8 eat focus
-                                            var status=doc.designMode;
-                                            doc.designMode="off";
-                                            doc.designMode="on";
-                                            doc.designMode=status;
+                                            // error raise in ie6
+                                            try{
+                                                var status=doc.designMode;
+                                                doc.designMode="off";
+                                                doc.designMode="on";
+                                                doc.designMode=status;
+                                            }catch(e){}
 
                                             win._gekfix=undefined;
 
@@ -19396,9 +19399,12 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
     
                 //compose
                 self.getRoot().prepend(
-                    t=new linb.UI.ToolBar({handler:false,items:items,disabled:pro.disabled||pro.readonly})
+                    t=new linb.UI.ToolBar({selectable:false,handler:false,items:items,disabled:pro.disabled||pro.readonly})
                 );
                 t.render(true);
+                if(linb.browser.ie)
+                    t.getRoot().query('*').attr('unselectable','on');
+
                 t = self._$tb = t.get(0);
     
                 t.onClick=self.box._toolbarclick;
@@ -19413,7 +19419,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
             var editor=profile.$hostage;
             if(!editor.$doc)return;
 
-            var pro=editor.properties;
+            var pro=editor.properties, first;
             editor.$win.focus();
 
             if(item.command=='custom'){
@@ -19425,8 +19431,10 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                 switch(cmd){
                     case 'forecolor':
                     case 'bgcolor':
-                        if(!editor.$colorPicker)
-                            editor.$colorPicker=(new linb.UI.ColorPicker({barDisplay:false})).render(true);
+                        if(!editor.$colorPicker){
+                            first=true;
+                            editor.$colorPicker=(new linb.UI.ColorPicker({selectable:false,barDisplay:false})).render(true);
+                        }
                         o=editor.$colorPicker;
                         break;
                     case 'fontsize':
@@ -19449,7 +19457,8 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                                     t=o[0]=='...'?'1':o[0];
                                     items2.push({id:o[0], caption:'<font size="'+o[0]+'" '+linb.$IEUNSELECTABLE+'>'+o[1]+'</font>'});
                                 });
-                                editor.$fontsizeList=(new linb.UI.List({height:'auto',items:items2,width:150})).render(true);
+                                first=true;
+                                editor.$fontsizeList=(new linb.UI.List({selectable:false,height:'auto',items:items2,width:150})).render(true);
                             }
                             o=editor.$fontsizeList;
                         //font family
@@ -19463,7 +19472,8 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                                     t=o=='...'?'':o;
                                     items2.push({id:o, caption:'<span style="font-family:'+o+'" '+linb.$IEUNSELECTABLE+'>'+o+'</span>'});
                                 });
-                                editor.$fontnameList=(new linb.UI.List({height:'auto',items:items2})).render(true);
+                                first=true;
+                                editor.$fontnameList=(new linb.UI.List({selectable:false,height:'auto',items:items2})).render(true);
                             }
                             o=editor.$fontnameList;
                         //font format
@@ -19478,14 +19488,15 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                                     t=o[0]=='...'?'span':o[0];
                                     items2.push({id:o[0], caption:'<'+t+' style="display:inline;padding:0;margin:0" '+linb.$IEUNSELECTABLE+'>'+o[1]+'</'+t+'>'});
                                 });
-
-                                editor.$formatblockList=(new linb.UI.List({height:'auto',items:items2})).render(true);
+                                first=true;
+                                editor.$formatblockList=(new linb.UI.List({selectable:false,height:'auto',items:items2})).render(true);
                             }
                             o=editor.$formatblockList;
                         }
                         break;
                     case 'html':
                         if(!editor.$htmlEditor){
+                            first=true;
                             editor.$htmlEditor=new linb.UI.Input({multiLines:true,width:400,height:300,resizer:true});
                         }
                         o=editor.$htmlEditor;
@@ -19506,6 +19517,10 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                     o.setValue('',true);
                     node=o.reBoxing();
                     node.popToTop(src);
+
+                    if(first && linb.browser.ie)
+                        o.getRoot().query('*').attr('unselectable','on');
+                    
                     _.tryF(o.activate,[],o);
 
                     //for on blur disappear
@@ -21353,7 +21368,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
         data = '<div '+evs+'><span class="'+cls+'-txt"'+evs+'>R: </span><span '+'id="'+key+'-R:'+id+':" class="'+cls+'-dd2 ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>R</span><span style="width:8px;height:8px" '+evs+' ></span><span class="'+cls+'-txt"'+evs+'>H: </span><span '+'id="'+key+'-HH:'+id+':" class="'+cls+'-dd2 ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>H</span><span '+evs+'>\xB0</span></div>' +
                '<div '+evs+'><span class="'+cls+'-txt"'+evs+'>G: </span><span '+'id="'+key+'-G:'+id+':" class="'+cls+'-dd2 ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>G</span><span style="width:8px;height:8px" '+evs+' ></span><span class="'+cls+'-txt"'+evs+'>S: </span><span '+'id="'+key+'-S:'+id+':" class="'+cls+'-dd2 ui-draggable '+tag+'DD2_CC'+tag+'"  '+evs+'>S</span><span '+evs+'>%</span></div>' +
                '<div '+evs+'><span class="'+cls+'-txt"'+evs+'>B: </span><span '+'id="'+key+'-B:'+id+':" class="'+cls+'-dd2 ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>B</span><span style="width:8px;height:8px" '+evs+' ></span><span class="'+cls+'-txt"'+evs+'>V: </span><span '+'id="'+key+'-V:'+id+':" class="'+cls+'-dd2 ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>V</span><span '+evs+'>%</span></div>' +
-               '<div '+evs+'><span style="width:38px"'+evs+'>HEX: '+tag+'</span><span '+'id="'+key+'-H:'+id+':" class="'+cls+'-dd3 ui-draggable '+tag+'DD3_CC'+tag+'" '+evs+'>H</span><span '+'id="'+key+'-E:'+id+':" class="'+cls+'-dd3 ui-draggable '+tag+'DD3_CC'+tag+'" '+evs+''+evs+'>E</span><span '+'id="'+key+'-X:'+id+':" class="'+cls+'-dd1 ui-draggable '+tag+'DD1_CC'+tag+'" '+evs+'>X</span></div>'
+               '<div '+evs+'><span style="width:38px"'+evs+'>HEX: </span><span '+'id="'+key+'-H:'+id+':" class="'+cls+'-dd3 ui-draggable '+tag+'DD3_CC'+tag+'" '+evs+'>H</span><span '+'id="'+key+'-E:'+id+':" class="'+cls+'-dd3 ui-draggable '+tag+'DD3_CC'+tag+'" '+evs+''+evs+'>E</span><span '+'id="'+key+'-X:'+id+':" class="'+cls+'-dd1 ui-draggable '+tag+'DD1_CC'+tag+'" '+evs+'>X</span></div>'
         ns.setTemplate({
             style:'{_style};height:auto;width:{_width}px;',
             tagName : 'div',
