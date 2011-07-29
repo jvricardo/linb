@@ -2175,7 +2175,8 @@ Class("linb.UI",  "linb.absObj", {
             }
             delete template.className;
 
-            template.style = (template.style||'')+';'+ u.$tag_special + (key||'KEY') + '_CS'+u.$tag_special;
+            template.style = (template.style?(template.style + ';'):'') 
+                + u.$tag_special + (key||'KEY') + '_CS'+u.$tag_special;
 
             var a=[], b={},
                 tagName=template.tagName.toLowerCase(),
@@ -3725,7 +3726,7 @@ Class("linb.UI",  "linb.absObj", {
             if(prop.zIndex)a[a.length]= 'z-index:'+prop.zIndex;
             if(prop.display)a[a.length]= 'display:'+ (prop.display=='inline-block'? linb.browser.gek?'-moz-inline-block;display:-moz-inline-box;display:inline-block;':'inline-block' :prop.display)
 
-            data._style = ';'+a.join(';')+';';
+            data._style = a.join(';');
 
             if('className' in dm)
             	data._className=prop.className||"";
@@ -4566,7 +4567,7 @@ new function(){
         Static:{
             Templates:{
                 className:'{_className}',
-                style:'{_style}text-align:{hAlign}',
+                style:'{_style};text-align:{hAlign}',
                 text:'{caption}'
             },
             Appearances:{

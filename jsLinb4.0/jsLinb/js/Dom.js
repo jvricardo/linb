@@ -1262,6 +1262,11 @@ Class('linb.Dom','linb.absBox',{
             var t=(parent.get(0)===document.body || parent.get(0)===document || parent.get(0)===window)?linb.win:parent, 
                 box = {};
 
+            //ensure show target on the top of the other elements with the same zindex
+            //parent.get(0).appendChild(target.get(0));
+            target.cssPos(pos).css({visibility:'hidden',display:'block'});
+            parent.append(target);
+            
             box.left=t.scrollLeft();
             box.top=t.scrollTop();
             box.width =t.width()+box.left;
@@ -1355,11 +1360,7 @@ type:4
             //over top
             if(pos.top < box.top)pos.top = box.top;
             //show
-            target.cssPos(pos).css({visibility:'visible',display:'block'});
-
-            //ensure show target on the top of the other elements with the same zindex
-            //parent.get(0).appendChild(target.get(0));
-            parent.append(target);
+            target.cssPos(pos).css({visibility:'visible'});
 
             return this;
         },

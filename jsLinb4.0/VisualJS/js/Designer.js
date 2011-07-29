@@ -31,6 +31,9 @@ Class('VisualJS.Designer', 'linb.Com',{
                 page.listObject.setUIValue(v?v.alias:'com', true);
 
                 _.resetRun('$profilegrid$', page._refreshProfileGrid,0,[ids],page);
+                
+                page.resizer.setConfigBtn(ids && ids.length==1);
+                page.resizer.setTag(ids[0]);
             },
             onReady:function(page){
                 page.setViewSize(page.$viewSize['800']);
@@ -315,6 +318,10 @@ Class('VisualJS.Designer', 'linb.Com',{
                 page._giveHandler(page.canvas.get(0),true);
                 page._enablePanelDesign(page.canvas.get(0));
 
+            },
+            onDestroy:function(page){
+                if(page.frame)
+                    page.frame.destroy();
             }
         },
         isDirty:function(){
@@ -348,12 +355,25 @@ Class('VisualJS.Designer', 'linb.Com',{
                     heightIncrement:this.dropOffset
                 },
                 zIndex:linb.Dom.TOP_ZINDEX
+            },{
+                onConfig:function(profile, e, src){
+                     var prf = linb.getObject(profile.properties.tag);
+                     if(prf){
+                        linb.ComFactory.getCom('VisualJS.CustomDecoration',function(){
+                          this.setProperties({
+                              targetProfile:prf
+                          });
+                          this.show();
+                      });
+                    }
+                }
             });
             page.resizer.setHost(page)
             .onItemsSelected(function(profile, ids){
                 this.pProfile.setSelectFromResizer.call(this.pProfile,ids);
             })
             .onActive(function(profile){
+                clearTimeout(this.timer);
                 this._focus();
             })
             .onUpdate(function(profile, target, size, cssPos){
@@ -469,6 +489,9 @@ Class('VisualJS.Designer', 'linb.Com',{
                 if(this.tempSelected){
                     this.SelectedFocus=index;
                     _.resetRun('$profilegrid$', this._refreshProfileGrid,0,[this.tempSelected],this);
+                    
+                    this.resizer.setConfigBtn(this.tempSelected.length==1);
+                    this.resizer.setTag(this.tempSelected[0]);
                 }
             })
             .onDblclick(function(profile, e, src){
@@ -487,6 +510,13 @@ Class('VisualJS.Designer', 'linb.Com',{
                         
                         page.startTaskList();
                     }
+                }else if(typeof CONF.designer_ctrldblclick=='function'){
+                    var arr = this.tempSelected,
+                        prf;
+                    if(arr.length)
+                        prf = linb.getObject(arr[0]);
+
+                    CONF.designer_ctrldblclick(page, prf, e, src);
                 }
             })
             //select children even if parent is selected
@@ -2056,9 +2086,11 @@ Class('VisualJS.Designer', 'linb.Com',{
                         background:'#fff',
                         shadow:true
                     });
-                    page.frame=linb.create('<div style="z-index:2000;background-color:red;position:absolute;font-size:0;line-height:0;display:none;">').css('opacity',0.3);
-                    linb('body').append(page.frame);
-
+                    if(!page.frame || !page.frame.get(0)){
+                        page.frame=linb.create('<div style="z-index:2000;background-color:red;position:absolute;font-size:0;line-height:0;display:none;">').css('opacity',0.3);
+                        linb('body').append(page.frame);
+                    }
+                    
                     page.treebarObj = new linb.UI.TreeBar({
                         group:false,
                         selMode:'none',
@@ -2527,7 +2559,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                 .setWidth(100)
                 .setHeight(100)
                 .setZIndex(10)
-                .setCustomStyle({"KEY":"overflow:hidden"})
+                .setCustomStyle({"KEY":"overflow:visible"})
             );
 
             return children;

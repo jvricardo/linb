@@ -18,6 +18,7 @@ Class("linb.UI.Gallery", "linb.UI.List",{
                         style:'width:{itemWidth}px;height:{itemHeight}px;',
                         CAPTION:{
                             tagName : 'div',
+                            style:'{capDisplay}',
                             text: '{caption}',
                             $order:0
                         },
@@ -188,6 +189,7 @@ Class("linb.UI.Gallery", "linb.UI.List",{
                 item[i] = item[i] || p[i];
             });
             item.capition = item.capition || '';
+            if(item.caption===null)capDisplay='display:none;';
             item.comment = item.comment || '';
             item._tabindex = p.tabindex;
             //Avoid Empty Image src

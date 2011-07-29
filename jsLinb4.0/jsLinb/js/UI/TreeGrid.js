@@ -2832,6 +2832,14 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                             node.color='color:'+t1+';';
                             node.bgcolor='background-color:'+cell.value+';';
                         }
+                    }else{
+                        if(dom){
+                            node.html(caption,false);
+                            node.css('color','#000').css('backgroundColor',"#fff");
+                        }else{
+                            node.color='color:#000;';
+                            node.bgcolor='background-color:#fff;';
+                        }
                     }
                 break;
                 case 'checkbox':
@@ -3153,6 +3161,8 @@ editorDropListHeight
 
             // * remove cell's caption first
             delete cell.caption;
+            delete cell._$caption;
+            delete cell._$tips;
 
             _.merge(cell,options,'all');
 

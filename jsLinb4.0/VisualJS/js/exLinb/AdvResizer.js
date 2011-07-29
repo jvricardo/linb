@@ -87,7 +87,7 @@ Class("linb.UI.AdvResizer","linb.UI.Resizer",{
                             t=o.regPool._nodes.pop();
                             linb(t).cssPos(v[0]).cssSize(v[1]);
                         }else{
-                            t = _.str.toDom('<div style="position:absolute;border:dashed 1px blue;left:{l}px;top:{t}px;width:{w}px;height:{h}px;"></div>'
+                            t = _.str.toDom('<div style="position:absolute;cursor:default;border:dashed 1px blue;left:{l}px;top:{t}px;width:{w}px;height:{h}px;"></div>'
                             .replace('{l}',v[0].left)
                             .replace('{t}',v[0].top)
                             .replace('{w}',v[1].width)

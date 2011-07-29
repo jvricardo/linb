@@ -1,5 +1,6 @@
 new function(){
     var _imgdemo='img/demo.gif';
+    var _imgno='img/error.gif';
     var _img_app=linb.getPath('img/','App.gif');
     var _img_widgets=linb.getPath('img/','widgets.gif');
     var _items=[{id:'a',caption:'item a',image:_imgdemo}, {id:'b',caption:'item b',image:_imgdemo}, {id:'c',caption:'item c',image:_imgdemo}, {id:'d',caption:'item d',image:_imgdemo,disabled:true}];
@@ -406,7 +407,11 @@ new function(){
                 ]}
             ]},
             {id:'linb.UI.absMisc',key:'linb.UI.absMisc',caption:'Medias',group:true, image:_img_app, imagePos:'-48px -48px', sub:[
-                {id:'linb.UI.Image',key:'linb.UI.Image', caption:'Image Element', image:_img_widgets, imagePos:'-624px top', draggable:true},
+                {id:'linb.UI.Image',key:'linb.UI.Image', caption:'Image Element', image:_img_widgets, imagePos:'-624px top', draggable:true,
+                    iniProp:{
+                        src:_imgno
+                    }
+                },
 
 /*
                 {id:'linb.UI.Media',key:'linb.UI.Media', caption:'Media', image:_img_widgets, imagePos:'-576px top', draggable:true},
@@ -540,7 +545,28 @@ new function(){
             objEditor:{
                 cls:'VisualJS.ObjectEditor'
             } 
-        }
+        },
+        designer_data_fontfamily:[
+            {caption:"<span style='font-family:arial,helvetica,sans-serif'>Arial</span>",id:"arial,helvetica,sans-serif"},
+            {caption:"<span style='font-family:arial black,avant garde'>Arial Black</span>",id:"arial black,avant garde"},
+            {caption:"<span style='font-family:comic sans ms,cursive'>Comic Sans MS</span>",id:"comic sans ms,cursive"},
+            {caption:"<span style='font-family:courier new,courier,monospace'>Courier New</span>",id:"courier new,courier,monospace"},
+            {caption:"<span style='font-family:georgia,serif'>Georgia</span>",id:"georgia,serif"},
+            {caption:"<span style='font-family:impact,chicago'>impact</span>",id:"impact,chicago"},
+            {caption:"<span style='font-family:lucida sans unicode,lucida grande,sans-serif'>Lucida Sans Unicode</span>",id:"lucida sans unicode,lucida grande,sans-serif"},
+            {caption:"<span style='font-family:tahoma,geneva,sans-serif'>Tahoma</span>",id:"tahoma,geneva,sans-serif"},
+            {caption:"<span style='font-family:times new roman,times,serif'>Times New Roman</span>",id:"times new roman,times,serif"},
+            {caption:"<span style='font-family:trebuchet ms,helvetica,sans-serif'>Trebuchet MS</span>",id:"trebuchet ms,helvetica,sans-serif"},
+            {caption:"<span style='font-family:verdana,geneva,sans-serif'>Verdana</span>",id:"verdana,geneva,sans-serif"},
+            {caption:"<span style='font-family:wingdings'>WingDings</span>",id:"wingdings"}
+        ],
+        designer_data_fontsize:["8pt","10pt","12pt","14pt","18pt","24pt","34pt"],
+        designer_data_fontweight:["normal","bolder","bold","lighter","200","100"],
+        designer_data_fontstyle:["normal","italic","oblique"],
+        designer_data_textdecoration:["none","underline","overline","line-through","blink"],
+        designer_data_textalign:["left","right","center","justify"],
+        designer_data_cursor:["default","text","pointer","move","crosshair","wait","help","e-resize","ne-resize","nw-resize","n-resize","se-resize","sw-resize","s-resize","w-resize"],
+        designer_data_overflow:["auto","visible","hidden","scroll"]
     };
     var fun=function(items,hash){
         var self=arguments.callee;

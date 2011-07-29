@@ -7287,6 +7287,11 @@ Class('linb.Dom','linb.absBox',{
             var t=(parent.get(0)===document.body || parent.get(0)===document || parent.get(0)===window)?linb.win:parent, 
                 box = {};
 
+            //ensure show target on the top of the other elements with the same zindex
+            //parent.get(0).appendChild(target.get(0));
+            target.cssPos(pos).css({visibility:'hidden',display:'block'});
+            parent.append(target);
+            
             box.left=t.scrollLeft();
             box.top=t.scrollTop();
             box.width =t.width()+box.left;
@@ -7380,11 +7385,7 @@ type:4
             //over top
             if(pos.top < box.top)pos.top = box.top;
             //show
-            target.cssPos(pos).css({visibility:'visible',display:'block'});
-
-            //ensure show target on the top of the other elements with the same zindex
-            //parent.get(0).appendChild(target.get(0));
-            parent.append(target);
+            target.cssPos(pos).css({visibility:'visible'});
 
             return this;
         },
@@ -13370,7 +13371,8 @@ Class("linb.UI",  "linb.absObj", {
             }
             delete template.className;
 
-            template.style = (template.style||'')+';'+ u.$tag_special + (key||'KEY') + '_CS'+u.$tag_special;
+            template.style = (template.style?(template.style + ';'):'') 
+                + u.$tag_special + (key||'KEY') + '_CS'+u.$tag_special;
 
             var a=[], b={},
                 tagName=template.tagName.toLowerCase(),
@@ -14920,7 +14922,7 @@ Class("linb.UI",  "linb.absObj", {
             if(prop.zIndex)a[a.length]= 'z-index:'+prop.zIndex;
             if(prop.display)a[a.length]= 'display:'+ (prop.display=='inline-block'? linb.browser.gek?'-moz-inline-block;display:-moz-inline-box;display:inline-block;':'inline-block' :prop.display)
 
-            data._style = ';'+a.join(';')+';';
+            data._style = a.join(';');
 
             if('className' in dm)
             	data._className=prop.className||"";
@@ -15761,7 +15763,7 @@ new function(){
         Static:{
             Templates:{
                 className:'{_className}',
-                style:'{_style}text-align:{hAlign}',
+                style:'{_style};text-align:{hAlign}',
                 text:'{caption}'
             },
             Appearances:{
@@ -16188,8 +16190,6 @@ new function(){
             style:'cursor:{cursor};{_style}',
             className:'{_className}',
             border:"0",
-            width:"{width}",
-            height:"{height}",
             src:linb.ini.img_bg,
             alt:"{alt}"
         },
@@ -16201,8 +16201,8 @@ new function(){
                 profile.boxing().onError(profile);
             },
             onLoad:function(profile, e, src){
-                var i=new Image(), path=i.src=linb.use(src).get(0).src,
-                    size=profile.box._adjust(profile,i.width,i.height);
+                var i=new Image(), path=i.src=linb.use(src).get(0).src,prop=profile.properties;
+                    size=profile.box._adjust(profile, _.isFinite(prop.width)?prop.width:i.width,_.isFinite(prop.height)?prop.height:i.height);
                 profile.boxing().afterLoad(profile, path, size[0], size[1]);
             },
             onClick:function(profile, e, src){
@@ -16235,14 +16235,14 @@ new function(){
         _adjust:function(profile,width,height){
             var pro=profile.properties,
                 src=profile.getRootNode();
-
+            width=parseInt(width)||0;
+            height=parseInt(height)||0;
+            src.style.width=src.style.height='';
             if(width>0 && height>0){
                 var r1=pro.maxWidth/width, r2=pro.maxHeight/height,r= r1<r2?r1:r2;
                 if(r>=1)r=1;
                 profile._rate=r;
-                src.width=width*r;
-                src.height=height*r;
-                return [width*r, height*r];
+                return [src.width=width*r, src.height=height*r];
             }
             return [0,0];
         },
@@ -16250,29 +16250,35 @@ new function(){
             maxWidth:{
                 ini:800,
                 action:function(v){
-                    var src=this.getRootNode();
-                    this.box._adjust(this,src.width,src.height);
+                    var src=this.getRootNode(),prop=this.properties;
+                    this.box._adjust(this,_.isFinite(prop.width)?prop.width:src.width,_.isFinite(prop.height)?prop.height:src.height);
                 }
             },
             maxHeight:{
                 ini:600,
                 action:function(v){
-                    var src=this.getRootNode();
-                    this.box._adjust(this,src.width,src.height);
+                    var src=this.getRootNode(),prop=this.properties;
+                    this.box._adjust(this,_.isFinite(prop.width)?prop.width:src.width,_.isFinite(prop.height)?prop.height:src.height);
                 }
             },
             width:{
-                ini:'',
+                ini:'auto',
                 action:function(v){
-                    var src=this.getRootNode();
-                    src.width=v;
+                    var src=this.getRootNode(),
+                        prop=this.properties,
+                        i=new Image();
+                    i.src=src.src;
+                    this.box._adjust(this, _.isFinite(v)?parseInt(v):i.width, _.isFinite(prop.height)?prop.height:i.height);
                 }
             },
             height:{
-                ini:'',
+                ini:'auto',
                 action:function(v){
-                    var src=this.getRootNode();
-                    src.height=v;
+                    var src=this.getRootNode(),
+                        prop=this.properties,
+                        i=new Image();
+                    i.src=src.src;
+                    this.box._adjust(this,_.isFinite(prop.width)?prop.width:i.width,_.isFinite(v)?parseInt(v):i.height);
                 }
             },
             src:{
@@ -16930,7 +16936,7 @@ Class("linb.UI.Resizer","linb.UI",{
         }
     },
     Initialize:function(){
-        this.addTemplateKeys(['HANDLER','HIDDEN','MOVE','L','R','T','B','LT','RT','LB','RB']);
+        this.addTemplateKeys(['HANDLER','HIDDEN','MOVE','CONF','L','R','T','B','LT','RT','LB','RB']);
         _.each({
             // add resizer to linb.Dom plugin
             addResizer:function(properties, onUpdate, onChange){
@@ -17081,6 +17087,16 @@ Class("linb.UI.Resizer","linb.UI",{
                 'font-size':0,
                 'line-height':0
             },
+            CONF:{
+                position:'absolute',
+                display:'block',
+                'z-index':100,
+                visibility: 'visible',
+                background: linb.UI.$bg('icons.gif', 'no-repeat -90px -272px', true),
+                'font-size':0,
+                'line-height':0,
+                cursor:'pointer'
+            },
             HANDLER:{
                 $order:0,
                 position:'absolute',
@@ -17154,6 +17170,15 @@ Class("linb.UI.Resizer","linb.UI",{
             },
             onDblclick:function(profile, e, src){
                 if(profile.onDblclick)profile.boxing().onDblclick(profile, e, src);
+            },
+            CONF:{
+                onMousedown:function(profile, e, src){
+                    return false;
+                },
+                onClick:function(profile,e,src){
+                    if(profile.onConfig)
+                        profile.boxing().onConfig(profile,e,src);
+                }
             },
             LT:{
                 onMousedown:function(profile, e, src){
@@ -17300,6 +17325,12 @@ Class("linb.UI.Resizer","linb.UI",{
 
             handlerSize:4,
             handlerOffset:0,
+            configBtn:{
+                ini:false,
+                action:function(v){
+                    this.getSubNode('CONF').css('display',v?'':'none');
+                }
+            },
 //>>
 
             left: 100,
@@ -17312,7 +17343,8 @@ Class("linb.UI.Resizer","linb.UI",{
         EventHandlers:{
             onDblclick:function(profile, e, src){},
             onUpdate:function(profile, target, size, cssPos){},
-            onChange:function(profile, proxy){}
+            onChange:function(profile, proxy){},
+            onConfig:function(profile, e, src){}
         },
         _dynamicTemplate:function(profile){
             var pro = profile.properties,size,pos,temp,
@@ -17329,6 +17361,7 @@ Class("linb.UI.Resizer","linb.UI",{
             var map= arguments.callee.map || (arguments.callee.map={
                 //move icon size 13*13
                 MOVE:{tagName:'div', style:'top:50%;left:50%;margin-left:-6px;margin-top:-6px;width:13px;height:13px;'},
+                CONF:{tagName:'div', style:'top:0;left:auto;right:-14px;width:12px;height:12px;{_showCofigBtn};'},
                 T:{tagName:'div', style:'top:-{extend}px;margin-left:-{extend}px;width:{handlerSize}px;height:{handlerSize}px;'},
                 RT:{tagName:'div', style:'top:-{extend}px;right:-{extend}px;width:{handlerSize}px;height:{handlerSize}px;'},
                 R:{tagName:'div', style:'right:-{extend}px;margin-top:-{extend}px;width:{handlerSize}px;height:{handlerSize}px;'},
@@ -17363,6 +17396,8 @@ Class("linb.UI.Resizer","linb.UI",{
                 t = pro._cover?map.cover:map;
                 // can move?
                 if(pro._move)template.MOVE = map.MOVE;
+
+                template.CONF = map.CONF;
 
                 // change height only
                 if(pro.vertical){
@@ -17439,6 +17474,7 @@ Class("linb.UI.Resizer","linb.UI",{
 
             t.extend =  (parseInt(t.handlerSize)||0)/2 + (parseInt(t.handlerOffset)||0);
 
+            t._showCofigBtn=t.configBtn?'':'display:none';
             return arguments.callee.upper.call(this, profile);
         },
         RenderTrigger:function(){
@@ -17466,7 +17502,7 @@ Class("linb.UI.Resizer","linb.UI",{
 
             var pos=linb.Event.getPos(e);
             linb.use(src).startDrag(e,{
-                dragDefer:1,
+                dragDefer:2,
                 targetReposition:false,
                 dragType:'blank',
                 dragCursor:true,
@@ -22718,16 +22754,17 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 onClick:function(p,e,s){
                     var sid=p.getSubId(s);
                     p.boxing()._setCtrlValue(p.$tempValue=sid,false);
+                    p.box._vC(p);
                     if(!p.properties.advance)
                         p.boxing().setUIValue(sid);
-                    p.box._vC(p);
+                        
                     return false;
                 },
                 onDblclick:function(p,e,s){
                     var sid=p.getSubId(s);
                     p.boxing()._setCtrlValue(p.$tempValue=sid,false);
-                    p.boxing().setUIValue(sid);
                     p.box._vC(p);
+                    p.boxing().setUIValue(sid);
                     return false;
                 }
             },
@@ -22738,8 +22775,8 @@ Class("linb.UI.Group", "linb.UI.Div",{
             },
             SET:{
                 onClick:function(p,e,src){
-                    p.boxing().setUIValue(p.$tempValue,true);
                     p.box._vC(p);
+                    p.boxing().setUIValue(p.$tempValue,true);
                 }
             },
             CANCEL:{
@@ -22890,8 +22927,8 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 },
                 onDblclick:function(p,e,src){
                     p.box._updateValueByPos(p, e);
-                    p.boxing().setUIValue(p.$tempValue);
                     p.box._vC(p);
+                    p.boxing().setUIValue(p.$tempValue);
                 }
             },
             ADVCLR:{
@@ -22924,8 +22961,8 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 },
                 onDblclick:function(p,e,src){
                     p.box._updateValueByPos(p, e);
-                    p.boxing().setUIValue(p.$tempValue);
                     p.box._vC(p);
+                    p.boxing().setUIValue(p.$tempValue);
                 }
             }
         },
@@ -25167,6 +25204,7 @@ Class("linb.UI.Gallery", "linb.UI.List",{
                         style:'width:{itemWidth}px;height:{itemHeight}px;',
                         CAPTION:{
                             tagName : 'div',
+                            style:'{capDisplay}',
                             text: '{caption}',
                             $order:0
                         },
@@ -25337,6 +25375,7 @@ Class("linb.UI.Gallery", "linb.UI.List",{
                 item[i] = item[i] || p[i];
             });
             item.capition = item.capition || '';
+            if(item.caption===null)capDisplay='display:none;';
             item.comment = item.comment || '';
             item._tabindex = p.tabindex;
             //Avoid Empty Image src
@@ -35129,6 +35168,14 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                             node.color='color:'+t1+';';
                             node.bgcolor='background-color:'+cell.value+';';
                         }
+                    }else{
+                        if(dom){
+                            node.html(caption,false);
+                            node.css('color','#000').css('backgroundColor',"#fff");
+                        }else{
+                            node.color='color:#000;';
+                            node.bgcolor='background-color:#fff;';
+                        }
                     }
                 break;
                 case 'checkbox':
@@ -35450,6 +35497,8 @@ editorDropListHeight
 
             // * remove cell's caption first
             delete cell.caption;
+            delete cell._$caption;
+            delete cell._$tips;
 
             _.merge(cell,options,'all');
 

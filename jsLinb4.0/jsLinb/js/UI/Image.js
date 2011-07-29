@@ -10,8 +10,6 @@ Class("linb.UI.Image", "linb.UI",{
             style:'cursor:{cursor};{_style}',
             className:'{_className}',
             border:"0",
-            width:"{width}",
-            height:"{height}",
             src:linb.ini.img_bg,
             alt:"{alt}"
         },
@@ -23,8 +21,8 @@ Class("linb.UI.Image", "linb.UI",{
                 profile.boxing().onError(profile);
             },
             onLoad:function(profile, e, src){
-                var i=new Image(), path=i.src=linb.use(src).get(0).src,
-                    size=profile.box._adjust(profile,i.width,i.height);
+                var i=new Image(), path=i.src=linb.use(src).get(0).src,prop=profile.properties;
+                    size=profile.box._adjust(profile, _.isFinite(prop.width)?prop.width:i.width,_.isFinite(prop.height)?prop.height:i.height);
                 profile.boxing().afterLoad(profile, path, size[0], size[1]);
             },
             onClick:function(profile, e, src){
@@ -57,14 +55,14 @@ Class("linb.UI.Image", "linb.UI",{
         _adjust:function(profile,width,height){
             var pro=profile.properties,
                 src=profile.getRootNode();
-
+            width=parseInt(width)||0;
+            height=parseInt(height)||0;
+            src.style.width=src.style.height='';
             if(width>0 && height>0){
                 var r1=pro.maxWidth/width, r2=pro.maxHeight/height,r= r1<r2?r1:r2;
                 if(r>=1)r=1;
                 profile._rate=r;
-                src.width=width*r;
-                src.height=height*r;
-                return [width*r, height*r];
+                return [src.width=width*r, src.height=height*r];
             }
             return [0,0];
         },
@@ -72,29 +70,35 @@ Class("linb.UI.Image", "linb.UI",{
             maxWidth:{
                 ini:800,
                 action:function(v){
-                    var src=this.getRootNode();
-                    this.box._adjust(this,src.width,src.height);
+                    var src=this.getRootNode(),prop=this.properties;
+                    this.box._adjust(this,_.isFinite(prop.width)?prop.width:src.width,_.isFinite(prop.height)?prop.height:src.height);
                 }
             },
             maxHeight:{
                 ini:600,
                 action:function(v){
-                    var src=this.getRootNode();
-                    this.box._adjust(this,src.width,src.height);
+                    var src=this.getRootNode(),prop=this.properties;
+                    this.box._adjust(this,_.isFinite(prop.width)?prop.width:src.width,_.isFinite(prop.height)?prop.height:src.height);
                 }
             },
             width:{
-                ini:'',
+                ini:'auto',
                 action:function(v){
-                    var src=this.getRootNode();
-                    src.width=v;
+                    var src=this.getRootNode(),
+                        prop=this.properties,
+                        i=new Image();
+                    i.src=src.src;
+                    this.box._adjust(this, _.isFinite(v)?parseInt(v):i.width, _.isFinite(prop.height)?prop.height:i.height);
                 }
             },
             height:{
-                ini:'',
+                ini:'auto',
                 action:function(v){
-                    var src=this.getRootNode();
-                    src.height=v;
+                    var src=this.getRootNode(),
+                        prop=this.properties,
+                        i=new Image();
+                    i.src=src.src;
+                    this.box._adjust(this,_.isFinite(prop.width)?prop.width:i.width,_.isFinite(v)?parseInt(v):i.height);
                 }
             },
             src:{

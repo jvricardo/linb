@@ -31,7 +31,7 @@ Class("linb.UI.Resizer","linb.UI",{
         }
     },
     Initialize:function(){
-        this.addTemplateKeys(['HANDLER','HIDDEN','MOVE','L','R','T','B','LT','RT','LB','RB']);
+        this.addTemplateKeys(['HANDLER','HIDDEN','MOVE','CONF','L','R','T','B','LT','RT','LB','RB']);
         _.each({
             // add resizer to linb.Dom plugin
             addResizer:function(properties, onUpdate, onChange){
@@ -182,6 +182,16 @@ Class("linb.UI.Resizer","linb.UI",{
                 'font-size':0,
                 'line-height':0
             },
+            CONF:{
+                position:'absolute',
+                display:'block',
+                'z-index':100,
+                visibility: 'visible',
+                background: linb.UI.$bg('icons.gif', 'no-repeat -90px -272px', true),
+                'font-size':0,
+                'line-height':0,
+                cursor:'pointer'
+            },
             HANDLER:{
                 $order:0,
                 position:'absolute',
@@ -255,6 +265,15 @@ Class("linb.UI.Resizer","linb.UI",{
             },
             onDblclick:function(profile, e, src){
                 if(profile.onDblclick)profile.boxing().onDblclick(profile, e, src);
+            },
+            CONF:{
+                onMousedown:function(profile, e, src){
+                    return false;
+                },
+                onClick:function(profile,e,src){
+                    if(profile.onConfig)
+                        profile.boxing().onConfig(profile,e,src);
+                }
             },
             LT:{
                 onMousedown:function(profile, e, src){
@@ -401,6 +420,12 @@ Class("linb.UI.Resizer","linb.UI",{
 
             handlerSize:4,
             handlerOffset:0,
+            configBtn:{
+                ini:false,
+                action:function(v){
+                    this.getSubNode('CONF').css('display',v?'':'none');
+                }
+            },
 //>>
 
             left: 100,
@@ -413,7 +438,8 @@ Class("linb.UI.Resizer","linb.UI",{
         EventHandlers:{
             onDblclick:function(profile, e, src){},
             onUpdate:function(profile, target, size, cssPos){},
-            onChange:function(profile, proxy){}
+            onChange:function(profile, proxy){},
+            onConfig:function(profile, e, src){}
         },
         _dynamicTemplate:function(profile){
             var pro = profile.properties,size,pos,temp,
@@ -430,6 +456,7 @@ Class("linb.UI.Resizer","linb.UI",{
             var map= arguments.callee.map || (arguments.callee.map={
                 //move icon size 13*13
                 MOVE:{tagName:'div', style:'top:50%;left:50%;margin-left:-6px;margin-top:-6px;width:13px;height:13px;'},
+                CONF:{tagName:'div', style:'top:0;left:auto;right:-14px;width:12px;height:12px;{_showCofigBtn};'},
                 T:{tagName:'div', style:'top:-{extend}px;margin-left:-{extend}px;width:{handlerSize}px;height:{handlerSize}px;'},
                 RT:{tagName:'div', style:'top:-{extend}px;right:-{extend}px;width:{handlerSize}px;height:{handlerSize}px;'},
                 R:{tagName:'div', style:'right:-{extend}px;margin-top:-{extend}px;width:{handlerSize}px;height:{handlerSize}px;'},
@@ -464,6 +491,8 @@ Class("linb.UI.Resizer","linb.UI",{
                 t = pro._cover?map.cover:map;
                 // can move?
                 if(pro._move)template.MOVE = map.MOVE;
+
+                template.CONF = map.CONF;
 
                 // change height only
                 if(pro.vertical){
@@ -540,6 +569,7 @@ Class("linb.UI.Resizer","linb.UI",{
 
             t.extend =  (parseInt(t.handlerSize)||0)/2 + (parseInt(t.handlerOffset)||0);
 
+            t._showCofigBtn=t.configBtn?'':'display:none';
             return arguments.callee.upper.call(this, profile);
         },
         RenderTrigger:function(){
@@ -567,7 +597,7 @@ Class("linb.UI.Resizer","linb.UI",{
 
             var pos=linb.Event.getPos(e);
             linb.use(src).startDrag(e,{
-                dragDefer:1,
+                dragDefer:2,
                 targetReposition:false,
                 dragType:'blank',
                 dragCursor:true,

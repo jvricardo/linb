@@ -459,16 +459,17 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
                 onClick:function(p,e,s){
                     var sid=p.getSubId(s);
                     p.boxing()._setCtrlValue(p.$tempValue=sid,false);
+                    p.box._vC(p);
                     if(!p.properties.advance)
                         p.boxing().setUIValue(sid);
-                    p.box._vC(p);
+                        
                     return false;
                 },
                 onDblclick:function(p,e,s){
                     var sid=p.getSubId(s);
                     p.boxing()._setCtrlValue(p.$tempValue=sid,false);
-                    p.boxing().setUIValue(sid);
                     p.box._vC(p);
+                    p.boxing().setUIValue(sid);
                     return false;
                 }
             },
@@ -479,8 +480,8 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
             },
             SET:{
                 onClick:function(p,e,src){
-                    p.boxing().setUIValue(p.$tempValue,true);
                     p.box._vC(p);
+                    p.boxing().setUIValue(p.$tempValue,true);
                 }
             },
             CANCEL:{
@@ -631,8 +632,8 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
                 },
                 onDblclick:function(p,e,src){
                     p.box._updateValueByPos(p, e);
-                    p.boxing().setUIValue(p.$tempValue);
                     p.box._vC(p);
+                    p.boxing().setUIValue(p.$tempValue);
                 }
             },
             ADVCLR:{
@@ -665,8 +666,8 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
                 },
                 onDblclick:function(p,e,src){
                     p.box._updateValueByPos(p, e);
-                    p.boxing().setUIValue(p.$tempValue);
                     p.box._vC(p);
+                    p.boxing().setUIValue(p.$tempValue);
                 }
             }
         },
