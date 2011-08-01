@@ -16204,6 +16204,8 @@ new function(){
                 var i=new Image(), path=i.src=linb.use(src).get(0).src,prop=profile.properties;
                     size=profile.box._adjust(profile, _.isFinite(prop.width)?prop.width:i.width,_.isFinite(prop.height)?prop.height:i.height);
                 profile.boxing().afterLoad(profile, path, size[0], size[1]);
+                if(prop.dock!='none')
+                    profile.boxing().adjustDock();
             },
             onClick:function(profile, e, src){
                 var p=profile.properties;
