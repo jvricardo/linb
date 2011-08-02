@@ -1,4 +1,4 @@
-﻿Class("linb.UI.RichEditor", ["linb.UI","linb.absValue"],{
+Class("linb.UI.RichEditor", ["linb.UI","linb.absValue"],{
     Initialize:function(){
         this.addTemplateKeys(['TOOLBARBTN']);
     },
