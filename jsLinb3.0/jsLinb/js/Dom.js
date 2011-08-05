@@ -1805,17 +1805,21 @@ type:4
             action=action||'';
             target=target||'_blank';
             var _t=[];
-            _.each(data,function(o,i){
-                if(_.isDefined(o))
-                    _t.push('<textarea name="'+i+'">'+(typeof o=='object'?_.serialize(o):o)+'</textarea>');
-            });
             if(!_.isEmpty(data)){
-                _t.push('<input type="hidden" name="rnd" value="'+_()+'">');
-                _t=_.str.toDom('<form target="'+target+'" action="'+action+'" method="'+method  + (enctype?'" enctype="' +enctype:'') +  '">'+_t.join('')+'</form>');
-                linb.Dom.getEmptyDiv().append(_t);
-                _t.get(0).submit();
-                _t.remove();
-                _t=null;
+                if(method.toLowerCase()=='get'){
+                    window.open(action + "?" + _.urlEncode(data));
+                }else{
+                    _.each(data,function(o,i){
+                        if(_.isDefined(o))
+                            _t.push('<textarea name="'+i+'">'+(typeof o=='object'?_.serialize(o):o)+'</textarea>');
+                    });
+                    _t.push('<input type="hidden" name="rnd" value="'+_()+'">');
+                    _t=_.str.toDom('<form target="'+target+'" action="'+action+'" method="'+method  + (enctype?'" enctype="' +enctype:'') +  '">'+_t.join('')+'</form>');
+                    linb.Dom.getEmptyDiv().append(_t);
+                    _t.get(0).submit();
+                    _t.remove();
+                    _t=null;
+                }
             }else{
                 window.open(action);
             }
