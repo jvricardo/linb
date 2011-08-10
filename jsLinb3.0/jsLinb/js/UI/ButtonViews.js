@@ -203,8 +203,10 @@ Class("linb.UI.ButtonViews", "linb.UI.Tabs",{
                     left = 0;
                     wc=width;
                 }
-                if(height-t.barSize>0)hc=height-t.barSize-2;
-                top = t.barLocation=='top'?2- -t.barSize:0;
+
+                hs.height(itmsH = hl.offsetHeight());
+                if(height-itmsH>0)hc=height-itmsH-2;
+                top = t.barLocation=='top'?2- -itmsH:0;
             }else{
                 if(height){
                     // for nopanel:
