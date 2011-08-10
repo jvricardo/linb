@@ -19962,7 +19962,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                 if((profile.$border||profile.$shadow||profile.$resizer) && linb.browser.ie)o.ieRemedy();
         }
     }
-});Class("linb.UI.RichEditor", ["linb.UI","linb.absValue"],{
+});﻿Class("linb.UI.RichEditor", ["linb.UI","linb.absValue"],{
     Initialize:function(){
         this.addTemplateKeys(['TOOLBARBTN']);
     },
@@ -20379,7 +20379,8 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
         },
         _iniToolBar:function(profile, flag){
             var self=profile,
-                pro=self.properties;
+                pro=self.properties,
+                tbH;
             if(self.$toolbar){
                 self.$toolbar.boxing().destroy();
                 delete self._$tb;
@@ -20409,6 +20410,9 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                     t=new linb.UI.ToolBar({selectable:false,handler:false,items:items,disabled:pro.disabled||pro.readonly})
                 );
                 t.render(true);
+                // keep toolbar's height number here
+                profile.$_tbH=tbH=t.getRoot().height();
+
                 if(linb.browser.ie)
                     t.getRoot().query('*').attr('unselectable','on');
 
@@ -20421,6 +20425,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                 t.$hostage=self;
             }
             linb.UI.$tryResize(profile, pro.width, pro.height,true);
+            return tbH;
         },
         _toolbarclick:function(profile,item,group,e,src){
             var editor=profile.$hostage;
@@ -20697,7 +20702,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
 
             if(width || height){
                 var itb=profile._$tb,
-                    _top=(itb?(itb.getRoot().offsetHeight()-1):0);
+                    _top=(itb?(profile.$_tbH-1):0);
                 if(!height)
                     height=profile.properties.height;
                 size.height=height-_top-1;
@@ -27658,7 +27663,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
         _adjustScroll:null
     }
 });
-Class("linb.UI.ButtonViews", "linb.UI.Tabs",{
+﻿Class("linb.UI.ButtonViews", "linb.UI.Tabs",{
     Initialize:function(){
         var t = this.getTemplate();
         t.LIST.className='uibg-bar uiborder-outset';
@@ -27863,8 +27868,10 @@ Class("linb.UI.ButtonViews", "linb.UI.Tabs",{
                     left = 0;
                     wc=width;
                 }
-                if(height-t.barSize>0)hc=height-t.barSize-2;
-                top = t.barLocation=='top'?2- -t.barSize:0;
+
+                hs.height(itmsH = hl.offsetHeight());
+                if(height-itmsH>0)hc=height-itmsH-2;
+                top = t.barLocation=='top'?2- -itmsH:0;
             }else{
                 if(height){
                     // for nopanel:
