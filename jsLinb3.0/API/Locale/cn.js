@@ -15382,6 +15382,54 @@ _.set(linb.Locale,["cn","app"], {
                     "col : Object, 被排序的列."
                 ]
             },
+            beforeColShowHide:{
+                $desc:"在显示或隐藏列前调用.返回false将阻止列显示或隐藏.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "colId : String, 被影响的列.",
+                    "flag: Boolean, true->显示; false->隐藏"
+                ]
+            },
+            afterColShowHide:{
+                $desc:"在显示或隐藏列后调用.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "colId : String, 被影响的列.",
+                    "flag: Boolean, true->显示; false->隐藏"
+                ]
+            },
+            beforeColResized:{
+                $desc:"在从界面改变列宽度前调用，返回false表示阻止改变列宽.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "colId : String, 所影响的列id.",
+                    "width: Number, 列宽"
+                ]
+            },
+            afterColResized:{
+                $desc:"在从界面改变列宽度后调用.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "col : Object, 所影响的列id.",
+                    "width: Number, 列宽"
+                ]
+            },
+            beforeRowResized:{
+                $desc:"在从界面改变行的高度前调用，返回false表示阻止改变行高.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "rowId : String, 所影响的行id.",
+                    "height: Number, 高"
+                ]
+            },
+            afterRowResized:{
+                $desc:"在从界面改变行的高度后调用.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "rowId : String, 所影响的行id.",
+                    "height: Number, 高"
+                ]
+            },
             beforeColDrag:{
                 $desc:"在终端用户拖动列之前被调用. 返回false将阻止列拖动.",
                 $paras:[

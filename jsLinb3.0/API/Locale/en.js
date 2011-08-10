@@ -15474,6 +15474,54 @@ _.set(linb.Locale,["en","app"], {
                     "col : Object, the column header object."
                 ]
             },
+            beforeColShowHide:{
+                $desc:"Fired before the column is hidden or showed. If returns false, the action will be ignored.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "colId : String, the target col id.",
+                    "flag: Boolean, true->show; false->hide"
+                ]
+            },
+            afterColShowHide:{
+                $desc:"Fired after the column is hidden or showed.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "colId : String, the target col id.",
+                    "flag: Boolean, true->show; false->hide"
+                ]
+            },
+            beforeColResized:{
+                $desc:"Fired before the column's width is modified. If returns false, the action will be ignored.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "colId : String, the target col id.",
+                    "width: Number, col width"
+                ]
+            },
+            afterColResized:{
+                $desc:"Fired after the column's width is modified.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "col : Object, the target col id.",
+                    "width: Number, col width"
+                ]
+            },
+            beforeRowResized:{
+                $desc:"Fired before the row's height is modified. If returns false, the action will be ignored.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "rowId : String, the target row id.",
+                    "height: Number, row height"
+                ]
+            },
+            afterRowResized:{
+                $desc:"Fired after the row's height is modified.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "rowId : String, the target row id.",
+                    "height: Number, row height"
+                ]
+            },
             beforeColDrag:{
                 $desc:"Fired before the column is draged. If returns false, the drag action will be ignored.",
                 $paras:[
