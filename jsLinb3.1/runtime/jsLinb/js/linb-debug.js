@@ -18964,7 +18964,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                 if((profile.$border||profile.$shadow||profile.$resizer) && linb.browser.ie)o.ieRemedy();
         }
     }
-});﻿Class("linb.UI.RichEditor", ["linb.UI","linb.absValue"],{
+});Class("linb.UI.RichEditor", ["linb.UI","linb.absValue"],{
     Initialize:function(){
         this.addTemplateKeys(['TOOLBARBTN']);
     },
@@ -26634,7 +26634,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
         _adjustScroll:null
     }
 });
-﻿Class("linb.UI.ButtonViews", "linb.UI.Tabs",{
+Class("linb.UI.ButtonViews", "linb.UI.Tabs",{
     Initialize:function(){
         var t = this.getTemplate();
         t.LIST.className='uibg-bar uiborder-outset';
@@ -31998,22 +31998,28 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             return ns;
         },
         showColumn:function(colId, flag){
-            return this.each(function(profile){
-                var map=profile.colMap2,
+            var profile=this.get(0),
+                map=profile.colMap2,
                     cols=profile.colMap,
                     col,
                     sid,
                     cells,
                     n=[];
                 if(col=cols[sid=map[colId]]){
+                if(profile.beforeColShowHide && false===profile.boxing().beforeColShowHide(profile,colId,flag))
+                    return false;
+
                     n.push(profile.getSubNode('HCELL',sid).get(0));
                     _.each(col._cells,function(id){
                         n.push(profile.getSubNode('CELL',id).get(0));
                     });
                     linb(n).css('display',(col.hidden=(flag===false?true:false))?'none':'');
+                
+                if(profile.afterColShowHide)
+                    profile.boxing().afterColShowHide(profile,colId,flag);
                 }
                 profile.box._ajdustBody(profile);
-            });
+            return true;
         },
 
         /*cell realted*/
@@ -32795,6 +32801,12 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     var o=linb(src).parent(2),
                         w=o.width() + linb.DragDrop.getProfile().offset.x,
                         col=profile.colMap[profile.getSubId(src)];
+
+                    if(profile.beforeColResized && false===profile.boxing().beforeColResized(profile,col?col.id:null,w)){
+                        profile._limited=0;
+                        return;
+                    }
+
                     o.width(w);
                     if(col)col.width=w;
 
@@ -32809,6 +32821,9 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                         });
                         linb(ids).width(w);
                     }
+
+                    if(profile.afterColResized)
+                        profile.boxing().afterColResized(profile,col?col.id:null,w);
 
                     profile.getSubNode('SCROLL').onScroll();
                     profile.box._ajdustBody(profile);
@@ -32840,9 +32855,17 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     ws.push(p._minColW);
                     w=parseInt(Math.max.apply(null,ws));
                     if(w>p._maxColW)w=p._maxColW;
+                    
+
+                    if(profile.beforeColResized && false===profile.boxing().beforeColResized(profile,header?header.id:null,w))
+                        return;
+
                     linb(ns).parent().width(w);
                     linb.use(src).parent(2).width(header.width=w);
                     linb(ns).removeClass(cls);
+
+                    if(profile.afterColResized)
+                        profile.boxing().afterColResized(profile,header.id,w);
 
                     profile.box._ajdustBody(profile);
                     return false;
@@ -32901,27 +32924,53 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
 
                     //for ie's weird bug
                     if(linb.browser.ie && h%2==1)h+=1;
+                    
+                    if(profile.beforeRowResized && false===profile.boxing().beforeRowResized(profile, row?row.id:null, h)){
+                        profile._limited=0;
+                        return;
+                    }
+
                     o.height(h);
                     if(profile.getKey(linb.use(src).parent(2).id())==profile.keys.HFCELL){
                         profile.properties.headerHeight=h;
                         linb.UI.$tryResize(profile,null,profile.getRoot().height(),true);
                     }else
                         row.height=h;
+                        
+                    if(profile.afterRowResized)
+                        profile.boxing().afterRowResized(profile, row?row.id:null, h);
+
                     profile._limited=0;
                 },
                 onDblclick:function(profile, e, src){
                     var p = profile.properties,
                         sid = profile.getSubId(src),
                         row,cells;
+            
                     if(sid){
                         row=profile.rowMap[sid];
                         cells=profile.getSubNode('CELLS', sid);
-                        cells.height(row.height=cells.height('auto').height());
+                        var h=cells.height('auto').height();
+                        
+                        if(profile.beforeRowResized && false===profile.boxing().beforeRowResized(profile, row.id, h))
+                            return;
+
+                        cells.height(row.height=h);
                     }else{
                         cells=profile.getSubNode('HCELLS');
-                        cells.height(profile.properties.headerHeight=cells.height('auto').height());
+                        var h=cells.height('auto').height();
+                        
+                        if(profile.beforeRowResized && false===profile.boxing().beforeRowResized(profile, null, h))
+                            return;
+
+                        cells.height(profile.properties.headerHeight=h);
+                        
                         linb.UI.$tryResize(profile,null,profile.getRoot().height(),true);
                     }
+
+                    if(profile.afterRowResized)
+                        profile.boxing().afterRowResized(profile, row?row.id:null, h);
+                    
                     return false;
                 },
                 onClick:function(){return false}
@@ -33763,6 +33812,13 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             afterColMoved:function(profile, colId, toId){},
             beforeColSorted:function(profile, col){},
             afterColSorted:function(profile, col){},
+
+            beforeColShowHide:function(profile,colId,flag){},
+            afterColShowHide:function(profile,colId,flag){},
+            beforeColResized:function(profile,colId,width){},
+            afterColResized:function(profile,colId,width){},
+            beforeRowResized:function(profile, rowId, height){},
+            afterRowResized:function(profile, rowId, height){},
 
             beforeRowActive:function(profile, row){},
             afterRowActive:function(profile, row){},
@@ -36607,7 +36663,6 @@ if(linb.browser.ie){
             w=size.width + 40;
             h=size.height + 90;
             dialog.setCaption(caption).setWidth(w).setHeight(h);
-            dialog.$cmd.reBoxing().left((size.width + 30 - dialog.$cmd.reBoxing().width())/2);
             return {width:w, height:h};
         },
         alert:function(title, content, onClose, btnCap, left, top, parent, subId){
@@ -36628,20 +36683,19 @@ if(linb.browser.ie){
                 });
 
                 var cmd = dialog.$cmd = new linb.UI.Div({
-                    bottom:10,
-                    width:60,
-                    height:24
-                }),
+                    height:24,
+                    dock:'bottom'
+                },null,null,null,{KEY:"text-align:center;"}),
 
                 btn = dialog.$btn = new linb.UI.SButton({
-                    width: 60,
+                    position:'relative',
                     tabindex:1
                 },
                 {
                     onClick:function(){
                         dialog.close();
                     }
-                });
+                },null,null,{KEY:'margin:0 4px'});
                 cmd.append(btn);
 
                 var div = dialog.$div = new linb.UI.Div({
@@ -36652,7 +36706,7 @@ if(linb.browser.ie){
             }
             me.onClose=onClose;
             
-            dialog.$btn.setCaption(btnCap || linb.wrapRes('$inline.ok'));
+            dialog.$btn.setCaption("&nbsp;&nbsp;"+(btnCap || linb.wrapRes('$inline.ok'))+"&nbsp;&nbsp;");
 
             var size=linb.UI.Dialog._adjust(dialog,title, content);
 
@@ -36686,34 +36740,31 @@ if(linb.browser.ie){
                 });
 
                 var cmd = dialog.$cmd=new linb.UI.Div({
-                    bottom:10,
-                    width:140,
-                    height:24
-                }),
+                    height:24,
+                    dock:'bottom'
+                },null,null,null,{KEY:"text-align:center;"}),
                 btn = dialog.$btn1 = new linb.UI.SButton({
-                    width: 60,
                     tabindex:1,
-                    left:0
+                    position:'relative'
                 },
                 {
                     onClick:function(){
                         _.tryF(me.onYes);
                         dialog.close();
                     }
-                });
+                },null,null,{KEY:'margin:0 4px'});
                 cmd.append(btn);
 
                 btn = dialog.$btn2=new linb.UI.SButton({
                     tabindex:1,
-                    width: 60,
-                    left:80
+                    position:'relative'
                 },
                 {
                     onClick:function(){
                         _.tryF(me.onNo,['no']);
                         dialog.close();
                     }
-                });
+                },null,null,{KEY:'margin:0 4px'});
                 cmd.append(btn);
 
                 var div = dialog.$div=new linb.UI.Div({
@@ -36724,8 +36775,8 @@ if(linb.browser.ie){
             }
             me.onYes=onYes;
             me.onNo=onNo;
-            dialog.$btn1.setCaption(btnCapYes || linb.wrapRes('$inline.yes'));
-            dialog.$btn2.setCaption(btnCapNo || linb.wrapRes('$inline.no'));
+            dialog.$btn1.setCaption("&nbsp;&nbsp;"+(btnCapYes || linb.wrapRes('$inline.yes'))+"&nbsp;&nbsp;");
+            dialog.$btn2.setCaption("&nbsp;&nbsp;"+(btnCapNo || linb.wrapRes('$inline.no'))+"&nbsp;&nbsp;");
             var size=linb.UI.Dialog._adjust(dialog, title, caption);
 
             if(parent && parent["linb.UI"])parent=parent.getContainer(subId);
@@ -36748,13 +36799,11 @@ if(linb.browser.ie){
             }),
 
             cmd = dialog.$cmd = new linb.UI.Div({
-                bottom:10,
-                width:'auto',
-                height:24,
-                CS:'text-align:center;'
-            })
+                    height:24,
+                    dock:'bottom'
+                },null,null,null,{KEY:"text-align:center;"})
             .append( dialog.$btn = new linb.UI.SButton({
-                caption: btnCap || '$inline.ok',
+                caption: "&nbsp;&nbsp;"+(btnCap || '$inline.ok')+"&nbsp;&nbsp;",
                 tabindex:1,
                 position:'relative'
             },
@@ -36762,7 +36811,7 @@ if(linb.browser.ie){
                 onClick:function(){
                     dialog.destroy();
                 }
-            })),
+            },null,null,{KEY:'margin:0 4px'})),
 
             div = dialog.$div = new linb.UI.Div({
                 left:10,
@@ -36821,14 +36870,11 @@ if(linb.browser.ie){
                     height:18
                 }),
                 cmd = new linb.UI.Div({
-                    top:65,
-                    width:270,
-                    height:24
-                })
-                .setCustomStyle('KEY',"text-align:center;")
+                    height:24,
+                    dock:'bottom'
+                },null,null,null,{KEY:"text-align:center;"})
                 .append(dialog.$btn1 = new linb.UI.SButton({
-                    width: 60,
-                    left:70,
+                    position:'relative',
                     tabindex:1
                 },
                 {
@@ -36838,18 +36884,17 @@ if(linb.browser.ie){
                             dialog.close();
                         }
                     }
-                }));
+                },null,null,{KEY:'margin:0 4px'}));
 
                 cmd.append(dialog.$btn2 = new linb.UI.SButton({
                     tabindex:1,
-                    left:140,
-                    width: 60
+                    position:'relative',
                 },
                 {
                     onClick:function(){
                         dialog.close();
                     }
-                }));
+                },null,null,{KEY:'margin:0 4px'}));
                 var inp=me.$inp=new linb.UI.Input({
                     left:10,
                     top:22,
@@ -36865,8 +36910,8 @@ if(linb.browser.ie){
             me.onYes=onYes;
             me.onNo=onNo;
             delete me._clickYes;
-            dialog.$btn1.setCaption(btnCapYes || linb.wrapRes('$inline.ok'));
-            dialog.$btn2.setCaption(btnCapNo || linb.wrapRes('$inline.cancel'));
+            dialog.$btn1.setCaption("&nbsp;&nbsp;"+(btnCapYes || linb.wrapRes('$inline.ok'))+"&nbsp;&nbsp;");
+            dialog.$btn2.setCaption("&nbsp;&nbsp;"+(btnCapNo || linb.wrapRes('$inline.cancel'))+"&nbsp;&nbsp;");
 
             if(parent && parent["linb.UI"])parent=parent.getContainer(subId);
             if(!_.isSet(parent))parent=linb('body');

@@ -682,22 +682,28 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             return ns;
         },
         showColumn:function(colId, flag){
-            return this.each(function(profile){
-                var map=profile.colMap2,
+            var profile=this.get(0),
+                map=profile.colMap2,
                     cols=profile.colMap,
                     col,
                     sid,
                     cells,
                     n=[];
                 if(col=cols[sid=map[colId]]){
+                if(profile.beforeColShowHide && false===profile.boxing().beforeColShowHide(profile,colId,flag))
+                    return false;
+
                     n.push(profile.getSubNode('HCELL',sid).get(0));
                     _.each(col._cells,function(id){
                         n.push(profile.getSubNode('CELL',id).get(0));
                     });
                     linb(n).css('display',(col.hidden=(flag===false?true:false))?'none':'');
+                
+                if(profile.afterColShowHide)
+                    profile.boxing().afterColShowHide(profile,colId,flag);
                 }
                 profile.box._ajdustBody(profile);
-            });
+            return true;
         },
 
         /*cell realted*/
@@ -1479,6 +1485,12 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     var o=linb(src).parent(2),
                         w=o.width() + linb.DragDrop.getProfile().offset.x,
                         col=profile.colMap[profile.getSubId(src)];
+
+                    if(profile.beforeColResized && false===profile.boxing().beforeColResized(profile,col?col.id:null,w)){
+                        profile._limited=0;
+                        return;
+                    }
+
                     o.width(w);
                     if(col)col.width=w;
 
@@ -1493,6 +1505,9 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                         });
                         linb(ids).width(w);
                     }
+
+                    if(profile.afterColResized)
+                        profile.boxing().afterColResized(profile,col?col.id:null,w);
 
                     profile.getSubNode('SCROLL').onScroll();
                     profile.box._ajdustBody(profile);
@@ -1524,9 +1539,17 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     ws.push(p._minColW);
                     w=parseInt(Math.max.apply(null,ws));
                     if(w>p._maxColW)w=p._maxColW;
+                    
+
+                    if(profile.beforeColResized && false===profile.boxing().beforeColResized(profile,header?header.id:null,w))
+                        return;
+
                     linb(ns).parent().width(w);
                     linb.use(src).parent(2).width(header.width=w);
                     linb(ns).removeClass(cls);
+
+                    if(profile.afterColResized)
+                        profile.boxing().afterColResized(profile,header.id,w);
 
                     profile.box._ajdustBody(profile);
                     return false;
@@ -1585,27 +1608,53 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
 
                     //for ie's weird bug
                     if(linb.browser.ie && h%2==1)h+=1;
+                    
+                    if(profile.beforeRowResized && false===profile.boxing().beforeRowResized(profile, row?row.id:null, h)){
+                        profile._limited=0;
+                        return;
+                    }
+
                     o.height(h);
                     if(profile.getKey(linb.use(src).parent(2).id())==profile.keys.HFCELL){
                         profile.properties.headerHeight=h;
                         linb.UI.$tryResize(profile,null,profile.getRoot().height(),true);
                     }else
                         row.height=h;
+                        
+                    if(profile.afterRowResized)
+                        profile.boxing().afterRowResized(profile, row?row.id:null, h);
+
                     profile._limited=0;
                 },
                 onDblclick:function(profile, e, src){
                     var p = profile.properties,
                         sid = profile.getSubId(src),
                         row,cells;
+            
                     if(sid){
                         row=profile.rowMap[sid];
                         cells=profile.getSubNode('CELLS', sid);
-                        cells.height(row.height=cells.height('auto').height());
+                        var h=cells.height('auto').height();
+                        
+                        if(profile.beforeRowResized && false===profile.boxing().beforeRowResized(profile, row.id, h))
+                            return;
+
+                        cells.height(row.height=h);
                     }else{
                         cells=profile.getSubNode('HCELLS');
-                        cells.height(profile.properties.headerHeight=cells.height('auto').height());
+                        var h=cells.height('auto').height();
+                        
+                        if(profile.beforeRowResized && false===profile.boxing().beforeRowResized(profile, null, h))
+                            return;
+
+                        cells.height(profile.properties.headerHeight=h);
+                        
                         linb.UI.$tryResize(profile,null,profile.getRoot().height(),true);
                     }
+
+                    if(profile.afterRowResized)
+                        profile.boxing().afterRowResized(profile, row?row.id:null, h);
+                    
                     return false;
                 },
                 onClick:function(){return false}
@@ -2447,6 +2496,13 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             afterColMoved:function(profile, colId, toId){},
             beforeColSorted:function(profile, col){},
             afterColSorted:function(profile, col){},
+
+            beforeColShowHide:function(profile,colId,flag){},
+            afterColShowHide:function(profile,colId,flag){},
+            beforeColResized:function(profile,colId,width){},
+            afterColResized:function(profile,colId,width){},
+            beforeRowResized:function(profile, rowId, height){},
+            afterRowResized:function(profile, rowId, height){},
 
             beforeRowActive:function(profile, row){},
             afterRowActive:function(profile, row){},
