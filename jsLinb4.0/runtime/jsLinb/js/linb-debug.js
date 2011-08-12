@@ -19962,7 +19962,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                 if((profile.$border||profile.$shadow||profile.$resizer) && linb.browser.ie)o.ieRemedy();
         }
     }
-});﻿Class("linb.UI.RichEditor", ["linb.UI","linb.absValue"],{
+});Class("linb.UI.RichEditor", ["linb.UI","linb.absValue"],{
     Initialize:function(){
         this.addTemplateKeys(['TOOLBARBTN']);
     },
@@ -27663,7 +27663,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
         _adjustScroll:null
     }
 });
-﻿Class("linb.UI.ButtonViews", "linb.UI.Tabs",{
+Class("linb.UI.ButtonViews", "linb.UI.Tabs",{
     Initialize:function(){
         var t = this.getTemplate();
         t.LIST.className='uibg-bar uiborder-outset';

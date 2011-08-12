@@ -14,6 +14,9 @@ Class('VisualJS.ClassTool',null,{
             // clear bottom comments
             while(reg12.test(str))
                 str = str.replace(reg12,'');
+            // clear comments
+            str = str.replace(/\/\/[^\n]*/g,'');
+            str = str.replace(/\/\*[^*]*\*+([^\/][^*]*\*+)*\//g,'');
                 
             // check "Class(" string
             if(!reg5.test(str))
