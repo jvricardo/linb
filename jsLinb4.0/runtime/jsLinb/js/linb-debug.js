@@ -7743,7 +7743,7 @@ type:4
             var _t=[];
             if(!_.isEmpty(data)){
                 if(method.toLowerCase()=='get'){
-                    window.open(action + "?" + _.urlEncode(data));
+                    window.open(action + "?" + _.urlEncode(data),target);
                 }else{
                     _.each(data,function(o,i){
                         if(_.isDefined(o))
@@ -7757,7 +7757,7 @@ type:4
                     _t=null;
                 }
             }else{
-                window.open(action);
+                window.open(action,target);
             }
         },
         busy:function(label){
@@ -37978,7 +37978,7 @@ if(linb.browser.ie){
 
                 cmd.append(dialog.$btn2 = new linb.UI.SButton({
                     tabindex:1,
-                    position:'relative',
+                    position:'relative'
                 },
                 {
                     onClick:function(){

@@ -1195,7 +1195,7 @@ if(linb.browser.ie){
 
                 cmd.append(dialog.$btn2 = new linb.UI.SButton({
                     tabindex:1,
-                    position:'relative',
+                    position:'relative'
                 },
                 {
                     onClick:function(){
