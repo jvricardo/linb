@@ -7081,10 +7081,8 @@ Class('linb.Dom','linb.absBox',{
             var me=arguments.callee, _f = me._f || (me._f=function(){return false}),cls;
             this.removeClass("ui-selectable").removeClass("ui-unselectable");
             this.addClass(value?"ui-selectable":"ui-unselectable");
-             return this.each(function(o){
-                if(!linb.browser.ie)
-                    o.unselectable=value?"off":"on";
-                else
+            return this.each(function(o){
+                if(linb.browser.ie)
                     o.onselectstart=value?null:_f;
             })
         },
@@ -12561,7 +12559,8 @@ Class("linb.UI",  "linb.absObj", {
                 $order:1,
                 'background-position':'left -60px',
                 'padding-left':'4px',
-                'vertical-align':'top'
+                'vertical-align':'top',
+                overflow:'hidden'
             },
             '.ui-btnc':{
                 $order:1,
@@ -13025,6 +13024,7 @@ Class("linb.UI",  "linb.absObj", {
                 '-moz-user-select': linb.browser.gek?'-moz-none':null,
                 '-khtml-user-select': linb.browser.kde?'none':null,
                 '-webkit-user-select': linb.browser.kde?'none':null,
+                '-o-user-select':linb.browser.opr?'none':null,
                 'user-select':'none'
             },
             '.ui-selectable':{
@@ -13032,6 +13032,7 @@ Class("linb.UI",  "linb.absObj", {
                 '-moz-user-select': linb.browser.gek?'text':null,
                 '-khtml-user-select': linb.browser.kde?'text':null,
                 '-webkit-user-select': linb.browser.kde?'text':null,
+                '-o-user-select':linb.browser.opr?'text':null,
                 'user-select':'text'
             },
             '.ui-ctrl':{

@@ -1364,7 +1364,8 @@ Class("linb.UI",  "linb.absObj", {
                 $order:1,
                 'background-position':'left -60px',
                 'padding-left':'4px',
-                'vertical-align':'top'
+                'vertical-align':'top',
+                overflow:'hidden'
             },
             '.ui-btnc':{
                 $order:1,
