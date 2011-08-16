@@ -690,7 +690,7 @@ _.merge(Class, {
 //function dependency: linb.Dom linb.Thread
 _.merge(linb,{
     $DEFAULTHREF:'javascript:;',
-    $IEUNSELECTABLE:' unselectable="on" ',
+    $IEUNSELECTABLE:function(){return linb.browser.ie?' onselectstart="return false;" ':''},
     SERIALIZEMAXLAYER:99,
     SERIALIZEMAXSIZE:9999,
 
@@ -824,7 +824,7 @@ _.merge(linb,{
         s=id;
         r= linb.getRes.apply(null,arguments);
         if(s==r)r=i;
-        return '<span id="'+linb.$localeDomId+'" class="'+s+'" '+linb.$IEUNSELECTABLE+'>'+r+'</span>';
+        return '<span id="'+linb.$localeDomId+'" class="'+s+'" '+linb.$IEUNSELECTABLE()+'>'+r+'</span>';
     },
     adjustRes:function(str, wrap){
         wrap=wrap?linb.wrapRes:linb.getRes;
@@ -7078,17 +7078,14 @@ Class('linb.Dom','linb.absBox',{
             return ns;
         },
         setSelectable:function(value){
-            var me=arguments.callee, _f = me._f || (me._f=function(){return false});
+            var me=arguments.callee, _f = me._f || (me._f=function(){return false}),cls;
+            this.removeClass("ui-selectable").removeClass("ui-unselectable");
+            this.addClass(value?"ui-selectable":"ui-unselectable");
              return this.each(function(o){
-                o.unselectable=value?"off":"on";
-                if(linb.browser.gek)
-                    o.style.MozUserSelect=value?"text":"-moz-none";
-                else if(linb.browser.ie)
+                if(!linb.browser.ie)
+                    o.unselectable=value?"off":"on";
+                else
                     o.onselectstart=value?null:_f;
-                else if(linb.browser.kde){
-                    o.style.webkitUserSelect=value?"text":"none";
-                    o.style.KhtmlUserSelect=value?"text":"none";
-                }
             })
         },
         setInlineBlock:function(){
@@ -13027,13 +13024,15 @@ Class("linb.UI",  "linb.absObj", {
                 $order:0,
                 '-moz-user-select': linb.browser.gek?'-moz-none':null,
                 '-khtml-user-select': linb.browser.kde?'none':null,
-                '-webkit-user-select': linb.browser.kde?'none':null
+                '-webkit-user-select': linb.browser.kde?'none':null,
+                'user-select':'none'
             },
             '.ui-selectable':{
                 $order:1,
                 '-moz-user-select': linb.browser.gek?'text':null,
                 '-khtml-user-select': linb.browser.kde?'text':null,
-                '-webkit-user-select': linb.browser.kde?'text':null
+                '-webkit-user-select': linb.browser.kde?'text':null,
+                'user-select':'text'
             },
             '.ui-ctrl':{
                 'vertical-align':'middle'
@@ -20467,7 +20466,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                                 _.arr.each(items,function(o){
                                     o=o.split(',');
                                     t=o[0]=='...'?'1':o[0];
-                                    items2.push({id:o[0], caption:'<font size="'+o[0]+'" '+linb.$IEUNSELECTABLE+'>'+o[1]+'</font>'});
+                                    items2.push({id:o[0], caption:'<font size="'+o[0]+'" '+linb.$IEUNSELECTABLE()+'>'+o[1]+'</font>'});
                                 });
                                 first=true;
                                 editor.$fontsizeList=(new linb.UI.List({selectable:false,height:'auto',items:items2,width:150})).render(true);
@@ -20482,7 +20481,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                                 var t;
                                 _.arr.each(items,function(o){
                                     t=o=='...'?'':o;
-                                    items2.push({id:o, caption:'<span style="font-family:'+o+'" '+linb.$IEUNSELECTABLE+'>'+o+'</span>'});
+                                    items2.push({id:o, caption:'<span style="font-family:'+o+'" '+linb.$IEUNSELECTABLE()+'>'+o+'</span>'});
                                 });
                                 first=true;
                                 editor.$fontnameList=(new linb.UI.List({selectable:false,height:'auto',items:items2})).render(true);
@@ -20498,7 +20497,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                                 _.arr.each(items,function(o){
                                     o=o.split(',');
                                     t=o[0]=='...'?'span':o[0];
-                                    items2.push({id:o[0], caption:'<'+t+' style="display:inline;padding:0;margin:0" '+linb.$IEUNSELECTABLE+'>'+o[1]+'</'+t+'>'});
+                                    items2.push({id:o[0], caption:'<'+t+' style="display:inline;padding:0;margin:0" '+linb.$IEUNSELECTABLE()+'>'+o[1]+'</'+t+'>'});
                                 });
                                 first=true;
                                 editor.$formatblockList=(new linb.UI.List({selectable:false,height:'auto',items:items2})).render(true);
@@ -22362,7 +22361,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
             l=list.length,
             i,data,
             arr=[],
-            evs=linb.$IEUNSELECTABLE;
+            evs=linb.$IEUNSELECTABLE();
 
         ns.addTemplateKeys(['TXT', 'DD1', 'DD2', 'DD3','R','G','B','HH','S','V','H','E','X']);
 
@@ -23333,7 +23332,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
             tr1='<tr>',
             tr2='</tr>',
             td1='<th id="'+key+'-W:'+id+':@"  class="'+cls+'-w '+tag+'W_CC'+tag+'"  style="'+tag+'W_CS'+tag+'">@</th>',
-            td2='<td id="'+key+'-TD:'+id+':@" class="'+cls+'-td '+tag+'TD_CC'+tag+'"  style="'+tag+'TD_CS'+tag+'" '+linb.$IEUNSELECTABLE+' >'+
+            td2='<td id="'+key+'-TD:'+id+':@" class="'+cls+'-td '+tag+'TD_CC'+tag+'"  style="'+tag+'TD_CS'+tag+'" '+linb.$IEUNSELECTABLE()+' >'+
                 '</td>',
             body,i,j,k,l,a=[],b=[];
         for(i=0;i<7;i++)
@@ -24210,7 +24209,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
         cls=this._excls3;
         cls2=this._excls4;
         id=linb.UI.$ID;
-        t='<span id="'+this.KEY+'-HI:'+id+':@" class="'+cls+' !" '+linb.$IEUNSELECTABLE+' >@</span>';
+        t='<span id="'+this.KEY+'-HI:'+id+':@" class="'+cls+' !" '+linb.$IEUNSELECTABLE()+' >@</span>';
         a=[];
         for(i=0;i<24;i++)
             a[a.length]=t.replace(/@/g,i<10?('0'+i):i).replace('!',(i%6===0)?cls2:'');
@@ -24220,7 +24219,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
         cls=this._excls;
         cls2=this._excls2;
         id=linb.UI.$ID;
-        t='<span id="'+this.KEY+'-MI:'+id+':@" class="'+cls+' !" '+linb.$IEUNSELECTABLE+' >@</span>';
+        t='<span id="'+this.KEY+'-MI:'+id+':@" class="'+cls+' !" '+linb.$IEUNSELECTABLE()+' >@</span>';
         a=[];
         for(i=0;i<60;i++)
             a[a.length]=t.replace(/@/g,i<10?('0'+i):i).replace('!',(i%5===0)?cls2:'');

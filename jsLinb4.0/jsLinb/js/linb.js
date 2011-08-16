@@ -690,7 +690,7 @@ _.merge(Class, {
 //function dependency: linb.Dom linb.Thread
 _.merge(linb,{
     $DEFAULTHREF:'javascript:;',
-    $IEUNSELECTABLE:' unselectable="on" ',
+    $IEUNSELECTABLE:function(){return linb.browser.ie?' onselectstart="return false;" ':''},
     SERIALIZEMAXLAYER:99,
     SERIALIZEMAXSIZE:9999,
 
@@ -824,7 +824,7 @@ _.merge(linb,{
         s=id;
         r= linb.getRes.apply(null,arguments);
         if(s==r)r=i;
-        return '<span id="'+linb.$localeDomId+'" class="'+s+'" '+linb.$IEUNSELECTABLE+'>'+r+'</span>';
+        return '<span id="'+linb.$localeDomId+'" class="'+s+'" '+linb.$IEUNSELECTABLE()+'>'+r+'</span>';
     },
     adjustRes:function(str, wrap){
         wrap=wrap?linb.wrapRes:linb.getRes;

@@ -1053,17 +1053,12 @@ Class('linb.Dom','linb.absBox',{
             return ns;
         },
         setSelectable:function(value){
-            var me=arguments.callee, _f = me._f || (me._f=function(){return false});
-             return this.each(function(o){
-                o.unselectable=value?"off":"on";
-                if(linb.browser.gek)
-                    o.style.MozUserSelect=value?"text":"-moz-none";
-                else if(linb.browser.ie)
+            var me=arguments.callee, _f = me._f || (me._f=function(){return false}),cls;
+            this.removeClass("ui-selectable").removeClass("ui-unselectable");
+            this.addClass(value?"ui-selectable":"ui-unselectable");
+            return this.each(function(o){
+                if(linb.browser.ie)
                     o.onselectstart=value?null:_f;
-                else if(linb.browser.kde){
-                    o.style.webkitUserSelect=value?"text":"none";
-                    o.style.KhtmlUserSelect=value?"text":"none";
-                }
             })
         },
         setInlineBlock:function(){

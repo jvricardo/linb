@@ -1827,13 +1827,17 @@ Class("linb.UI",  "linb.absObj", {
                 $order:0,
                 '-moz-user-select': linb.browser.gek?'-moz-none':null,
                 '-khtml-user-select': linb.browser.kde?'none':null,
-                '-webkit-user-select': linb.browser.kde?'none':null
+                '-webkit-user-select': linb.browser.kde?'none':null,
+                '-o-user-select':linb.browser.opr?'none':null,
+                'user-select':'none'
             },
             '.ui-selectable':{
                 $order:1,
                 '-moz-user-select': linb.browser.gek?'text':null,
                 '-khtml-user-select': linb.browser.kde?'text':null,
-                '-webkit-user-select': linb.browser.kde?'text':null
+                '-webkit-user-select': linb.browser.kde?'text':null,
+                '-o-user-select':linb.browser.opr?'text':null,
+                'user-select':'text'
             },
             '.ui-ctrl':{
                 'vertical-align':'middle'

@@ -38,7 +38,7 @@ Class('linb.UI.TimePicker', ['linb.UI',"linb.absValue"], {
         cls=this._excls3;
         cls2=this._excls4;
         id=linb.UI.$ID;
-        t='<span id="'+this.KEY+'-HI:'+id+':@" class="'+cls+' !" '+linb.$IEUNSELECTABLE+' >@</span>';
+        t='<span id="'+this.KEY+'-HI:'+id+':@" class="'+cls+' !" '+linb.$IEUNSELECTABLE()+' >@</span>';
         a=[];
         for(i=0;i<24;i++)
             a[a.length]=t.replace(/@/g,i<10?('0'+i):i).replace('!',(i%6===0)?cls2:'');
@@ -48,7 +48,7 @@ Class('linb.UI.TimePicker', ['linb.UI',"linb.absValue"], {
         cls=this._excls;
         cls2=this._excls2;
         id=linb.UI.$ID;
-        t='<span id="'+this.KEY+'-MI:'+id+':@" class="'+cls+' !" '+linb.$IEUNSELECTABLE+' >@</span>';
+        t='<span id="'+this.KEY+'-MI:'+id+':@" class="'+cls+' !" '+linb.$IEUNSELECTABLE()+' >@</span>';
         a=[];
         for(i=0;i<60;i++)
             a[a.length]=t.replace(/@/g,i<10?('0'+i):i).replace('!',(i%5===0)?cls2:'');

@@ -56,7 +56,7 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
             l=list.length,
             i,data,
             arr=[],
-            evs=linb.$IEUNSELECTABLE;
+            evs=linb.$IEUNSELECTABLE();
 
         ns.addTemplateKeys(['TXT', 'DD1', 'DD2', 'DD3','R','G','B','HH','S','V','H','E','X']);
 
