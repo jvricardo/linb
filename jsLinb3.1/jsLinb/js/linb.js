@@ -693,7 +693,7 @@ _.merge(Class, {
 //function dependency: linb.Dom linb.Thread
 _.merge(linb,{
     $DEFAULTHREF:'javascript:;',
-    $IEUNSELECTABLE:' unselectable="on" ',
+    $IEUNSELECTABLE:' onselectstart="return false;" ',
     SERIALIZEMAXLAYER:99,
     SERIALIZEMAXSIZE:9999,
 
