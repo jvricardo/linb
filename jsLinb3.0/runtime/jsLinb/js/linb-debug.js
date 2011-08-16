@@ -1100,6 +1100,18 @@ new function(){
     else
         (function(){/loaded|complete/.test(d.readyState)?f():setTimeout(arguments.callee,1)})()
 };
+// for loction url info
+new function(){
+    linb._uriReg=/^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/;
+    linb._localReg=/^(?:about|app|app\-storage|.+\-extension|file|widget):$/;
+    linb._curHref=(function(a){
+        try{return location.href;}catch(e){
+            a=document.createElement("a");
+            a.href="";
+            return a.href;
+        }})(),
+    linb._localParts=linb._uriReg.exec(linb._curHref.toLowerCase())||[];
+};
 
 /*linb.Thread
 *  dependency: _ ; Class ; linb
@@ -1551,12 +1563,14 @@ Class('linb.absIO',null,{
             return [n,w,w.document];
         },
         isCrossDomain:function(uri){
-            uri=uri||'';
-            var me=arguments.callee,
-                r=me.r || (me.r=/(http(s)?\:\/\/)?([\w\.]+(:[\d]+)?)(.*)/),t;
-            if((t=uri.indexOf(':'))==-1||t>uri.indexOf('/'))return false;
-            if(uri.indexOf('file:')===0)return !!location.host;
-            return  location.host != uri.replace(r,'$3')
+            var a=linb._uriReg.exec((uri||'').toLowerCase()),
+                b=linb._localParts;
+            return !!( a&&(
+                    a[1]!==b[1]||
+                    a[2]!==b[2]||
+                    (a[3]||(a[1]==="http:"?80:443))!==(b[3]||(b[1]==="http:"?80:443)) 
+                )
+            );
         },
         //get multi ajax results once
         groupCall:function(hash, callback, onStart, onEnd, threadid){
@@ -1674,7 +1688,15 @@ Class('linb.Ajax','linb.absIO',{
                 //this is for opera
                 var ns=this,status = ns._XML.status;
                 _response = rspType=='text'?ns._XML.responseText:ns._XML.responseXML;
-                if(status===undefined || status===0 || status==304 || (status >= 200 && status < 300 ))
+                // crack for some local case
+                if(!status && linb._localReg.test(linb._localParts[1]) && !linb.absIO.isCrossDomain(uri))
+                    status=ns._XML.responseText?200:404;
+                // for IE7
+                if(status==1223)status=204;
+                // offline or other Network problems
+                if(status===undefined || status<10 )
+                    _onError(new Error('Network problems : ' +status));
+                else if(status==304 || (status >= 200 && status < 300 ))
                     _onResponse();
                 else
                     _onError(new Error('XMLHTTP returns : ' +status));
