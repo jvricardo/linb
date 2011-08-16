@@ -25,12 +25,12 @@ Class=window.Class=function(key, pkey, obj){
     pkey = ( !pkey?[]:typeof pkey=='string'?[pkey]:pkey);
     for(i=0; t=pkey[i]; i++)
         if(!(_parent[i]=(_.get(w, t.split('.')) || (linb&&linb.SC&&linb.SC(t)))))
-            throw new Error('errNoParent:'+ t);
+            throw new Error('errNoParent--'+ t);
     if(obj.Dependency){
         if(typeof obj.Dependency == "string")obj.Dependency=[obj.Dependency];
         for(i=0; t=obj.Dependency[i]; i++)
             if(!(_.get(w, t.split('.')) || (linb&&linb.SC&&linb.SC(t))))
-                throw new Error('errNoDependency:'+ t);
+                throw new Error('errNoDependency--'+ t);
     }
     parent0=_parent[0];
 
@@ -1159,6 +1159,18 @@ new function(){
     else
         (function(){/loaded|complete/.test(d.readyState)?f():setTimeout(arguments.callee,1)})()
 };
+// for loction url info
+new function(){
+    linb._uriReg=/^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/;
+    linb._localReg=/^(?:about|app|app\-storage|.+\-extension|file|widget):$/;
+    linb._curHref=(function(a){
+        try{return location.href;}catch(e){
+            a=document.createElement("a");
+            a.href="";
+            return a.href;
+        }})(),
+    linb._localParts=linb._uriReg.exec(linb._curHref.toLowerCase())||[];
+};
 
 /*linb.Thread
 *  dependency: _ ; Class ; linb
@@ -1632,15 +1644,14 @@ Class('linb.absIO',null,{
             return [n,w,w.document];
         },
         isCrossDomain:function(uri){
-            uri=uri||'';
-            var me=arguments.callee,
-                r=me.r || (me.r=/^(\w+:)\/\/([^\/]+?)(?::(\d+))?(?:$|\/)/),
-                arr=uri.match(r);
-            return arr?(
-                location.protocol !=  arr[1] ||
-                document.domain   !=  arr[2] ||
-                location.port     != (arr[3] || "")
-            ):true;
+            var a=linb._uriReg.exec((uri||'').toLowerCase()),
+                b=linb._localParts;
+            return !!( a&&(
+                    a[1]!==b[1]||
+                    a[2]!==b[2]||
+                    (a[3]||(a[1]==="http:"?80:443))!==(b[3]||(b[1]==="http:"?80:443)) 
+                )
+            );
         },
         //get multi ajax results once
         groupCall:function(hash, callback, onStart, onEnd, threadid){
@@ -1769,10 +1780,18 @@ Class('linb.Ajax','linb.absIO',{
                 _txtresponse = rspType=='xml'?ns._XML.responseXML:ns._XML.responseText;
                 // try to get js object, or the original
                 _response=rspType=="json"?((obj=_.unserialize(_txtresponse))===false?_txtresponse:obj):_txtresponse;
-                if(status===undefined || status===0 || status==304 || (status >= 200 && status < 300 ))
+                // crack for some local case
+                if(!status && linb._localReg.test(linb._localParts[1]) && !linb.absIO.isCrossDomain(uri))
+                    status=ns._XML.responseText?200:404;
+                // for IE7
+                if(status==1223)status=204;
+                // offline or other Network problems
+                if(status===undefined || status<10 )
+                    _onError(new Error('Network problems--' +status));
+                else if(status===undefined || status===0 || status==304 || (status >= 200 && status < 300 ))
                     _onResponse();
                 else
-                    _onError(new Error('XMLHTTP returns : ' +status));
+                    _onError(new Error('XMLHTTP returns--' +status));
             }
         }
     },
@@ -1910,7 +1929,7 @@ Class('linb.SAjax','linb.absIO',{
                         o[i]._onResponse();
                     }
                 }else
-                    self._onError(new Error("SAjax return value formatting error: "+obj));
+                    self._onError(new Error("SAjax return value formatting error--"+obj));
             }catch(e){
                 linb.Debugger && linb.Debugger.trace(e);
             }
@@ -1989,7 +2008,7 @@ Class('linb.IAjax','linb.absIO',{
                     }else{
                         //clear first
                         self._clear();
-                        self._onError(new Error("IAjax return value formatting error, or no matched 'id': "+data));
+                        self._onError(new Error("IAjax return value formatting error, or no matched 'id'-- "+data));
                     }
                 });
             };
