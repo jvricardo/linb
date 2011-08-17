@@ -331,6 +331,9 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
 
                 profile.$poplink = o.get(0);
 
+                if((profile.beforePopShow && false===box.beforePopShow(profile, profile.$drop))
+                    return;
+
                 //pop
                 var node=o.reBoxing();
                 node.popToTop(profile.getSubNode('BOX'));
@@ -935,6 +938,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
             onFileDlgOpen:function(profile, node){},
             onCommand:function(profile, node){},
             beforeComboPop:function(profile, pos, e, src){},
+            beforePopShow:function(){profile, popCtl},
             onClick:function(profile, e, src, value){}
         },
         _posMap:{

@@ -10269,7 +10269,7 @@ _.set(linb.Locale,["cn","app"], {
                 ]
             },
             beforeComboPop:{
-                $desc:"当命令按钮按下时（弹出窗口弹出前）调用.",
+                $desc:"当命令按钮按下时（弹出窗口弹出前）调用.如返false,系统默认的弹出窗口不会出现.",
                 $paras:[
                     "profile : linb.UIProfile.",
                     "pos : Object, 鼠标位置.",
@@ -10281,6 +10281,13 @@ _.set(linb.Locale,["cn","app"], {
                     "var o1,o2;linb(id).prepend(o1=new linb.UI.ComboInput({position:'relative',type:'cmdbox'}));"+
                     "o1.beforeComboPop(function(p){p.boxing().setUIValue( 'beforeComboPop' )});"+
                     "}"
+                ]
+            },
+            beforePopShow:{
+                $desc:"在弹出窗口显示前调用.如返false,弹出窗口不会显示.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "popCtl : linb.UI, 弹出窗口对象."
                 ]
             },
             onClick:{

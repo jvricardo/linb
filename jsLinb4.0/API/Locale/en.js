@@ -10343,7 +10343,7 @@ _.set(linb.Locale,["en","app"], {
                 ]
             },
             beforeComboPop:{
-                $desc:"Fired before the pop-up window shows. If returns false, the default pop action will be ignored.",
+                $desc:"Fired before the pop-up window is created. If returns false, the default pop window will be ignored.",
                 $paras:[
                     "profile : linb.UIProfile.",
                     "pos : the mouse position.",
@@ -10355,6 +10355,13 @@ _.set(linb.Locale,["en","app"], {
                     "var o1,o2;linb(id).prepend(o1=new linb.UI.ComboInput({position:'relative',type:'cmdbox'}));"+
                     "o1.beforeComboPop(function(p){p.boxing().setUIValue( 'beforeComboPop' )});"+
                     "}"
+                ]
+            },
+            beforePopShow:{
+                $desc:"Fired before the pop-up window shows. If returns false, the default pop action won't show.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "popCtl : linb.UI, pop-up window UI Control."
                 ]
             },
             onClick:{
