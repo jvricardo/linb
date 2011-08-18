@@ -21066,7 +21066,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
 
                 profile.$poplink = o.get(0);
 
-                if((profile.beforePopShow && false===box.beforePopShow(profile, profile.$drop))
+                if(profile.beforePopShow && false===box.beforePopShow(profile, profile.$drop))
                     return;
 
                 //pop
