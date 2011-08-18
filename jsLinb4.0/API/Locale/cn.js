@@ -11188,6 +11188,15 @@ _.set(linb.Locale,["cn","app"], {
                     "}"
                 ]
             },
+            onClick:{
+                $desc:"在单击条目的时候触发该事件.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "item: Object, 项对象.",
+                    "e: Event, 事件对象.",
+                    "src: String, 事件所属DOM元素的linbid."
+                ]
+            },
             onDblclick:{
                 $desc:"在双击条目的时候触发该事件.",
                 $paras:[

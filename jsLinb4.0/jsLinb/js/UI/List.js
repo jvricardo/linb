@@ -198,6 +198,9 @@ Class("linb.UI.List", ["linb.UI", "linb.absList","linb.absValue" ],{
 
                     if(properties.disabled|| item.disabled)return false;
 
+                    if(profile.onClick)
+                        box.onClick(profile,item,e,src);
+
                     linb.use(src).focus();
 
                     switch(properties.selMode){
@@ -349,6 +352,7 @@ Class("linb.UI.List", ["linb.UI", "linb.absList","linb.absValue" ],{
             maxHeight:300
         },
         EventHandlers:{
+            onClick:function(profile, item, e, src){},
             onDblclick:function(profile, item, e, src){},
             onItemSelected:function(profile, item, e, src, type){}
         },

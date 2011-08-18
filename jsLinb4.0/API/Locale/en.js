@@ -11262,6 +11262,15 @@ _.set(linb.Locale,["en","app"], {
                     "}"
                 ]
             },
+            onClick:{
+                $desc:"Fired when list item was clicked.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "item: list item Object.",
+                    "e: Event, the DOM event Object.",
+                    "src : String, the event source DOM element's linbid."
+                ]
+            },
             onDblclick:{
                 $desc:"Fired when list item was dblclicked.",
                 $paras:[
