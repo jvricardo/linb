@@ -327,6 +327,20 @@ Class('VisualJS.Designer', 'linb.Com',{
         isDirty:function(){
             return !!this._dirty;
         },
+        $tryToRefreshSel:function(profile){
+            var page=this,t;
+
+            if((t=profile.parent) && t.reSelectObject &&_.arr.indexOf(page.tempSelected, profile.$linbid)!=-1){
+                _.resetRun(":"+page.tempSelected.join(':'), function(){
+                    if(!profile.box)return;
+                    if(page.tempSelected.length>1)
+                        t.reSelectObject.call(t,profile, profile.getRoot().parent());
+                    else
+                        t.selectObject.call(t,profile, profile.getRoot().parent());
+                });
+                page.profileGrid.offEditor();
+            }
+        },
         resetCodeFromDesigner:function(sync){
             var page=this;
             if(page._dirty){
@@ -339,6 +353,89 @@ Class('VisualJS.Designer', 'linb.Com',{
 
                 page._dirty=false;
             }
+        },
+        _inplaceedit:function(prf, nodeKey, multi, conf, node, left, top, w, h){
+            var page=this,
+                ismulti=!!conf[0],
+                getF=conf[1],
+                setF=conf[2],
+                itemKey=conf[3],
+                item;
+            
+            var unFun=function(setV){
+                inplaceEditor.getSubNode('INPUT').onBlur();
+
+                inplaceEditor.setVisibility('hidden').setLeft(-1000).setValue('',true);
+                linb.Event.keyboardHook('esc');
+            };
+            
+            if(!page.$inplaceEditor){
+                page.$inplaceEditor = new linb.UI.ComboInput({
+                    type:'none',
+                    dirtyMark:false,
+                    visibility:'hidden'
+                },{
+                    onHotKeydown:function(p,kb){
+                        if(kb.key=='tab' || kb.key=='enter'){
+                            unFun();
+                            return false;
+                        }
+                    }
+                });
+                page.canvas.append(page.$inplaceEditor);
+                page.$inplaceEditor.render(true);
+            }
+            var inplaceEditor = page.$inplaceEditor;
+            // to set the caption/label
+            inplaceEditor.afterUIValueSet(function(p, ov, nv){
+                if(ismulti){
+                    if(typeof setF=='function')
+                        setF(prf, item, itemKey, nv);
+                    else{
+                        var options={};
+                        options[itemKey||"caption"]=nv;
+                        prf.boxing()[setF](item.id,options);
+                    }
+                }else{
+                    prf.boxing()[setF](nv);
+                }
+                page._dirty=true;
+                
+                // if single selected, refresh grid data
+                if(page.tempSelected.length==1 && prf.parent && prf.parent.selectObject)
+                    prf.parent.selectObject.call(prf.parent,prf, prf.getRoot().parent());
+                
+            });
+            
+            var oldV;
+            if(ismulti){
+                if(typeof getF=='function')
+                    item=getF(prf, node.get(0));
+                else
+                    item=prf.boxing()[getF](node.get(0).$linbid);
+                if(item){
+                    oldV=item[itemKey||"caption"]||"";
+                }else
+                    return;
+            }else{
+                oldV=prf.boxing()[getF]();
+            }
+            
+            // init
+            inplaceEditor.setValue(oldV,true);
+            // ensure on the top
+            inplaceEditor.setZIndex(linb.Dom.TOP_ZINDEX + 10);
+            inplaceEditor.setLeft(left-1).setTop(top-1).setWidth(w<10?10:(w+2)).setHeight(h<20?20:(h+2));
+
+            // to hide
+            node.setBlurTrigger('design:inplace:editor', unFun);
+            linb.Event.keyboardHook('esc',0,0,0,function(){
+                inplaceEditor.setValue(oldV,true);
+                unFun();
+            });
+            
+            // show            
+            inplaceEditor.setVisibility('visible').activate();
         },
         _createResizer:function(){
             var page=this;
@@ -522,7 +619,66 @@ Class('VisualJS.Designer', 'linb.Com',{
             //select children even if parent is selected
             .onRegionClick(function(profile, e){
                 var ep=linb.Event.getPos(e),arr,t,m,ret;
-                var fun=function(arr, ep, parent){
+                var tryinplaceedit=function(prf,nodeKey,multi,conf, node, root,epoff,ppos,rgw, rgh, subId){
+
+                    if(node && !node.isEmpty()){
+                        var pos=node.offset(null,root),
+                        w=node.offsetWidth(),
+                        h=node.offsetHeight();
+                        
+                        if(epoff.left>pos.left && epoff.top>pos.top && epoff.left<pos.left+w && epoff.top<pos.top+h &&
+                           epoff.left<rgw&& epoff.top<rgh){
+
+                            page._inplaceedit(prf, nodeKey, multi,conf, node, ppos.left+pos.left,ppos.top+pos.top,w,h);
+
+                            return true;
+                        }
+                    }
+                    return false;
+                };
+                var fun1=function(ep,prf){
+                    var conf=CONF.inplaceedit && CONF.inplaceedit[prf.key],
+                        root,nodes,node;
+                    if(!_.isHash(conf))
+                        return false;
+                    for(var nodeKey in conf){
+                        var item=conf[nodeKey],
+                            ismulti=!!item[0];
+                            
+                        var root=prf.getRoot(),
+                            //mouse abs pos offset
+                            epoff={},
+                            //parent abs pos
+                            ppos=root.offset(),
+                            inpos=root.offset(null,page.canvas.getRoot()),
+                            //parent size
+                            rgw=root.offsetWidth(),
+                            rgh=root.offsetHeight();
+                        epoff.left=ep.left-ppos.left;
+                        epoff.top=ep.top-ppos.top;
+
+                        // multi 
+                        if(ismulti){
+                            var nodes=prf.getSubNode(nodeKey,true).get(),
+                                node;
+                            for(var i=0,l=nodes.length;i<l;i++){
+                                node=nodes[i];
+                                if(node.id){
+                                    var subId=prf.getSubId(node.id);
+                                    if(tryinplaceedit(prf, nodeKey, 1, item, linb([node.$linbid]), root, epoff,inpos, rgw, rgh, subId))
+                                        return true;
+                                }
+                            }
+                        }
+                        // single
+                        else{
+                            if(tryinplaceedit(prf, nodeKey,  0, item,prf.getSubNode(nodeKey), root, epoff,inpos, rgw, rgh, subId))
+                                return true;
+                        }
+                    }
+                    return false;
+                },
+                fun2=function(arr, ep, parent){
                     var me=arguments.callee,
                         m,rt,pos,w,h,
                         //mouse abs pos offset
@@ -556,12 +712,21 @@ Class('VisualJS.Designer', 'linb.Com',{
                 if(!(arr=this.tempSelected) || !arr.length)return;
                 _.arr.each(arr,function(o){
                     t=linb.getObject(o);
-                    ret=fun(t.children, ep, t.getRoot());
+                    // to check whether to in-place edit label/caption or not
+                    ret=fun1(ep, t);
+                    if(ret)return false;
+                    //return false;
+                    
+                    // to check whether select a child or not
+                    ret=fun2(t.children, ep, t.getRoot());
                     if(ret)return false;
                 });
                 if(ret){
-                    this.selectWidget([ret]);
-                    return false;
+                    // to select a child
+                    if(ret!==true){
+                        this.selectWidget([ret]);
+                        return false;
+                    }
                 }
             });
             page.holder.append(page.resizer);
@@ -780,30 +945,10 @@ Class('VisualJS.Designer', 'linb.Com',{
                         });
 
                         profile.$onDock=function(profile){
-                            var t;
-                            if((t=profile.parent) && t.reSelectObject &&_.arr.indexOf(page.tempSelected, profile.$linbid)!=-1){
-                                _.resetRun(":"+page.tempSelected.join(':'), function(){
-                                    if(!profile.box)return;
-                                    if(page.tempSelected.length>1)
-                                        t.reSelectObject.call(t,profile, profile.getRoot().parent());
-                                    else
-                                        t.selectObject.call(t,profile, profile.getRoot().parent());
-                                });
-                                page.profileGrid.offEditor();
-                            }
+                            page.$tryToRefreshSel(profile);
                         };
                         profile.$afterRefresh=function(profile){
-                            var t;
-                            if((t=profile.parent) && t.reSelectObject &&_.arr.indexOf(page.tempSelected, profile.$linbid)!=-1){
-                                _.resetRun(":"+page.tempSelected.join(':'), function(){
-                                    if(!profile.box)return;
-                                    if(page.tempSelected.length>1)
-                                        t.reSelectObject.call(t,profile, profile.getRoot().parent());
-                                    else
-                                        t.selectObject.call(t,profile, profile.getRoot().parent());
-                                });
-                                page.profileGrid.offEditor();
-                            }
+                            page.$tryToRefreshSel(profile);
                         };
                     }
 
@@ -2081,7 +2226,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                 if(!page.objlistBlock){
                     page.objlistBlock=new linb.UI.Block({
                         width:200,
-                        height:200,
+                        height:400,
                         borderType:'ridge',
                         background:'#fff',
                         shadow:true
@@ -2139,7 +2284,8 @@ Class('VisualJS.Designer', 'linb.Com',{
                     }
                 };
                 fun(page.canvas.get(0), items, CONF.mapWidgets);
-                page.treebarObj.setItems(items).toggleNode(page.canvas.get(0).$linbid,true);
+                page.treebarObj.setItems(items).toggleNode(page.canvas.get(0).$linbid,true,true);
+
                 var node = page.objlistBlock.reBoxing();
                 node.popToTop(profile.getRoot());
                 var unFun=function(){
@@ -2167,6 +2313,13 @@ Class('VisualJS.Designer', 'linb.Com',{
         getWidgets:function(flag){
             if(!flag)
                 this._clearSelect(this.canvas.get(0));
+                
+            // remove inplaceEditor first
+            if(this.$inplaceEditor){
+                this.$inplaceEditor.destroy();
+                delete this.$inplaceEditor;
+            }
+
             var arr=[], c = this.canvas.get(0).children || this.canvas.get(0).childNodes;
             _.arr.each(c,function(o){
                 arr.push(o[0]);

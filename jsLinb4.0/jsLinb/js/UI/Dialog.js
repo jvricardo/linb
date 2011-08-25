@@ -975,7 +975,7 @@ if(linb.browser.ie){
                 });
 
                 var cmd = dialog.$cmd = new linb.UI.Div({
-                    height:24,
+                    height:26,
                     dock:'bottom'
                 },null,null,null,{KEY:"text-align:center;"}),
 
@@ -1040,7 +1040,7 @@ if(linb.browser.ie){
                 });
 
                 var cmd = dialog.$cmd=new linb.UI.Div({
-                    height:24,
+                    height:26,
                     dock:'bottom'
                 },null,null,null,{KEY:"text-align:center;"}),
                 btn = dialog.$btn1 = new linb.UI.SButton({
@@ -1105,7 +1105,7 @@ if(linb.browser.ie){
             }),
 
             cmd = dialog.$cmd = new linb.UI.Div({
-                    height:24,
+                    height:26,
                     dock:'bottom'
                 },null,null,null,{KEY:"text-align:center;"})
             .append( dialog.$btn = new linb.UI.SButton({
@@ -1177,7 +1177,7 @@ if(linb.browser.ie){
                     height:18
                 }),
                 cmd = new linb.UI.Div({
-                    height:24,
+                    height:26,
                     dock:'bottom'
                 },null,null,null,{KEY:"text-align:center;"})
                 .append(dialog.$btn1 = new linb.UI.SButton({

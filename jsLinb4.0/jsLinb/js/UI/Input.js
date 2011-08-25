@@ -184,8 +184,8 @@ Class("linb.UI.Input", ["linb.UI.Widget","linb.absValue"] ,{
                'overflow-x':'hidden'
             },
             ERROR:{
-                width:'16px',
-                height:'16px',
+                width:'9px',
+                height:'9px',
                 position:'absolute',
                 right:'2px',
                 top:'2px',

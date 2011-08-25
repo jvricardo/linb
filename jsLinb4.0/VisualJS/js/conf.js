@@ -335,8 +335,8 @@ new function(){
                 {id:'linb.UI.ToolBar',key:'linb.UI.ToolBar', caption:'ToolBar', image:_img_widgets, imagePos:'-432px top', draggable:true,
                     iniProp:{
                         items:[
-                            {id:'grp1',sub:[{caption:'button'}, {type:'split'}, {caption:'drop button', dropButton:true}, {caption:'status button', statusButton:true}]}, 
-                            {id:'grp2',sub:[{image:_imgdemo},{caption:'image button',label:"label:",image:_imgdemo}]}
+                            {id:'grp1',sub:[{id:'a1',caption:'button'}, {id:'a2',type:'split'}, {id:'a3',caption:'drop button', dropButton:true}, {id:'a4',caption:'status button', statusButton:true}]}, 
+                            {id:'grp2',sub:[{id:'b1',image:_imgdemo},{id:'b2',caption:'image button',label:"label:",image:_imgdemo}]}
                         ]
                     }
                 },
@@ -566,7 +566,121 @@ new function(){
         designer_data_textdecoration:["none","underline","overline","line-through","blink"],
         designer_data_textalign:["left","right","center","justify"],
         designer_data_cursor:["default","text","pointer","move","crosshair","wait","help","e-resize","ne-resize","nw-resize","n-resize","se-resize","sw-resize","s-resize","w-resize"],
-        designer_data_overflow:["auto","visible","hidden","scroll"]
+        designer_data_overflow:["auto","visible","hidden","scroll"],
+        inplaceedit:{
+            "linb.UI.Link":{
+                KEY:[0,'getCaption','setCaption']
+            },
+            "linb.UI.SLabel":{
+                KEY:[0,'getCaption','setCaption']
+            },
+            "linb.UI.Label":{
+                KEY:[0,'getCaption','setCaption']
+            },
+            "linb.UI.SCheckBox":{
+                CAPTION:[0,'getCaption','setCaption']
+            },
+            "linb.UI.CheckBox":{
+                CAPTION:[0,'getCaption','setCaption']
+            },
+            "linb.UI.SButton":{
+                KEY:[0,'getCaption','setCaption']
+            },
+            "linb.UI.Button":{
+                CAPTION:[0,'getCaption','setCaption']
+            },
+            "linb.UI.Group":{
+                CAPTION:[0,'getCaption','setCaption']
+            },
+            "linb.UI.Input":{
+                LABEL:[0,'getLabelCaption','setLabelCaption']
+            },
+            "linb.UI.ComboInput":{
+                LABEL:[0,'getLabelCaption','setLabelCaption']
+            },
+            "linb.UI.PageBar":{
+                LABEL:[0,'getCaption','setCaption']
+            },
+            "linb.UI.Dialog":{
+                CAPTION:[0,'getCaption','setCaption']
+            },
+            "linb.UI.Panel":{
+                CAPTION:[0,'getCaption','setCaption']
+            },
+            
+            "linb.UI.List":{
+                ITEM:[1,'getItemByDom','updateItem']
+            },
+            "linb.UI.RadioBox":{
+                CAPTION:[1,'getItemByDom','updateItem']
+            },
+            "linb.UI.StatusButtons":{
+                CAPTION:[1,'getItemByDom','updateItem']
+            },
+            "linb.UI.Gallery":{
+                CAPTION:[1,'getItemByDom','updateItem'],
+                COMMENT:[1,'getItemByDom','updateItem','comment']
+            },
+            "linb.UI.Tabs":{
+                CAPTION:[1,'getItemByDom','updateItem']
+            },
+            "linb.UI.Stacks":{
+                CAPTION:[1,'getItemByDom','updateItem']
+            },
+            "linb.UI.ButtonViews":{
+                CAPTION:[1,'getItemByDom','updateItem']
+            },
+            "linb.UI.MenuBar":{
+                ITEM:[1,'getItemByDom','updateItem']
+            },
+            "linb.UI.TreeBar":{
+                ITEMCAPTION:[1,'getItemByDom','updateItem']
+            },
+            "linb.UI.TreeView":{
+                ITEMCAPTION:[1,'getItemByDom','updateItem']
+            },
+            "linb.UI.ToolBar":{
+                LABEL:[1,function(prf,node){
+                    return prf.SubSerialIdMapItem[prf.getSubId(node.id)];
+                },'updateItem','label'],
+                BTN:[1,function(prf,node){
+                    return prf.SubSerialIdMapItem[prf.getSubId(node.id)];
+                },'updateItem']
+            },
+            "linb.UI.TreeGrid":{
+                CELLA:[1,function(prf,node){
+                    var subId=prf.getSubId(node.id),o,item={};
+                    if(subId.charAt(0)=='r'){
+                        o=prf.rowMap[subId];
+                        item.id=o.id;
+                        item.caption=o.caption;
+                        item.isRow=true;
+                    }else{
+                        o=prf.cellMap[subId];
+                        item.id=o.id;
+                        item.caption=o.value;
+                    }
+                    return item;
+                },function(prf,item, itemKey, nv){
+                    if(item.isRow)
+                        prf.boxing().updateRow(item.id, {caption:nv});
+                    else
+                        prf.boxing().updateCell(item.id, {value:nv});
+                }],
+                HCELLA:[1,function(prf,node){
+                    var subId=prf.getSubId(node.id);
+                    return subId?prf.colMap[subId]:{
+                        id:' X ',
+                        caption:prf.boxing().getGridHandlerCaption()
+                    };
+                },function(prf,item, itemKey, nv){
+                    if(item.id!=' X ')
+                        prf.boxing().updateHeader(item.id, {caption:nv});
+                    else
+                        prf.boxing().setGridHandlerCaption(nv);
+                }]
+            }
+        }
     };
     var fun=function(items,hash){
         var self=arguments.callee;

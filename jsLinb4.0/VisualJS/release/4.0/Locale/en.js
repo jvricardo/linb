@@ -16,7 +16,7 @@
     langTips:'Switch Locale',
     
     spabuilder:{
-        nosavefirst:'You are about to close a file without saving it. Do you want to continue?',
+        nosavefirst:'You have unsaved changed. Are you sure you want to discard current changes?',
         menubar:{
             servicetester:'LINB Service Tester',
             backendcode:'Back-end Service Code',
@@ -61,7 +61,7 @@
         originalFile:"Original file: ",
         issave2server:"Do you mean to overwrite the original server file?",
         save2serverOK:'Saved to server successfully',
-        nosavefirst:'You are about to close a file without saving it. Do you want to continue?',
+        nosavefirst:'You have unsaved changed. Are you sure you want to discard current changes?',
         
         savetoserver:'Save original file (in server)',
         savetolocal:"Save jsLinb Class file(.js) to local disk",

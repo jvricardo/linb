@@ -2092,14 +2092,6 @@ Class('linb.IAjax','linb.absIO',{
             if(ns.dummy)return ns.dummy;
             //can get from linb.ini;
             if(ini.dummy)return ns.dummy=ini.dummy;
-            if(b.gek){
-                arr=d.getElementsByTagName("link");
-                for(var i=0,j=arr.length; i<j; i++){
-                    o = arr[i];
-                    if (o.rel == "stylesheet" && !f(o.href))
-                        return ns.dummy=o.href.split('#')[0];
-                }
-            }
             if(!f(ini.path)){
                 //not for 'ex-domain include jslinb' case
                 if(!d.getElementById('linb:img:bg')){
@@ -2119,6 +2111,15 @@ Class('linb.IAjax','linb.absIO',{
                     o = arr[i];
                     if(o.src && !f(o.src))
                         return ns.dummy=o.src.split('#')[0];
+                }
+                
+                if(b.gek){
+                    arr=d.getElementsByTagName("link");
+                    for(var i=0,j=arr.length; i<j; i++){
+                        o = arr[i];
+                        if (o.rel == "stylesheet" && !f(o.href))
+                            return ns.dummy=o.href.split('#')[0];
+                    }
                 }
             }
             //get from parent, not for opera in this case
@@ -19309,8 +19310,8 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                'overflow-x':'hidden'
             },
             ERROR:{
-                width:'16px',
-                height:'16px',
+                width:'9px',
+                height:'9px',
                 position:'absolute',
                 right:'2px',
                 top:'2px',
@@ -37785,7 +37786,7 @@ if(linb.browser.ie){
                 });
 
                 var cmd = dialog.$cmd = new linb.UI.Div({
-                    height:24,
+                    height:26,
                     dock:'bottom'
                 },null,null,null,{KEY:"text-align:center;"}),
 
@@ -37850,7 +37851,7 @@ if(linb.browser.ie){
                 });
 
                 var cmd = dialog.$cmd=new linb.UI.Div({
-                    height:24,
+                    height:26,
                     dock:'bottom'
                 },null,null,null,{KEY:"text-align:center;"}),
                 btn = dialog.$btn1 = new linb.UI.SButton({
@@ -37915,7 +37916,7 @@ if(linb.browser.ie){
             }),
 
             cmd = dialog.$cmd = new linb.UI.Div({
-                    height:24,
+                    height:26,
                     dock:'bottom'
                 },null,null,null,{KEY:"text-align:center;"})
             .append( dialog.$btn = new linb.UI.SButton({
@@ -37987,7 +37988,7 @@ if(linb.browser.ie){
                     height:18
                 }),
                 cmd = new linb.UI.Div({
-                    height:24,
+                    height:26,
                     dock:'bottom'
                 },null,null,null,{KEY:"text-align:center;"})
                 .append(dialog.$btn1 = new linb.UI.SButton({
