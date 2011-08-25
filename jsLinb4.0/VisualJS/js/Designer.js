@@ -320,7 +320,7 @@ Class('VisualJS.Designer', 'linb.Com',{
 
             },
             onDestroy:function(page){
-                if(page.frame)
+                if(page.frame && page.frame.destroy)
                     page.frame.destroy();
             }
         },
@@ -363,13 +363,15 @@ Class('VisualJS.Designer', 'linb.Com',{
                 item;
             
             var unFun=function(setV){
+                if(!inplaceEditor || !inplaceEditor.getSubNode('INPUT'))
+                    return; 
                 inplaceEditor.getSubNode('INPUT').onBlur();
 
                 inplaceEditor.setVisibility('hidden').setLeft(-1000).setValue('',true);
                 linb.Event.keyboardHook('esc');
             };
             
-            if(!page.$inplaceEditor){
+            if(!page.$inplaceEditor || !page.$inplaceEditor.get(0)){
                 page.$inplaceEditor = new linb.UI.ComboInput({
                     type:'none',
                     dirtyMark:false,
@@ -447,6 +449,7 @@ Class('VisualJS.Designer', 'linb.Com',{
 
             //resizer
             page.resizer = linb.create('AdvResizer',{
+                forceMovable:false,
                 dragArgs:{
                     widthIncrement:this.dropOffset,
                     heightIncrement:this.dropOffset
@@ -715,7 +718,6 @@ Class('VisualJS.Designer', 'linb.Com',{
                     // to check whether to in-place edit label/caption or not
                     ret=fun1(ep, t);
                     if(ret)return false;
-                    //return false;
                     
                     // to check whether select a child or not
                     ret=fun2(t.children, ep, t.getRoot());
@@ -2272,6 +2274,9 @@ Class('VisualJS.Designer', 'linb.Com',{
                 //get items
                 var items=[];
                 var fun = function(profile, items, map){
+                    if((this.$inplaceEditor&&this.$inplaceEditor.get(0))==profile)
+                        return;
+
                     var self=arguments.callee,t,
                         item = {id:profile.$linbid, caption:profile.alias, image: (t=map[profile.box.KEY])?t.image:'', imagePos:(t=map[profile.box.KEY])?t.imagePos:''};
                     items.push(item);
@@ -2313,15 +2318,11 @@ Class('VisualJS.Designer', 'linb.Com',{
         getWidgets:function(flag){
             if(!flag)
                 this._clearSelect(this.canvas.get(0));
-                
-            // remove inplaceEditor first
-            if(this.$inplaceEditor){
-                this.$inplaceEditor.destroy();
-                delete this.$inplaceEditor;
-            }
 
             var arr=[], c = this.canvas.get(0).children || this.canvas.get(0).childNodes;
             _.arr.each(c,function(o){
+                if((this.$inplaceEditor&&this.$inplaceEditor.get(0))==o[0])
+                    return;
                 arr.push(o[0]);
             });
 

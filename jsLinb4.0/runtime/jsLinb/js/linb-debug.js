@@ -17335,7 +17335,7 @@ Class("linb.UI.Resizer","linb.UI",{
             // handler visible?
             forceVisible:false,
             // movable
-            forceMovable:false,
+            forceMovable:'',
 
             // only show right/bottom handlers
             singleDir:false,
@@ -17495,8 +17495,8 @@ Class("linb.UI.Resizer","linb.UI",{
                 t._visible=true;
                 t._cover=false;
             }
-            if(t.forceMovable)
-                t._move=true;
+            if(typeof t.forceMovable=="boolean")
+                t._move=t.forceMovable;
 
             t.extend =  (parseInt(t.handlerSize)||0)/2 + (parseInt(t.handlerOffset)||0);
 
