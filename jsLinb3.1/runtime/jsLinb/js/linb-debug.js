@@ -1980,14 +1980,6 @@ Class('linb.IAjax','linb.absIO',{
             if(ns.dummy)return ns.dummy;
             //can get from linb.ini;
             if(ini.dummy)return ns.dummy=ini.dummy;
-            if(b.gek){
-                arr=d.getElementsByTagName("link");
-                for(var i=0,j=arr.length; i<j; i++){
-                    o = arr[i];
-                    if (o.rel == "stylesheet" && !f(o.href))
-                        return ns.dummy=o.href.split('#')[0];
-                }
-            }
             if(!f(ini.path)){
                 //not for 'ex-domain include jslinb' case
                 if(!d.getElementById('linb:img:bg')){
@@ -2007,6 +1999,14 @@ Class('linb.IAjax','linb.absIO',{
                     o = arr[i];
                     if(o.src && !f(o.src))
                         return ns.dummy=o.src.split('#')[0];
+                }
+                if(b.gek){
+                    arr=d.getElementsByTagName("link");
+                    for(var i=0,j=arr.length; i<j; i++){
+                        o = arr[i];
+                        if (o.rel == "stylesheet" && !f(o.href))
+                            return ns.dummy=o.href.split('#')[0];
+                    }
                 }
             }
             //get from parent, not for opera in this case
@@ -29881,6 +29881,9 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
                 oitem.sub = arr;
                 
                 _.arr.each(a,function(item){
+                    if(typeof item.id!='string')
+                        item.id=item.caption||(_()+'');
+
                     dataItem={id: item.id};
                     fun(profile,dataItem,item,pid,index,len,mapCache,serialId);
                     arr.push(dataItem);
