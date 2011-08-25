@@ -430,6 +430,9 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
                 oitem.sub = arr;
                 
                 _.arr.each(a,function(item){
+                    if(typeof item.id!='string')
+                        item.id=item.caption||(_()+'');
+
                     dataItem={id: item.id};
                     fun(profile,dataItem,item,pid,index,len,mapCache,serialId);
                     arr.push(dataItem);
