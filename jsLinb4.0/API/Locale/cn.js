@@ -7022,6 +7022,9 @@ _.set(linb.Locale,["cn","app"], {
                     "}"
                 ]
             },
+            isDestroyed:{
+                $desc:"判断当前对象是否已被销毁."
+            },
             draggable:{
                 $desc:"允许或禁止用户拖动当前对象.",
                 $rtn:"[self]",

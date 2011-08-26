@@ -22,7 +22,7 @@ Class('linb.UIProfile','linb.Profile', {
                 if(!ele.$linbid)
                     linb.UI.$addEventsHanlder(ele, true);
 
-                ns.renderId=ele.$linbid;
+                ns.rendered=ns.renderId=ele.$linbid;
 
                 ele=null;
             }
@@ -71,7 +71,7 @@ Class('linb.UIProfile','linb.Profile', {
         },
         __gc:function(){
             var ns=this, t;
-            if(ns.$destroyed)return;
+            if(ns.destroyed)return;
             // special one
             if(ns.$beforeDestroy){
                 _.tryF(ns.$beforeDestroy,[],ns);
@@ -129,13 +129,13 @@ Class('linb.UIProfile','linb.Profile', {
             }
 
             //set once
-            ns.$destroyed=true;
+            ns.destroyed=true;
             //afterDestroy
             _.tryF(ns.$afterdestory,[],ns);
             if(ns.afterDestroy)ns.boxing().afterDestroy(ns);
             _.breakO([ns.properties,ns.events, ns.CF, ns.CB, ns.CC, ns.CS, ns],2);
             //set again
-            ns.$destroyed=true;
+            ns.destroyed=true;
         },
         unlinkParent:function(){
             var profile=this;
@@ -590,7 +590,7 @@ Class("linb.UI",  "linb.absObj", {
         },
         destroy:function(){
             this.each(function(o){
-                if(o.$destroyed)return;
+                if(o.destroyed)return;
                 // special one
                 if(o.$beforeDestroy){
                     _.tryF(o.$beforeDestroy,[],o);
@@ -601,6 +601,9 @@ Class("linb.UI",  "linb.absObj", {
                 else o.__gc();
             });
             this._nodes.length=0;
+        },
+        isDestroyed:function(){
+            return !!(this.get(0)?this.get(0).destroyed:1);
         },
         _toDomElems:function(){
             var arr=[];
@@ -899,8 +902,8 @@ Class("linb.UI",  "linb.absObj", {
 
                 //set back
                 _.merge(o,s,'all');
-                // notice: remove $destroyed here
-                delete o.$destroyed;
+                // notice: remove destroyed here
+                delete o.destroyed;
                 o.$linbid=$linbid;
                 o.serialId=serialId;
 

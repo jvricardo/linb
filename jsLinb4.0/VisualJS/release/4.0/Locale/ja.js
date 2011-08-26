@@ -245,7 +245,9 @@
             gridxy: '位置をグリッドにそろえる',
             gridwh: '大きさをグリッドにそろえる',
             clone:'選択したコントロールを複製',
-            'delete': '削除'
+            'delete': '削除',
+            aligngroup : 'コントロールの配置',
+            posgroup : 'グリッドとレイヤー'
         }
     },
     addfile:{

@@ -8755,7 +8755,7 @@ Class('linb.Com',null,{
                 _.arr.each(self._nodes,function(o){
                     if(o.box && o.box["linb.UI"] && !o.box.$noDomRoot){
                         o.$afterdestory=function(){
-                            if(!self.$destroyed)
+                            if(!self.destroyed)
                                 self.destroy();
                             self=null;
                         };
@@ -8824,7 +8824,7 @@ Class('linb.Com',null,{
             self.threadid=threadid;
             self._fireEvent('onDestroy');
             //set once
-            self.$destroyed=true;
+            self.destroyed=true;
             if(ns && ns.length)
                 _.arr.each(ns, function(o){
                     if(o && o.box)
@@ -8835,7 +8835,7 @@ Class('linb.Com',null,{
             self._ctrlpool=null;
             _.breakO(self);
             //set again
-            self.$destroyed=true;
+            self.destroyed=true;
         }
     },
     Static:{
@@ -11237,7 +11237,7 @@ Class('linb.UIProfile','linb.Profile', {
                 if(!ele.$linbid)
                     linb.UI.$addEventsHanlder(ele, true);
 
-                ns.renderId=ele.$linbid;
+                ns.rendered=ns.renderId=ele.$linbid;
 
                 ele=null;
             }
@@ -11286,7 +11286,7 @@ Class('linb.UIProfile','linb.Profile', {
         },
         __gc:function(){
             var ns=this, t;
-            if(ns.$destroyed)return;
+            if(ns.destroyed)return;
             // special one
             if(ns.$beforeDestroy){
                 _.tryF(ns.$beforeDestroy,[],ns);
@@ -11344,13 +11344,13 @@ Class('linb.UIProfile','linb.Profile', {
             }
 
             //set once
-            ns.$destroyed=true;
+            ns.destroyed=true;
             //afterDestroy
             _.tryF(ns.$afterdestory,[],ns);
             if(ns.afterDestroy)ns.boxing().afterDestroy(ns);
             _.breakO([ns.properties,ns.events, ns.CF, ns.CB, ns.CC, ns.CS, ns],2);
             //set again
-            ns.$destroyed=true;
+            ns.destroyed=true;
         },
         unlinkParent:function(){
             var profile=this;
@@ -11805,7 +11805,7 @@ Class("linb.UI",  "linb.absObj", {
         },
         destroy:function(){
             this.each(function(o){
-                if(o.$destroyed)return;
+                if(o.destroyed)return;
                 // special one
                 if(o.$beforeDestroy){
                     _.tryF(o.$beforeDestroy,[],o);
@@ -11816,6 +11816,9 @@ Class("linb.UI",  "linb.absObj", {
                 else o.__gc();
             });
             this._nodes.length=0;
+        },
+        isDestroyed:function(){
+            return !!(this.get(0)?this.get(0).destroyed:1);
         },
         _toDomElems:function(){
             var arr=[];
@@ -12114,8 +12117,8 @@ Class("linb.UI",  "linb.absObj", {
 
                 //set back
                 _.merge(o,s,'all');
-                // notice: remove $destroyed here
-                delete o.$destroyed;
+                // notice: remove destroyed here
+                delete o.destroyed;
                 o.$linbid=$linbid;
                 o.serialId=serialId;
 
@@ -29428,7 +29431,8 @@ Class("linb.UI.PopMenu",["linb.UI.Widget","linb.absList"],{
                 // maybe destroyed here
                 if(p.box){
                     p.boxing().hide();
-                    p.$popGrp.length=0;
+                    if(p.$popGrp)
+                        p.$popGrp.length=0;
                 }
             };
             f.profile=profile;
@@ -29477,8 +29481,9 @@ Class("linb.UI.PopMenu",["linb.UI.Widget","linb.absList"],{
             }
             profile[cm]=profile[sms]=profile[hl]=null;
             if(t=profile.$parentPopMenu)t[sms]=null;
-
-            _.arr.removeValue(profile.$popGrp,root._get(0));
+            
+            if(profile.$popGrp)
+                _.arr.removeValue(profile.$popGrp,root._get(0));
 
             if(false!==triggerEvent)
                 profile.boxing().onHide(profile);
@@ -29905,7 +29910,8 @@ Class("linb.UI.PopMenu",["linb.UI.Widget","linb.absList"],{
                                 }
                                 //reset
                                 profile.$subPopMenuShowed = null;
-                                profile.$popGrp.length=0;
+                                if(profile.$popGrp)
+                                    profile.$popGrp.length=0;
                             },100);
                         }
                     }
@@ -30069,7 +30075,8 @@ Class("linb.UI.PopMenu",["linb.UI.Widget","linb.absList"],{
                 if(!b){
                     while(b=profile.$parentPopMenu)profile=b;
                     profile.boxing().hide();
-                    profile.$popGrp.length=0;
+                    if(profile.$popGrp)
+                        profile.$popGrp.length=0;
                 }
             }
         },

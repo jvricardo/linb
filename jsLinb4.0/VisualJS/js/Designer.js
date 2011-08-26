@@ -43,8 +43,11 @@ Class('VisualJS.Designer', 'linb.Com',{
                 var tbpath = linb.ini.appPath+'img/designer/toolbar.gif',
                     tbk='$VisualJS.designer.tool.',
                     showRefresh = CONF.designer_editMode != "simple";
-                page.toolbar.setItems([{
+
+                page.$canvasMenuItems=[{
                     id:'code',
+                    level:1,
+                    canvasOnly:true,
                     sub:[
                     {
                         id : "viewsize",
@@ -73,6 +76,8 @@ Class('VisualJS.Designer', 'linb.Com',{
                         tips : tbk+'tojson'
                     }]},
                     {id:'align',
+                    level:2,
+                    caption:tbk+'aligngroup',
                     sub:[
                         {id:'left',caption:'',image:tbpath,imagePos:'0 top', tips:tbk+'left'},
                         {id:'center',caption:'',image:tbpath,imagePos:'-16px top',tips:tbk+'center'},
@@ -87,21 +92,31 @@ Class('VisualJS.Designer', 'linb.Com',{
                         {id:'h',caption:'',image:tbpath,imagePos:'-128px top',tips:tbk+'height'}
                     ]},
                     {id:'pos',
+                    level:2,
+                    caption:tbk+'posgroup',
                     sub:[
                         {id:'zindex1',caption:'',image:tbpath,imagePos:'-144px top',tips:tbk+'toplayer'},
                         {id:'zindex2',caption:'',image:tbpath,imagePos:'-160px top',tips:tbk+'bottomlayer'},
                         {id:'s1',type:'split'},
                         {id:'repos',caption:'',image:tbpath,imagePos:'-176px top',tips:tbk+'gridxy'},
-                        {id:'resize',caption:'',image:tbpath,imagePos:'-192px top',tips:tbk+'gridwh'},
-                        {id:'s2',type:'split'},
-                        {id:'clone',caption:'',image:tbpath,imagePos:'-240px top',tips:tbk+'clone'}
+                        {id:'resize',caption:'',image:tbpath,imagePos:'-192px top',tips:tbk+'gridwh'}
                     ]},
                     {id:'del',
+                    level:1,
                     sub:[
+                        {id:'clone',caption:'',image:tbpath,imagePos:'-240px top',tips:tbk+'clone'},
                         {id:'delete',caption:'',image:tbpath,imagePos:'-256px top', tips:tbk+'delete'}
                     ]}
-                    ]
-                );
+                    ];
+                page.$canvasMenuItems1=[
+                    {"id":"800", viewsize:true, "caption":"800 &#215 600"}, 
+                    {"id":"1024", viewsize:true, "caption":"1024 &#215 768"}, 
+                    {"id":"1280", viewsize:true,"caption":"1280 &#215 1024"}
+                ];
+                
+                page.popViewSize.setItems(page.$canvasMenuItems1);
+
+                page.toolbar.setItems(page.$canvasMenuItems);
             },
             onRender:function(page){
                 var _refresh=page._refresh=function(obj, key, region){
@@ -371,7 +386,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                 linb.Event.keyboardHook('esc');
             };
             
-            if(!page.$inplaceEditor || !page.$inplaceEditor.get(0)){
+            if(!page.$inplaceEditor || page.$inplaceEditor.isDestroyed()){
                 page.$inplaceEditor = new linb.UI.ComboInput({
                     type:'none',
                     dirtyMark:false,
@@ -439,6 +454,96 @@ Class('VisualJS.Designer', 'linb.Com',{
             // show            
             inplaceEditor.setVisibility('visible').activate();
         },
+        _showPopMenu:function(e, flag){
+            var page=this,
+                toolbaritems=page.toolbar.getItems(),
+                popMenu,
+                items=[];
+            _.arr.each(toolbaritems,function(item,i){
+                if(item.hidden)return;
+
+                if(flag && !item.canvasOnly)
+                    return;
+
+                if(item.level==1 && i!==0 && items.length>0){
+                    items.push({type:'split'});
+                }
+
+                if(item.level==1){                    
+                    _.arr.each(item.sub,function(subitem){
+                        if(subitem.hidden)
+                            return;
+                        if(subitem.id=='viewsize'){
+                            items.push({
+                                id:item.id,
+                                caption:subitem.tips,
+                                sub:page.$canvasMenuItems1
+                            });
+                        }else if(subitem.type=='split'){
+                            items.push({type:'split'});
+                        }else{
+                            items.push({
+                                id:subitem.id,
+                                image:subitem.image,
+                                imagePos:subitem.imagePos,
+                                caption:subitem.tips
+                            });
+                        }
+                    });
+                }else{
+                    var sub=[];
+                    _.arr.each(item.sub,function(subitem){
+                        if(subitem.hidden)
+                            return;
+                        /*if(subitem.id=='viewsize'){
+                            sub.push({
+                                id:item.id,
+                                caption:'xxxxxxxxxx',
+                                image:subitem.image,
+                                imagePos:subitem.imagePos,
+                                sub:page.$canvasMenuItems1
+                            });
+                        }else*/ if(subitem.type=='split'){
+                            sub.push({type:'split'});
+                        }else{
+                            sub.push({
+                                id:subitem.id,
+                                image:subitem.image,
+                                imagePos:subitem.imagePos,
+                                caption:subitem.tips
+                            });
+                        }
+                    });
+                    items.push({
+                        id:item.id,
+                        caption:item.caption,
+                        sub:sub
+                    });
+                }
+            });
+            popMenu = new linb.UI.PopMenu({
+                items:items
+            },{onHide:function(p){
+                p.boxing().destroy();
+
+                },onMenuSelected:function(p,item){
+                    if(item.viewsize)
+                        page.popViewSize.fireItemClickEvent(item.id);
+                    else
+                        page.toolbar.fireItemClickEvent(item.id);
+
+                    p.boxing().hide();
+                }
+            });
+
+            popMenu.pop(linb.Event.getPos(e));
+        },
+        _oncanvasmenu:function(profile, e, src){
+            if(linb.Event.getSrc(e)==this.canvas.getRootNode()){
+                this._showPopMenu(e, true);
+                return false;
+            }
+        },
         _createResizer:function(){
             var page=this;
             //proxy region
@@ -466,6 +571,10 @@ Class('VisualJS.Designer', 'linb.Com',{
                           this.show();
                       });
                     }
+                },
+                onContextmenu:function(profile, e, src){
+                    this._showPopMenu(e);
+                    return false;
                 }
             });
             page.resizer.setHost(page)
@@ -632,7 +741,11 @@ Class('VisualJS.Designer', 'linb.Com',{
                         if(epoff.left>pos.left && epoff.top>pos.top && epoff.left<pos.left+w && epoff.top<pos.top+h &&
                            epoff.left<rgw&& epoff.top<rgh){
 
-                            page._inplaceedit(prf, nodeKey, multi,conf, node, ppos.left+pos.left,ppos.top+pos.top,w,h);
+                            _.asyRun(function(){
+                                if(!node.get(0) || !node.get(0).offsetWidth)
+                                    return;
+                                page._inplaceedit(prf, nodeKey, multi,conf, node, ppos.left+pos.left,ppos.top+pos.top,w,h);
+                            },200);
 
                             return true;
                         }
@@ -746,7 +859,7 @@ Class('VisualJS.Designer', 'linb.Com',{
             var self=this;
             self.proxy.css('display','none');
 
-            if(!self.resizer || !self.resizer.get(0) || !self.resizer.get(0).renderId){
+            if(!self.resizer || !self.resizer.getRootNode() || !self.resizer.get(0).renderId){
                 // sometimes, resizer and proxy will be removed, we have to create them again
                 self._createResizer();
             }
@@ -1560,45 +1673,8 @@ Class('VisualJS.Designer', 'linb.Com',{
                     break;
                 case 'pos':
                     this._change();
-                    var page=this;
-                    var sel = page.getByCacheId(this.tempSelected);
-                    if('clone'==id){
-                        var ids=[];
-                        var t,ids=[],pid;
-                        //get source
-                        var src = page.getByCacheId(this.tempSelected);
-                        //clone and added to its' parent
-                        var tar = src.clone();
-                        tar.each(function(o){
-                            o.$inDesign=true;
-                            o=o.properties;
-                            if(parseInt(o.left)||o.left===0)o.left+=10;
-                            if(parseInt(o.top)||o.top===0)o.top+=10;
-                        });
-
-                        src.get(0).parent.boxing().append(tar);
-
-                        pid=src.get(0).parent.$linbid;
-                        //get ids
-                        tar.each(function(o){
-                            ids.push(o.$linbid);
-                        });
-                        //fire event
-                        //_.tryF(this.afterAddWidget, [tar, pid], this);
-
-                        tar.each(function(o){
-                            page._designable(o);
-                        });
-
-                        //set to resizer
-                        this.resizer.resetTarget(linb(tar));
-
-                        linb.message(linb.getRes('VisualJS.designer.colneOK', ids.length));
-                        //set selected
-                        //this._setSelected(null,true)._setSelected(ids, true);
-                        return;
-                    }
-                    var zIndex=0;
+                    var sel = page.getByCacheId(this.tempSelected),
+                        zIndex=0;
                     sel.each(function(o){
                         var ins = o.boxing();
                         var node=ins.reBoxing();
@@ -1643,8 +1719,43 @@ Class('VisualJS.Designer', 'linb.Com',{
                     break;
                 case 'del':
                     this._change();
-                    if('delete'==id)this._deleteSelected();
+                    if('delete'==id){
+                        this._deleteSelected();
+                    }else if('clone'==id){
+                        var ids=[];
+                        var t,ids=[],pid;
+                        //get source
+                        var src = page.getByCacheId(this.tempSelected);
+                        //clone and added to its' parent
+                        var tar = src.clone();
+                        tar.each(function(o){
+                            o.$inDesign=true;
+                            o=o.properties;
+                            if(parseInt(o.left)||o.left===0)o.left+=10;
+                            if(parseInt(o.top)||o.top===0)o.top+=10;
+                        });
 
+                        src.get(0).parent.boxing().append(tar);
+
+                        pid=src.get(0).parent.$linbid;
+                        //get ids
+                        tar.each(function(o){
+                            ids.push(o.$linbid);
+                        });
+                        //fire event
+                        //_.tryF(this.afterAddWidget, [tar, pid], this);
+
+                        tar.each(function(o){
+                            page._designable(o);
+                        });
+
+                        //set to resizer
+                        this.resizer.resetTarget(linb(tar));
+
+                        linb.message(linb.getRes('VisualJS.designer.colneOK', ids.length));
+                        //set selected
+                        //this._setSelected(null,true)._setSelected(ids, true);
+                    }
                 break;
             }
 
@@ -2274,7 +2385,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                 //get items
                 var items=[];
                 var fun = function(profile, items, map){
-                    if((this.$inplaceEditor&&this.$inplaceEditor.get(0))==profile)
+                    if((page.$inplaceEditor&&page.$inplaceEditor.get(0))==profile)
                         return;
 
                     var self=arguments.callee,t,
@@ -2319,9 +2430,10 @@ Class('VisualJS.Designer', 'linb.Com',{
             if(!flag)
                 this._clearSelect(this.canvas.get(0));
 
-            var arr=[], c = this.canvas.get(0).children || this.canvas.get(0).childNodes;
+            var page=this,
+                arr=[], c = page.canvas.get(0).children || page.canvas.get(0).childNodes;
             _.arr.each(c,function(o){
-                if((this.$inplaceEditor&&this.$inplaceEditor.get(0))==o[0])
+                if((page.$inplaceEditor&&page.$inplaceEditor.get(0))==o[0])
                     return;
                 arr.push(o[0]);
             });
@@ -2591,7 +2703,6 @@ Class('VisualJS.Designer', 'linb.Com',{
             append(
                 (new linb.UI.PopMenu)
                 .setHost(host,"popViewSize")
-                .setItems([{"id":"800", "caption":"800 &#215 600"}, {"id":"1024", "caption":"1024 &#215 768"}, {"id":"1280", "caption":"1280 &#215 1024"}])
                 .onMenuSelected("_popvs_onmenusel")
             );
 
@@ -2714,6 +2825,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                 .setHeight(100)
                 .setZIndex(10)
                 .setCustomStyle({"KEY":"overflow:visible"})
+                .onContextmenu('_oncanvasmenu')
             );
 
             return children;
@@ -2775,6 +2887,8 @@ Class('VisualJS.Designer', 'linb.Com',{
             else
                 return ' ';
         };
+        
+        linb.doc.onContextmenu(function(){return false});
 
     }
 });

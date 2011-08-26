@@ -244,7 +244,9 @@
             gridxy: 'Set position to grid',
             gridwh: 'Set size to grid',
             clone:'Clone selected controls',
-            'delete': 'Delete'
+            'delete': 'Delete',
+            aligngroup : 'Align',
+            posgroup : 'Grid&Layer'
         }
     },
     addfile:{

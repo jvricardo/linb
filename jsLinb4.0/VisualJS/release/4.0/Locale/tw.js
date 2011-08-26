@@ -247,7 +247,9 @@
             gridxy: '對齊到網格',
             gridwh: '按網格調整大小',
             clone:'克隆選中控件',
-            'delete': '刪除選中控件'
+            'delete': '刪除選中控件',
+            aligngroup : '控件對齊'',
+            posgroup : '網格和層'
         }
     },
     addfile:{

@@ -257,7 +257,7 @@ Class('linb.Com',null,{
                 _.arr.each(self._nodes,function(o){
                     if(o.box && o.box["linb.UI"] && !o.box.$noDomRoot){
                         o.$afterdestory=function(){
-                            if(!self.$destroyed)
+                            if(!self.destroyed)
                                 self.destroy();
                             self=null;
                         };
@@ -326,7 +326,7 @@ Class('linb.Com',null,{
             self.threadid=threadid;
             self._fireEvent('onDestroy');
             //set once
-            self.$destroyed=true;
+            self.destroyed=true;
             if(ns && ns.length)
                 _.arr.each(ns, function(o){
                     if(o && o.box)
@@ -337,7 +337,7 @@ Class('linb.Com',null,{
             self._ctrlpool=null;
             _.breakO(self);
             //set again
-            self.$destroyed=true;
+            self.destroyed=true;
         }
     },
     Static:{

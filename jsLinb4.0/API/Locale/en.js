@@ -6999,6 +6999,9 @@ _.set(linb.Locale,["en","app"], {
                     "}"
                 ]
             },
+            isDestroyed:{
+                $desc:"To determine whether the current control is destroyed or not."
+            },
             draggable:{
                 $desc:"Enables/disables the draggable functionality on the specified elements.",
                 $rtn:"[self]",

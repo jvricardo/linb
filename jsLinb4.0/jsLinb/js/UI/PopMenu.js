@@ -137,7 +137,8 @@ Class("linb.UI.PopMenu",["linb.UI.Widget","linb.absList"],{
                 // maybe destroyed here
                 if(p.box){
                     p.boxing().hide();
-                    p.$popGrp.length=0;
+                    if(p.$popGrp)
+                        p.$popGrp.length=0;
                 }
             };
             f.profile=profile;
@@ -186,8 +187,9 @@ Class("linb.UI.PopMenu",["linb.UI.Widget","linb.absList"],{
             }
             profile[cm]=profile[sms]=profile[hl]=null;
             if(t=profile.$parentPopMenu)t[sms]=null;
-
-            _.arr.removeValue(profile.$popGrp,root._get(0));
+            
+            if(profile.$popGrp)
+                _.arr.removeValue(profile.$popGrp,root._get(0));
 
             if(false!==triggerEvent)
                 profile.boxing().onHide(profile);
@@ -614,7 +616,8 @@ Class("linb.UI.PopMenu",["linb.UI.Widget","linb.absList"],{
                                 }
                                 //reset
                                 profile.$subPopMenuShowed = null;
-                                profile.$popGrp.length=0;
+                                if(profile.$popGrp)
+                                    profile.$popGrp.length=0;
                             },100);
                         }
                     }
@@ -778,7 +781,8 @@ Class("linb.UI.PopMenu",["linb.UI.Widget","linb.absList"],{
                 if(!b){
                     while(b=profile.$parentPopMenu)profile=b;
                     profile.boxing().hide();
-                    profile.$popGrp.length=0;
+                    if(profile.$popGrp)
+                        profile.$popGrp.length=0;
                 }
             }
         },
