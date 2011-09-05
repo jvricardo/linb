@@ -101,7 +101,6 @@ Class("linb.UI.Input", ["linb.UI.Widget","linb.absValue"] ,{
                         type : '{_type}',
                         maxlength:'{maxlength}',
                         tabindex:'{tabindex}',
-                        cursor:'{cursor}',
                         style:'{_css};{hAlign};'
                     }
                 }
@@ -153,7 +152,8 @@ Class("linb.UI.Input", ["linb.UI.Widget","linb.absValue"] ,{
             },
             "KEY-readonly input":{
                 $order:2,
-                color:'#909090'
+                color:'#909090',
+                cursor:'pointer'
             },
             "KEY-readonly BOX, KEY-inputreadonly BOX":{
                 $order:2,
@@ -524,7 +524,6 @@ Class("linb.UI.Input", ["linb.UI.Widget","linb.absValue"] ,{
                 action: function(v){
                     var n=this.getSubNode('INPUT'),
                         cls=this.getClass('KEY','-readonly');
-                    n.attr('readonly',v).css('cursor',v?'pointer':'');
                     
                     if(v)this.getRoot().addClass(cls);
                     else this.getRoot().removeClass(cls);
@@ -579,7 +578,6 @@ Class("linb.UI.Input", ["linb.UI.Widget","linb.absValue"] ,{
 
             var d=arguments.callee.upper.call(this, profile);
 
-            d.cursor = d.readonly?'pointer':'';
             d._type = d.type || '';
             if(linb.browser.kde)
                 d._css='resize:none;';
