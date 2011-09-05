@@ -19,7 +19,7 @@ Class("linb.UI.Input", ["linb.UI.Widget","linb.absValue"] ,{
             var profile = this.get(0);
             if(profile.renderId){
                 var node=profile.getSubNode('INPUT').get(0);
-                node.focus();
+                try{node.focus();}catch(e){}
                 //DOM node's readOnly
                 if(!node.readOnly && node.select)try{node.select()}catch(e){}
             }

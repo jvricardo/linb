@@ -698,7 +698,7 @@ Class('linb.UIProfile','linb.Profile', {
         },
         __gc:function(){
             var ns=this, t;
-            if(ns.$destroyed)return;
+            if(ns.destroyed)return;
             // special one
             if(ns.$beforeDestroy){
                 _.tryF(ns.$beforeDestroy,[],ns);
@@ -756,13 +756,13 @@ Class('linb.UIProfile','linb.Profile', {
             }
 
             //set once
-            ns.$destroyed=true;
+            ns.destroyed=true;
             //afterDestroy
             _.tryF(ns.$afterdestory,[],ns);
             if(ns.afterDestroy)ns.boxing().afterDestroy(ns);
             _.breakO([ns.properties,ns.events, ns.CF, ns.CB, ns.CC, ns.CS, ns],2);
             //set again
-            ns.$destroyed=true;
+            ns.destroyed=true;
         },
         unlinkParent:function(){
             var profile=this;
@@ -1217,7 +1217,7 @@ Class("linb.UI",  "linb.absObj", {
         },
         destroy:function(){
             this.each(function(o){
-                if(o.$destroyed)return;
+                if(o.destroyed)return;
                 // special one
                 if(o.$beforeDestroy){
                     _.tryF(o.$beforeDestroy,[],o);
@@ -1545,8 +1545,8 @@ Class("linb.UI",  "linb.absObj", {
 
                 //set back
                 _.merge(o,s,'all');
-                // notice: remove $destroyed here
-                delete o.$destroyed;
+                // notice: remove destroyed here
+                delete o.destroyed;
                 o.$linbid=$linbid;
                 o.serialId=serialId;
 
@@ -2470,13 +2470,17 @@ Class("linb.UI",  "linb.absObj", {
                 $order:0,
                 '-moz-user-select': linb.browser.gek?'-moz-none':null,
                 '-khtml-user-select': linb.browser.kde?'none':null,
-                '-webkit-user-select': linb.browser.kde?'none':null
+                '-webkit-user-select': linb.browser.kde?'none':null,
+                '-o-user-select':linb.browser.opr?'none':null,
+                'user-select':'none'
             },
             '.ui-selectable':{
                 $order:1,
                 '-moz-user-select': linb.browser.gek?'text':null,
                 '-khtml-user-select': linb.browser.kde?'text':null,
-                '-webkit-user-select': linb.browser.kde?'text':null
+                '-webkit-user-select': linb.browser.kde?'text':null,
+                '-o-user-select':linb.browser.opr?'text':null,
+                'user-select':'text'
             },
             '.ui-ctrl':{
                 'vertical-align':'middle'
@@ -2823,7 +2827,7 @@ Class("linb.UI",  "linb.absObj", {
                     //custom class here
                     bak+' '+
                     //add a special
-                    (lkey==profile.key ? ('ui-ctrl '+ (prop.selectable?'ui-selectable ':'ui-unselectable ')) : '' ) +
+                    (lkey==profile.key ? ('ui-ctrl '+(linb.browser.ie?'':'{_selectable} ')) : '' ) +
                     //custom theme
                     u.$tag_special + (key||'KEY') + '_CT'+u.$tag_special + ' ' +
                     //custom class
@@ -2870,9 +2874,9 @@ Class("linb.UI",  "linb.absObj", {
 
             // add "unselectable" to node
             if(lkey==profile.key){
-                b.unselectable=prop.selectable?'off':'on';
-                if(linb.browser.ie && !prop.selectable)
-                    b.onselectstart="javascript:return false";
+                // unselectable="on" will kill onBlur
+                if(linb.browser.ie)
+                    b._onlinbsel="{_selectable}";
             }
 
             for(var i in b)
@@ -4397,6 +4401,11 @@ Class("linb.UI",  "linb.absObj", {
                 prop.items=profile.box._adjustItems(prop.items);
                 data.items = this._prepareItems(profile, prop.items);
             }
+
+            if('selectable' in dm)
+                data._selectable=linb.browser.ie
+                    ? (prop.selectable?"true":"false")
+                    : (prop.selectable?"ui-selectable":"ui-unselectable");
 
             //default prepare
             data =  ajd(profile, prop, data);
