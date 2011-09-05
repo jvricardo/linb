@@ -1146,14 +1146,12 @@ Class('linb.Dom','linb.absBox',{
             return ns;
         },
         setSelectable:function(value){
-            var me=arguments.callee, _f = me._f || (me._f=function(){return false});
-             return this.each(function(o){
-                if(linb.browser.gek)
-                    o.style.MozUserSelect=value?"text":"none"
-                else{
-                    o.unselectable=value?"off":"on";
-                    o.onselectstart=value?null:_f;
-                }
+            var me=arguments.callee,cls;
+            this.removeClass("ui-selectable").removeClass("ui-unselectable");
+            this.addClass(value?"ui-selectable":"ui-unselectable");
+            return this.each(function(o){
+                if(linb.browser.ie)
+                    o._onlinbsel=value?"true":"false";
             })
         },
         setInlineBlock:function(){
@@ -2193,18 +2191,17 @@ type:4
                 }
             },'hookA',0);
 
-        if(linb.browser.ie || linb.browser.kde)
-            document.onselectstart=function(){
-                try {
-                    var n = event.srcElement ;
-                    if(n.tagName== "INPUT" || n.tagName== "TEXTAREA" || n.tagName== "PRE" || n.tagName== "CODE" )
-                        return event.srcElement.unselectable!='on';
-                    return false;
-                }catch(e) {
-                    return false;
-                };
+        if(linb.browser.ie && document.body)
+            document.body.onselectstart=function(n){
+                n=event.srcElement;
+                while(n&&n.tagName&&n.tagName!="BODY"&&n.tagName!="HTML"){
+                    if('_onlinbsel' in n)
+                        return n._onlinbsel!='false';
+                    n=n.parentNode;
+                }
+                return true;
             };
-
+            
         //free memory
         linb.win.afterUnload(function(){
             window.onresize=null;
@@ -2213,8 +2210,8 @@ type:4
                 window.removeEventListener('DOMMouseScroll', linb.Event.$eventhandler3, false);
             document.onmousewheel=window.onmousewheel=null;
 
-            if(linb.browser.ie|| linb.browser.kde)
-                document.onselectstart=null;
+            if(linb.browser.ie && document.body)
+                document.body.onselectstart=null;
 
             //unlink link 'App'
             linb.SC.__gc();
