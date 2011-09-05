@@ -77,7 +77,6 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
         _toEditor:function(value){
             var profile=this.get(0),
                 pro=profile.properties,t;
-
                 if(t= profile.CF.toEditor||profile.$toEditor)
                     return t(profile, value);
             return value;
@@ -816,7 +815,15 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                         //here, dont use $valueFormat, valueFormat or onValueFormat
                         //use $getShowValue, $toEditor, $fromEditor related functions
                         profile.$_onedit=true;
-                        linb.use(src).get(0).value=v;
+                        var node=linb.use(src).get(0),
+                            resel=linb.browser.ie && !node.readOnly && node.select && document.selection.createRange().text;
+                        
+                        node.value=v;
+
+                        // reselect
+                        if(resel)
+                            try{node.select()}catch(e){}
+
                         delete profile.$_onedit;
                     }
 

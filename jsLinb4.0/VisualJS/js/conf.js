@@ -679,6 +679,10 @@ new function(){
                     else
                         prf.boxing().setGridHandlerCaption(nv);
                 }]
+            },
+            "linb.UI.FoldingTabs":{
+                CAPTION:[1,'getItemByDom','updateItem'],
+                MESSAGE:[1,'getItemByDom','updateItem','message']
             }
         }
     };

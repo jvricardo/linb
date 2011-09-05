@@ -1053,12 +1053,12 @@ Class('linb.Dom','linb.absBox',{
             return ns;
         },
         setSelectable:function(value){
-            var me=arguments.callee, _f = me._f || (me._f=function(){return false}),cls;
+            var me=arguments.callee,cls;
             this.removeClass("ui-selectable").removeClass("ui-unselectable");
             this.addClass(value?"ui-selectable":"ui-unselectable");
             return this.each(function(o){
                 if(linb.browser.ie)
-                    o.onselectstart=value?null:_f;
+                    o._onlinbsel=value?"true":"false";
             })
         },
         setInlineBlock:function(){
@@ -1360,7 +1360,7 @@ type:4
             return this;
         },
         //for remove obj when blur
-        setBlurTrigger : function(id, trigger, group){
+        setBlurTrigger : function(id, trigger, group, checkChild){
             var ns=this,
                 doc=document,
                 sid='$blur_triggers$',
@@ -1368,6 +1368,7 @@ type:4
                     var me=arguments.callee,
                         p=linb.Event.getPos(e),
                         arr=me.arr,
+                        srcN=linb.Event.getSrc(e),
                         a=_.copy(arr),
                         b, pos, w, h, v;
                     //filter first
@@ -1388,15 +1389,27 @@ type:4
                     _.arr.each(a,function(i){
                         v=arr[i];
                         b=true;
-                        v.target.each(function(o){
-                            if(o.parentNode && (w=o.offsetWidth) && (h=o.offsetHeight)){
-                                pos=linb([o]).offset();
-                                if(p.left>=pos.left && p.top>=pos.top && p.left<=(pos.left+w) && p.top<=(pos.top+h))
-                                    return b=false;
+                        var isChild=function(){
+                            var nds=v.target.get();
+                            while (srcN && srcN.tagName && srcN.tagName!="BODY" && srcN.tagName!="HTML"){
+                                if(_.arr.indexOf(nds,srcN)!=-1)
+                                    return true;
+                                srcN = srcN.parentNode;
                             }
-                        });
+                        };
+                        
+                        if(!checkChild || isChild()){
+                            v.target.each(function(o){
+                                if(o.parentNode && (w=o.offsetWidth) && (h=o.offsetHeight)){
+                                    pos=linb([o]).offset();
+                                    if(p.left>=pos.left && p.top>=pos.top && p.left<=(pos.left+w) && p.top<=(pos.top+h))
+                                        return b=false;
+                                }
+                            });
+                        }
+
                         if(b){
-                            _.tryF(v.trigger,[],v.target);
+                            _.tryF(v.trigger,[p,e],v.target);
                             _.arr.removeValue(arr,i);
                             delete arr[i];
                         }else
@@ -2099,10 +2112,15 @@ type:4
                 }
             },'hookA',0);
 
-        if(linb.browser.ie || linb.browser.kde)
-            document.onselectstart=function(){
-                if(event.srcElement && (event.srcElement.tagName=="BODY"||event.srcElement.tagName=="HTML"))
-                    return false;
+        if(linb.browser.ie && document.body)
+            document.body.onselectstart=function(n){
+                n=event.srcElement;
+                while(n&&n.tagName&&n.tagName!="BODY"&&n.tagName!="HTML"){
+                    if('_onlinbsel' in n)
+                        return n._onlinbsel!='false';
+                    n=n.parentNode;
+                }
+                return true;
             };
         //free memory
         linb.win.afterUnload(function(){
@@ -2112,8 +2130,8 @@ type:4
                 window.removeEventListener('DOMMouseScroll', linb.Event.$eventhandler3, false);
             document.onmousewheel=window.onmousewheel=null;
 
-            if(linb.browser.ie|| linb.browser.kde)
-                document.onselectstart=null;
+            if(linb.browser.ie && document.body)
+                document.body.onselectstart=null;
 
             //unlink link 'App'
             linb.SC.__gc();

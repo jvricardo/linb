@@ -2174,7 +2174,7 @@ Class("linb.UI",  "linb.absObj", {
                     //custom class here
                     bak+' '+
                     //add a special
-                    (lkey==profile.key ? ('ui-ctrl '+ (prop.selectable?'ui-selectable ':'ui-unselectable ')) : '' ) +
+                    (lkey==profile.key ? ('ui-ctrl '+(linb.browser.ie?'':'{_selectable} ')) : '' ) +
                     //custom theme
                     u.$tag_special + (key||'KEY') + '_CT'+u.$tag_special + ' ' +
                     //custom class
@@ -2222,9 +2222,9 @@ Class("linb.UI",  "linb.absObj", {
 
             // add "unselectable" to node
             if(lkey==profile.key){
-                b.unselectable=prop.selectable?'off':'on';
-                if(linb.browser.ie && !prop.selectable)
-                    b.onselectstart="javascript:return false";
+                // unselectable="on" will kill onBlur
+                if(linb.browser.ie)
+                    b._onlinbsel="{_selectable}";
             }
 
             for(var i in b)
@@ -3749,6 +3749,12 @@ Class("linb.UI",  "linb.absObj", {
                 prop.items=profile.box._adjustItems(prop.items);
                 data.items = this._prepareItems(profile, prop.items);
             }
+
+
+            if('selectable' in dm)
+                data._selectable=linb.browser.ie
+                    ? (prop.selectable?"true":"false")
+                    : (prop.selectable?"ui-selectable":"ui-unselectable");
 
             //default prepare
             data =  ajd(profile, prop, data);

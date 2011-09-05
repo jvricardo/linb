@@ -17,7 +17,7 @@ Added property to linb.Com:
 Added functions to linb.Com:
     getDataBinders
 Added functions to linb.UI.TreeGrid:
-    offEditor, autoRowHeight, autoColWidth
+    offEditor, autoRowHeight, autoColWidth, addHotRow, removeHotRow
 Added properties to linb.UI.Input:
     labelSize, labelPos, labelGap, labelCaption, labelHAlign 
 Added events to linb.UI.Input:
@@ -29,7 +29,11 @@ Added properties to linb.UI.RadioBox:
 Removed functions from linb.UI.TimeLine:
     fixedWidth
 Added properties to linb.UI.absList/linb.UI.TreeGrid:
-    valueSeparator
+    valueSeparator, rowOptions, colOptions, treeMode, hotRow
+Added properties to linb.UI.TreeGrid:
+    rowOptions, colOptions, treeMode, hotRow
+Added events to linb.UI.TreeGrid:
+    beforeInitHotRow,onInitHotRow,beforeHotRowAdded,afterHotRowAdded
 Added properties to linb.UI.Span/linb.UI.Div/linb.UI.Block/linb.UI.Dilalog/linb.UI.Tabs/linb.UI.Layout:
     overflow
 Removed keys from linb.absIO(linb.Ajax/linb.SAjax/linb.IAjax):
