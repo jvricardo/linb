@@ -29,11 +29,11 @@ Added properties to linb.UI.RadioBox:
 Removed functions from linb.UI.TimeLine:
     fixedWidth
 Added properties to linb.UI.absList/linb.UI.TreeGrid:
-    valueSeparator, rowOptions, colOptions, treeMode, hotRow
+    valueSeparator
 Added properties to linb.UI.TreeGrid:
     rowOptions, colOptions, treeMode, hotRow
 Added events to linb.UI.TreeGrid:
-    beforeInitHotRow,onInitHotRow,beforeHotRowAdded,afterHotRowAdded
+    beforeInitHotRow,onInitHotRow,beforeHotRowAdded,afterHotRowAdded,onRowDirtied
 Added properties to linb.UI.Span/linb.UI.Div/linb.UI.Block/linb.UI.Dilalog/linb.UI.Tabs/linb.UI.Layout:
     overflow
 Removed keys from linb.absIO(linb.Ajax/linb.SAjax/linb.IAjax):

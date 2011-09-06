@@ -19,7 +19,7 @@ Class('App', 'linb.Com',{
             host.ctl_panel3.append(
                 (new linb.UI.ButtonViews)
                 .setHost(host,"ctl_buttonviews1")
-                .setItems([{"id":"pop", "caption":"With a dialog"}, {"id":"inline", "caption":"Inline"}])
+                .setItems([{"id":"pop", "caption":"With a dialog"}, {"id":"inline", "caption":"Inline"}, {"id":"inline2", "caption":"Inline 2"}])
                 .setBarSize(28)
                 .setValue("inline")
                 .onChange("_ctl_buttonviews1_onchange")
@@ -35,11 +35,29 @@ Class('App', 'linb.Com',{
                 .setRows([{"cells":[{"value":"label1", "id":"c_a", "oValue":"label1"}, {"value":"input1", "id":"c_b", "oValue":"input1"}, {"value":100, "id":"c_c", "oValue":100}, {"value":100, "id":"c_d", "oValue":100}], "id":"a"}, {"cells":[{"value":"label2", "id":"c_e", "oValue":"label2"}, {"value":"input2", "id":"c_f", "oValue":"input2"}, {"value":200, "id":"c_g", "oValue":200}, {"value":200, "id":"c_h", "oValue":200}], "id":"b"}, {"cells":[{"value":"label3", "id":"c_i", "oValue":"label3"}, {"value":"input3", "id":"c_j", "oValue":"input3"}, {"value":300, "id":"c_k", "oValue":300}, {"value":300, "id":"c_l", "oValue":300}], "id":"c"}])
                 .setRowHandlerWidth(16)
                 .setTreeMode(false)
-                .setHotRow(true)
+                .setHotRowMode('auto')
                 .onInitHotRow("_onInitHotRow")
                 .beforeHotRowAdded("_beforeHotRowAdded")
                 .afterHotRowAdded("_afterHotRowAdded")
             , 'inline');
+            
+            
+            host.ctl_buttonviews1.append(
+                (new linb.UI.TreeGrid)
+                .setHost(host,"treegrid2")
+                .setCurrencyTpl("$ *")
+                .setRowNumbered(true)
+                .setEditable(true)
+                .setHeader([{"id":"label", "type":"label", "width":80, "caption":"label"}, {"id":"input", "type":"input", "width":80, "caption":"input"}, {"id":"number", "type":"number", "width":80, "caption":"number"}, {"id":"currency", "type":"currency", "width":80, "caption":"currency"}])
+                .setRows([{"cells":[{"value":"label1", "id":"c_a", "oValue":"label1"}, {"value":"input1", "id":"c_b", "oValue":"input1"}, {"value":100, "id":"c_c", "oValue":100}, {"value":100, "id":"c_d", "oValue":100}], "id":"a"}, {"cells":[{"value":"label2", "id":"c_e", "oValue":"label2"}, {"value":"input2", "id":"c_f", "oValue":"input2"}, {"value":200, "id":"c_g", "oValue":200}, {"value":200, "id":"c_h", "oValue":200}], "id":"b"}, {"cells":[{"value":"label3", "id":"c_i", "oValue":"label3"}, {"value":"input3", "id":"c_j", "oValue":"input3"}, {"value":300, "id":"c_k", "oValue":300}, {"value":300, "id":"c_l", "oValue":300}], "id":"c"}])
+                .setRowHandlerWidth(16)
+                .setTreeMode(false)
+                .setHotRowMode('show')
+                .onInitHotRow("_onInitHotRow")
+                .beforeHotRowAdded("_beforeHotRowAdded2")
+                .afterHotRowAdded("_afterHotRowAdded")
+            , 'inline2');
+                        
             
             host.ctl_buttonviews1.append(
                 (new linb.UI.TreeGrid)
@@ -101,6 +119,15 @@ Class('App', 'linb.Com',{
                     return cells[3];
                 }
             }
+            return true;
+        },
+        _beforeHotRowAdded2:function(profile, row, leaveGrid){
+            var cells=row.cells;
+            if(cells[3].value<=0){
+                linb.message("Cancelled! The last row's 4th cell must be greater than 0");
+                return null;
+            }
+            return true;
         },
         _afterHotRowAdded:function(){
                 linb.message("New row added!");

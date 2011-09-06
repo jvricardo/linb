@@ -32602,16 +32602,16 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                 }
             });
         },
-        addTempRow:function(){
+        addHotRow:function(){
             var prf=this.get(0);
             if(prf.renderId)
                 prf.box._addTempRow(prf);
         },
-        removeTempRow:function(){
-            var prf=this.get(0);
-            prf.getSubNode('BODY').setBlurTrigger(prf.$domId+':BODY');
-            delete prf.__hastmpRow;
-            this.removeRows([prf.box._temprowid]);
+        removeHotRow:function(){
+            var profile=this.get(0);
+            profile.box._sethotrowoutterblur(profile,true);
+            delete profile.__hastmpRow;
+            this.removeRows([profile.box._temprowid]);
         },
         isDirtied:function(){
             var dirty=false;
@@ -32885,6 +32885,12 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                 profile.box._asy(profile);
             }
 
+            // if hot row exists, ensure it's the last one
+            if(profile.renderId&&profile.__hastmpRow){
+                var rows=profile.properties.rows;
+                if(rows[rows.length-1].id!=profile.box._temprowid)
+                    profile.box.__ensurehotrow(profile);
+            }
             return this;
         },
         //delete row according to id
@@ -32969,6 +32975,11 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             delete profile.$allrowscache;
             
             profile.box._asy(profile);
+            
+            if(profile.renderId&&profile.__hastmpRow){
+                profile.box.__ensurehotrow(profile);
+            }
+            
             return self;
         },
         removeAllRows:function(){
@@ -33005,6 +33016,10 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             delete profile.$allrowscache;
             profile.properties.$UIvalue=null;
 
+            if(profile.renderId&&profile.__hastmpRow){
+                profile.box.__ensurehotrow(profile);
+            }
+            
             return this;
         },
         resetRowValue:function(rowId){
@@ -33037,7 +33052,11 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             var ar,profile=this.get(0);
             if(profile.properties.activeMode!='row')return;
             if(!(ar=profile.$activeRow))return;
-            return profile.rowMap[profile.getSubId(ar)];
+            ar=profile.rowMap[profile.getSubId(ar)];
+            if(ar && ar.id && ar.id==profile.box._temprowid){
+                ar=null;
+            }
+            return ar;
         },
         setActiveRow:function(rowId){
             var dr, row, profile=this.get(0);            
@@ -33698,6 +33717,10 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                  $order:5,
                  'background-color':'#A3BAE9'
             },
+            "CELLS-hot":{
+                $order:6,
+                'background-color':'#FFE97F'
+            },
             'CELLS-checked, CELL-checked, CELLS-checked CELLA, CELL-checked CELLA':{
                  $order:6,
                 'background-color':'#7199E8',
@@ -34158,13 +34181,13 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     sortby = col ? col.sortby : null,
                     index = col ? _.arr.indexOf(p.header,col) :-1,
                     me=arguments.callee,
-                    fun = me.fun||(me.fun = function(profile, root, index, type, sortby,order){
+                    fun = me.fun||(me.fun = function(profile, subNode, index, type, sortby,order,lastrownode){
                         var rows,parent,self=arguments.callee;
-                        if(root){
-                            rows = root.sub;
-                            parent = profile.getSubNode('SUB', root._serialId).get(0);
+                        if(subNode){
+                            rows = subNode.sub;
+                            parent = profile.getSubNode('SUB', subNode._serialId).get(0);
                         }else{
-                            root={_inited:true};
+                            subNode={_inited:true};
                             rows = profile.properties.rows;
                             parent = profile.getSubNode('BODY').get(0);
                         }
@@ -34172,7 +34195,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                         var a1=[], a2=[], a3=[], t,ff;
                         _.arr.each(rows,function(row){
                             if(row.sub && row.sub.length>1)
-                                self(profile, row, index, type, sortby, order);
+                                self(profile, row, index, type, sortby, order, null);
                              //for short input
                              a1[a1.length]= index==-1 
                                 ? row.caption 
@@ -34202,7 +34225,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
 
                         //sort memory array
                         //sort dom node
-                        var b = root._inited, bak=_.copy(rows), c;
+                        var b = subNode._inited, bak=_.copy(rows), c;
                         if(b)
                             a1=parent.childNodes;
                         _.arr.each(a2,function(o,i){
@@ -34213,11 +34236,24 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                             var fragment=document.createDocumentFragment();
                             for(var i=0;t=a3[i];i++)
                                 fragment.appendChild(t);
-                            parent.appendChild(fragment);
+                                
+                            if(lastrownode)
+                                parent.insertBefore(fragment, lastrownode);
+                            else
+                                parent.appendChild(fragment);
                         }
                     });
 
-                    fun(profile, '', index, type, sortby,order);
+                    var lastrow,lastrownode;
+                    if(profile.__hastmpRow){
+                        lastrow=profile.properties.rows.pop();
+                        lastrownode=profile.getSubNode('BODY').get(0).lastChild;
+                    }
+
+                    fun(profile, null, index, type, sortby,order, lastrownode);
+
+                    if(profile.__hastmpRow)
+                        profile.properties.rows.push(lastrow);
 
                     //show sort mark
                     profile.getSubNode('SORT', true).css('display','none');
@@ -34596,14 +34632,14 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                         
                     }
                     // to check hot row
-                    if(prop.hotRow){
+                    if(prop.hotRowMode!='none'){
                         var cell=profile.cellMap[profile.getSubId(src)],row;
                         if(cell)
                             row=cell._row;
                         else
                             row=profile.rowMap[profile.getSubId(src)];
-                        if(profile.__hastmpRow && row.id!==profile.box._temprowid)
-                            profile.box._checkNewLine(profile,true);
+                        if(profile.__hastmpRow && profile.__needchecktmprow && row.id!==profile.box._temprowid)
+                            profile.box._checkNewLine(profile,'focuscell');
                     }
                 },
                 onKeydown:function(profile, e, src){
@@ -34712,18 +34748,21 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                                 if(count==max+1)count=1;
                             }
                         }
-                        if(newLine && p.hotRow){
+                        if(newLine && p.hotRowMode!='none'){
                             var cell=profile.cellMap[profile.getSubId(src)],
                                 colId;
-                            if(!cell)return false;
-                            colId=cell._col.id;
+                            if(!cell){
+                                var row=profile.rowMap[profile.getSubId(src)];
+                                if(!row)return false;    
+                            }else
+                                colId=cell._col.id;
 
                             var addhotrow=true,
                                 cacheAll=profile.$allrowscache;
                             // if it's just the active row
                             if(profile.__hastmpRow){
                                 // if it's invalid, dont add new row
-                                addhotrow=profile.box._checkNewLine(profile,true);
+                                addhotrow=profile.box._checkNewLine(profile,'keydown');
 
                                 if(!profile.$allrowscache)
                                     profile.box._cacheRows(profile);
@@ -34946,8 +34985,8 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     var o=this;
                     if(o.renderId)
                         o.boxing().removeAllRows().insertRows(value);
+                    //use copy to avoid outer memory link
                     else
-                        //use copy to avoid outer memory link
                         o.properties.rows = _.copy(value);
                 }
             },
@@ -34979,8 +35018,17 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     this.getSubNodes(['ROWLRULER', 'ROWTOGGLE'],true).css('display',value?'':'none');
                 }
             },
-            hotRow:{
-                ini:false
+            hotRowMode:{
+                ini:'none',
+                listbox:['none','auto','show'],
+                action:function(value){
+                    if(this.renderId){
+                        if(value=='none')
+                            this.boxing().removeHotRow();
+                        else
+                            this.box.__ensurehotrow(this);
+                    }
+                }
             },
             noCtrlKey:true
         },
@@ -35019,6 +35067,8 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             
             beforeCellUpdated:function(profile, cell, options, isHotRow){},
             afterCellUpdated:function(profile, cell, options, isHotRow){},
+            
+            onRowDirtied:function(profile, row){},
 
             onDblclickRow:function(profile, row, e, src){},
             beforeComboPop:function(profile, cell, proEditor, pos, e, src){},
@@ -35040,22 +35090,33 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             ns.box._asy(ns);
             ns.box._ajdustBody(ns);
             
-            // add a temp row
-            if(pro.hotRow&&(!pro.rows||pro.rows.length===0))
-                ns.box._addTempRow(ns);
+            ns.box.__ensurehotrow(ns);
         },
-
+        __ensurehotrow:function(profile){
+            var prop=profile.properties,box=profile.box;
+            // add a temp row
+            switch(prop.hotRowMode){
+                case 'auto':
+                    if(!prop.rows||prop.rows.length===0)
+                        box._addTempRow(profile);
+                break;
+                case 'show':
+                    box._addTempRow(profile);
+                break;
+            }
+        },
         _temprowid:'_ r _temp_',
         _temprownumber:'[*]',
         _addTempRow:function(profile,coId){
-            profile.getSubNode('BODY').setBlurTrigger(profile.$domId+':BODY');
-            if(profile.__tmpRowBlurTrigger){
-                clearTimeout(profile.__tmpRowBlurTrigger);
-                delete profile.__tmpRowBlurTrigger;
-            }
+            // clear first, ensure only one
+            profile.box._sethotrowoutterblur(profile,true);
+            delete profile.__hastmpRow;
+            profile.boxing().removeRows([this._temprowid]);
             
             if(profile.beforeInitHotRow && false===profile.boxing().beforeInitHotRow(profile))
                 return false;            
+            
+            profile.__needchecktmprow=true;
             
             var row=[],
                 ins=profile.boxing();
@@ -35070,6 +35131,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             // gives a special id
             row.id = this._temprowid;
             row.rowNumber=this._temprownumber;
+            row.rowClass=profile.getClass('CELLS', '-hot');
 
             ins.insertRows([row]);
             
@@ -35078,46 +35140,57 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
     
             profile.__hastmpRow=true;
             
-            profile.getSubNode('BODY').setBlurTrigger(profile.$domId+':BODY',function(pos,e){
-                var innerTrigger = linb.Event.getSrc(e)==profile.getSubNode('SCROLL').get(0);
-                profile.__tmpRowBlurTrigger=_.asyRun(function(){
-                    profile.box._checkNewLine(profile,innerTrigger);
-                });
-            });
-            
+            profile.box._sethotrowoutterblur(profile);
         },
 
-        _checkNewLine:function(profile,innerTrigger){
-            profile.getSubNode('BODY').setBlurTrigger(profile.$domId+':BODY');
-            if(profile.__tmpRowBlurTrigger){
-                clearTimeout(profile.__tmpRowBlurTrigger);
-                delete profile.__tmpRowBlurTrigger;
-            }
+        _checkNewLine:function(profile,trigger){
+            var prop=profile.properties;
+            profile.box._sethotrowoutterblur(profile,true);
             
             // checked already
             if(!profile.__hastmpRow)
                 return;
 
+            delete profile.__needchecktmprow;
+
             var ins=profile.boxing(),
                 rowId=this._temprowid,
                 tempRow=ins.getRowbyRowId(rowId),
-                result=innerTrigger;
+                result=prop.hotRowMode=='show'
+                    ?trigger=='keydown'?true:null
+                    :trigger?true:false;
 
-            if(profile.beforeHotRowAdded)
-                result=ins.beforeHotRowAdded(profile, tempRow, !innerTrigger);
+            if(profile.beforeHotRowAdded){
+                var result2=ins.beforeHotRowAdded(profile, tempRow, !trigger);
+                if(_.isDefined(result2))
+                    result=result2;
+            }
             
+            // do nothing
+            if(result===null){
+                if(prop.hotRowMode=='auto'){
+                    profile.box._sethotrowoutterblur(profile);
+                }
+                return false;
+            }
             // remove the hot row
-            if(result===false){
-                delete profile.__hastmpRow;
-                ins.removeRows([rowId]);
-                if(profile.properties.rows.length===0)
-                    this._addTempRow(profile);    
+            else if(result===false){
+                if(prop.hotRowMode=='auto'){
+                    delete profile.__hastmpRow;
+                    ins.removeRows([rowId]);
+                    if(prop.rows.length===0)
+                        this._addTempRow(profile);
+                }
                 // dont add new hot row
                 return false;
             }
             // add a new row
-            else if(!_.isSet(result) || result===true){
+            else if(result===true){
                 var newrow=_.clone(tempRow,true);
+                // remove CELLS-hot;
+                var hotcls=profile.getClass('CELLS', '-hot');
+                if(hotcls==newrow.rowClass)delete newrow.rowClass;
+                else newrow.rowClass=newrow.rowClass.replace(hotcls,'');
                 
                 delete profile.__hastmpRow;
                 ins.removeRows([rowId]);
@@ -35131,11 +35204,14 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                 
                 if(profile.afterHotRowAdded)
                     ins.afterHotRowAdded(profile, newrow);
-                
+                if(prop.hotRowMode=='show'){
+                    this._addTempRow(profile);
+                }
                 return true;
             }
             // focus the invalid cell, and keep this hot row
             else{
+                profile.__needchecktmprow=true;
                 // if returns cell
                 if(_.isHash(result))
                     ins.focusCell(result);
@@ -35143,14 +35219,24 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                 else
                     ins.focusCell(ins.getCell(result));
                     
-                profile.getSubNode('BODY').setBlurTrigger(profile.$domId+':BODY',function(pos,e){
-                    var innerTrigger = linb.Event.getSrc(e)==profile.getSubNode('SCROLL').get(0);
-                    profile.__tmpRowBlurTrigger=_.asyRun(function(){
-                        profile.box._checkNewLine(profile,innerTrigger);
-                    });
-                });
+                profile.box._sethotrowoutterblur(profile);
                 // dont add new hot row
                 return false;
+            }
+        },
+        _sethotrowoutterblur:function(profile, clear){
+            profile.getSubNode('BODY').setBlurTrigger(profile.$domId+':BODY',clear?null:function(pos,e){
+                var trigger = linb.Event.getSrc(e)==profile.getSubNode('SCROLL').get(0)?'focusin':null;
+                profile.__tmpRowBlurTrigger=_.asyRun(function(){
+                    if(profile.box)
+                        profile.box._checkNewLine(profile,trigger);
+                });
+            });
+            if(clear){
+                if(profile.__tmpRowBlurTrigger){
+                    clearTimeout(profile.__tmpRowBlurTrigger);
+                    delete profile.__tmpRowBlurTrigger;
+                }
             }
         },
         _cacheRows:function(profile){
@@ -35820,8 +35906,10 @@ editorDropListHeight
             if(!_.isHash(options))options={value:options};
             options=_.filter(options,function(o,i){return !sc[i.charAt(0)] || i=='_$caption' });
 
-            if(triggerEvent && false === profile.boxing().beforeCellUpdated(profile, cell, options,ishotrow))
-                return;
+            if(triggerEvent){
+                if(profile.beforeCellUpdated && false === profile.boxing().beforeCellUpdated(profile, cell, options,ishotrow))
+                    return;
+            }
 
             // * remove cell's caption first
             delete cell.caption;
@@ -35856,16 +35944,22 @@ editorDropListHeight
                 }
             }
 
-            if(triggerEvent)
-                profile.boxing().afterCellUpdated(profile,cell, options,ishotrow);
+            if(triggerEvent){
+                if(profile.afterCellUpdated)
+                    profile.boxing().afterCellUpdated(profile,cell, options,ishotrow);            
+            }    
         },
         _ensureValue:function(profile,value){
             if(profile.properties.selMode=='multi'||profile.properties.selMode=='multibycheckbox'){
                 var arr = (value?(''+value):'').split(profile.properties.valueSeparator);
+                // ignore hot row
+                _.arr.removeValue(arr,this._temprowid);
                 arr.sort();
                 return arr.join(profile.properties.valueSeparator);
-            }else
-                return value;
+            }else{
+                // ignore hot row
+                return value==this._temprowid?null:value;
+            }
         },
         _sel:function(profile, type, src, id, e){
             var properties=profile.properties;
@@ -35992,7 +36086,8 @@ editorDropListHeight
             // real cellId
             cellId=cell._serialId;
             var cellNode = profile.getSubNode('CELL', cellId),
-                colId = cell._col.id;
+                colId = cell._col.id,
+                ishotrow=cell._row.id==profile.box._temprowid;
 
             //clear the prev editor
             var editor = profile.$curEditor;
@@ -36168,10 +36263,27 @@ editorDropListHeight
                         var editor=this;
                         // for ie's setBlurTrigger doesn't trigger onchange event
                         editor.getSubNode('INPUT').onBlur(true);
-        
+                        
+                        // row dirty alert
+                        var cell=profile.$cellInEditor;
+                        _.asyRun(function(){
+                            var lc=profile.$cellInEditor;
+                            if(cell._row && (!lc || (lc._row && lc._row!=cell._row))){
+                                var dirty=false;
+                                _.arr.each(cell._row.cells,function(v){
+                                    if(v.oValue!==v.value){
+                                        dirty=true;
+                                        return false;
+                                    }
+                                });
+                                if(dirty && cell._row.id !=profile.box._temprowid && profile.onRowDirtied)
+                                    profile.boxing().onRowDirtied(profile,cell._row);
+                            }
+                        },100);
+
                         profile.$curEditor=null;
                         profile.$cellInEditor=null;
-        
+                        
                         editor.getRoot().setBlurTrigger(profile.$linbid+":editor");
                         if(!profile.properties.directInput){
                             editor.afterUIValueSet(null).beforeNextFocus(null).onCancel(null);                    
@@ -36211,7 +36323,6 @@ editorDropListHeight
                         editor.undo=null;
                         if(profile.onEndEdit)
                             profile.boxing().onEndEdit(profile, cell, editor);
-
                     };
         
                     //editor change value, update cell value
@@ -36294,6 +36405,11 @@ editorDropListHeight
             //give a reference
             profile.$curEditor=editor;
             profile.$cellInEditor=cell;
+            
+            if(ishotrow){
+                profile.__needchecktmprow=true;
+                profile.box._sethotrowoutterblur(profile);
+            }
         },
         _ajdustBody:function(profile){
             _.resetRun(profile.$linbid+'4',function(){
