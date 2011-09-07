@@ -2626,6 +2626,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     }
                 }
             },
+            hotRowNumber:'[*]',
             noCtrlKey:true
         },
         EventHandlers:{
@@ -2702,7 +2703,6 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             }
         },
         _temprowid:'_ r _temp_',
-        _temprownumber:'[*]',
         _addTempRow:function(profile,coId){
             // clear first, ensure only one
             profile.box._sethotrowoutterblur(profile,true);
@@ -2726,7 +2726,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
 
             // gives a special id
             row.id = this._temprowid;
-            row.rowNumber=this._temprownumber;
+            row.rowNumber=profile.properties.hotRowNumber;
             row.rowClass=profile.getClass('CELLS', '-hot');
 
             ins.insertRows([row]);
@@ -2793,7 +2793,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
 
                 if(newrow.id==rowId)
                     delete newrow.id;
-                if(newrow.rowNumber==this._temprownumber)
+                if(newrow.rowNumber==prop.hotRowNumber)
                     delete newrow.rowNumber;
 
                 ins.insertRows([newrow]);
