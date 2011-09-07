@@ -12571,6 +12571,7 @@ Class("linb.UI",  "linb.absObj", {
             '.ui-draggable':{},
             '.ui-btn, .ui-btni, .ui-btnc':{
                 height:'22px',
+                'line-height':'22px',
                 background:linb.UI.$bg('button.gif', 'no-repeat', true)
             },
             '.ui-btn':{
@@ -12596,6 +12597,9 @@ Class("linb.UI",  "linb.absObj", {
             '.ui-btnc a':{
                 padding:'0 4px'
             },
+            '.ui-btnc a, .ui-btnc span, .ui-btnc button':{
+                'line-height':'22px'
+            },
             '.ui-btni':{
                 $order:1,
                 'background-position':'left -60px',
@@ -12607,7 +12611,6 @@ Class("linb.UI",  "linb.absObj", {
                 $order:1,
                 'background-position':'left -30px',
                 'background-repeat': 'repeat-x',
-                'padding-top':'3px',
                 'vertical-align':'top'
             },
             '.ui-btn-mouseover, .ui-btn-focus':{
@@ -15881,7 +15884,6 @@ new function(){
                 'KEY FOCUS':{
                     cursor:'pointer',
                     'font-size':'12px',
-                    'line-height':'14px',
                     'text-align':'center',
                     display:'block'
                 }
@@ -15988,7 +15990,7 @@ new function(){
                     'vertical-align':'middle',
                     padding:'2px 0',
                     'font-size':'12px',
-                    'line-height':'14px'
+                    'line-height':'22px'
                 },
                 CAPTION:{
                     'vertical-align':linb.browser.ie6?'baseline':'middle'
@@ -21506,6 +21508,19 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                     if(profile.onCommand)profile.boxing().onCommand(profile,src);
                 }
             },
+            BOX:{
+                onClick : function(profile, e, src){
+                    var prop=profile.properties;
+                    if(prop.type=='cmdbox'){
+                        if(profile.onClick)
+                            profile.boxing().onClick(profile, e, src, prop.$UIvalue);
+                    //DOM node's readOnly
+                    }else if(prop.inputReadonly || profile.$inputReadonly){
+                        if(prop.disabled || prop.readonly)return;
+                        profile.boxing()._drop(e, src);
+                    }
+                }
+            },
             INPUT:{
                 onChange:function(profile, e, src){
                     if(profile.$_onedit||profile.$_inner)return;
@@ -21665,17 +21680,6 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                             return false;
                         }
                     }
-                },
-                onClick : function(profile, e, src){
-                    var prop=profile.properties;
-                    if(prop.type=='cmdbox'){
-                        if(profile.onClick)
-                            profile.boxing().onClick(profile, e, src, prop.$UIvalue);
-                    //DOM node's readOnly
-                    }else if(prop.inputReadonly || profile.$inputReadonly){
-                        if(prop.disabled || prop.readonly)return;
-                        profile.boxing()._drop(e, src);
-                    }
                 }
             },
             R1:{
@@ -21709,7 +21713,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
             onFileDlgOpen:function(profile, node){},
             onCommand:function(profile, node){},
             beforeComboPop:function(profile, pos, e, src){},
-            beforePopShow:function(){profile, popCtl},
+            beforePopShow:function(profile, popCtl){},
             onClick:function(profile, e, src, value){}
         },
         _posMap:{
@@ -22031,10 +22035,14 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
             }
         },
         _onresize:function(profile,width,height){
-            var $hborder=1, $vborder=1,
-                toff=linb.UI.$getCSSValue('linb-comboinput-input','paddingTop'),
-                loff=linb.UI.$getCSSValue('linb-comboinput-input','paddingLeft'),
-                roff=linb.UI.$getCSSValue('linb-comboinput-input','paddingRight');
+            var f=function(k){return k?profile.getSubNode(k).get(0):null},
+                v1=f('INPUT'),
+                isB=v1.type.toLowerCase()=='button',
+                $hborder=1, 
+                $vborder=1,
+                toff=isB?0:linb.UI.$getCSSValue('linb-comboinput-input','paddingTop'),
+                loff=isB?0:linb.UI.$getCSSValue('linb-comboinput-input','paddingLeft'),
+                roff=isB?0:linb.UI.$getCSSValue('linb-comboinput-input','paddingRight');
 
             var t = profile.properties,
                 o = profile.getSubNode('BOX'),
@@ -22043,8 +22051,6 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 labelGap=t.labelGap||0,
                 labelPos=t.labelPos || 'left',
                 px='px',
-                f=function(k){return k?profile.getSubNode(k).get(0):null},
-                v1=f('INPUT'),
                 commandbtn=f(t.commandBtn!='none'?'SBTN':null),
                 functionbtn=f(t.type=='spin'?'RBTN':t.type=='none'?null:'BTN'),
                 ww=width,
@@ -30759,7 +30765,7 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
             },
             ICON:{
                 margin:0,
-                'vertical-align':'top'
+                'vertical-align':'text-top'
             },
             ITEMS:{
                 display:'block',
@@ -30816,8 +30822,10 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
                 $order:2,
                 'background-position':'-32px center'
             },
+            BOX:{
+                height:'22px'
+            },
             'LABEL, CAPTION':{
-                height:'16px',
                 'vertical-align':'middle',
                 'margin-left':'2px',
                 'margin-right':'2px',
@@ -32644,21 +32652,23 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
         /*rows related*/
         //type: 'original', 'data', 'min'
         getRows:function(type){
-            var v=this.get(0).properties.rows;
-            if(type=='data')
-                v=_.clone(v,true);
-            else if(type=='min'){
-                var a=_.clone(v,true),b;
-                _.arr.each(a,function(o,i){
-                    _.each(b=a[i]=a[i].cells,function(v,j){
-                        b[j] = v.value;
+            var v=this.get(0).properties.rows,a,b;
+            if(type=='data'||type=='min'){
+                a=_.clone(v,true);
+
+                if(a&&a.length&&a[a.length-1]&&a[a.length-1].id==this.constructor._temprowid)
+                    a.pop();
+
+                if(type=='min'){
+                    _.arr.each(a,function(o,i){
+                        _.each(b=a[i]=a[i].cells,function(v,j){
+                            b[j] = v.value;
+                        });
                     });
-                });
-                v=a;
-            }
-            if(v&&v.length&&v[v.length-1]&&v[v.length-1].id==this.constructor._temprowid)
-                v.pop();
-            return v;
+                }
+                return a;
+            }else
+                return v;
         },
         getRowbyRowId:function(rowId, type){
             var profile=this.get(0),v=profile.rowMap2[rowId];
@@ -34581,8 +34591,18 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                         }
                         // checkbox is special for editor
                         if(!disabled && !readonly && type=='checkbox')
-                            if(editable)
+                            if(editable){
                                 box._updCell(profile, cell, !cell.value, p.dirtyMark, true);
+                            
+                            profile.box._trycheckrowdirty(profile,cell);
+                            
+                            var ishotrow=cell._row.id==profile.box._temprowid
+                            if(ishotrow){
+                                profile.__needchecktmprow=true;
+                                profile.box._sethotrowoutterblur(profile);
+                            }
+                        }
+                                                        
                         if(!p.editable){
                             if(mode=='cell'){
                                 if(getPro(profile, cell, 'disabled'))
@@ -35203,7 +35223,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                 ins.insertRows([newrow]);
                 
                 if(profile.afterHotRowAdded)
-                    ins.afterHotRowAdded(profile, newrow);
+                    ins.afterHotRowAdded(profile, prop.rows[prop.rows.length-1]);
                 if(prop.hotRowMode=='show'){
                     this._addTempRow(profile);
                 }
@@ -36078,6 +36098,24 @@ editorDropListHeight
                     :((t=p.colOptions)&&t.hasOwnProperty(key)&&_.isSet(t[key]))?t[key]
                     :((t=p)&&t.hasOwnProperty(key)&&_.isSet(t[key]))?t[key]:null;
         },
+        _trycheckrowdirty:function(profile,cell){
+            if(!cell || !cell._row)return;
+
+            _.resetRun(profile.key+":"+profile.$linbid+":"+cell._row.id,function(){
+                var lc=profile.$cellInEditor;
+                if(cell._row && (!lc || (lc._row && lc._row!=cell._row))){
+                    var dirty=false;
+                    _.arr.each(cell._row.cells,function(v){
+                        if(v.oValue!==v.value){
+                            dirty=true;
+                            return false;
+                        }
+                    });
+                    if(dirty && cell._row.id !=profile.box._temprowid && profile.onRowDirtied)
+                        profile.boxing().onRowDirtied(profile,cell._row);
+                }
+            },100);
+        },
         _editCell:function(profile, cellId){
             var cell = typeof cellId=='string'?profile.cellMap[cellId]:cellId;
             if(!cell)return;
@@ -36265,21 +36303,7 @@ editorDropListHeight
                         editor.getSubNode('INPUT').onBlur(true);
                         
                         // row dirty alert
-                        var cell=profile.$cellInEditor;
-                        _.asyRun(function(){
-                            var lc=profile.$cellInEditor;
-                            if(cell._row && (!lc || (lc._row && lc._row!=cell._row))){
-                                var dirty=false;
-                                _.arr.each(cell._row.cells,function(v){
-                                    if(v.oValue!==v.value){
-                                        dirty=true;
-                                        return false;
-                                    }
-                                });
-                                if(dirty && cell._row.id !=profile.box._temprowid && profile.onRowDirtied)
-                                    profile.boxing().onRowDirtied(profile,cell._row);
-                            }
-                        },100);
+                        profile.box._trycheckrowdirty(profile,profile.$cellInEditor);
 
                         profile.$curEditor=null;
                         profile.$cellInEditor=null;

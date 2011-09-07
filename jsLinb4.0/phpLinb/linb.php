@@ -95,6 +95,7 @@
       /**
        * request data symbol: error
        */
+      const SYM_ID = "id";
       const SYM_MESSAGE = "message";
       /**
          * request data sub symbol: key
@@ -408,6 +409,7 @@
       }
 
       public static function echoException($eid, $e, $file='', $line=-1){
+           $id = LINB::SYM_ID;
            $msg = LINB::SYM_MESSAGE;
 
       	    if($e instanceof Exception){
@@ -462,7 +464,7 @@
 
    //for php 5.22 json enabled
    if(function_exists("json_encode")){
-        class JSON{
+        class PHPJSON{
             function encode($var){
                 return json_encode($var);
             }
@@ -470,7 +472,7 @@
                 return json_decode($var);
             }
         }
-        LINB::$json = new JSON;
+        LINB::$json = new PHPJSON;
    }else
         LINB::$json = new JSON;
 

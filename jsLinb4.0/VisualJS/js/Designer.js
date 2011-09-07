@@ -1735,7 +1735,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                             if(parseInt(o.top)||o.top===0)o.top+=10;
                         });
 
-                        src.get(0).parent.boxing().append(tar);
+                        src.get(0).parent.boxing().append(tar, src.get(0).childrenId);
 
                         pid=src.get(0).parent.$linbid;
                         //get ids

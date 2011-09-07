@@ -228,21 +228,23 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
         /*rows related*/
         //type: 'original', 'data', 'min'
         getRows:function(type){
-            var v=this.get(0).properties.rows;
-            if(type=='data')
-                v=_.clone(v,true);
-            else if(type=='min'){
-                var a=_.clone(v,true),b;
-                _.arr.each(a,function(o,i){
-                    _.each(b=a[i]=a[i].cells,function(v,j){
-                        b[j] = v.value;
+            var v=this.get(0).properties.rows,a,b;
+            if(type=='data'||type=='min'){
+                a=_.clone(v,true);
+
+                if(a&&a.length&&a[a.length-1]&&a[a.length-1].id==this.constructor._temprowid)
+                    a.pop();
+
+                if(type=='min'){
+                    _.arr.each(a,function(o,i){
+                        _.each(b=a[i]=a[i].cells,function(v,j){
+                            b[j] = v.value;
+                        });
                     });
-                });
-                v=a;
-            }
-            if(v&&v.length&&v[v.length-1]&&v[v.length-1].id==this.constructor._temprowid)
-                v.pop();
-            return v;
+                }
+                return a;
+            }else
+                return v;
         },
         getRowbyRowId:function(rowId, type){
             var profile=this.get(0),v=profile.rowMap2[rowId];
@@ -2165,8 +2167,18 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                         }
                         // checkbox is special for editor
                         if(!disabled && !readonly && type=='checkbox')
-                            if(editable)
+                            if(editable){
                                 box._updCell(profile, cell, !cell.value, p.dirtyMark, true);
+                            
+                            profile.box._trycheckrowdirty(profile,cell);
+                            
+                            var ishotrow=cell._row.id==profile.box._temprowid
+                            if(ishotrow){
+                                profile.__needchecktmprow=true;
+                                profile.box._sethotrowoutterblur(profile);
+                            }
+                        }
+                                                        
                         if(!p.editable){
                             if(mode=='cell'){
                                 if(getPro(profile, cell, 'disabled'))
@@ -2787,7 +2799,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                 ins.insertRows([newrow]);
                 
                 if(profile.afterHotRowAdded)
-                    ins.afterHotRowAdded(profile, newrow);
+                    ins.afterHotRowAdded(profile, prop.rows[prop.rows.length-1]);
                 if(prop.hotRowMode=='show'){
                     this._addTempRow(profile);
                 }
@@ -3662,6 +3674,24 @@ editorDropListHeight
                     :((t=p.colOptions)&&t.hasOwnProperty(key)&&_.isSet(t[key]))?t[key]
                     :((t=p)&&t.hasOwnProperty(key)&&_.isSet(t[key]))?t[key]:null;
         },
+        _trycheckrowdirty:function(profile,cell){
+            if(!cell || !cell._row)return;
+
+            _.resetRun(profile.key+":"+profile.$linbid+":"+cell._row.id,function(){
+                var lc=profile.$cellInEditor;
+                if(cell._row && (!lc || (lc._row && lc._row!=cell._row))){
+                    var dirty=false;
+                    _.arr.each(cell._row.cells,function(v){
+                        if(v.oValue!==v.value){
+                            dirty=true;
+                            return false;
+                        }
+                    });
+                    if(dirty && cell._row.id !=profile.box._temprowid && profile.onRowDirtied)
+                        profile.boxing().onRowDirtied(profile,cell._row);
+                }
+            },100);
+        },
         _editCell:function(profile, cellId){
             var cell = typeof cellId=='string'?profile.cellMap[cellId]:cellId;
             if(!cell)return;
@@ -3849,21 +3879,7 @@ editorDropListHeight
                         editor.getSubNode('INPUT').onBlur(true);
                         
                         // row dirty alert
-                        var cell=profile.$cellInEditor;
-                        _.asyRun(function(){
-                            var lc=profile.$cellInEditor;
-                            if(cell._row && (!lc || (lc._row && lc._row!=cell._row))){
-                                var dirty=false;
-                                _.arr.each(cell._row.cells,function(v){
-                                    if(v.oValue!==v.value){
-                                        dirty=true;
-                                        return false;
-                                    }
-                                });
-                                if(dirty && cell._row.id !=profile.box._temprowid && profile.onRowDirtied)
-                                    profile.boxing().onRowDirtied(profile,cell._row);
-                            }
-                        },100);
+                        profile.box._trycheckrowdirty(profile,profile.$cellInEditor);
 
                         profile.$curEditor=null;
                         profile.$cellInEditor=null;

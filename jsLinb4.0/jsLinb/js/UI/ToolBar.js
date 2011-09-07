@@ -213,7 +213,7 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
             },
             ICON:{
                 margin:0,
-                'vertical-align':'top'
+                'vertical-align':'text-top'
             },
             ITEMS:{
                 display:'block',
@@ -270,8 +270,10 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
                 $order:2,
                 'background-position':'-32px center'
             },
+            BOX:{
+                height:'22px'
+            },
             'LABEL, CAPTION':{
-                height:'16px',
                 'vertical-align':'middle',
                 'margin-left':'2px',
                 'margin-right':'2px',

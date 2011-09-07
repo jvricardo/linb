@@ -542,8 +542,8 @@ class IO{
 	 * @param string $path
 	 * @param string $s
 	 */
-	function setString($path,$s){
-		return file_put_contents($path,$s);
+	function setString($path,$s,$flag=null){
+		return file_put_contents($path,$s,$flag);
 	}
 	/**
 	 * get an array from a file
