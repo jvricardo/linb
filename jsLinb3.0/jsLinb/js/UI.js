@@ -1956,6 +1956,7 @@ Class("linb.UI",  "linb.absObj", {
             '.ui-draggable':{},
             '.ui-btn, .ui-btni, .ui-btnc':{
                 height:'22px',
+                'line-height':'22px',
                 background:linb.UI.$bg('button.gif', 'no-repeat', true)
             },
             '.ui-btn':{
@@ -1981,6 +1982,9 @@ Class("linb.UI",  "linb.absObj", {
             '.ui-btnc a':{
                 padding:'0 4px'
             },
+            '.ui-btnc a, .ui-btnc span, .ui-btnc button':{
+                'line-height':'22px'
+            },
             '.ui-btni':{
                 $order:1,
                 'background-position':'left -60px',
@@ -1992,7 +1996,6 @@ Class("linb.UI",  "linb.absObj", {
                 $order:1,
                 'background-position':'left -30px',
                 'background-repeat': 'repeat-x',
-                'padding-top':'3px',
                 'vertical-align':'top'
             },
             '.ui-btn-mouseover, .ui-btn-focus':{
@@ -5207,7 +5210,6 @@ new function(){
                 'KEY FOCUS':{
                     cursor:'pointer',
                     'font-size':'12px',
-                    'line-height':'14px',
                     'text-align':'center',
                     display:'block'
                 }
@@ -5314,7 +5316,7 @@ new function(){
                     'vertical-align':'middle',
                     padding:'2px 0',
                     'font-size':'12px',
-                    'line-height':'14px'
+                    'line-height':'22px'
                 },
                 CAPTION:{
                     'vertical-align':linb.browser.ie6?'baseline':'middle'

@@ -754,6 +754,19 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                     if(profile.onCommand)profile.boxing().onCommand(profile,src);
                 }
             },
+            BOX:{
+                onClick : function(profile, e, src){
+                    var prop=profile.properties;
+                    if(prop.type=='cmdbox'){
+                        if(profile.onClick)
+                            profile.boxing().onClick(profile, e, src, prop.$UIvalue);
+                    //DOM node's readOnly
+                    }else if(prop.inputReadonly || profile.$inputReadonly){
+                        if(prop.disabled || prop.readonly)return;
+                        profile.boxing()._drop(e, src);
+                    }
+                }
+            },
             INPUT:{
                 onChange:function(profile, e, src){
                     if(profile.$_onedit||profile.$_inner)return;
@@ -904,17 +917,6 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                             profile.boxing()._drop(e,src);
                             return false;
                         }
-                    }
-                },
-                onClick : function(profile, e, src){
-                    var prop=profile.properties;
-                    if(prop.type=='cmdbox'){
-                        if(profile.onClick)
-                            profile.boxing().onClick(profile, e, src, prop.$UIvalue);
-                    //DOM node's readOnly
-                    }else if(prop.inputReadonly || profile.$inputReadonly){
-                        if(prop.disabled || prop.readonly)return;
-                        profile.boxing()._drop(e, src);
                     }
                 }
             },
@@ -1266,16 +1268,19 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
             }
         },
         _onresize:function(profile,width,height){
-            var $hborder=1, $vborder=1,
-                toff=linb.UI.$getCSSValue('linb-comboinput-input','paddingTop'),
-                loff=linb.UI.$getCSSValue('linb-comboinput-input','paddingLeft'),
-                roff=linb.UI.$getCSSValue('linb-comboinput-input','paddingRight');
+             var f=function(k){return k?profile.getSubNode(k).get(0):null},
+                v1=f('INPUT'),
+                isB=v1.type.toLowerCase()=='button',
+                $hborder=1, 
+                $vborder=1,
+                toff=isB?0:linb.UI.$getCSSValue('linb-comboinput-input','paddingTop'),
+                loff=isB?0:linb.UI.$getCSSValue('linb-comboinput-input','paddingLeft'),
+                roff=isB?0:linb.UI.$getCSSValue('linb-comboinput-input','paddingRight');
+
 
             var t = profile.properties,
                 o = profile.getSubNode('BOX'),
                 px='px',
-                f=function(k){return k?profile.getSubNode(k).get(0):null},
-                v1=f('INPUT'),
                 save=f(t.commandBtn!='none'?'SBTN':null),
                 btn=f(t.type=='spin'?'RBTN':t.type=='none'?null:'BTN'),
                 ww=width,
