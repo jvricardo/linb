@@ -971,6 +971,10 @@ if(linb.browser.ie){
                             dialog.hide();
                             return false;
                         }
+                    },
+                    onHotKeydown:function(p,k){
+                        if(k.key=='esc')
+                            dialog.close();
                     }
                 });
 
@@ -986,6 +990,10 @@ if(linb.browser.ie){
                 {
                     onClick:function(){
                         dialog.close();
+                    },
+                    onHotKeydown:function(p,k){
+                        if(k.key=='enter')
+                            dialog.close();
                     }
                 },null,null,{KEY:'margin:0 4px'});
                 cmd.append(btn);
@@ -1116,6 +1124,10 @@ if(linb.browser.ie){
             {
                 onClick:function(){
                     dialog.destroy();
+                },
+                onHotKeydown:function(p,k){
+                    if(k.key=='esc')
+                        dialog.close();
                 }
             },null,null,{KEY:'margin:0 4px'})),
 

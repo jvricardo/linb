@@ -6344,6 +6344,8 @@ Class('linb.Dom','linb.absBox',{
 
         //flag: false => no remove this from momery(IE)
         replace:function(target, triggerGC){
+            if(_.isHash(target) || _.isStr(target))
+                target=linb.create(target);
             target=linb(target);
             var v,i,c=this.get(0),ns=target.get(),l=ns.length;
             if(l>0 && (v=ns[l-1])){
@@ -6360,6 +6362,8 @@ Class('linb.Dom','linb.absBox',{
         swap:function(target){
             var self=this,t = linb.Dom.getEmptyDiv().html('*',false);
 
+            if(_.isHash(target) || _.isStr(target))
+                target=linb.create(target);
             target=linb(target);
 
             self.replace(t,false);
@@ -38156,6 +38160,10 @@ if(linb.browser.ie){
                             dialog.hide();
                             return false;
                         }
+                    },
+                    onHotKeydown:function(p,k){
+                        if(k.key=='esc')
+                            dialog.close();
                     }
                 });
 
@@ -38171,6 +38179,10 @@ if(linb.browser.ie){
                 {
                     onClick:function(){
                         dialog.close();
+                    },
+                    onHotKeydown:function(p,k){
+                        if(k.key=='enter')
+                            dialog.close();
                     }
                 },null,null,{KEY:'margin:0 4px'});
                 cmd.append(btn);
@@ -38301,6 +38313,10 @@ if(linb.browser.ie){
             {
                 onClick:function(){
                     dialog.destroy();
+                },
+                onHotKeydown:function(p,k){
+                    if(k.key=='esc')
+                        dialog.close();
                 }
             },null,null,{KEY:'margin:0 4px'})),
 
