@@ -1327,21 +1327,20 @@ Class("linb.UI",  "linb.absObj", {
         self.setDataModel(hash);
 
         linb.UI.$cache_css += linb.UI.buildCSSText({
-            '.linbcss-noscroll, .linbcss-noscroll BODY, .linbcss-viewport, .linbcss-viewport BODY':{
+            '.linb-css-noscroll, .linb-css-noscroll BODY, .linb-css-viewport, .linb-css-viewport BODY':{
                 overflow:'hidden',
                 height:'100%',
                 border:'0 none',
                 margin:'0',
                 padding:'0'
             },
-            '.ui-ctr':{},
-            '.ui-draggable':{},
-            '.ui-btn, .ui-btni, .ui-btnc':{
+            '.linb-ui-draggable':{},
+            '.linb-ui-btn, .linb-ui-btni, .linb-ui-btnc':{
                 height:'22px',
                 'line-height':'22px',
                 background:linb.UI.$bg('button.gif', 'no-repeat', true)
             },
-            '.ui-btn':{
+            '.linb-ui-btn':{
                 $order:1,
                 'white-space': 'nowrap',
                 'vertical-align':'top',
@@ -1350,10 +1349,10 @@ Class("linb.UI",  "linb.absObj", {
                 'padding-right':'4px',
                 'font-size':'12px'
             },
-            '.ui-btn *':{
+            '.linb-ui-btn *':{
                 cursor:'pointer'
             },
-            '.ui-btnc button, .ui-btnc a':{
+            '.linb-ui-btnc button, .linb-ui-btnc a':{
                 display:linb.$inlineBlock,
                 zoom:linb.browser.ie?1:null,
                 background:'transparent',
@@ -1361,56 +1360,56 @@ Class("linb.UI",  "linb.absObj", {
                 margin:0,
                 padding:0
             },
-            '.ui-btnc a':{
+            '.linb-ui-btnc a':{
                 padding:'0 4px'
             },
-            '.ui-btnc a, .ui-btnc span, .ui-btnc button':{
+            '.linb-ui-btnc a, .linb-ui-btnc span, .linb-ui-btnc button':{
                 'line-height':'22px'
             },
-            '.ui-btni':{
+            '.linb-ui-btni':{
                 $order:1,
                 'background-position':'left -60px',
                 'padding-left':'4px',
                 'vertical-align':'top',
                 overflow:'hidden'
             },
-            '.ui-btnc':{
+            '.linb-ui-btnc':{
                 $order:1,
                 'background-position':'left -30px',
                 'background-repeat': 'repeat-x',
                 'vertical-align':'top'
             },
-            '.ui-btn-mouseover, .ui-btn-focus':{
+            '.linb-ui-btn-mouseover, .linb-ui-btn-focus':{
                 $order:2,
                 'background-position':'right -90px'
             },
-            '.ui-btn-mouseover .ui-btni, .ui-btn-focus .ui-btni':{
+            '.linb-ui-btn-mouseover .linb-ui-btni, .linb-ui-btn-focus .linb-ui-btni':{
                 $order:2,
                 'background-position':'left -150px'
             },
-            '.ui-btn-mouseover .ui-btnc, .ui-btn-focus .ui-btnc':{
+            '.linb-ui-btn-mouseover .linb-ui-btnc, .linb-ui-btn-focus .linb-ui-btnc':{
                 $order:2,
                 'background-position':'left -120px'
             },
-            '.ui-btn-mousedown, .ui-btn-checked':{
+            '.linb-ui-btn-mousedown, .linb-ui-btn-checked':{
                 $order:3,
                 'background-position':'right -180px'
             },
-            '.ui-btn-mousedown .ui-btni, .ui-btn-checked .ui-btni':{
+            '.linb-ui-btn-mousedown .linb-ui-btni, .linb-ui-btn-checked .linb-ui-btni':{
                 $order:3,
                 'background-position':'left -240px'
             },
-            '.ui-btn-mousedown .ui-btnc, .ui-btn-checked .ui-btnc':{
+            '.linb-ui-btn-mousedown .linb-ui-btnc, .linb-ui-btn-checked .linb-ui-btnc':{
                 $order:3,
                 'background-position':'left -210px'
             },
-            '.ui-image':{
+            '.linb-ui-image':{
                 'vertical-align':'middle',
                 width:'16px',
                 height:'16px',
                 'background-repeat':'no-repeat'
             },
-            '.ui-icon':{
+            '.linb-ui-icon':{
                 'vertical-align':'middle',
                 width:'16px',
                 height:'16px',
@@ -1418,11 +1417,11 @@ Class("linb.UI",  "linb.absObj", {
                 'background-position' : 'center',
                 margin:'0 2px'
             },
-            '.ui-busy':{
+            '.linb-ui-busy':{
                 background: 'url('+linb.ini.img_busy+') no-repeat center center',
                 'background-position' : 'center'
             },
-            '.uicmd-close, .uicmd-info, .uicmd-opt, .uicmd-pop, .uicmd-land, .uicmd-refresh, .uicmd-toggle, .uicmd-toggle2, .uicmd-min, .uicmd-max,.uicmd-restore,.uicmd-pin, .uicmd-check, .uicmd-radio, .uicmd-add, .uicmd-remove':{
+            '.linb-uicmd-close, .linb-uicmd-info, .linb-uicmd-opt, .linb-uicmd-pop, .linb-uicmd-land, .linb-uicmd-refresh, .linb-uicmd-toggle, .linb-uicmd-toggle2, .linb-uicmd-min, .linb-uicmd-max,.linb-uicmd-restore,.linb-uicmd-pin, .linb-uicmd-check, .linb-uicmd-radio, .linb-uicmd-add, .linb-uicmd-remove':{
                 background: linb.UI.$bg('icons.gif', 'no-repeat 0 0', true),
                 width:'16px',
                 height:'16px',
@@ -1430,245 +1429,245 @@ Class("linb.UI",  "linb.absObj", {
                 cursor:'default',
                 'vertical-align':'middle'
             },
-            '.uicmd-info':{
+            '.linb-uicmd-info':{
                 $order:1,
                 'background-position' : '-320px 0'
             },
-            '.uicmd-info-mouseover':{
+            '.linb-uicmd-info-mouseover':{
                 $order:2,
                 'background-position' : '-320px  -20px'
             },
-            '.uicmd-info-mousedown':{
+            '.linb-uicmd-info-mousedown':{
                 $order:3,
                 'background-position' : '-320px  -40px'
             },
-            '.uicmd-opt':{
+            '.linb-uicmd-opt':{
                 $order:1,
                 'background-position' : '0 0'
             },
-            '.uicmd-opt-mouseover':{
+            '.linb-uicmd-opt-mouseover':{
                 $order:2,
                 'background-position' : '0 -20px'
             },
-            '.uicmd-opt-mousedown':{
+            '.linb-uicmd-opt-mousedown':{
                 $order:3,
                 'background-position' : '0 -40px'
             },
-            '.uicmd-pop, .uicmd-land':{
+            '.linb-uicmd-pop, .linb-uicmd-land':{
                 $order:1,
                 'background-position' : '-40px 0'
             },
-            '.uicmd-pop-mouseover, .uicmd-land-mouseover':{
+            '.linb-uicmd-pop-mouseover, .linb-uicmd-land-mouseover':{
                 $order:2,
                 'background-position' : '-40px -20px'
             },
-            '.uicmd-pop-mousedown, .uicmd-land-mousedown':{
+            '.linb-uicmd-pop-mousedown, .linb-uicmd-land-mousedown':{
                 $order:3,
                 'background-position' : '-40px -40px'
             },
-            '.uicmd-refresh':{
+            '.linb-uicmd-refresh':{
                 $order:1,
                 'background-position' : '-280px 0'
             },
-            '.uicmd-refresh-mouseover':{
+            '.linb-uicmd-refresh-mouseover':{
                 $order:2,
                 'background-position' : '-280px -20px'
             },
-            '.uicmd-refresh-mousedown':{
+            '.linb-uicmd-refresh-mousedown':{
                 $order:3,
                 'background-position' : '-280px -40px'
             },
-            '.uicmd-pin':{
+            '.linb-uicmd-pin':{
                 $order:1,
                 'background-position' : '-80px 0'
             },
-            '.uicmd-pin-mouseover':{
+            '.linb-uicmd-pin-mouseover':{
                 $order:2,
                 'background-position': '-80px -20px'
             },
-            '.uicmd-pin-mousedown':{
+            '.linb-uicmd-pin-mousedown':{
                 $order:3,
                 'background-position': '-80px -40px'
             },
-            '.uicmd-pin-checked, .uicmd-pin-checked-mouseover, .uicmd-pin-checked-mousedown':{
+            '.linb-uicmd-pin-checked, .linb-uicmd-pin-checked-mouseover, .linb-uicmd-pin-checked-mousedown':{
                 $order:4,
                 'background-position':  '-80px -40px'
             },
-            '.uicmd-min':{
+            '.linb-uicmd-min':{
                 $order:1,
                 'background-position' : '-120px 0'
             },
-            '.uicmd-min-mouseover':{
+            '.linb-uicmd-min-mouseover':{
                 $order:2,
                'background-position': ' -120px -20px'
             },
-            '.uicmd-min-mousedown':{
+            '.linb-uicmd-min-mousedown':{
                 $order:3,
                'background-position':  '-120px -40px'
             },
-            '.uicmd-restore':{
+            '.linb-uicmd-restore':{
                 $order:1,
                 'background-position' : '-160px 0'
             },
-            '.uicmd-restore-mouseover':{
+            '.linb-uicmd-restore-mouseover':{
                 $order:2,
                'background-position':  '-160px -20px'
             },
-            '.uicmd-restore-mousedown':{
+            '.linb-uicmd-restore-mousedown':{
                 $order:3,
                'background-position':  '-160px -40px'
             },
-            '.uicmd-max':{
+            '.linb-uicmd-max':{
                 $order:1,
                 'background-position' : '-200px 0'
             },
-            '.uicmd-max-mouseover':{
+            '.linb-uicmd-max-mouseover':{
                 $order:2,
                'background-position':  '-200px -20px'
             },
-            '.uicmd-max-mousedown':{
+            '.linb-uicmd-max-mousedown':{
                 $order:3,
                'background-position':  '-200px -40px'
             },
-            '.uicmd-close':{
+            '.linb-uicmd-close':{
                 $order:1,
                 'background-position' : '-240px 0'
             },
-            '.uicmd-close-mouseover':{
+            '.linb-uicmd-close-mouseover':{
                 $order:2,
                 'background-position' : '-240px -20px'
             },
-            '.uicmd-close-mousedown':{
+            '.linb-uicmd-close-mousedown':{
                 $order:3,
                 'background-position' : '-240px -40px'
             },
-            '.uicmd-check':{
+            '.linb-uicmd-check':{
                 $order:1,
                 margin:'0 4px 0 2px',
                 'background-position' : '-20px -70px'
             },
-            '.uicmd-check-mouseover':{
+            '.linb-uicmd-check-mouseover':{
                 $order:2,
                 'background-position' : '-20px -90px'
             },
-            '.uicmd-check-mousedown':{
+            '.linb-uicmd-check-mousedown':{
                 $order:3,
                 'background-position' : '-20px -110px'
             },
-            '.uicmd-check-checked':{
+            '.linb-uicmd-check-checked':{
                 $order:4,
                 'background-position' : '0 -70px'
             },
-            '.uicmd-check-checked-mouseover':{
+            '.linb-uicmd-check-checked-mouseover':{
                 $order:5,
                 'background-position' : '0 -90px'
             },
-            '.uicmd-check-checked-mousedown':{
+            '.linb-uicmd-check-checked-mousedown':{
                 $order:6,
                 'background-position' : '0 -110px'
             },
-            '.uicmd-radio':{
+            '.linb-uicmd-radio':{
                 $order:1,
                 margin:'0 4px 0 2px',
                 'background-position' : '-60px -70px'
             },
-            '.uicmd-radio-mouseover':{
+            '.linb-uicmd-radio-mouseover':{
                 $order:2,
                 'background-position' : '-60px -90px'
             },
-            '.uicmd-radio-mousedown':{
+            '.linb-uicmd-radio-mousedown':{
                 $order:3,
                 'background-position' : '-60px -110px'
             },
-            '.uicmd-radio-checked':{
+            '.linb-uicmd-radio-checked':{
                 $order:4,
                 'background-position' : '-40px -70px'
             },
-            '.uicmd-radio-checked-mouseover':{
+            '.linb-uicmd-radio-checked-mouseover':{
                 $order:5,
                 'background-position' : '-40px -90px'
             },
-            '.uicmd-radio-checked-mousedown':{
+            '.linb-uicmd-radio-checked-mousedown':{
                 $order:6,
                 'background-position' : '-40px -110px'
             },
-            '.uicmd-add':{
+            '.linb-uicmd-add':{
                 $order:1,
                'background-position':'-56px -222px'
             },
-           '.uicmd-add-mouseover':{
+           '.linb-uicmd-add-mouseover':{
                 $order:2,
                 'background-position':'-56px -222px'
            },
-           '.uicmd-add-mousedown':{
+           '.linb-uicmd-add-mousedown':{
                 $order:3,
                 'background-position':'-56px -222px'
            },
-            '.uicmd-remove':{
+            '.linb-uicmd-remove':{
                 $order:1,
                 'background-position': '-72px -222px'
             },
-            '.uicmd-remove-mouseover':{
+            '.linb-uicmd-remove-mouseover':{
                 $order:1,
                 'background-position': '-72px -222px'
             },
-            '.uicmd-remove-mousedown':{
+            '.linb-uicmd-remove-mousedown':{
                 $order:1,
                 'background-position': '-72px -222px'
             },
 
-            '.uicmd-toggle':{
+            '.linb-uicmd-toggle':{
                 $order:1,
                 'background-position': '-160px -70px'
             },
-            '.uicmd-toggle-mouseover':{
+            '.linb-uicmd-toggle-mouseover':{
                 $order:2,
                 'background-position': '-160px -90px'
             },
-            '.uicmd-toggle-mousedown':{
+            '.linb-uicmd-toggle-mousedown':{
                 $order:3,
                 'background-position': '-160px -110px'
             },
-            '.uicmd-toggle-checked':{
+            '.linb-uicmd-toggle-checked':{
                 $order:4,
                 'background-position': '-180px -70px'
             },
-            '.uicmd-toggle-checked-mouseover':{
+            '.linb-uicmd-toggle-checked-mouseover':{
                 $order:5,
                 'background-position': '-180px -90px'
             },
-            '.uicmd-toggle-checked-mousedown':{
+            '.linb-uicmd-toggle-checked-mousedown':{
                 $order:6,
                 'background-position': '-180px -110px'
             },
-            '.uicmd-toggle2':{
+            '.linb-uicmd-toggle2':{
                 $order:1,
                 'background-position': '-200px -70px'
             },
-            '.uicmd-toggle2-mouseover':{
+            '.linb-uicmd-toggle2-mouseover':{
                 $order:2,
                 'background-position': '-200px -90px'
             },
-            '.uicmd-toggle2-mousedown':{
+            '.linb-uicmd-toggle2-mousedown':{
                 $order:3,
                 'background-position': '-200px -110px'
             },
-            '.uicmd-toggle2-checked':{
+            '.linb-uicmd-toggle2-checked':{
                 $order:4,
                 'background-position': '-220px -70px'
             },
-            '.uicmd-toggle2-checked-mouseover':{
+            '.linb-uicmd-toggle2-checked-mouseover':{
                 $order:5,
                 'background-position': '-220px -90px'
             },
-            '.uicmd-toggle2-checked-mousedown':{
+            '.linb-uicmd-toggle2-checked-mousedown':{
                 $order:6,
                 'background-position': '-220px -110px'
             },
-            '.uicmd-none':{
+            '.linb-uicmd-none':{
                 display:'none'
             },
-            '.uicmd-empty':{
+            '.linb-uicmd-empty':{
                 $order:1000,
                 width:'16px',
                 height:'16px',
@@ -1679,55 +1678,55 @@ Class("linb.UI",  "linb.absObj", {
             },
 
 
-            '.uibar-top, .uibar-bottom, .uibar-top-s, .uibar-bottom-s':{
+            '.linb-uibar-top, .linb-uibar-bottom, .linb-uibar-top-s, .linb-uibar-bottom-s':{
                 position:'relative',
                 //for avoiding extra space after table in IE
                 'vertical-align':'baseline',
                 'font-size':0,
                 'line-height':0
             },
-            '.uibar-top td, .uibar-top-s td, .uibar-bottom td, .uibar-bottom-s td':{
+            '.linb-uibar-top td, .linb-uibar-top-s td, .linb-uibar-bottom td, .linb-uibar-bottom-s td':{
                 $order:1,
                 background: linb.UI.$bg('bar_vertical.gif', 'no-repeat 0 0', true)
             },
 //uibar-top
             /*set table height for ff2, set uibar height for performance*/
-            '.uibar-top, .uibar-top .uibar-t':{
+            '.linb-uibar-top, .linb-uibar-top .linb-uibar-t':{
                 height:'29px'
             },
-            '.uibar-top .uibar-tdl':{
+            '.linb-uibar-top .linb-uibar-tdl':{
                 $order:1,
                 'padding-left':'4px',
                 height:'100%',
                 'background-position': '0 0'
             },
-            '.uibar-top .uibar-tdm':{
+            '.linb-uibar-top .linb-uibar-tdm':{
                 $order:1,
                 'background-position': '0 -30px',
                 'background-repeat': 'repeat-x'
             },
-            '.uibar-top .uibar-tdr':{
+            '.linb-uibar-top .linb-uibar-tdr':{
                 $order:1,
                 'padding-left':'4px',
                 'background-position': 'right -60px'
             },
-            '.uibar-top-focus .uibar-tdl':{
+            '.linb-uibar-top-focus .linb-uibar-tdl':{
                 $order:2,
                 'padding-left':'4px',
                 height:'100%',
                 'background-position': 'left -90px'
             },
-            '.uibar-top-focus .uibar-tdm':{
+            '.linb-uibar-top-focus .linb-uibar-tdm':{
                 $order:2,
                 'background-position': 'left -120px',
                 'background-repeat': 'repeat-x'
             },
-            '.uibar-top-focus .uibar-tdr':{
+            '.linb-uibar-top-focus .linb-uibar-tdr':{
                 $order:2,
                 'padding-left':'4px',
                 'background-position': 'right -150px'
             },
-            '.uibar-top .uibar-cmdl':{
+            '.linb-uibar-top .linb-uibar-cmdl':{
                 overflow:'hidden',
                 position:'absolute',
                 left:0,
@@ -1737,13 +1736,13 @@ Class("linb.UI",  "linb.absObj", {
                 'padding-left':'8px',
                 'white-space': 'nowrap'
             },
-            '.uibar-top .uibar-cmdr':{
+            '.linb-uibar-top .linb-uibar-cmdr':{
                 position:'absolute',
                 top:'6px',
                 right:'8px',
                 'text-align':'right'
             },
-            '.uicon-main':{
+            '.linb-uicon-main':{
                 position:'relative',
                 'padding-left':'4px',
                 'font-size':0,
@@ -1752,85 +1751,85 @@ Class("linb.UI",  "linb.absObj", {
                 overflow:'visible',
                 background: linb.UI.$bg('bar_horizontal.gif', 'repeat-y -595px top', true)
             },
-            '.uicon-maini':{
+            '.linb-uicon-maini':{
                 'padding-right':'4px',
                 'font-size':0,
                 'line-height':0,
                 background: linb.UI.$bg('container_right.gif', '#AAD2FA repeat-y right top', true)
             },
 //uibar-bottom
-            '.uibar-bottom, .uibar-bottom .uibar-t':{
+            '.linb-uibar-bottom, .linb-uibar-bottom .linb-uibar-t':{
                 height:'12px'
             },
-            '.uibar-bottom .uibar-tdl':{
+            '.linb-uibar-bottom .linb-uibar-tdl':{
                 $order:1,
                 'padding-left':'4px',
                 height:'100%',
                 'background-position': 'left -189px'
             },
-            '.uibar-bottom .uibar-tdm':{
+            '.linb-uibar-bottom .linb-uibar-tdm':{
                 $order:1,
                 'background-position': 'left -211px',
                 'background-repeat': 'repeat-x'
             },
-            '.uibar-bottom .uibar-tdr':{
+            '.linb-uibar-bottom .linb-uibar-tdr':{
                 $order:1,
                 'padding-left':'4px',
                 'background-position': 'right -233px'
             },
 //uibar-top-s
-            '.uibar-top-s, .uibar-top-s .uibar-t':{
+            '.linb-uibar-top-s, .linb-uibar-top-s .linb-uibar-t':{
                 $order:3,
                 height:'7px'
             },
-            '.uibar-top-s .uibar-tdl':{
+            '.linb-uibar-top-s .linb-uibar-tdl':{
                 $order:3,
                 height:'100%',
                 'padding-left':'4px',
                 'background-position': 'left -261px'
             },
-            '.uibar-top-s .uibar-tdm':{
+            '.linb-uibar-top-s .linb-uibar-tdm':{
                 $order:3,
                 'background-position': 'left -283px',
                 'background-repeat': 'repeat-x'
             },
-            '.uibar-top-s .uibar-tdr':{
+            '.linb-uibar-top-s .linb-uibar-tdr':{
                 $order:3,
                 'padding-left':'4px',
                 'background-position': 'right -305px'
             },
-            '.uibar-top-s .uibar-cmdl':{
+            '.linb-uibar-top-s .linb-uibar-cmdl':{
                 $order:3,
                 display:'none'
             },
-            '.uibar-top-s .uibar-cmdr':{
+            '.linb-uibar-top-s .linb-uibar-cmdr':{
                 $order:3,
                 display:'none'
             },
 //uibar-bottom-s
-            '.uibar-bottom-s, .uibar-bottom-s .uibar-t':{
+            '.linb-uibar-bottom-s, .linb-uibar-bottom-s .linb-uibar-t':{
                 $order:3,
                 height:'6px'
             },
-            '.uibar-bottom-s .uibar-tdl':{
+            '.linb-uibar-bottom-s .linb-uibar-tdl':{
                 $order:3,
                 height:'100%',
                 'padding-left':'4px',
                 'background-position': 'left -327px'
             },
-            '.uibar-bottom-s .uibar-tdm':{
+            '.linb-uibar-bottom-s .linb-uibar-tdm':{
                 $order:3,
                 'background-position': 'left -349px',
                 'background-repeat': 'repeat-x'
             },
-            '.uibar-bottom-s .uibar-tdr':{
+            '.linb-uibar-bottom-s .linb-uibar-tdr':{
                 $order:3,
                 'padding-left':'4px',
                 'background-position': 'right -371px'
             }
         })
         + linb.UI.buildCSSText({
-            '.ui-unselectable':{
+            '.linb-ui-unselectable':{
                 $order:0,
                 '-moz-user-select': linb.browser.gek?'-moz-none':null,
                 '-khtml-user-select': linb.browser.kde?'none':null,
@@ -1838,7 +1837,7 @@ Class("linb.UI",  "linb.absObj", {
                 '-o-user-select':linb.browser.opr?'none':null,
                 'user-select':'none'
             },
-            '.ui-selectable':{
+            '.linb-ui-selectable':{
                 $order:1,
                 '-moz-user-select': linb.browser.gek?'text':null,
                 '-khtml-user-select': linb.browser.kde?'text':null,
@@ -1846,10 +1845,16 @@ Class("linb.UI",  "linb.absObj", {
                 '-o-user-select':linb.browser.opr?'text':null,
                 'user-select':'text'
             },
-            '.ui-ctrl':{
+            '.linb-ui-ctrl':{
+                cursor:'default',
+                color:'#000',
+                'font-family':'arial,helvetica,clean,sans-serif',
+                'font-style':'normal',
+                'font-weight':'normal',
+                'font-size':'12px',
                 'vertical-align':'middle'
             },
-            '.uiw-shell':{
+            '.linb-uiw-shell':{
                 background:'transparent',
                 display:linb.$inlineBlock,
                 zoom:linb.browser.ie6?1:null,
@@ -1860,7 +1865,7 @@ Class("linb.UI",  "linb.absObj", {
                 margin:0
             },
             /*span*/
-            '.uiw-frame':{
+            '.linb-uiw-frame':{
                 $order:1,
                 display:'block',
                 position:'relative',
@@ -1873,7 +1878,7 @@ Class("linb.UI",  "linb.absObj", {
                 '-moz-box-flex':'1'
             },
             /*span*/
-            '.uiw-border':{
+            '.linb-uiw-border':{
                 $order:2,
                 display:'block',
                 position:'absolute',
@@ -1887,58 +1892,55 @@ Class("linb.UI",  "linb.absObj", {
             }
         })
         + linb.UI.buildCSSText({
-            '.uibg-base':{
+            '.linb-uibg-base':{
                 'background-color':'#fff'
             },
-            '.uibg-bar':{
+            '.linb-uibg-bar':{
                 'background-color':'#aad2fa'
             },
-            '.uiborder-flat':{
+            '.linb-uiborder-flat':{
                 border:'solid 1px #648cb4'
             },
-            '.uiborder-inset':{
+            '.linb-uiborder-inset':{
                 border:'solid 1px',
                 'border-color':'#648cb4 #c8e1fa #c8e1fa #648cb4'
             },
-            '.uiborder-outset':{
+            '.linb-uiborder-outset':{
                 border:'solid 1px',
                 'border-color':'#c8e1fa #648cb4 #648cb4 #c8e1fa'
             }
         });
 
         linb.UI.$cache_css2 += linb.UI.buildCSSText({
-            '.ui-dirty':{
+            '.linb-ui-dirty':{
                 $order:1,
                 'background-image': linb.UI.$bg('icons.gif', '', true),
                 'background-repeat': 'no-repeat',
                 'background-position':'-390px -290px'
             },
-            '.ui-inputdisabled':{
+            '.linb-ui-inputdisabled':{
                 color:'#808080'
             },
-            '.ui-itemreadonly':{
+            '.linb-ui-itemreadonly':{
                 $order:2,
                 color: '#808080'
             },
-            '.ui-readonly, .ui-readonly *':{
+            '.linb-ui-readonly, .linb-ui-readonly *':{
                 $order:2,
                 color: '#808080'
             },
-            '.ui-itemdisabled':{
+            '.linb-ui-itemdisabled':{
                 $order:2,
                 cursor:'not-allowed',
                 color: '#808080'
             },
-            '.ui-disabled, .ui-disabled *':{
+            '.linb-ui-disabled, .linb-ui-disabled *':{
                 $order:2,
                 color: '#808080'
             },
-            '.ui-invalid, .ui-invalid *':{
+            '.linb-ui-invalid, .linb-ui-invalid *':{
                 $order:1,
                 'background-color': '#FFEBCD'
-            },
-            '#linblangkey':{
-                'vertical-align':'baseline'
             }
         });
     },
@@ -1948,8 +1950,8 @@ Class("linb.UI",  "linb.absObj", {
     Static:{
         $cache_css:'',
         $cache_css2:'',
-        $css_tag_dirty: "ui-dirty",
-        $css_tag_invalid: "ui-invalid",
+        $css_tag_dirty: "linb-ui-dirty",
+        $css_tag_invalid: "linb-ui-invalid",
         $tag_left:"{",
         $tag_right:"}",
         $tag_subId:"_serialId",
@@ -2152,7 +2154,7 @@ Class("linb.UI",  "linb.absObj", {
                 r7=self.r7 || (self.r7=/([^{}]*)\{([\w]+)\}([^{}]*)/g),
                 first=false,
                 u=linb.UI,
-                t, o , bak, lkey;
+                t, o , bak, tagN,lkey;
 
             if(!template)template=profile.template;
             lkey = key?profile.keys[key]:profile.key;
@@ -2171,13 +2173,14 @@ Class("linb.UI",  "linb.absObj", {
                 t = u.$CLS + (key?'-'+key.toLowerCase():'');
                 //save bak
                 bak = template.className || '';
+                tagN=template.tagName.toLowerCase();
 
                 //default class first
-                template['class'] =  t+' '+
+                template['class'] =  'linb-node linb-node-'+tagN+' ' + t+' '+
                     //custom class here
-                    bak+' '+
+                    bak + ' ' +
                     //add a special
-                    (lkey==profile.key ? ('ui-ctrl '+(linb.browser.ie?'':'{_selectable} ')) : '' ) +
+                    (lkey==profile.key ? ('linb-ui-ctrl '+(linb.browser.ie?'':'{_selectable} ')) : '' ) +
                     //custom theme
                     u.$tag_special + (key||'KEY') + '_CT'+u.$tag_special + ' ' +
                     //custom class
@@ -2797,14 +2800,14 @@ Class("linb.UI",  "linb.absObj", {
                 self.$cssNo=1;
                 var b=linb.browser;
                 linb('body').addClass(
-                          (b.ie ? ("linbcss-ie linbcss-ie" + b.ver + " ") :
-                           b.gek ? ("linbcss-gek linbcss-gek" + b.ver + " ") :
-                           b.kde ? ("linbcss-kde linbcss-kde" + b.ver + " ") :
-                           b.opr ? ("linbcss-opr linbcss-opr" + b.ver + " ") : "")
-                        + (b.isSafari ? "linbcss-safari ": b.isChrome ? "linbcss-chrome " :"")
-                        + (b.isMac ? "linbcss-mac": b.isLinux ? "linbcss-linux " :"")
+                          (b.ie ? ("linb-css-ie linb-css-ie" + b.ver + " ") :
+                           b.gek ? ("linb-css-gek linb-css-gek" + b.ver + " ") :
+                           b.kde ? ("linb-css-kde linb-css-kde" + b.ver + " ") :
+                           b.opr ? ("linb-css-opr linb-css-opr" + b.ver + " ") : "")
+                        + (b.isSafari ? "linb-css-safari ": b.isChrome ? "linb-css-chrome " :"")
+                        + (b.isMac ? "linb-css-mac": b.isLinux ? "linb-css-linux " :"")
                 );
-                linb('html').addClass(b.isStrict?"linbcss-base linbcss-strict":"linbcss-base ");
+                linb('html').addClass(b.isStrict?"linb-css-base linb-css-strict":"linb-css-base ");
             }
             if(cache1){
                 linb.CSS.addStyleSheet(cache1, 'linb.UI-CSS'+(self.$cssNo++));
@@ -3056,9 +3059,9 @@ Class("linb.UI",  "linb.absObj", {
             }
 
             if('disabled' in dm)
-                hashOut.disabled= (_.isSet(hashOut.disabled) && hashOut.disabled) ?'ui-itemdisabled':'';
+                hashOut.disabled= (_.isSet(hashOut.disabled) && hashOut.disabled) ?'linb-ui-itemdisabled':'';
             if('readonly' in dm)
-                hashOut.readonly= (_.isSet(hashOut.readonly) && hashOut.readonly) ?'ui-itemreadonly':'';
+                hashOut.readonly= (_.isSet(hashOut.readonly) && hashOut.readonly) ?'linb-ui-itemreadonly':'';
 
             //todo:remove the extra para
             hashOut.imageDisplay = (hashOut.imageClass||hashOut.image)?'':'display:none';
@@ -3120,9 +3123,9 @@ Class("linb.UI",  "linb.absObj", {
                 action: function(v){
                     var i=this.getRoot();
                     if(v)
-                        i.addClass('ui-disabled');
+                        i.addClass('linb-ui-disabled');
                     else
-                        i.removeClass('ui-disabled');
+                        i.removeClass('linb-ui-disabled');
                 }
             },
             dock:{
@@ -3629,11 +3632,11 @@ Class("linb.UI",  "linb.absObj", {
                 if(isWin){
                     var f=linb.win.$getEvent('onSize','dock');
                     if(f && f.dockall && f.dockall.length){
-                        linb('html').addClass('linbcss-viewport');
+                        linb('html').addClass('linb-css-viewport');
                         if(t=linb('body').get(0))
                             t.scroll='no';
                     }else{
-                        linb('html').removeClass('linbcss-viewport');
+                        linb('html').removeClass('linb-css-viewport');
                         if(t=linb('body').get(0))
                             t.scroll='';
                     }
@@ -3742,7 +3745,7 @@ Class("linb.UI",  "linb.absObj", {
             if('className' in dm)
             	data._className=prop.className||"";
 
-            if('readonly' in dm)data.readonly=prop.readonly?"ui-readonly":"";
+            if('readonly' in dm)data.readonly=prop.readonly?"linb-ui-readonly":"";
             if('href' in dm)data.href = prop.href || linb.$DEFAULTHREF;
             if('tabindex' in dm)data.tabindex = prop.tabindex || '-1';
             if('items' in dm){
@@ -3757,7 +3760,7 @@ Class("linb.UI",  "linb.absObj", {
             if('selectable' in dm)
                 data._selectable=linb.browser.ie
                     ? (prop.selectable?"true":"false")
-                    : (prop.selectable?"ui-selectable":"ui-unselectable");
+                    : (prop.selectable?"linb-ui-selectable":"linb-ui-unselectable");
 
             //default prepare
             data =  ajd(profile, prop, data);
@@ -4363,9 +4366,9 @@ Class("linb.absValue", "linb.absObj",{
                 action: function(v){
                     var i=this.getRoot();
                     if(v)
-                        i.addClass('ui-readonly');
+                        i.addClass('linb-ui-readonly');
                     else
-                        i.removeClass('ui-readonly');
+                        i.removeClass('linb-ui-readonly');
                 }
             },
             // setValue and getValue
@@ -4462,13 +4465,13 @@ new function(){
                 }
             },
             Templates:{
-                className:'uiw-shell {_className}',
+                className:'linb-uiw-shell {_className}',
                 style:'{_style}',
                 FRAME:{
-                    className:'uiw-frame ',
+                    className:'linb-uiw-frame ',
                     BORDER:{
                         style:'width:{bWidth}px;height:{bHeight}px;',
-                        className:'uiw-border'
+                        className:'linb-uiw-border'
                     }
                 }
             },
@@ -4623,11 +4626,11 @@ new function(){
                 className:'{_clsName} {_className}',
                 style:'{_style}',
                 BTN:{
-                    className:'ui-btn',
+                    className:'linb-ui-btn',
                     BTNI:{
-                        className:'ui-btni',
+                        className:'linb-ui-btni',
                         BTNC:{
-                            className:'ui-btnc',
+                            className:'linb-ui-btnc',
                             FOCUS:{
                                 tabindex: '{tabindex}',
                                 style:"{_align}",
@@ -4740,7 +4743,7 @@ new function(){
                 FOCUS:{
                     tabindex: '{tabindex}',
                     MARK:{
-                        className:'uicmd-check'
+                        className:'linb-uicmd-check'
                     },
                     CAPTION:{
                         $order:1,

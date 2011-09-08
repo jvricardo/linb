@@ -66,7 +66,7 @@ Class("linb.UI.Button", ["linb.UI.Widget","linb.absValue"],{
                             BOX:{
                                 ICON:{
                                     $order:1,
-                                    className:'ui-icon {imageClass}',
+                                    className:'linb-ui-icon {imageClass}',
                                     style:'{backgroundImage} {backgroundPosition} {backgroundRepeat} {imageDisplay}'
                                 },
                                 CAPTION:{

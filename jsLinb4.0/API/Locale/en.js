@@ -16197,8 +16197,8 @@ _.set(linb.Locale,["en","app"], {
                     "pNode : linb.Dom, the Editor's parent Node."
                 ]
             },
-            onNewLineTriggerred:{
-                $desc:"Fired when user click 'down' keyboard on any cell of the last row.",
+            beforeInitHotRow:{
+                $desc:"Fired before the hot row initialization.[when hotRowMode is not 'none'] If returns false, the default edit action will be ignored.",
                 $paras:[
                     "profile : linb.UIProfile.",
                     "cell : Object. cell object.",

@@ -53,21 +53,21 @@ Class("linb.UI.Poll", "linb.UI.List",{
             tagName : 'DIV',
             style:'{titleDisplay}',
             text : '{title}',
-            className:"uibg-bar uiborder-outset {disabled} {_cls}"
+            className:"linb-uibg-bar linb-uiborder-outset {disabled} {_cls}"
         };
         t.TAIL={
             $order:20,
             tagName : 'DIV',
-            className:"uibg-bar uiborder-outset {disabled}",
+            className:"linb-uibg-bar linb-uiborder-outset {disabled}",
             text:"{cmds}"
         };
         t.$submap={
             items:{
                 OUTER:{
                     tagName:'div',
-                    className:'uibg-bar uiborder-outset',
+                    className:'linb-uibg-bar linb-uiborder-outset',
                     TOGGLE:{
-                        className:'uicmd-toggle',
+                        className:'linb-uicmd-toggle',
                         style:'{_togdisplay}'
                     },
                     ITEM:{
@@ -100,12 +100,12 @@ Class("linb.UI.Poll", "linb.UI.List",{
                             },
                             DEL:{
                                 $order:2,
-                                className:'ui-btn',
+                                className:'linb-ui-btn',
                                 style:'{_del}',
                                 DELI:{
-                                    className:'ui-btni',
+                                    className:'linb-ui-btni',
                                     DELC:{
-                                        className:'ui-btnc',
+                                        className:'linb-ui-btnc',
                                         DELA:{
                                             tagName:'button',
                                             text:'{removeText}'
@@ -128,11 +128,11 @@ Class("linb.UI.Poll", "linb.UI.List",{
             },
             cmds:{
                 CMD:{
-                    className:'ui-btn',
+                    className:'linb-ui-btn',
                     CMDI:{
-                        className:'ui-btni',
+                        className:'linb-ui-btni',
                         CMDC:{
-                            className:'ui-btnc',
+                            className:'linb-ui-btnc',
                             CMDA:{
                                 tabindex: '{_tabindex}',
                                 text:'{caption}'
@@ -535,14 +535,14 @@ Class("linb.UI.Poll", "linb.UI.List",{
             item._body= item._body || 'Loading...'
             if(item.id!='$custom'){
                 item._togdisplay=((p.toggle && item.toggle!==false) || item.toggle)?'':'display:none;';
-                item._optclass=p.selMode=='multi'?'uicmd-check':'uicmd-radio';
+                item._optclass=p.selMode=='multi'?'linb-uicmd-check':'linb-uicmd-radio';
                 item._display='';
                 item.percent = parseFloat(item.percent)||0;
                 if(item.percent<0)item.percent=0;
                 if(item.percent>1)item.percent=1;
                 item._per = 200*(1-item.percent);
             }else{
-                item._optclass='uicmd-add';
+                item._optclass='linb-uicmd-add';
                 item._togdisplay=item._display='display:none;';
                 item._per = 0;
                 item._itemcls=profile.getClass('EDITS');

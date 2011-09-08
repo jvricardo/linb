@@ -89,7 +89,7 @@ Class("linb.UI.TagEditor", ['linb.UI',"linb.absValue"], {
                         p=ns.properties,
                         node=ns.getSubNode('BORDER'),
                         reg=/^uiborder-/,
-                        pretag='uiborder-',
+                        pretag='linb-uiborder-',
                         root=ns.getRoot();
                     node.removeClass(reg);
                     node.addClass(pretag+v);
@@ -202,7 +202,7 @@ Class("linb.UI.TagEditor", ['linb.UI',"linb.absValue"], {
         },
         _prepareData:function(profile){
             var data=arguments.callee.upper.call(this, profile);
-            data._bordertype='uiborder-'+data.borderType;
+            data._bordertype='linb-uiborder-'+data.borderType;
             
             
             

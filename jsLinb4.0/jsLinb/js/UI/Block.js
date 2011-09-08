@@ -4,10 +4,10 @@ Class("linb.UI.Block", "linb.UI.Widget",{
             t = self.getTemplate();
         //modify
         _.merge(t.FRAME.BORDER,{
-            className:'uiw-border {clsBorderType1}',
+            className:'linb-uiw-border {clsBorderType1}',
             PANEL:{
                 tagName:'div',
-                className:'{clsBorderType2} uibg-bar',
+                className:'{clsBorderType2} linb-uibg-bar',
                 style:'{background};{_overflow};',
                 text:'{html}'+linb.UI.$childTag
             }
@@ -58,9 +58,9 @@ Class("linb.UI.Block", "linb.UI.Widget",{
                         p=ns.properties,
                         n1=ns.getSubNode('BORDER'), n2=ns.getSubNode('PANEL'),
                         reg=/^uiborder-/,
-                        flat='uiborder-flat',
-                        ins='uiborder-inset',
-                        outs='uiborder-outset',
+                        flat='linb-uiborder-flat',
+                        ins='linb-uiborder-inset',
+                        outs='linb-uiborder-outset',
                         root=ns.getRoot();
                     n1.removeClass(reg);
                     n2.removeClass(reg);

@@ -108,40 +108,40 @@ Class("linb.UI.Dialog","linb.UI.Widget",{
             TABSTOP1:{$order:-1},
             TBAR:{
                 tagName:'div',
-                className:'uibar-top',
+                className:'linb-uibar-top',
                 TBART:{
                     cellpadding:"0",
                     cellspacing:"0",
                     width:'100%',
                     border:'0',
                     tagName:'table',
-                    className:'uibar-t',
+                    className:'linb-uibar-t',
                     TBARTR:{
                         tagName:'tr',
                         TBARTDL:{
                             tagName:'td',
-                            className:'uibar-tdl'
+                            className:'linb-uibar-tdl'
                         },
                         TBARTDM:{
                             $order:1,
                             width:'100%',
                             tagName:'td',
-                            className:'uibar-tdm'
+                            className:'linb-uibar-tdm'
                         },
                         TBARTDR:{
                             $order:2,
                             tagName:'td',
-                            className:'uibar-tdr'
+                            className:'linb-uibar-tdr'
                         }
                     }
                 },
                 BARCMDL:{
                     $order:1,
                     tagName: 'div',
-                    className:'uibar-cmdl',
+                    className:'linb-uibar-cmdl',
                     ICON:{
                         $order:0,
-                        className:'ui-icon {imageClass}',
+                        className:'linb-ui-icon {imageClass}',
                         style:'{backgroundImage} {backgroundPosition} {backgroundRepeat} {imageDisplay}'
                     },
                     CAPTION:{
@@ -152,50 +152,50 @@ Class("linb.UI.Dialog","linb.UI.Widget",{
                 BARCMDR:{
                     $order:2,
                     tagName: 'div',
-                    className:'uibar-cmdr',
+                    className:'linb-uibar-cmdr',
                     INFO:{
-                        className:'uicmd-info',
+                        className:'linb-uicmd-info',
                         style:'{infoDisplay}',
                         $order:1
                     },
                     OPT:{
-                        className:'uicmd-opt',
+                        className:'linb-uicmd-opt',
                         style:'{optDisplay}',
                         $order:1
                     },
                     PIN:{
                         $order:2,
-                        className:'uicmd-pin',
+                        className:'linb-uicmd-pin',
                         style:'{pinDisplay}'
                     },
                     LAND:{
                         $order:3,
-                        className:'uicmd-land',
+                        className:'linb-uicmd-land',
                         style:'{landDisplay}'
                     },
                     REFRESH:{
-                        className:'uicmd-refresh',
+                        className:'linb-uicmd-refresh',
                         style:'{refreshDisplay}',
                         $order:4
                     },
                     MIN:{
                         $order:5,
-                        className:'uicmd-min',
+                        className:'linb-uicmd-min',
                         style:'{minDisplay}'
                     },
                     RESTORE:{
                         $order:6,
-                        className:'uicmd-restore',
+                        className:'linb-uicmd-restore',
                         style:'display:none;'
                     },
                     MAX:{
                         $order:7,
-                        className:'uicmd-max',
+                        className:'linb-uicmd-max',
                         style:'{maxDisplay}'
                     },
                     CLOSE:{
                         $order:8,
-                        className:'uicmd-close ',
+                        className:'linb-uicmd-close ',
                         style:'{closeDisplay}'
                     }
                 }
@@ -203,10 +203,10 @@ Class("linb.UI.Dialog","linb.UI.Widget",{
             MAIN:{
                 $order:2,
                 tagName:'div',
-                className:'uicon-main',
+                className:'linb-uicon-main',
                 MAINI:{
                     tagName:'div',
-                    className:'uicon-maini',
+                    className:'linb-uicon-maini',
                     PANEL:{
                         tagName:'div',
                         style:"{_overflow};",
@@ -217,30 +217,30 @@ Class("linb.UI.Dialog","linb.UI.Widget",{
             BBAR:{
                 $order:3,
                 tagName:'div',
-                className:'uibar-bottom',
+                className:'linb-uibar-bottom',
                 BBART:{
                     cellpadding:"0",
                     cellspacing:"0",
                     width:'100%',
                     border:'0',
                     tagName:'table',
-                    className:'uibar-t',
+                    className:'linb-uibar-t',
                     BBARTR:{
                         tagName:'tr',
                         BBARTDL:{
                             tagName:'td',
-                            className:'uibar-tdl'
+                            className:'linb-uibar-tdl'
                         },
                         BBARTDM:{
                             $order:1,
                             width:'100%',
                             tagName:'td',
-                            className:'uibar-tdm'
+                            className:'linb-uibar-tdm'
                         },
                         BBARTDR:{
                             $order:2,
                             tagName:'td',
-                            className:'uibar-tdr'
+                            className:'linb-uibar-tdr'
                         }
                     }
                 }
@@ -1110,6 +1110,11 @@ if(linb.browser.ie){
                 maxBtn:false,
                 pinBtn:false,
                 resizer:false
+            },{
+                onHotKeydown:function(p,k){
+                    if(k.key=='esc')
+                        dialog.close();
+                }
             }),
 
             cmd = dialog.$cmd = new linb.UI.Div({
@@ -1126,7 +1131,7 @@ if(linb.browser.ie){
                     dialog.destroy();
                 },
                 onHotKeydown:function(p,k){
-                    if(k.key=='esc')
+                    if(k.key=='enter')
                         dialog.close();
                 }
             },null,null,{KEY:'margin:0 4px'})),

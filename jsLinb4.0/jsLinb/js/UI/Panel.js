@@ -36,7 +36,7 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                 tagName:'div',
                 TBAR:{
                     tagName:'div',
-                    className:'uibar-top',
+                    className:'linb-uibar-top',
                     BART:{
                         cellpadding:"0",
                         cellspacing:"0",
@@ -44,37 +44,37 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                         height:'100%',
                         border:'0',
                         tagName:'table',
-                        className:'uibar-t',
+                        className:'linb-uibar-t',
                         BARTR:{
                             tagName:'tr',
                             BARTDL:{
                                 tagName:'td',
-                                className:'uibar-tdl'
+                                className:'linb-uibar-tdl'
                             },
                             BARTDM:{
                                 $order:1,
                                 width:'100%',
                                 tagName:'td',
-                                className:'uibar-tdm'
+                                className:'linb-uibar-tdm'
                             },
                             BARTDR:{
                                 $order:2,
                                 tagName:'td',
-                                className:'uibar-tdr'
+                                className:'linb-uibar-tdr'
                             }
                         }
                     },
                     BARCMDL:{
                         tagName: 'div',
-                        className:'uibar-cmdl',
+                        className:'linb-uibar-cmdl',
                         TOGGLE:{
-                            className: 'uicmd-toggle {toggleCls}',
+                            className: 'linb-uicmd-toggle {toggleCls}',
                             style:'{toggleDisplay}',
                             $order:0
                         },
                         ICON:{
                             $order:0,
-                            className:'ui-icon {imageClass}',
+                            className:'linb-ui-icon {imageClass}',
                             style:'{backgroundImage} {backgroundPosition} {backgroundRepeat} {imageDisplay}'
                         },
                         CAPTION:{
@@ -85,29 +85,29 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                     },
                     BARCMDR:{
                         tagName: 'div',
-                        className:'uibar-cmdr',
+                        className:'linb-uibar-cmdr',
                         INFO:{
-                            className:'uicmd-info',
+                            className:'linb-uicmd-info',
                             style:'{infoDisplay}',
                             $order:1
                         },
                         OPT:{
-                            className:'uicmd-opt',
+                            className:'linb-uicmd-opt',
                             style:'{optDisplay}',
                             $order:1
                         },
                         POP:{
-                            className:'uicmd-pop',
+                            className:'linb-uicmd-pop',
                             style:'{popDisplay}',
                             $order:2
                         },
                         REFRESH:{
-                            className:'uicmd-refresh',
+                            className:'linb-uicmd-refresh',
                             style:'{refreshDisplay}',
                             $order:3
                         },
                         CLOSE:{
-                            className:'uicmd-close ',
+                            className:'linb-uicmd-close ',
                             style:'{closeDisplay}',
                             $order:4
                         }
@@ -116,10 +116,10 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                 MAIN:{
                     $order:2,
                     tagName:'div',
-                    className:'uicon-main',
+                    className:'linb-uicon-main',
                     MAINI:{
                         tagName:'div',
-                        className:'uicon-maini',
+                        className:'linb-uicon-maini',
                         PANEL:{
                             tagName:'div',
                             className:'{_bordertype}',
@@ -131,30 +131,30 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                 BBAR:{
                     $order:3,
                     tagName:'div',
-                    className:'uibar-bottom-s',
+                    className:'linb-uibar-bottom-s',
                     BBART:{
                         cellpadding:"0",
                         cellspacing:"0",
                         width:'100%',
                         border:'0',
                         tagName:'table',
-                        className:'uibar-t',
+                        className:'linb-uibar-t',
                         BBARTR:{
                             tagName:'tr',
                             BBARTDL:{
                                 tagName:'td',
-                                className:'uibar-tdl'
+                                className:'linb-uibar-tdl'
                             },
                             BBARTDM:{
                                 $order:1,
                                 width:'100%',
                                 tagName:'td',
-                                className:'uibar-tdm'
+                                className:'linb-uibar-tdm'
                             },
                             BBARTDR:{
                                 $order:2,
                                 tagName:'td',
-                                className:'uibar-tdr'
+                                className:'linb-uibar-tdr'
                             }
                         }
                     }
@@ -363,7 +363,7 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                         p=ns.properties,
                         node=ns.getSubNode('PANEL'),
                         reg=/^uiborder-/,
-                        pretag='uiborder-',
+                        pretag='linb-uiborder-',
                         root=ns.getRoot();
                     node.removeClass(reg);
                     node.addClass(pretag+v);
@@ -396,7 +396,7 @@ Class("linb.UI.Panel", "linb.UI.Div",{
             var nodisplay='display:none';
 
             data.panelDisplay = data.toggle?'':nodisplay;
-            data.toggleCls = data.toggle?'uicmd-toggle-checked':'';
+            data.toggleCls = data.toggle?'linb-uicmd-toggle-checked':'';
 
             data.toggleDisplay = data.toggleBtn?'':nodisplay;
             data.infoDisplay = data.infoBtn?'':nodisplay;
@@ -405,7 +405,7 @@ Class("linb.UI.Panel", "linb.UI.Div",{
             data.popDisplay = data.popBtn?'':nodisplay;
             data.refreshDisplay= data.refreshBtn?'':nodisplay;
             
-            data._bordertype='uiborder-'+data.borderType;
+            data._bordertype='linb-uiborder-'+data.borderType;
             
             profile._toggle = !!data.toggle;
 

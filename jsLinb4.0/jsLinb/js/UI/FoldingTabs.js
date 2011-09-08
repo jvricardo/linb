@@ -80,7 +80,7 @@ Class("linb.UI.FoldingTabs", "linb.UI.Tabs",{
             BOX:{
                 $order:0,
                 tagName : 'div',
-                className:'uibg-base',
+                className:'linb-uibg-base',
                 ITEMS:{
                     tagName : 'div',
                     text:"{items}"
@@ -103,11 +103,11 @@ Class("linb.UI.FoldingTabs", "linb.UI.Tabs",{
                                     tagName:'div',
                                     TOGGLE:{
                                         $order:0,
-                                        className:'uicmd-toggle {_tlgchecked}'
+                                        className:'linb-uicmd-toggle {_tlgchecked}'
                                     },
                                     ICON:{
                                         $order:2,
-                                        className:'ui-icon {imageClass}',
+                                        className:'linb-ui-icon {imageClass}',
                                         style:'{backgroundImage} {backgroundPosition} {backgroundRepeat} {imageDisplay}'
                                     },
                                     CAPTION:{
@@ -127,16 +127,16 @@ Class("linb.UI.FoldingTabs", "linb.UI.Tabs",{
                                         $order:2,
                                         OPT:{
                                             $order:1,
-                                            className:'uicmd-opt',
+                                            className:'linb-uicmd-opt',
                                             style:'{_opt}'
                                         },
                                         POP:{
-                                            className:'uicmd-pop',
+                                            className:'linb-uicmd-pop',
                                             style:'{popDisplay}',
                                             $order:1
                                         },
                                         CLOSE:{
-                                            className:'uicmd-close ',
+                                            className:'linb-uicmd-close ',
                                             style:'{closeDisplay}',
                                             $order:2
                                         }
@@ -156,7 +156,7 @@ Class("linb.UI.FoldingTabs", "linb.UI.Tabs",{
                                 PANEL:{
                                     tagName : 'div',
                                     style:'{_itemHeight}',
-                                    className:'uibg-base',
+                                    className:'linb-uibg-base',
                                     text:linb.UI.$childTag
                                 }
                             }

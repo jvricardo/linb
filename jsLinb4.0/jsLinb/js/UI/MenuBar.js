@@ -112,7 +112,7 @@ Class("linb.UI.MenuBar",["linb.UI","linb.absList" ],{
                 tagName:'div'
             },
             BORDER:{
-                className:'uibg-bar uiborder-outset',
+                className:'linb-uibg-bar linb-uiborder-outset',
                 tagName:'div',
                 LIST:{
                     tagName:'div',
@@ -135,7 +135,7 @@ Class("linb.UI.MenuBar",["linb.UI","linb.absList" ],{
                                     className:' {typeCls} {disabled}',
                                     ICON:{
                                         $order:1,
-                                        className:'ui-icon {imageClass}',
+                                        className:'linb-ui-icon {imageClass}',
                                         style:'{backgroundImage} {backgroundPosition} {backgroundRepeat} {imageDisplay}'
                                     },
                                     CAPTION:{

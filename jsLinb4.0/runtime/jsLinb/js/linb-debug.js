@@ -5995,39 +5995,30 @@ Class("linb.CSS", null,{
         }
     },
     Initialize:function(){
-        var b=linb.browser;
-        this.addStyleSheet(""+
-// cross browser reset
-            "html{color:#000;background:#FFF;}"+
-            "body{cursor:default;font:13px/1.231 arial,helvetica,clean,sans-serif;}"+
-            (linb.browser.ie?"body{font-size:small;font:x-small;}":"")+
-            "body *{line-height:1.22em;}"+
-            "body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}"+
-            "table{border-collapse:collapse;border-spacing:0;empty-cells:show;font-size:inherit;"+(linb.browser.ie?"font:100%;":"")+"}"+
-            "fieldset,img,body,html{border:0;}"+
-            "address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}"+
-            "ol,ul,li{list-style:none;}"+
-            "caption,th{text-align:left;}"+
-            "h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}"+
-            "q:before,q:after{content:'';}"+
-            "abbr,acronym {border:0;font-variant:normal;}"+
-            "sup {vertical-align:text-top;}"+
-            "sub {vertical-align:text-bottom;}"+
-            "input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}"+
-            (b.ie?"input,textarea,select{font-size:100%;}":"")+
-            "legend{color:#000;}"+
-            "del,ins{text-decoration:none;}"+
-            "pre,code,kbd,samp,tt{font-family:monospace;"+(b.ie?"font-size:108%;":"")+"line-height:100%;}"+
-            "select,input,button,textarea{font:99% arial,helvetica,clean,sans-serif;border-width:1px;}"+
+        var b=linb.browser,
+// cross browser reset 
+            css=".linb-node{margin:0;padding:0;line-height:1.22em;}"+
+            ".linb-node-table{border-collapse:collapse;border-spacing:0;empty-cells:show;font-size:inherit;"+(b.ie?"font:100%;":"")+"}"+
+            ".linb-node-fieldset,.linb-node-img{border:0;}"+
+            ".linb-node-ol,.linb-node-ul,.linb-node-li{list-style:none;}"+
+            ".linb-node-caption,.linb-node-th{text-align:left;}"+
+            ".linb-node-th{font-weight:normal;}"+
+            ".linb-node-q:before,.linb-node-q:after{content:'';}"+
+            ".linb-node-abbr,.linb-node-acronym{border:0;font-variant:normal;}"+
+            ".linb-node-sup{vertical-align:text-top;}"+
+            ".linb-node-sub{vertical-align:text-bottom;}"+
+            ".linb-node-input,.linb-node-textarea,.linb-node-select{cursor:text;font-family:inherit;font-size:inherit;font-weight:inherit;"+(b.ie?"font-size:100%;":"")+"}"+
+            ".linb-node-del,.linb-node-ins{text-decoration:none;}"+
+            ".linb-node-pre,.linb-node-code,.linb-node-kbd,.linb-node-samp,.linb-node-tt{font-family:monospace;"+(b.ie?"font-size:108%;":"")+"line-height:100%;}"+
+            ".linb-node-select,.linb-node-input,.linb-node-button,.linb-node-textarea{font:99% arial,helvetica,clean,sans-serif;border-width:1px;}"+
 // base setting
-            (linb.browser.ie6?("#"+linb.$localeDomId+"{vertical-align:baseline;}"):"")+
-            "a{color:#0000ee;text-decoration:none;}"+
-            "a:hover{color:red}"+
-            (b.gek? ("a:focus{outline-offset:-1px;"+ (parseInt(b.ver)<3?"-moz-outline-offset:-1px !important":"") +"}" ):"")+
-            "div{font-size:12px;}"+
-            "span{outline-offset:-1px;"+
+            ".linb-node-a{cursor:pointer;color:#0000ee;text-decoration:none;}"+
+            ".linb-node-a:hover{color:red}"+
+            (b.gek? (".linb-node-a:focus{outline-offset:-1px;"+ (parseInt(b.ver)<3?"-moz-outline-offset:-1px !important":"") +"}" ):"")+
+            ".linb-node-span, .linb-node-div{font-size:12px;}"+
+            ".linb-node-span{outline-offset:-1px;"+
             (b.gek
-                ? parseFloat(linb.browser.ver)<3 
+                ? parseFloat(b.ver)<3 
                     ? ((parseInt(b.ver)<3?"-moz-outline-offset:-1px !important;":"") + "display:-moz-inline-block;display:-moz-inline-box;display:inline-block;")
                     :"display:inline-block;"
                 : b.ie6
@@ -6035,13 +6026,15 @@ Class("linb.CSS", null,{
                 :"display:inline-block;")+
             (b.ie?"zoom:1;":"")+
             "}"+
-            "h1{font-size:138.5%;}"+
-            "h2{font-size:123.1%;}"+
-            "h3{font-size:108%;}"+
-            "h1,h2,h3{margin:1em 0;}"+
-            "h1,h2,h3,h4,h5,h6,strong {font-weight:bold;}"+
-            "em{font-style:italic;}"
-        , 'linb.CSS');
+            ".linb-node-h1{font-size:138.5%;}"+
+            ".linb-node-h2{font-size:123.1%;}"+
+            ".linb-node-h3{font-size:108%;}"+
+            ".linb-node-h1,.linb-node-h2,.linb-node-h3{margin:1em 0;}"+
+            ".linb-node-h1,.linb-node-h2,.linb-node-h3,.linb-node-h4,.linb-node-h5,.linb-node-h6,.linb-node-strong{font-weight:bold;}"+
+            ".linb-node-em{font-style:italic;}"+
+            (b.ie6?("#"+linb.$localeDomId+"{vertical-align:baseline;}"):"");
+
+        this.addStyleSheet(css, 'linb.CSS');
     }   
 });
 Class('linb.DomProfile', 'linb.absProfile', {
@@ -7103,8 +7096,8 @@ Class('linb.Dom','linb.absBox',{
         },
         setSelectable:function(value){
             var me=arguments.callee,cls;
-            this.removeClass("ui-selectable").removeClass("ui-unselectable");
-            this.addClass(value?"ui-selectable":"ui-unselectable");
+            this.removeClass("linb-ui-selectable").removeClass("linb-ui-unselectable");
+            this.addClass(value?"linb-ui-selectable":"linb-ui-unselectable");
             return this.each(function(o){
                 if(linb.browser.ie)
                     o._onlinbsel=value?"true":"false";
@@ -11173,7 +11166,7 @@ Class("linb.Tips", null,{
 
            if(!div){
                div =
-               '<div class="uibg-bar uiborder-outset" style="font-size:0;line-height:0;border:solid 1px #cdcdcd;position:absolute;overflow:visible;top:-50px;z-index:'+linb.Dom.TOP_ZINDEX+'">' +
+               '<div class="linb-uibg-bar linb-uiborder-outset" style="font-size:0;line-height:0;border:solid 1px #cdcdcd;position:absolute;overflow:visible;top:-50px;z-index:'+linb.Dom.TOP_ZINDEX+'">' +
                '<div style="font-size:14px;overflow:hidden;font-weight:bold;padding:2px;"></div>'+
                '<div style="padding:5px;overflow:hidden;"></div>'+
                '</div>';
@@ -12564,21 +12557,20 @@ Class("linb.UI",  "linb.absObj", {
         self.setDataModel(hash);
 
         linb.UI.$cache_css += linb.UI.buildCSSText({
-            '.linbcss-noscroll, .linbcss-noscroll BODY, .linbcss-viewport, .linbcss-viewport BODY':{
+            '.linb-css-noscroll, .linb-css-noscroll BODY, .linb-css-viewport, .linb-css-viewport BODY':{
                 overflow:'hidden',
                 height:'100%',
                 border:'0 none',
                 margin:'0',
                 padding:'0'
             },
-            '.ui-ctr':{},
-            '.ui-draggable':{},
-            '.ui-btn, .ui-btni, .ui-btnc':{
+            '.linb-ui-draggable':{},
+            '.linb-ui-btn, .linb-ui-btni, .linb-ui-btnc':{
                 height:'22px',
                 'line-height':'22px',
                 background:linb.UI.$bg('button.gif', 'no-repeat', true)
             },
-            '.ui-btn':{
+            '.linb-ui-btn':{
                 $order:1,
                 'white-space': 'nowrap',
                 'vertical-align':'top',
@@ -12587,10 +12579,10 @@ Class("linb.UI",  "linb.absObj", {
                 'padding-right':'4px',
                 'font-size':'12px'
             },
-            '.ui-btn *':{
+            '.linb-ui-btn *':{
                 cursor:'pointer'
             },
-            '.ui-btnc button, .ui-btnc a':{
+            '.linb-ui-btnc button, .linb-ui-btnc a':{
                 display:linb.$inlineBlock,
                 zoom:linb.browser.ie?1:null,
                 background:'transparent',
@@ -12598,56 +12590,56 @@ Class("linb.UI",  "linb.absObj", {
                 margin:0,
                 padding:0
             },
-            '.ui-btnc a':{
+            '.linb-ui-btnc a':{
                 padding:'0 4px'
             },
-            '.ui-btnc a, .ui-btnc span, .ui-btnc button':{
+            '.linb-ui-btnc a, .linb-ui-btnc span, .linb-ui-btnc button':{
                 'line-height':'22px'
             },
-            '.ui-btni':{
+            '.linb-ui-btni':{
                 $order:1,
                 'background-position':'left -60px',
                 'padding-left':'4px',
                 'vertical-align':'top',
                 overflow:'hidden'
             },
-            '.ui-btnc':{
+            '.linb-ui-btnc':{
                 $order:1,
                 'background-position':'left -30px',
                 'background-repeat': 'repeat-x',
                 'vertical-align':'top'
             },
-            '.ui-btn-mouseover, .ui-btn-focus':{
+            '.linb-ui-btn-mouseover, .linb-ui-btn-focus':{
                 $order:2,
                 'background-position':'right -90px'
             },
-            '.ui-btn-mouseover .ui-btni, .ui-btn-focus .ui-btni':{
+            '.linb-ui-btn-mouseover .linb-ui-btni, .linb-ui-btn-focus .linb-ui-btni':{
                 $order:2,
                 'background-position':'left -150px'
             },
-            '.ui-btn-mouseover .ui-btnc, .ui-btn-focus .ui-btnc':{
+            '.linb-ui-btn-mouseover .linb-ui-btnc, .linb-ui-btn-focus .linb-ui-btnc':{
                 $order:2,
                 'background-position':'left -120px'
             },
-            '.ui-btn-mousedown, .ui-btn-checked':{
+            '.linb-ui-btn-mousedown, .linb-ui-btn-checked':{
                 $order:3,
                 'background-position':'right -180px'
             },
-            '.ui-btn-mousedown .ui-btni, .ui-btn-checked .ui-btni':{
+            '.linb-ui-btn-mousedown .linb-ui-btni, .linb-ui-btn-checked .linb-ui-btni':{
                 $order:3,
                 'background-position':'left -240px'
             },
-            '.ui-btn-mousedown .ui-btnc, .ui-btn-checked .ui-btnc':{
+            '.linb-ui-btn-mousedown .linb-ui-btnc, .linb-ui-btn-checked .linb-ui-btnc':{
                 $order:3,
                 'background-position':'left -210px'
             },
-            '.ui-image':{
+            '.linb-ui-image':{
                 'vertical-align':'middle',
                 width:'16px',
                 height:'16px',
                 'background-repeat':'no-repeat'
             },
-            '.ui-icon':{
+            '.linb-ui-icon':{
                 'vertical-align':'middle',
                 width:'16px',
                 height:'16px',
@@ -12655,11 +12647,11 @@ Class("linb.UI",  "linb.absObj", {
                 'background-position' : 'center',
                 margin:'0 2px'
             },
-            '.ui-busy':{
+            '.linb-ui-busy':{
                 background: 'url('+linb.ini.img_busy+') no-repeat center center',
                 'background-position' : 'center'
             },
-            '.uicmd-close, .uicmd-info, .uicmd-opt, .uicmd-pop, .uicmd-land, .uicmd-refresh, .uicmd-toggle, .uicmd-toggle2, .uicmd-min, .uicmd-max,.uicmd-restore,.uicmd-pin, .uicmd-check, .uicmd-radio, .uicmd-add, .uicmd-remove':{
+            '.linb-uicmd-close, .linb-uicmd-info, .linb-uicmd-opt, .linb-uicmd-pop, .linb-uicmd-land, .linb-uicmd-refresh, .linb-uicmd-toggle, .linb-uicmd-toggle2, .linb-uicmd-min, .linb-uicmd-max,.linb-uicmd-restore,.linb-uicmd-pin, .linb-uicmd-check, .linb-uicmd-radio, .linb-uicmd-add, .linb-uicmd-remove':{
                 background: linb.UI.$bg('icons.gif', 'no-repeat 0 0', true),
                 width:'16px',
                 height:'16px',
@@ -12667,245 +12659,245 @@ Class("linb.UI",  "linb.absObj", {
                 cursor:'default',
                 'vertical-align':'middle'
             },
-            '.uicmd-info':{
+            '.linb-uicmd-info':{
                 $order:1,
                 'background-position' : '-320px 0'
             },
-            '.uicmd-info-mouseover':{
+            '.linb-uicmd-info-mouseover':{
                 $order:2,
                 'background-position' : '-320px  -20px'
             },
-            '.uicmd-info-mousedown':{
+            '.linb-uicmd-info-mousedown':{
                 $order:3,
                 'background-position' : '-320px  -40px'
             },
-            '.uicmd-opt':{
+            '.linb-uicmd-opt':{
                 $order:1,
                 'background-position' : '0 0'
             },
-            '.uicmd-opt-mouseover':{
+            '.linb-uicmd-opt-mouseover':{
                 $order:2,
                 'background-position' : '0 -20px'
             },
-            '.uicmd-opt-mousedown':{
+            '.linb-uicmd-opt-mousedown':{
                 $order:3,
                 'background-position' : '0 -40px'
             },
-            '.uicmd-pop, .uicmd-land':{
+            '.linb-uicmd-pop, .linb-uicmd-land':{
                 $order:1,
                 'background-position' : '-40px 0'
             },
-            '.uicmd-pop-mouseover, .uicmd-land-mouseover':{
+            '.linb-uicmd-pop-mouseover, .linb-uicmd-land-mouseover':{
                 $order:2,
                 'background-position' : '-40px -20px'
             },
-            '.uicmd-pop-mousedown, .uicmd-land-mousedown':{
+            '.linb-uicmd-pop-mousedown, .linb-uicmd-land-mousedown':{
                 $order:3,
                 'background-position' : '-40px -40px'
             },
-            '.uicmd-refresh':{
+            '.linb-uicmd-refresh':{
                 $order:1,
                 'background-position' : '-280px 0'
             },
-            '.uicmd-refresh-mouseover':{
+            '.linb-uicmd-refresh-mouseover':{
                 $order:2,
                 'background-position' : '-280px -20px'
             },
-            '.uicmd-refresh-mousedown':{
+            '.linb-uicmd-refresh-mousedown':{
                 $order:3,
                 'background-position' : '-280px -40px'
             },
-            '.uicmd-pin':{
+            '.linb-uicmd-pin':{
                 $order:1,
                 'background-position' : '-80px 0'
             },
-            '.uicmd-pin-mouseover':{
+            '.linb-uicmd-pin-mouseover':{
                 $order:2,
                 'background-position': '-80px -20px'
             },
-            '.uicmd-pin-mousedown':{
+            '.linb-uicmd-pin-mousedown':{
                 $order:3,
                 'background-position': '-80px -40px'
             },
-            '.uicmd-pin-checked, .uicmd-pin-checked-mouseover, .uicmd-pin-checked-mousedown':{
+            '.linb-uicmd-pin-checked, .linb-uicmd-pin-checked-mouseover, .linb-uicmd-pin-checked-mousedown':{
                 $order:4,
                 'background-position':  '-80px -40px'
             },
-            '.uicmd-min':{
+            '.linb-uicmd-min':{
                 $order:1,
                 'background-position' : '-120px 0'
             },
-            '.uicmd-min-mouseover':{
+            '.linb-uicmd-min-mouseover':{
                 $order:2,
                'background-position': ' -120px -20px'
             },
-            '.uicmd-min-mousedown':{
+            '.linb-uicmd-min-mousedown':{
                 $order:3,
                'background-position':  '-120px -40px'
             },
-            '.uicmd-restore':{
+            '.linb-uicmd-restore':{
                 $order:1,
                 'background-position' : '-160px 0'
             },
-            '.uicmd-restore-mouseover':{
+            '.linb-uicmd-restore-mouseover':{
                 $order:2,
                'background-position':  '-160px -20px'
             },
-            '.uicmd-restore-mousedown':{
+            '.linb-uicmd-restore-mousedown':{
                 $order:3,
                'background-position':  '-160px -40px'
             },
-            '.uicmd-max':{
+            '.linb-uicmd-max':{
                 $order:1,
                 'background-position' : '-200px 0'
             },
-            '.uicmd-max-mouseover':{
+            '.linb-uicmd-max-mouseover':{
                 $order:2,
                'background-position':  '-200px -20px'
             },
-            '.uicmd-max-mousedown':{
+            '.linb-uicmd-max-mousedown':{
                 $order:3,
                'background-position':  '-200px -40px'
             },
-            '.uicmd-close':{
+            '.linb-uicmd-close':{
                 $order:1,
                 'background-position' : '-240px 0'
             },
-            '.uicmd-close-mouseover':{
+            '.linb-uicmd-close-mouseover':{
                 $order:2,
                 'background-position' : '-240px -20px'
             },
-            '.uicmd-close-mousedown':{
+            '.linb-uicmd-close-mousedown':{
                 $order:3,
                 'background-position' : '-240px -40px'
             },
-            '.uicmd-check':{
+            '.linb-uicmd-check':{
                 $order:1,
                 margin:'0 4px 0 2px',
                 'background-position' : '-20px -70px'
             },
-            '.uicmd-check-mouseover':{
+            '.linb-uicmd-check-mouseover':{
                 $order:2,
                 'background-position' : '-20px -90px'
             },
-            '.uicmd-check-mousedown':{
+            '.linb-uicmd-check-mousedown':{
                 $order:3,
                 'background-position' : '-20px -110px'
             },
-            '.uicmd-check-checked':{
+            '.linb-uicmd-check-checked':{
                 $order:4,
                 'background-position' : '0 -70px'
             },
-            '.uicmd-check-checked-mouseover':{
+            '.linb-uicmd-check-checked-mouseover':{
                 $order:5,
                 'background-position' : '0 -90px'
             },
-            '.uicmd-check-checked-mousedown':{
+            '.linb-uicmd-check-checked-mousedown':{
                 $order:6,
                 'background-position' : '0 -110px'
             },
-            '.uicmd-radio':{
+            '.linb-uicmd-radio':{
                 $order:1,
                 margin:'0 4px 0 2px',
                 'background-position' : '-60px -70px'
             },
-            '.uicmd-radio-mouseover':{
+            '.linb-uicmd-radio-mouseover':{
                 $order:2,
                 'background-position' : '-60px -90px'
             },
-            '.uicmd-radio-mousedown':{
+            '.linb-uicmd-radio-mousedown':{
                 $order:3,
                 'background-position' : '-60px -110px'
             },
-            '.uicmd-radio-checked':{
+            '.linb-uicmd-radio-checked':{
                 $order:4,
                 'background-position' : '-40px -70px'
             },
-            '.uicmd-radio-checked-mouseover':{
+            '.linb-uicmd-radio-checked-mouseover':{
                 $order:5,
                 'background-position' : '-40px -90px'
             },
-            '.uicmd-radio-checked-mousedown':{
+            '.linb-uicmd-radio-checked-mousedown':{
                 $order:6,
                 'background-position' : '-40px -110px'
             },
-            '.uicmd-add':{
+            '.linb-uicmd-add':{
                 $order:1,
                'background-position':'-56px -222px'
             },
-           '.uicmd-add-mouseover':{
+           '.linb-uicmd-add-mouseover':{
                 $order:2,
                 'background-position':'-56px -222px'
            },
-           '.uicmd-add-mousedown':{
+           '.linb-uicmd-add-mousedown':{
                 $order:3,
                 'background-position':'-56px -222px'
            },
-            '.uicmd-remove':{
+            '.linb-uicmd-remove':{
                 $order:1,
                 'background-position': '-72px -222px'
             },
-            '.uicmd-remove-mouseover':{
+            '.linb-uicmd-remove-mouseover':{
                 $order:1,
                 'background-position': '-72px -222px'
             },
-            '.uicmd-remove-mousedown':{
+            '.linb-uicmd-remove-mousedown':{
                 $order:1,
                 'background-position': '-72px -222px'
             },
 
-            '.uicmd-toggle':{
+            '.linb-uicmd-toggle':{
                 $order:1,
                 'background-position': '-160px -70px'
             },
-            '.uicmd-toggle-mouseover':{
+            '.linb-uicmd-toggle-mouseover':{
                 $order:2,
                 'background-position': '-160px -90px'
             },
-            '.uicmd-toggle-mousedown':{
+            '.linb-uicmd-toggle-mousedown':{
                 $order:3,
                 'background-position': '-160px -110px'
             },
-            '.uicmd-toggle-checked':{
+            '.linb-uicmd-toggle-checked':{
                 $order:4,
                 'background-position': '-180px -70px'
             },
-            '.uicmd-toggle-checked-mouseover':{
+            '.linb-uicmd-toggle-checked-mouseover':{
                 $order:5,
                 'background-position': '-180px -90px'
             },
-            '.uicmd-toggle-checked-mousedown':{
+            '.linb-uicmd-toggle-checked-mousedown':{
                 $order:6,
                 'background-position': '-180px -110px'
             },
-            '.uicmd-toggle2':{
+            '.linb-uicmd-toggle2':{
                 $order:1,
                 'background-position': '-200px -70px'
             },
-            '.uicmd-toggle2-mouseover':{
+            '.linb-uicmd-toggle2-mouseover':{
                 $order:2,
                 'background-position': '-200px -90px'
             },
-            '.uicmd-toggle2-mousedown':{
+            '.linb-uicmd-toggle2-mousedown':{
                 $order:3,
                 'background-position': '-200px -110px'
             },
-            '.uicmd-toggle2-checked':{
+            '.linb-uicmd-toggle2-checked':{
                 $order:4,
                 'background-position': '-220px -70px'
             },
-            '.uicmd-toggle2-checked-mouseover':{
+            '.linb-uicmd-toggle2-checked-mouseover':{
                 $order:5,
                 'background-position': '-220px -90px'
             },
-            '.uicmd-toggle2-checked-mousedown':{
+            '.linb-uicmd-toggle2-checked-mousedown':{
                 $order:6,
                 'background-position': '-220px -110px'
             },
-            '.uicmd-none':{
+            '.linb-uicmd-none':{
                 display:'none'
             },
-            '.uicmd-empty':{
+            '.linb-uicmd-empty':{
                 $order:1000,
                 width:'16px',
                 height:'16px',
@@ -12916,55 +12908,55 @@ Class("linb.UI",  "linb.absObj", {
             },
 
 
-            '.uibar-top, .uibar-bottom, .uibar-top-s, .uibar-bottom-s':{
+            '.linb-uibar-top, .linb-uibar-bottom, .linb-uibar-top-s, .linb-uibar-bottom-s':{
                 position:'relative',
                 //for avoiding extra space after table in IE
                 'vertical-align':'baseline',
                 'font-size':0,
                 'line-height':0
             },
-            '.uibar-top td, .uibar-top-s td, .uibar-bottom td, .uibar-bottom-s td':{
+            '.linb-uibar-top td, .linb-uibar-top-s td, .linb-uibar-bottom td, .linb-uibar-bottom-s td':{
                 $order:1,
                 background: linb.UI.$bg('bar_vertical.gif', 'no-repeat 0 0', true)
             },
 //uibar-top
             /*set table height for ff2, set uibar height for performance*/
-            '.uibar-top, .uibar-top .uibar-t':{
+            '.linb-uibar-top, .linb-uibar-top .linb-uibar-t':{
                 height:'29px'
             },
-            '.uibar-top .uibar-tdl':{
+            '.linb-uibar-top .linb-uibar-tdl':{
                 $order:1,
                 'padding-left':'4px',
                 height:'100%',
                 'background-position': '0 0'
             },
-            '.uibar-top .uibar-tdm':{
+            '.linb-uibar-top .linb-uibar-tdm':{
                 $order:1,
                 'background-position': '0 -30px',
                 'background-repeat': 'repeat-x'
             },
-            '.uibar-top .uibar-tdr':{
+            '.linb-uibar-top .linb-uibar-tdr':{
                 $order:1,
                 'padding-left':'4px',
                 'background-position': 'right -60px'
             },
-            '.uibar-top-focus .uibar-tdl':{
+            '.linb-uibar-top-focus .linb-uibar-tdl':{
                 $order:2,
                 'padding-left':'4px',
                 height:'100%',
                 'background-position': 'left -90px'
             },
-            '.uibar-top-focus .uibar-tdm':{
+            '.linb-uibar-top-focus .linb-uibar-tdm':{
                 $order:2,
                 'background-position': 'left -120px',
                 'background-repeat': 'repeat-x'
             },
-            '.uibar-top-focus .uibar-tdr':{
+            '.linb-uibar-top-focus .linb-uibar-tdr':{
                 $order:2,
                 'padding-left':'4px',
                 'background-position': 'right -150px'
             },
-            '.uibar-top .uibar-cmdl':{
+            '.linb-uibar-top .linb-uibar-cmdl':{
                 overflow:'hidden',
                 position:'absolute',
                 left:0,
@@ -12974,13 +12966,13 @@ Class("linb.UI",  "linb.absObj", {
                 'padding-left':'8px',
                 'white-space': 'nowrap'
             },
-            '.uibar-top .uibar-cmdr':{
+            '.linb-uibar-top .linb-uibar-cmdr':{
                 position:'absolute',
                 top:'6px',
                 right:'8px',
                 'text-align':'right'
             },
-            '.uicon-main':{
+            '.linb-uicon-main':{
                 position:'relative',
                 'padding-left':'4px',
                 'font-size':0,
@@ -12989,85 +12981,85 @@ Class("linb.UI",  "linb.absObj", {
                 overflow:'visible',
                 background: linb.UI.$bg('bar_horizontal.gif', 'repeat-y -595px top', true)
             },
-            '.uicon-maini':{
+            '.linb-uicon-maini':{
                 'padding-right':'4px',
                 'font-size':0,
                 'line-height':0,
                 background: linb.UI.$bg('container_right.gif', '#AAD2FA repeat-y right top', true)
             },
 //uibar-bottom
-            '.uibar-bottom, .uibar-bottom .uibar-t':{
+            '.linb-uibar-bottom, .linb-uibar-bottom .linb-uibar-t':{
                 height:'12px'
             },
-            '.uibar-bottom .uibar-tdl':{
+            '.linb-uibar-bottom .linb-uibar-tdl':{
                 $order:1,
                 'padding-left':'4px',
                 height:'100%',
                 'background-position': 'left -189px'
             },
-            '.uibar-bottom .uibar-tdm':{
+            '.linb-uibar-bottom .linb-uibar-tdm':{
                 $order:1,
                 'background-position': 'left -211px',
                 'background-repeat': 'repeat-x'
             },
-            '.uibar-bottom .uibar-tdr':{
+            '.linb-uibar-bottom .linb-uibar-tdr':{
                 $order:1,
                 'padding-left':'4px',
                 'background-position': 'right -233px'
             },
 //uibar-top-s
-            '.uibar-top-s, .uibar-top-s .uibar-t':{
+            '.linb-uibar-top-s, .linb-uibar-top-s .linb-uibar-t':{
                 $order:3,
                 height:'7px'
             },
-            '.uibar-top-s .uibar-tdl':{
+            '.linb-uibar-top-s .linb-uibar-tdl':{
                 $order:3,
                 height:'100%',
                 'padding-left':'4px',
                 'background-position': 'left -261px'
             },
-            '.uibar-top-s .uibar-tdm':{
+            '.linb-uibar-top-s .linb-uibar-tdm':{
                 $order:3,
                 'background-position': 'left -283px',
                 'background-repeat': 'repeat-x'
             },
-            '.uibar-top-s .uibar-tdr':{
+            '.linb-uibar-top-s .linb-uibar-tdr':{
                 $order:3,
                 'padding-left':'4px',
                 'background-position': 'right -305px'
             },
-            '.uibar-top-s .uibar-cmdl':{
+            '.linb-uibar-top-s .linb-uibar-cmdl':{
                 $order:3,
                 display:'none'
             },
-            '.uibar-top-s .uibar-cmdr':{
+            '.linb-uibar-top-s .linb-uibar-cmdr':{
                 $order:3,
                 display:'none'
             },
 //uibar-bottom-s
-            '.uibar-bottom-s, .uibar-bottom-s .uibar-t':{
+            '.linb-uibar-bottom-s, .linb-uibar-bottom-s .linb-uibar-t':{
                 $order:3,
                 height:'6px'
             },
-            '.uibar-bottom-s .uibar-tdl':{
+            '.linb-uibar-bottom-s .linb-uibar-tdl':{
                 $order:3,
                 height:'100%',
                 'padding-left':'4px',
                 'background-position': 'left -327px'
             },
-            '.uibar-bottom-s .uibar-tdm':{
+            '.linb-uibar-bottom-s .linb-uibar-tdm':{
                 $order:3,
                 'background-position': 'left -349px',
                 'background-repeat': 'repeat-x'
             },
-            '.uibar-bottom-s .uibar-tdr':{
+            '.linb-uibar-bottom-s .linb-uibar-tdr':{
                 $order:3,
                 'padding-left':'4px',
                 'background-position': 'right -371px'
             }
         })
         + linb.UI.buildCSSText({
-            '.ui-unselectable':{
+            '.linb-ui-unselectable':{
                 $order:0,
                 '-moz-user-select': linb.browser.gek?'-moz-none':null,
                 '-khtml-user-select': linb.browser.kde?'none':null,
@@ -13075,7 +13067,7 @@ Class("linb.UI",  "linb.absObj", {
                 '-o-user-select':linb.browser.opr?'none':null,
                 'user-select':'none'
             },
-            '.ui-selectable':{
+            '.linb-ui-selectable':{
                 $order:1,
                 '-moz-user-select': linb.browser.gek?'text':null,
                 '-khtml-user-select': linb.browser.kde?'text':null,
@@ -13083,10 +13075,16 @@ Class("linb.UI",  "linb.absObj", {
                 '-o-user-select':linb.browser.opr?'text':null,
                 'user-select':'text'
             },
-            '.ui-ctrl':{
+            '.linb-ui-ctrl':{
+                cursor:'default',
+                color:'#000',
+                'font-family':'arial,helvetica,clean,sans-serif',
+                'font-style':'normal',
+                'font-weight':'normal',
+                'font-size':'12px',
                 'vertical-align':'middle'
             },
-            '.uiw-shell':{
+            '.linb-uiw-shell':{
                 background:'transparent',
                 display:linb.$inlineBlock,
                 zoom:linb.browser.ie6?1:null,
@@ -13097,7 +13095,7 @@ Class("linb.UI",  "linb.absObj", {
                 margin:0
             },
             /*span*/
-            '.uiw-frame':{
+            '.linb-uiw-frame':{
                 $order:1,
                 display:'block',
                 position:'relative',
@@ -13110,7 +13108,7 @@ Class("linb.UI",  "linb.absObj", {
                 '-moz-box-flex':'1'
             },
             /*span*/
-            '.uiw-border':{
+            '.linb-uiw-border':{
                 $order:2,
                 display:'block',
                 position:'absolute',
@@ -13124,58 +13122,55 @@ Class("linb.UI",  "linb.absObj", {
             }
         })
         + linb.UI.buildCSSText({
-            '.uibg-base':{
+            '.linb-uibg-base':{
                 'background-color':'#fff'
             },
-            '.uibg-bar':{
+            '.linb-uibg-bar':{
                 'background-color':'#aad2fa'
             },
-            '.uiborder-flat':{
+            '.linb-uiborder-flat':{
                 border:'solid 1px #648cb4'
             },
-            '.uiborder-inset':{
+            '.linb-uiborder-inset':{
                 border:'solid 1px',
                 'border-color':'#648cb4 #c8e1fa #c8e1fa #648cb4'
             },
-            '.uiborder-outset':{
+            '.linb-uiborder-outset':{
                 border:'solid 1px',
                 'border-color':'#c8e1fa #648cb4 #648cb4 #c8e1fa'
             }
         });
 
         linb.UI.$cache_css2 += linb.UI.buildCSSText({
-            '.ui-dirty':{
+            '.linb-ui-dirty':{
                 $order:1,
                 'background-image': linb.UI.$bg('icons.gif', '', true),
                 'background-repeat': 'no-repeat',
                 'background-position':'-390px -290px'
             },
-            '.ui-inputdisabled':{
+            '.linb-ui-inputdisabled':{
                 color:'#808080'
             },
-            '.ui-itemreadonly':{
+            '.linb-ui-itemreadonly':{
                 $order:2,
                 color: '#808080'
             },
-            '.ui-readonly, .ui-readonly *':{
+            '.linb-ui-readonly, .linb-ui-readonly *':{
                 $order:2,
                 color: '#808080'
             },
-            '.ui-itemdisabled':{
+            '.linb-ui-itemdisabled':{
                 $order:2,
                 cursor:'not-allowed',
                 color: '#808080'
             },
-            '.ui-disabled, .ui-disabled *':{
+            '.linb-ui-disabled, .linb-ui-disabled *':{
                 $order:2,
                 color: '#808080'
             },
-            '.ui-invalid, .ui-invalid *':{
+            '.linb-ui-invalid, .linb-ui-invalid *':{
                 $order:1,
                 'background-color': '#FFEBCD'
-            },
-            '#linblangkey':{
-                'vertical-align':'baseline'
             }
         });
     },
@@ -13185,8 +13180,8 @@ Class("linb.UI",  "linb.absObj", {
     Static:{
         $cache_css:'',
         $cache_css2:'',
-        $css_tag_dirty: "ui-dirty",
-        $css_tag_invalid: "ui-invalid",
+        $css_tag_dirty: "linb-ui-dirty",
+        $css_tag_invalid: "linb-ui-invalid",
         $tag_left:"{",
         $tag_right:"}",
         $tag_subId:"_serialId",
@@ -13389,7 +13384,7 @@ Class("linb.UI",  "linb.absObj", {
                 r7=self.r7 || (self.r7=/([^{}]*)\{([\w]+)\}([^{}]*)/g),
                 first=false,
                 u=linb.UI,
-                t, o , bak, lkey;
+                t, o , bak, tagN,lkey;
 
             if(!template)template=profile.template;
             lkey = key?profile.keys[key]:profile.key;
@@ -13408,13 +13403,14 @@ Class("linb.UI",  "linb.absObj", {
                 t = u.$CLS + (key?'-'+key.toLowerCase():'');
                 //save bak
                 bak = template.className || '';
+                tagN=template.tagName.toLowerCase();
 
                 //default class first
-                template['class'] =  t+' '+
+                template['class'] =  'linb-node linb-node-'+tagN+' ' + t+' '+
                     //custom class here
-                    bak+' '+
+                    bak + ' ' +
                     //add a special
-                    (lkey==profile.key ? ('ui-ctrl '+(linb.browser.ie?'':'{_selectable} ')) : '' ) +
+                    (lkey==profile.key ? ('linb-ui-ctrl '+(linb.browser.ie?'':'{_selectable} ')) : '' ) +
                     //custom theme
                     u.$tag_special + (key||'KEY') + '_CT'+u.$tag_special + ' ' +
                     //custom class
@@ -14034,14 +14030,14 @@ Class("linb.UI",  "linb.absObj", {
                 self.$cssNo=1;
                 var b=linb.browser;
                 linb('body').addClass(
-                          (b.ie ? ("linbcss-ie linbcss-ie" + b.ver + " ") :
-                           b.gek ? ("linbcss-gek linbcss-gek" + b.ver + " ") :
-                           b.kde ? ("linbcss-kde linbcss-kde" + b.ver + " ") :
-                           b.opr ? ("linbcss-opr linbcss-opr" + b.ver + " ") : "")
-                        + (b.isSafari ? "linbcss-safari ": b.isChrome ? "linbcss-chrome " :"")
-                        + (b.isMac ? "linbcss-mac": b.isLinux ? "linbcss-linux " :"")
+                          (b.ie ? ("linb-css-ie linb-css-ie" + b.ver + " ") :
+                           b.gek ? ("linb-css-gek linb-css-gek" + b.ver + " ") :
+                           b.kde ? ("linb-css-kde linb-css-kde" + b.ver + " ") :
+                           b.opr ? ("linb-css-opr linb-css-opr" + b.ver + " ") : "")
+                        + (b.isSafari ? "linb-css-safari ": b.isChrome ? "linb-css-chrome " :"")
+                        + (b.isMac ? "linb-css-mac": b.isLinux ? "linb-css-linux " :"")
                 );
-                linb('html').addClass(b.isStrict?"linbcss-base linbcss-strict":"linbcss-base ");
+                linb('html').addClass(b.isStrict?"linb-css-base linb-css-strict":"linb-css-base ");
             }
             if(cache1){
                 linb.CSS.addStyleSheet(cache1, 'linb.UI-CSS'+(self.$cssNo++));
@@ -14293,9 +14289,9 @@ Class("linb.UI",  "linb.absObj", {
             }
 
             if('disabled' in dm)
-                hashOut.disabled= (_.isSet(hashOut.disabled) && hashOut.disabled) ?'ui-itemdisabled':'';
+                hashOut.disabled= (_.isSet(hashOut.disabled) && hashOut.disabled) ?'linb-ui-itemdisabled':'';
             if('readonly' in dm)
-                hashOut.readonly= (_.isSet(hashOut.readonly) && hashOut.readonly) ?'ui-itemreadonly':'';
+                hashOut.readonly= (_.isSet(hashOut.readonly) && hashOut.readonly) ?'linb-ui-itemreadonly':'';
 
             //todo:remove the extra para
             hashOut.imageDisplay = (hashOut.imageClass||hashOut.image)?'':'display:none';
@@ -14357,9 +14353,9 @@ Class("linb.UI",  "linb.absObj", {
                 action: function(v){
                     var i=this.getRoot();
                     if(v)
-                        i.addClass('ui-disabled');
+                        i.addClass('linb-ui-disabled');
                     else
-                        i.removeClass('ui-disabled');
+                        i.removeClass('linb-ui-disabled');
                 }
             },
             dock:{
@@ -14866,11 +14862,11 @@ Class("linb.UI",  "linb.absObj", {
                 if(isWin){
                     var f=linb.win.$getEvent('onSize','dock');
                     if(f && f.dockall && f.dockall.length){
-                        linb('html').addClass('linbcss-viewport');
+                        linb('html').addClass('linb-css-viewport');
                         if(t=linb('body').get(0))
                             t.scroll='no';
                     }else{
-                        linb('html').removeClass('linbcss-viewport');
+                        linb('html').removeClass('linb-css-viewport');
                         if(t=linb('body').get(0))
                             t.scroll='';
                     }
@@ -14979,7 +14975,7 @@ Class("linb.UI",  "linb.absObj", {
             if('className' in dm)
             	data._className=prop.className||"";
 
-            if('readonly' in dm)data.readonly=prop.readonly?"ui-readonly":"";
+            if('readonly' in dm)data.readonly=prop.readonly?"linb-ui-readonly":"";
             if('href' in dm)data.href = prop.href || linb.$DEFAULTHREF;
             if('tabindex' in dm)data.tabindex = prop.tabindex || '-1';
             if('items' in dm){
@@ -14994,7 +14990,7 @@ Class("linb.UI",  "linb.absObj", {
             if('selectable' in dm)
                 data._selectable=linb.browser.ie
                     ? (prop.selectable?"true":"false")
-                    : (prop.selectable?"ui-selectable":"ui-unselectable");
+                    : (prop.selectable?"linb-ui-selectable":"linb-ui-unselectable");
 
             //default prepare
             data =  ajd(profile, prop, data);
@@ -15600,9 +15596,9 @@ Class("linb.absValue", "linb.absObj",{
                 action: function(v){
                     var i=this.getRoot();
                     if(v)
-                        i.addClass('ui-readonly');
+                        i.addClass('linb-ui-readonly');
                     else
-                        i.removeClass('ui-readonly');
+                        i.removeClass('linb-ui-readonly');
                 }
             },
             // setValue and getValue
@@ -15699,13 +15695,13 @@ new function(){
                 }
             },
             Templates:{
-                className:'uiw-shell {_className}',
+                className:'linb-uiw-shell {_className}',
                 style:'{_style}',
                 FRAME:{
-                    className:'uiw-frame ',
+                    className:'linb-uiw-frame ',
                     BORDER:{
                         style:'width:{bWidth}px;height:{bHeight}px;',
-                        className:'uiw-border'
+                        className:'linb-uiw-border'
                     }
                 }
             },
@@ -15860,11 +15856,11 @@ new function(){
                 className:'{_clsName} {_className}',
                 style:'{_style}',
                 BTN:{
-                    className:'ui-btn',
+                    className:'linb-ui-btn',
                     BTNI:{
-                        className:'ui-btni',
+                        className:'linb-ui-btni',
                         BTNC:{
-                            className:'ui-btnc',
+                            className:'linb-ui-btnc',
                             FOCUS:{
                                 tabindex: '{tabindex}',
                                 style:"{_align}",
@@ -15977,7 +15973,7 @@ new function(){
                 FOCUS:{
                     tabindex: '{tabindex}',
                     MARK:{
-                        className:'uicmd-check'
+                        className:'linb-uicmd-check'
                     },
                     CAPTION:{
                         $order:1,
@@ -17703,10 +17699,10 @@ Class("linb.UI.Resizer","linb.UI",{
             t = self.getTemplate();
         //modify
         _.merge(t.FRAME.BORDER,{
-            className:'uiw-border {clsBorderType1}',
+            className:'linb-uiw-border {clsBorderType1}',
             PANEL:{
                 tagName:'div',
-                className:'{clsBorderType2} uibg-bar',
+                className:'{clsBorderType2} linb-uibg-bar',
                 style:'{background};{_overflow};',
                 text:'{html}'+linb.UI.$childTag
             }
@@ -17757,9 +17753,9 @@ Class("linb.UI.Resizer","linb.UI",{
                         p=ns.properties,
                         n1=ns.getSubNode('BORDER'), n2=ns.getSubNode('PANEL'),
                         reg=/^uiborder-/,
-                        flat='uiborder-flat',
-                        ins='uiborder-inset',
-                        outs='uiborder-outset',
+                        flat='linb-uiborder-flat',
+                        ins='linb-uiborder-inset',
+                        outs='linb-uiborder-outset',
                         root=ns.getRoot();
                     n1.removeClass(reg);
                     n2.removeClass(reg);
@@ -17855,7 +17851,7 @@ Class("linb.UI.Label", "linb.UI.Widget",{
                 style:'display:none;',
                 SICON:{
                     $order:0,
-                    className:'ui-icon {imageClass}',
+                    className:'linb-ui-icon {imageClass}',
                     style:'{backgroundImage} {backgroundPosition} {backgroundRepeat} {imageDisplay}'
                 },
                 SCAPTION:{
@@ -17868,7 +17864,7 @@ Class("linb.UI.Label", "linb.UI.Widget",{
                 $order:2,
                 ICON:{
                     $order:0,
-                    className:'ui-icon {imageClass}',
+                    className:'linb-ui-icon {imageClass}',
                     style:'{backgroundImage} {backgroundPosition} {backgroundRepeat} {imageDisplay}'
                 },
                 CAPTION:{
@@ -18181,7 +18177,7 @@ Class("linb.UI.Button", ["linb.UI.Widget","linb.absValue"],{
                             BOX:{
                                 ICON:{
                                     $order:1,
-                                    className:'ui-icon {imageClass}',
+                                    className:'linb-ui-icon {imageClass}',
                                     style:'{backgroundImage} {backgroundPosition} {backgroundRepeat} {imageDisplay}'
                                 },
                                 CAPTION:{
@@ -18493,7 +18489,7 @@ Class("linb.UI.Button", ["linb.UI.Widget","linb.absValue"],{
         _.merge(t.FRAME.FOCUS.TB.TR.TD.BOX,{
             MARK:{
                 $order:0,
-                className:'uicmd-check'
+                className:'linb-uicmd-check'
             }
         },'all');
         this.setTemplate(t);
@@ -19666,9 +19662,9 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                 action: function(v){
                     var i=this.getSubNode('INPUT');
                     if(v)
-                        i.addClass('ui-inputdisabled');
+                        i.addClass('linb-ui-inputdisabled');
                     else
-                        i.removeClass('ui-inputdisabled');
+                        i.removeClass('linb-ui-inputdisabled');
                     if((""+i.get(0).type).toLowerCase()!='button')
                         // use readonly for selection
                         i.attr('readonly'/*'disabled'*/,v);
@@ -22193,12 +22189,12 @@ Class("linb.UI.Group", "linb.UI.Div",{
                     HANDLE:{
                         tabindex: '{tabindex}',
                         TOGGLE:{
-                            className: 'uicmd-toggle2 {toggleCls2}',
+                            className: 'linb-uicmd-toggle2 {toggleCls2}',
                             style:"{toggleDispplay}"
                         },
                         ICON:{
                             $order:1,
-                            className:'ui-icon {imageClass}',
+                            className:'linb-ui-icon {imageClass}',
                             style:'{backgroundImage} {backgroundPosition} {backgroundRepeat} {imageDisplay}'
                         },
                         CAPTION : {
@@ -22318,7 +22314,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
 
             data.panelDisplay = data.toggleBtn&&!data.toggle?nodisplay:'';
             data.toggleCls = data.toggleBtn&&!data.toggle?profile.getClass('FIELDSET','-checked'):'';
-            data.toggleCls2 = data.toggleBtn&&data.toggle?'uicmd-toggle2-checked':'';
+            data.toggleCls2 = data.toggleBtn&&data.toggle?'linb-uicmd-toggle2-checked':'';
             
             profile._toggle = !!data.toggle;
             
@@ -22440,10 +22436,10 @@ Class("linb.UI.Group", "linb.UI.Div",{
             arr.push('<span  '+'id="'+key+'-SC:'+id+':'+list[i]+'" style="background-color:#'+list[i]+'" '+evs+'>'+list[i]+'</span>');
 
         //data
-        data = '<div '+evs+'><span class="'+cls+'-txt"'+evs+'>R: </span><span '+'id="'+key+'-R:'+id+':" class="'+cls+'-dd2 ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>R</span><span style="width:8px;height:8px" '+evs+' ></span><span class="'+cls+'-txt"'+evs+'>H: </span><span '+'id="'+key+'-HH:'+id+':" class="'+cls+'-dd2 ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>H</span><span '+evs+'>\xB0</span></div>' +
-               '<div '+evs+'><span class="'+cls+'-txt"'+evs+'>G: </span><span '+'id="'+key+'-G:'+id+':" class="'+cls+'-dd2 ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>G</span><span style="width:8px;height:8px" '+evs+' ></span><span class="'+cls+'-txt"'+evs+'>S: </span><span '+'id="'+key+'-S:'+id+':" class="'+cls+'-dd2 ui-draggable '+tag+'DD2_CC'+tag+'"  '+evs+'>S</span><span '+evs+'>%</span></div>' +
-               '<div '+evs+'><span class="'+cls+'-txt"'+evs+'>B: </span><span '+'id="'+key+'-B:'+id+':" class="'+cls+'-dd2 ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>B</span><span style="width:8px;height:8px" '+evs+' ></span><span class="'+cls+'-txt"'+evs+'>V: </span><span '+'id="'+key+'-V:'+id+':" class="'+cls+'-dd2 ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>V</span><span '+evs+'>%</span></div>' +
-               '<div '+evs+'><span style="width:38px"'+evs+'>HEX: </span><span '+'id="'+key+'-H:'+id+':" class="'+cls+'-dd3 ui-draggable '+tag+'DD3_CC'+tag+'" '+evs+'>H</span><span '+'id="'+key+'-E:'+id+':" class="'+cls+'-dd3 ui-draggable '+tag+'DD3_CC'+tag+'" '+evs+''+evs+'>E</span><span '+'id="'+key+'-X:'+id+':" class="'+cls+'-dd1 ui-draggable '+tag+'DD1_CC'+tag+'" '+evs+'>X</span></div>'
+        data = '<div '+evs+'><span class="'+cls+'-txt"'+evs+'>R: </span><span '+'id="'+key+'-R:'+id+':" class="'+cls+'-dd2 linb-ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>R</span><span style="width:8px;height:8px" '+evs+' ></span><span class="'+cls+'-txt"'+evs+'>H: </span><span '+'id="'+key+'-HH:'+id+':" class="'+cls+'-dd2 linb-ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>H</span><span '+evs+'>\xB0</span></div>' +
+               '<div '+evs+'><span class="'+cls+'-txt"'+evs+'>G: </span><span '+'id="'+key+'-G:'+id+':" class="'+cls+'-dd2 linb-ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>G</span><span style="width:8px;height:8px" '+evs+' ></span><span class="'+cls+'-txt"'+evs+'>S: </span><span '+'id="'+key+'-S:'+id+':" class="'+cls+'-dd2 linb-ui-draggable '+tag+'DD2_CC'+tag+'"  '+evs+'>S</span><span '+evs+'>%</span></div>' +
+               '<div '+evs+'><span class="'+cls+'-txt"'+evs+'>B: </span><span '+'id="'+key+'-B:'+id+':" class="'+cls+'-dd2 linb-ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>B</span><span style="width:8px;height:8px" '+evs+' ></span><span class="'+cls+'-txt"'+evs+'>V: </span><span '+'id="'+key+'-V:'+id+':" class="'+cls+'-dd2 linb-ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>V</span><span '+evs+'>%</span></div>' +
+               '<div '+evs+'><span style="width:38px"'+evs+'>HEX: </span><span '+'id="'+key+'-H:'+id+':" class="'+cls+'-dd3 linb-ui-draggable '+tag+'DD3_CC'+tag+'" '+evs+'>H</span><span '+'id="'+key+'-E:'+id+':" class="'+cls+'-dd3 linb-ui-draggable '+tag+'DD3_CC'+tag+'" '+evs+''+evs+'>E</span><span '+'id="'+key+'-X:'+id+':" class="'+cls+'-dd1 linb-ui-draggable '+tag+'DD1_CC'+tag+'" '+evs+'>X</span></div>'
         ns.setTemplate({
             style:'{_style};height:auto;width:{_width}px;',
             tagName : 'div',
@@ -22458,36 +22454,36 @@ Class("linb.UI.Group", "linb.UI.Div",{
                         cellspacing:"0",
                         width:'100%',
                         border:'0',
-                        className:'uibar-t',
+                        className:'linb-uibar-t',
                         tagName:'table',
                         BARTR:{
                             tagName:'tr',
                             BARTDL:{
                                 tagName:'td',
-                                className:'uibar-tdl'
+                                className:'linb-uibar-tdl'
                             },
                             BARTDM:{
                                 $order:1,
                                 width:'100%',
                                 tagName:'td',
-                                className:'uibar-tdm'
+                                className:'linb-uibar-tdm'
                             },
                             BARTDR:{
                                 $order:2,
                                 tagName:'td',
-                                className:'uibar-tdr'
+                                className:'linb-uibar-tdr'
                             }
                         }
                     },
                     BARCMDL:{
                         tagName: 'div',
-                        className:'uibar-cmdl'
+                        className:'linb-uibar-cmdl'
                     },
                     BARCMDR:{
                         tagName: 'div',
-                        className:'uibar-cmdr',
+                        className:'linb-uibar-cmdr',
                         CLOSE:{
-                            className:'uicmd-close ',
+                            className:'linb-uicmd-close ',
                             style:'{closeDisplay}'
                         }
                     }
@@ -22495,10 +22491,10 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 MAIN:{
                     $order:2,
                     tagName:'div',
-                    className:'uicon-main',
+                    className:'linb-uicon-main',
                     MAINI:{
                         tagName:'div',
-                        className:'uicon-maini',
+                        className:'linb-uicon-maini',
                         CON:{
                             $order:1,
                             tagName:'div',
@@ -22554,19 +22550,19 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 TAIL:{
                     $order:3,
                     tagName:'div',
-                    className:'uicon-main',
+                    className:'linb-uicon-main',
                     TAILI:{
                         tagName:'div',
-                        className:'uicon-maini',
+                        className:'linb-uicon-maini',
                         CAPTION:{
                             text : '{caption}'
                         },
                         SET:{
-                            className:'ui-btn',
+                            className:'linb-ui-btn',
                             SETI:{
-                                className:'ui-btni',
+                                className:'linb-ui-btni',
                                 SETC:{
-                                    className:'ui-btnc',
+                                    className:'linb-ui-btnc',
                                     SETA:{
                                         tabindex: '{tabindex}',
                                         text:linb.wrapRes('inline.set')
@@ -22583,30 +22579,30 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 BBAR:{
                     $order:4,
                     tagName:'div',
-                    className:'uibar-bottom-s',
+                    className:'linb-uibar-bottom-s',
                     BBART:{
                         cellpadding:"0",
                         cellspacing:"0",
                         width:'100%',
                         border:'0',
                         tagName:'table',
-                        className:'uibar-t',
+                        className:'linb-uibar-t',
                         BBARTR:{
                             tagName:'tr',
                             BBARTDL:{
                                 tagName:'td',
-                                className:'uibar-tdl'
+                                className:'linb-uibar-tdl'
                             },
                             BBARTDM:{
                                 $order:1,
                                 width:'100%',
                                 tagName:'td',
-                                className:'uibar-tdm'
+                                className:'linb-uibar-tdm'
                             },
                             BBARTDR:{
                                 $order:2,
                                 tagName:'td',
-                                className:'uibar-tdr'
+                                className:'linb-uibar-tdr'
                             }
                         }
                     }
@@ -22632,9 +22628,9 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 ini:true,
                 action:function(v){
                     if(v)
-                        this.getSubNode('BAR').replaceClass('uibar-top-s','uibar-top');
+                        this.getSubNode('BAR').replaceClass('linb-uibar-top-s','linb-uibar-top');
                     else
-                        this.getSubNode('BAR').replaceClass('uibar-top','uibar-top-s');
+                        this.getSubNode('BAR').replaceClass('linb-uibar-top','linb-uibar-top-s');
                 }
             },
             closeBtn:{
@@ -22662,7 +22658,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 padding:'4px 5px 4px 0'
             },
             CON:{
-                height:'196px',
+                height:'198px',
                 padding:'3px',
                 position:'relative',
                 border:'solid 1px #648CB4'
@@ -22677,7 +22673,6 @@ Class("linb.UI.Group", "linb.UI.Div",{
             },
             'DATA div':{
                 'padding-top':'3px',
-                'height':'20px',
                 'clear':'both'
             },
             TXT:{
@@ -23056,7 +23051,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
         _prepareData:function(profile){
             var data=arguments.callee.upper.call(this, profile);
             var nodisplay='display:none';
-            data.classBar= data.barDisplay?'uibar-top':'uibar-top-s';
+            data.classBar= data.barDisplay?'linb-uibar-top':'linb-uibar-top-s';
             data.closeDisplay = data.closeBtn?'':nodisplay;
             data._width = data.advance?'410':'210';
             data.advDispay = data.advance?'':'display:none;';
@@ -23394,15 +23389,15 @@ Class("linb.UI.Group", "linb.UI.Div",{
             
         self.addTemplateKeys(['H', 'COL', 'W','TBODY', 'THEADER','TD']);
         var colgroup = '<colgroup id="'+key+'-COL:'+id+':"  class="'+tag+'COL_CS'+tag+'"  style="'+tag+'COL_CS'+tag+'"><col width="2%"/><col width="14%"/><col width="14%"/><col width="14%"/><col width="14%"/><col width="14%"/><col width="14%"/><col width="14%"/></colgroup>',
-            thead1='<thead ID="'+key+'-THEADER:'+id+':" class="'+tag+'THEADER_CS'+tag+'"  style="'+tag+'THEADER_CS'+tag+'" ><tr height="1%"><th id="'+key+'-H:'+id+':7" class="'+cls+'-h '+cls+'-w '+tag+'H_CC'+tag+'" style="'+tag+'H_CS'+tag+'"></th>',
+            thead1='<thead ID="'+key+'-THEADER:'+id+':" class="'+tag+'THEADER_CS'+tag+'"  style="'+tag+'THEADER_CS'+tag+'" ><tr height="1%"><th id="'+key+'-H:'+id+':7" class="linb-node linb-node-th '+cls+'-h '+cls+'-w '+tag+'H_CC'+tag+'" style="'+tag+'H_CS'+tag+'"></th>',
             thead2='</tr></thead>',
-            th='<th id="'+key+'-H:'+id+':@" class="'+cls+'-h '+tag+'H_CC'+tag+'"  style="'+tag+'H_CS'+tag+'">@</th>',
+            th='<th id="'+key+'-H:'+id+':@" class="linb-node linb-node-th '+cls+'-h '+tag+'H_CC'+tag+'"  style="'+tag+'H_CS'+tag+'">@</th>',
             tbody1 = '<tbody id="'+key+'-TBODY:'+id +':"  class="'+tag+'TBODY_CS'+tag+'"  style="'+tag+'TBODY_CS'+tag+'" >',
             tbody2 = '</tbody>',
             tr1='<tr>',
             tr2='</tr>',
-            td1='<th id="'+key+'-W:'+id+':@"  class="'+cls+'-w '+tag+'W_CC'+tag+'"  style="'+tag+'W_CS'+tag+'">@</th>',
-            td2='<td id="'+key+'-TD:'+id+':@" class="'+cls+'-td '+tag+'TD_CC'+tag+'"  style="'+tag+'TD_CS'+tag+'" '+linb.$IEUNSELECTABLE()+' >'+
+            td1='<th id="'+key+'-W:'+id+':@"  class="linb-node linb-node-th '+cls+'-w '+tag+'W_CC'+tag+'"  style="'+tag+'W_CS'+tag+'">@</th>',
+            td2='<td id="'+key+'-TD:'+id+':@" class="linb-node linb-node-td '+cls+'-td '+tag+'TD_CC'+tag+'"  style="'+tag+'TD_CS'+tag+'" '+linb.$IEUNSELECTABLE()+' >'+
                 '</td>',
             body,i,j,k,l,a=[],b=[];
         for(i=0;i<7;i++)
@@ -23426,37 +23421,37 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 tagName : 'div',
                 BAR:{
                     tagName:'div',
-                    className:'uibar-top',
+                    className:'linb-uibar-top',
                     style:'{barDisplay};',
                     BART:{
                         cellpadding:"0",
                         cellspacing:"0",
                         width:'100%',
                         border:'0',
-                        className:'uibar-t',
+                        className:'linb-uibar-t',
                         tagName:'table',
                         BARTR:{
                             tagName:'tr',
                             BARTDL:{
                                 tagName:'td',
-                                className:'uibar-tdl'
+                                className:'linb-uibar-tdl'
                             },
                             BARTDM:{
                                 $order:1,
                                 width:'100%',
                                 tagName:'td',
-                                className:'uibar-tdm'
+                                className:'linb-uibar-tdm'
                             },
                             BARTDR:{
                                 $order:2,
                                 tagName:'td',
-                                className:'uibar-tdr'
+                                className:'linb-uibar-tdr'
                             }
                         }
                     },
                     BARCMDL:{
                         tagName:'div',
-                        className:'uibar-cmdl',
+                        className:'linb-uibar-cmdl',
                         PRE2:{
                             $order:0,
                             tabindex: '{tabindex}'
@@ -23467,12 +23462,12 @@ Class("linb.UI.Group", "linb.UI.Div",{
                         },
                         YEAR:{
                             $order:2,
-                            className:'ui-draggable'
+                            className:'linb-ui-draggable'
                         },
                         YTXT:{$order:3,text:'-'},
                         MONTH:{
                             $order:4,
-                            className:'ui-draggable'
+                            className:'linb-ui-draggable'
                         },
                         MTXT:{$order:5,text:'-'},
                         DAY:{
@@ -23489,9 +23484,9 @@ Class("linb.UI.Group", "linb.UI.Div",{
                     },
                     BARCMDR:{
                         tagName: 'div',
-                        className:'uibar-cmdr',
+                        className:'linb-uibar-cmdr',
                         CLOSE:{
-                            className:'uicmd-close ',
+                            className:'linb-uicmd-close ',
                             style:'{closeDisplay}'
                         }
                     }
@@ -23499,10 +23494,10 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 MAIN:{
                     $order:2,
                     tagName:'div',
-                    className:'uicon-main',
+                    className:'linb-uicon-main',
                     MAINI:{
                         tagName:'div',
-                        className:'uicon-maini',
+                        className:'linb-uicon-maini',
                         CON:{
                             tagName:'div',
                             BODY:{
@@ -23518,10 +23513,10 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 TAIL:{
                     $order:3,
                     tagName:'div',
-                    className:'uicon-main',
+                    className:'linb-uicon-main',
                     TAILI:{
                         tagName:'div',
-                        className:'uicon-maini',
+                        className:'linb-uicon-maini',
                         CAPTION:{
                             tagName:'div',
                             style:'{_nocap}',
@@ -23541,12 +23536,12 @@ Class("linb.UI.Group", "linb.UI.Div",{
                             },
                             HOUR:{
                                 $order:2,
-                                className:'ui-draggable'
+                                className:'linb-ui-draggable'
                             },
                             MTXT:{$order:3,text:':'},
                             MINUTE:{
                                 $order:4,
-                                className:'ui-draggable'
+                                className:'linb-ui-draggable'
                             },
                             TNEXT:{
                                 $order:6,
@@ -23562,11 +23557,11 @@ Class("linb.UI.Group", "linb.UI.Div",{
                              title:"{_todaytitle}"
                         },
                         SET:{
-                            className:'ui-btn',
+                            className:'linb-ui-btn',
                             SETI:{
-                                className:'ui-btni',
+                                className:'linb-ui-btni',
                                 SETC:{
-                                    className:'ui-btnc',
+                                    className:'linb-ui-btnc',
                                     SETA:{
                                         tabindex: '{tabindex}',
                                         text:linb.wrapRes('inline.set')
@@ -23579,30 +23574,30 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 BBAR:{
                     $order:4,
                     tagName:'div',
-                    className:'uibar-bottom-s',
+                    className:'linb-uibar-bottom-s',
                     BBART:{
                         cellpadding:"0",
                         cellspacing:"0",
                         width:'100%',
                         border:'0',
                         tagName:'table',
-                        className:'uibar-t',
+                        className:'linb-uibar-t',
                         BBARTR:{
                             tagName:'tr',
                             BBARTDL:{
                                 tagName:'td',
-                                className:'uibar-tdl'
+                                className:'linb-uibar-tdl'
                             },
                             BBARTDM:{
                                 $order:1,
                                 width:'100%',
                                 tagName:'td',
-                                className:'uibar-tdm'
+                                className:'linb-uibar-tdm'
                             },
                             BBARTDR:{
                                 $order:2,
                                 tagName:'td',
-                                className:'uibar-tdr'
+                                className:'linb-uibar-tdr'
                             }
                         }
                     }
@@ -23753,7 +23748,8 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 $order:1,
                 border:0,
                 'border-right':'solid 1px #648CB4',
-                'border-bottom':'solid 1px #648CB4'
+                'border-bottom':'solid 1px #648CB4',
+                'font-size': '12px'
             },
             'TD .exday':{
                 color:'#C1C1C1'
@@ -24137,7 +24133,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
             profile.box._getLabelNodes(profile).each(function(node,i){
                 n=date.add(v,'d',i);
                 daymap[i]=n;
-                t=date.get(n,'m')==m?'#':'<p class="exday">#</p>';
+                t=date.get(n,'m')==m?'#':'<p class="linb-node linb-node-p exday">#</p>';
                 n=date.get(n,'d');
                 node.innerHTML = t.replace('#',n);
             });
@@ -24279,7 +24275,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
         cls=this._excls3;
         cls2=this._excls4;
         id=linb.UI.$ID;
-        t='<span id="'+this.KEY+'-HI:'+id+':@" class="'+cls+' !" '+linb.$IEUNSELECTABLE()+' >@</span>';
+        t='<span id="'+this.KEY+'-HI:'+id+':@" class="linb-node linb-node-span '+cls+' !" '+linb.$IEUNSELECTABLE()+' >@</span>';
         a=[];
         for(i=0;i<24;i++)
             a[a.length]=t.replace(/@/g,i<10?('0'+i):i).replace('!',(i%6===0)?cls2:'');
@@ -24289,7 +24285,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
         cls=this._excls;
         cls2=this._excls2;
         id=linb.UI.$ID;
-        t='<span id="'+this.KEY+'-MI:'+id+':@" class="'+cls+' !" '+linb.$IEUNSELECTABLE()+' >@</span>';
+        t='<span id="'+this.KEY+'-MI:'+id+':@" class="linb-node linb-node-span '+cls+' !" '+linb.$IEUNSELECTABLE()+' >@</span>';
         a=[];
         for(i=0;i<60;i++)
             a[a.length]=t.replace(/@/g,i<10?('0'+i):i).replace('!',(i%5===0)?cls2:'');
@@ -24304,7 +24300,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 tagName : 'div',
                 BAR:{
                     tagName:'div',
-                    className:'uibar-top',
+                    className:'linb-uibar-top',
                     style:'{barDisplay};',
                     BART:{
                         cellpadding:"0",
@@ -24312,29 +24308,29 @@ Class("linb.UI.Group", "linb.UI.Div",{
                         width:'100%',
                         border:'0',
                         tagName:'table',
-                        className:'uibar-t',
+                        className:'linb-uibar-t',
                         BARTR:{
                             tagName:'tr',
                             BARTDL:{
                                 tagName:'td',
-                                className:'uibar-tdl'
+                                className:'linb-uibar-tdl'
                             },
                             BARTDM:{
                                 $order:1,
                                 width:'100%',
                                 tagName:'td',
-                                className:'uibar-tdm'
+                                className:'linb-uibar-tdm'
                             },
                             BARTDR:{
                                 $order:2,
                                 tagName:'td',
-                                className:'uibar-tdr'
+                                className:'linb-uibar-tdr'
                             }
                         }
                     },
                     BARCMDL:{
                         tagName: 'div',
-                        className:'uibar-cmdl',
+                        className:'linb-uibar-cmdl',
                         PRE2:{
                             $order:0,
                             tabindex: '{tabindex}'
@@ -24345,12 +24341,12 @@ Class("linb.UI.Group", "linb.UI.Div",{
                         },
                         HOUR:{
                             $order:2,
-                            className:'ui-draggable'
+                            className:'linb-ui-draggable'
                         },
                         MTXT:{$order:3,text:':'},
                         MINUTE:{
                                 $order:4,
-                                className:'ui-draggable'
+                                className:'linb-ui-draggable'
                             },
                         NEXT:{
                             $order:6,
@@ -24363,9 +24359,9 @@ Class("linb.UI.Group", "linb.UI.Div",{
                     },
                     BARCMDR:{
                         tagName: 'div',
-                        className:'uibar-cmdr',
+                        className:'linb-uibar-cmdr',
                         CLOSE:{
-                            className:'uicmd-close ',
+                            className:'linb-uicmd-close ',
                             style:'{closeDisplay}'
                         }
                     }
@@ -24373,19 +24369,19 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 MAIN:{
                     $order:2,
                     tagName:'div',
-                    className:'uicon-main',
+                    className:'linb-uicon-main',
                     MAINI:{
                         tagName:'div',
-                        className:'uicon-maini',
+                        className:'linb-uicon-maini',
                         CONH:{
                             tagName:'div',
-                            className:'uiborder-inset',
+                            className:'linb-uiborder-inset',
                             text:h
                         },
                         CONM:{
                             $order:2,
                             tagName:'div',
-                            className:'uiborder-inset',
+                            className:'linb-uiborder-inset',
                             text:m
                         }
                     }
@@ -24393,19 +24389,19 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 TAIL:{
                     $order:3,
                     tagName:'div',
-                    className:'uicon-main',
+                    className:'linb-uicon-main',
                     TAILI:{
                         tagName:'div',
-                        className:'uicon-maini',
+                        className:'linb-uicon-maini',
                         CAPTION:{
                             text : '{caption}'
                         },
                         SET:{
-                            className:'ui-btn',
+                            className:'linb-ui-btn',
                             SETI:{
-                                className:'ui-btni',
+                                className:'linb-ui-btni',
                                 SETC:{
-                                    className:'ui-btnc',
+                                    className:'linb-ui-btnc',
                                     SETA:{
                                         tabindex: '{tabindex}',
                                         text:linb.wrapRes('inline.set')
@@ -24418,30 +24414,30 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 BBAR:{
                     $order:4,
                     tagName:'div',
-                    className:'uibar-bottom-s',
+                    className:'linb-uibar-bottom-s',
                     BBART:{
                         cellpadding:"0",
                         cellspacing:"0",
                         width:'100%',
                         border:'0',
                         tagName:'table',
-                        className:'uibar-t',
+                        className:'linb-uibar-t',
                         BBARTR:{
                             tagName:'tr',
                             BBARTDL:{
                                 tagName:'td',
-                                className:'uibar-tdl'
+                                className:'linb-uibar-tdl'
                             },
                             BBARTDM:{
                                 $order:1,
                                 width:'100%',
                                 tagName:'td',
-                                className:'uibar-tdm'
+                                className:'linb-uibar-tdm'
                             },
                             BBARTDR:{
                                 $order:2,
                                 tagName:'td',
-                                className:'uibar-tdr'
+                                className:'linb-uibar-tdr'
                             }
                         }
                     }
@@ -24943,7 +24939,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
         Templates:{
             tagName : 'div',
             style:'{_style}',
-            className:'uibg-base {_className}',
+            className:'linb-uibg-base {_className}',
             ITEMS:{
                $order:10,
                tagName:'div',
@@ -24962,7 +24958,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                         },
                         ICON:{
                             $order:10,
-                            className:'ui-icon {imageClass}',
+                            className:'linb-ui-icon {imageClass}',
                             style:'{backgroundImage} {backgroundPosition} {backgroundRepeat} {imageDisplay}'
                         },
                         CAPTION:{
@@ -25192,7 +25188,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                         p=ns.properties,
                         node=ns.getSubNode('ITEMS'),
                         reg=/^uiborder-/,
-                        pretag='uiborder-',
+                        pretag='linb-uiborder-',
                         root=ns.getRoot();
                     node.removeClass(reg);
                     node.addClass(pretag+v);
@@ -25253,7 +25249,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
         },
         _prepareData:function(profile){
             var data=arguments.callee.upper.call(this, profile);
-            data._bordertype='uiborder-'+data.borderType;
+            data._bordertype='linb-uiborder-'+data.borderType;
             return data;
         },
         _prepareItem:function(profile, item){
@@ -25640,7 +25636,7 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                 tagName:'div',
                 TBAR:{
                     tagName:'div',
-                    className:'uibar-top',
+                    className:'linb-uibar-top',
                     BART:{
                         cellpadding:"0",
                         cellspacing:"0",
@@ -25648,37 +25644,37 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                         height:'100%',
                         border:'0',
                         tagName:'table',
-                        className:'uibar-t',
+                        className:'linb-uibar-t',
                         BARTR:{
                             tagName:'tr',
                             BARTDL:{
                                 tagName:'td',
-                                className:'uibar-tdl'
+                                className:'linb-uibar-tdl'
                             },
                             BARTDM:{
                                 $order:1,
                                 width:'100%',
                                 tagName:'td',
-                                className:'uibar-tdm'
+                                className:'linb-uibar-tdm'
                             },
                             BARTDR:{
                                 $order:2,
                                 tagName:'td',
-                                className:'uibar-tdr'
+                                className:'linb-uibar-tdr'
                             }
                         }
                     },
                     BARCMDL:{
                         tagName: 'div',
-                        className:'uibar-cmdl',
+                        className:'linb-uibar-cmdl',
                         TOGGLE:{
-                            className: 'uicmd-toggle {toggleCls}',
+                            className: 'linb-uicmd-toggle {toggleCls}',
                             style:'{toggleDisplay}',
                             $order:0
                         },
                         ICON:{
                             $order:0,
-                            className:'ui-icon {imageClass}',
+                            className:'linb-ui-icon {imageClass}',
                             style:'{backgroundImage} {backgroundPosition} {backgroundRepeat} {imageDisplay}'
                         },
                         CAPTION:{
@@ -25689,29 +25685,29 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                     },
                     BARCMDR:{
                         tagName: 'div',
-                        className:'uibar-cmdr',
+                        className:'linb-uibar-cmdr',
                         INFO:{
-                            className:'uicmd-info',
+                            className:'linb-uicmd-info',
                             style:'{infoDisplay}',
                             $order:1
                         },
                         OPT:{
-                            className:'uicmd-opt',
+                            className:'linb-uicmd-opt',
                             style:'{optDisplay}',
                             $order:1
                         },
                         POP:{
-                            className:'uicmd-pop',
+                            className:'linb-uicmd-pop',
                             style:'{popDisplay}',
                             $order:2
                         },
                         REFRESH:{
-                            className:'uicmd-refresh',
+                            className:'linb-uicmd-refresh',
                             style:'{refreshDisplay}',
                             $order:3
                         },
                         CLOSE:{
-                            className:'uicmd-close ',
+                            className:'linb-uicmd-close ',
                             style:'{closeDisplay}',
                             $order:4
                         }
@@ -25720,10 +25716,10 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                 MAIN:{
                     $order:2,
                     tagName:'div',
-                    className:'uicon-main',
+                    className:'linb-uicon-main',
                     MAINI:{
                         tagName:'div',
-                        className:'uicon-maini',
+                        className:'linb-uicon-maini',
                         PANEL:{
                             tagName:'div',
                             className:'{_bordertype}',
@@ -25735,30 +25731,30 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                 BBAR:{
                     $order:3,
                     tagName:'div',
-                    className:'uibar-bottom-s',
+                    className:'linb-uibar-bottom-s',
                     BBART:{
                         cellpadding:"0",
                         cellspacing:"0",
                         width:'100%',
                         border:'0',
                         tagName:'table',
-                        className:'uibar-t',
+                        className:'linb-uibar-t',
                         BBARTR:{
                             tagName:'tr',
                             BBARTDL:{
                                 tagName:'td',
-                                className:'uibar-tdl'
+                                className:'linb-uibar-tdl'
                             },
                             BBARTDM:{
                                 $order:1,
                                 width:'100%',
                                 tagName:'td',
-                                className:'uibar-tdm'
+                                className:'linb-uibar-tdm'
                             },
                             BBARTDR:{
                                 $order:2,
                                 tagName:'td',
-                                className:'uibar-tdr'
+                                className:'linb-uibar-tdr'
                             }
                         }
                     }
@@ -25967,7 +25963,7 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                         p=ns.properties,
                         node=ns.getSubNode('PANEL'),
                         reg=/^uiborder-/,
-                        pretag='uiborder-',
+                        pretag='linb-uiborder-',
                         root=ns.getRoot();
                     node.removeClass(reg);
                     node.addClass(pretag+v);
@@ -26000,7 +25996,7 @@ Class("linb.UI.Panel", "linb.UI.Div",{
             var nodisplay='display:none';
 
             data.panelDisplay = data.toggle?'':nodisplay;
-            data.toggleCls = data.toggle?'uicmd-toggle-checked':'';
+            data.toggleCls = data.toggle?'linb-uicmd-toggle-checked':'';
 
             data.toggleDisplay = data.toggleBtn?'':nodisplay;
             data.infoDisplay = data.infoBtn?'':nodisplay;
@@ -26009,7 +26005,7 @@ Class("linb.UI.Panel", "linb.UI.Div",{
             data.popDisplay = data.popBtn?'':nodisplay;
             data.refreshDisplay= data.refreshBtn?'':nodisplay;
             
-            data._bordertype='uiborder-'+data.borderType;
+            data._bordertype='linb-uiborder-'+data.borderType;
             
             profile._toggle = !!data.toggle;
 
@@ -26174,7 +26170,7 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
                 style:'position:absolute;display:none;',
                 POP:{
                     tagName:'div',
-                    className:'uibg-base'
+                    className:'linb-uibg-base'
                 }
             },
             LABEL:{
@@ -26182,11 +26178,11 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
             },
             FIRST:{
                 $order:1,
-                className:'ui-btn',
+                className:'linb-ui-btn',
                 FIRSTI:{
-                    className:'ui-btni',
+                    className:'linb-ui-btni',
                     FIRSTC:{
-                        className:'ui-btnc',
+                        className:'linb-ui-btnc',
                         FIRSTA:{
                             tagName:'a',
                             href:'#',
@@ -26197,11 +26193,11 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
             },
             PREM:{
                 $order:2,
-                className:'ui-btn',
+                className:'linb-ui-btn',
                 PREMI:{
-                    className:'ui-btni',
+                    className:'linb-ui-btni',
                     PREMC:{
-                        className:'ui-btnc',
+                        className:'linb-ui-btnc',
                         PREMA:{
                             tagName:'a',
                             href:'#',
@@ -26212,11 +26208,11 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
             },
             PREV:{
                 $order:3,
-                className:'ui-btn',
+                className:'linb-ui-btn',
                 PREVI:{
-                    className:'ui-btni',
+                    className:'linb-ui-btni',
                     PREVC:{
-                        className:'ui-btnc',
+                        className:'linb-ui-btnc',
                         PREVA:{
                             tagName:'a',
                             href:'#',
@@ -26228,11 +26224,11 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
             },
             CUR:{
                 $order:4,
-                className:'ui-btn ui-btn-focus',
+                className:'linb-ui-btn linb-ui-btn-focus',
                 CURI:{
-                    className:'ui-btni',
+                    className:'linb-ui-btni',
                     CURC:{
-                        className:'ui-btnc',
+                        className:'linb-ui-btnc',
                         CURA:{
                             tagName:'a',
                             href:'#',
@@ -26243,11 +26239,11 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
             },
             NEXT:{
                 $order:5,
-                className:'ui-btn',
+                className:'linb-ui-btn',
                 NEXTI:{
-                    className:'ui-btni',
+                    className:'linb-ui-btni',
                     NEXTC:{
-                        className:'ui-btnc',
+                        className:'linb-ui-btnc',
                         NEXTA:{
                             tagName:'a',
                             href:'#',
@@ -26259,11 +26255,11 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
             },
             NEXTM:{
                 $order:6,
-                className:'ui-btn',
+                className:'linb-ui-btn',
                 NEXTMI:{
-                    className:'ui-btni',
+                    className:'linb-ui-btni',
                     NEXTMC:{
-                        className:'ui-btnc',
+                        className:'linb-ui-btnc',
                         NEXTMA:{
                             tagName:'a',
                             href:'#',
@@ -26274,11 +26270,11 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
             },
             LAST:{
                 $order:7,
-                className:'ui-btn',
+                className:'linb-ui-btn',
                 LASTI:{
-                    className:'ui-btni',
+                    className:'linb-ui-btni',
                     LASTC:{
-                        className:'ui-btnc',
+                        className:'linb-ui-btnc',
                         LASTA:{
                             tagName:'a',
                             href:'#',
@@ -26303,10 +26299,10 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
                 'outline-offset':'',
                 '-moz-outline-offset': (linb.browser.gek && parseInt(linb.browser.ver)<3)?'':null
             },
-            'KEY .ui-btn, POP .ui-btn':{
+            'KEY .linb-ui-btn, POP .linb-ui-btn':{
                 'margin-right':'3px'
             },
-            'KEY .ui-btn a, POP .ui-btn a':{
+            'KEY .linb-ui-btn a, POP .linb-ui-btn a':{
                 padding:'0 3px 0 3px'
             },
             'PREV,CUR,NEXT':{
@@ -26464,7 +26460,7 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
             var _id=profile.keys.POPI+':'+profile.serialId+':';
             while(n<l){
                 //margin-top for ie6
-                a.push('<span style="margin-top:3px;" id="'+_id+n+'" class="ui-btn"><span class="ui-btni"><span class="ui-btnc"><a href="'+prop.uriTpl.replace('*',n)+'">'+prop.textTpl.replace('*',n)+'</a></span></span></span>')
+                a.push('<span style="margin-top:3px;" id="'+_id+n+'" class="linb-node linb-node-span linb-ui-btn"><span class="linb-node linb-node-span linb-ui-btni"><span class="linb-node linb-node-span linb-ui-btnc"><a class="linb-node linb-node-a" href="'+prop.uriTpl.replace('*',n)+'">'+prop.textTpl.replace('*',n)+'</a></span></span></span>')
                 n=n+m;
             }
             pop.width('auto');
@@ -26835,7 +26831,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                                         RULER:{},
                                         ICON:{
                                             $order:0,
-                                            className:'ui-icon {imageClass}',
+                                            className:'linb-ui-icon {imageClass}',
                                             style:'{backgroundImage} {backgroundPosition} {backgroundRepeat} {imageDisplay}'
                                         },
                                         CAPTION:{
@@ -26846,16 +26842,16 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                                             $order:2,
                                             OPT:{
                                                 $order:1,
-                                                className:'uicmd-opt',
+                                                className:'linb-uicmd-opt',
                                                 style:'{_opt}'
                                             },
                                             POP:{
-                                                className:'uicmd-pop',
+                                                className:'linb-uicmd-pop',
                                                 style:'{popDisplay}',
                                                 $order:1
                                             },
                                             CLOSE:{
-                                                className:'uicmd-close ',
+                                                className:'linb-uicmd-close ',
                                                 style:'{closeDisplay}',
                                                 $order:2
                                             }
@@ -26869,7 +26865,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                 panels:{
                     PANEL:{
                         tagName : 'div',
-                        className:'uibg-base',
+                        className:'linb-uibg-base',
                         style:"{_overflow};",
                         text:linb.UI.$childTag
                     }
@@ -27739,7 +27735,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
 Class("linb.UI.ButtonViews", "linb.UI.Tabs",{
     Initialize:function(){
         var t = this.getTemplate();
-        t.LIST.className='uibg-bar uiborder-outset';
+        t.LIST.className='linb-uibg-bar linb-uiborder-outset';
         delete t.LEFT;
         delete t.TOP;
         this.setTemplate(t);
@@ -27985,7 +27981,7 @@ Class("linb.UI.ButtonViews", "linb.UI.Tabs",{
                     },
                     ICON:{
                         $order:1,
-                        className:'ui-icon {imageClass}',
+                        className:'linb-ui-icon {imageClass}',
                         style:'{backgroundImage} {backgroundPosition} {backgroundRepeat} {imageDisplay}'
                     },
                     CAPTION:{
@@ -28036,7 +28032,7 @@ Class("linb.UI.ButtonViews", "linb.UI.Tabs",{
             checkBox:{
                 ini:false,
                 action:function(v){
-                    this.getSubNode('MARK',true).replaceClass(v ? /(uicmd-radio)|(\s+uicmd-radio)/g : /(^uicmd-check)|(\s+uicmd-check)/g , v ? ' uicmd-check' : ' uicmd-radio');
+                    this.getSubNode('MARK',true).replaceClass(v ? /(uicmd-radio)|(\s+uicmd-radio)/g : /(^uicmd-check)|(\s+uicmd-check)/g , v ? ' linb-uicmd-check' : ' linb-uicmd-radio');
                 }
             }
         },
@@ -28045,7 +28041,7 @@ Class("linb.UI.ButtonViews", "linb.UI.Tabs",{
             ClickEffected:{ITEM:null,MARK:'MARK'}
         },
         _prepareItem:function(profile, item){
-            item._markcls = profile.properties.checkBox?'uicmd-check':'uicmd-radio';
+            item._markcls = profile.properties.checkBox?'linb-uicmd-check':'linb-uicmd-radio';
         }
     }
 });
@@ -28447,7 +28443,7 @@ Class("linb.UI.TreeBar",["linb.UI","linb.absList","linb.absValue"],{
                             },
                             ITEMICON:{
                                 $order:3,
-                                className:'ui-icon {imageClass}',
+                                className:'linb-ui-icon {imageClass}',
                                 style:'{backgroundImage} {backgroundPosition} {backgroundRepeat} {imageDisplay}'
                             },
                             ITEMCAPTION:{
@@ -28846,7 +28842,7 @@ Class("linb.UI.TreeBar",["linb.UI","linb.absList","linb.absValue"],{
                 oitem._pid=pid;
 
             // set 'visible' will show when parent call .height()
-            item.togglemark = item.sub?'uicmd-toggle':'uicmd-none';
+            item.togglemark = item.sub?'linb-uicmd-toggle':'linb-uicmd-none';
 
             item.disabled = item.disabled?profile.getClass('KEY', '-disabled'):'';
             item.itemDisplay=item.hidden?'display:none;':'';
@@ -28990,7 +28986,7 @@ Class("linb.UI.TreeBar",["linb.UI","linb.absList","linb.absValue"],{
         },
         _tofold:function(profile,item,pid){
             profile.getSubNodeByItemId('BAR', pid).addClass(profile.getClass('BAR','-fold'));
-            profile.getSubNodeByItemId('TOGGLE', pid).replaceClass(new RegExp("\\buicmd-none\\b"), "uicmd-toggle");
+            profile.getSubNodeByItemId('TOGGLE', pid).replaceClass(new RegExp("\\buicmd-none\\b"), "linb-uicmd-toggle");
         },
         _onresize:function(profile,width,height){
             profile.getSubNode('BORDER').cssSize({ width :width?width:null, height :height?height:null});
@@ -29583,7 +29579,7 @@ Class("linb.UI.PopMenu",["linb.UI.Widget","linb.absList"],{
                     style:'{itemStyle}{itemDisplay}',
                     ICON:{
                         $order:0,
-                        className:'ui-icon {imageClass}',
+                        className:'linb-ui-icon {imageClass}',
                         style:'{backgroundImage} {backgroundPosition} {backgroundRepeat}'
                     },
                     CAPTION:{
@@ -29610,7 +29606,7 @@ Class("linb.UI.PopMenu",["linb.UI.Widget","linb.absList"],{
                     style:'{itemStyle}{itemDisplay}',
                     CHECKBOX:{
                         $order:0,
-                         className:'ui-icon {checkboxCls}'
+                         className:'linb-ui-icon {checkboxCls}'
                     },
                     CAPTION:{
                         text : '{caption}',
@@ -29635,7 +29631,7 @@ Class("linb.UI.PopMenu",["linb.UI.Widget","linb.absList"],{
                     style:'{itemStyle}{itemDisplay}',
                     RADIOBOX:{
                         $order:0,
-                         className:'ui-icon {radioboxCls}'
+                         className:'linb-ui-icon {radioboxCls}'
                     },
                     CAPTION:{
                         text : '{caption}',
@@ -30256,7 +30252,7 @@ Class("linb.UI.MenuBar",["linb.UI","linb.absList" ],{
                 tagName:'div'
             },
             BORDER:{
-                className:'uibg-bar uiborder-outset',
+                className:'linb-uibg-bar linb-uiborder-outset',
                 tagName:'div',
                 LIST:{
                     tagName:'div',
@@ -30279,7 +30275,7 @@ Class("linb.UI.MenuBar",["linb.UI","linb.absList" ],{
                                     className:' {typeCls} {disabled}',
                                     ICON:{
                                         $order:1,
-                                        className:'ui-icon {imageClass}',
+                                        className:'linb-ui-icon {imageClass}',
                                         style:'{backgroundImage} {backgroundPosition} {backgroundRepeat} {imageDisplay}'
                                     },
                                     CAPTION:{
@@ -30618,9 +30614,9 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
                         }
                         if('disabled' in options && options.disabled!=item.disabled){
                             if(options.disabled)
-                                n2.addClass('ui-itemdisabled');
+                                n2.addClass('linb-ui-itemdisabled');
                             else
-                                n2.removeClass('ui-itemdisabled');
+                                n2.removeClass('linb-ui-itemdisabled');
                         }
                         if('image' in options&& options.image!=item.image)
                             n1.css('background-image',options.image);
@@ -30684,7 +30680,7 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
             className:'{_className}',
             style:'{_style}',
             ITEMS:{
-                className:'uibg-bar uiborder-outset',
+                className:'linb-uibg-bar linb-uiborder-outset',
                 tagName:'div',
                 style:'{mode}',
                 text:'{items}'
@@ -30719,19 +30715,19 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
                                 text:'{label}'
                             },
                             BTN:{
-                                className:'ui-btn {itemcls} {itemClass}',
+                                className:'linb-ui-btn {itemcls} {itemClass}',
                                 style:'{itemStyle} {boxDisplay}',
                                 BTNI:{
-                                    className:'ui-btni',
+                                    className:'linb-ui-btni',
                                     BTNC:{
-                                        className:'ui-btnc',
+                                        className:'linb-ui-btnc',
                                         BOX:{
                                             tabindex: '{_tabindex}',
                                             BOXWRAP:{
                                                 tagName:'div',
                                                 ICON:{
                                                     $order:1,
-                                                    className:'ui-icon {imageClass}',
+                                                    className:'linb-ui-icon {imageClass}',
                                                     style:'{backgroundImage} {backgroundPosition} {backgroundRepeat}  {imageDisplay}'
                                                 },
                                                 CAPTION:{
@@ -30967,7 +30963,7 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
                         linb.UI.adjustData(profile,item, dataItem);
 
                         if(item.statusButton && !!item.value)
-                            dataItem.itemcls=" ui-btn-checked "+profile.getClass('BTN','-checked', !!item.value);
+                            dataItem.itemcls=" linb-ui-btn-checked "+profile.getClass('BTN','-checked', !!item.value);
 
                         dataItem.splitDisplay=dataItem.split?'':dn;
                         dataItem.labelDisplay=dataItem.label?'':dn;
@@ -31174,7 +31170,7 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
                         MOVE:{
                             $order:0,
                             tagName:'div',
-                            className:'uibg-bar {cls2} ',
+                            className:'linb-uibg-bar {cls2} ',
                             style:'{moveDisplay}'
                         },
                         CMD:{
@@ -31185,7 +31181,7 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
                         },
                         PANEL:{
                             tagName:'div',
-                            className:'uibg-base',
+                            className:'linb-uibg-base',
                             style:'position:absolute;left:0;top:0;{_overflow};',
                             text:linb.UI.$childTag
                         }
@@ -32787,9 +32783,9 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     if('sub' in options){
                         t=ns.getSubNode('ROWTOGGLE',rid);
                         if(options.sub)
-                            t.removeClass('uicmd-empty').addClass('uicmd-toggle2')
+                            t.removeClass('linb-uicmd-empty').addClass('linb-uicmd-toggle2')
                         else
-                            t.removeClass('uicmd-toggle2').addClass('uicmd-empty')
+                            t.removeClass('linb-uicmd-toggle2').addClass('linb-uicmd-empty')
                     }
 
                     if(t=options.height)
@@ -33047,7 +33043,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                 }
             });
             if(prop.dirtyMark && prop.showDirtyMark)
-                linb(arr).removeClass('ui-dirty');
+                linb(arr).removeClass('linb-ui-dirty');
         },
         resetColValue:function(colId){
             var profile=this.get(0),col=this.getHeaderByColId(colId),arr=[],prop=profile.properties;
@@ -33060,7 +33056,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                 }
             });
             if(prop.dirtyMark && prop.showDirtyMark)
-                linb(arr).removeClass('ui-dirty');
+                linb(arr).removeClass('linb-ui-dirty');
         },
         getActiveRow:function(){
             var ar,profile=this.get(0);
@@ -33308,7 +33304,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     delete v.dirty;
                 });
                 if(prop.dirtyMark && prop.showDirtyMark)
-                    profile.getSubNode('CELLA',true).removeClass('ui-dirty');
+                    profile.getSubNode('CELLA',true).removeClass('linb-ui-dirty');
             })
         },
         getDirtied:function(rowId, colId){
@@ -33368,7 +33364,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                                             style:'{rowDDDisplay}'
                                         },
                                         HFMARK:{
-                                            className:"uicmd-check",
+                                            className:"linb-uicmd-check",
                                             style:'{_rowMarkDisplay}'
                                         },
                                         GRIDCAPTION:{
@@ -33391,7 +33387,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     SCROLL:{
                         $order:1,
                         tagName:'div',
-                        className:'uibg-base ',
+                        className:'linb-uibg-base ',
                         BODY:{
                             tagName:'div',
                             text:'{rows}'
@@ -35755,7 +35751,7 @@ editorDropListHeight
                 cells = t.cells = [];
 
                 t[SubID]=temp;
-                t.subClass = row.sub?'uicmd-toggle2':'uicmd-empty';
+                t.subClass = row.sub?'linb-uicmd-toggle2':'linb-uicmd-empty';
 
                 // id to dom item id
                 a[row.id]=temp;
@@ -35958,11 +35954,11 @@ editorDropListHeight
                 else{
                     if(cell.value===cell.oValue){
                         if(psdm)
-                            node.removeClass('ui-dirty');
+                            node.removeClass('linb-ui-dirty');
                         delete cell.dirty;
                     }else{
                         if(psdm)
-                            node.addClass('ui-dirty');
+                            node.addClass('linb-ui-dirty');
                         cell.dirty=true;
                     }
                 }
@@ -37297,40 +37293,40 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
             TABSTOP1:{$order:-1},
             TBAR:{
                 tagName:'div',
-                className:'uibar-top',
+                className:'linb-uibar-top',
                 TBART:{
                     cellpadding:"0",
                     cellspacing:"0",
                     width:'100%',
                     border:'0',
                     tagName:'table',
-                    className:'uibar-t',
+                    className:'linb-uibar-t',
                     TBARTR:{
                         tagName:'tr',
                         TBARTDL:{
                             tagName:'td',
-                            className:'uibar-tdl'
+                            className:'linb-uibar-tdl'
                         },
                         TBARTDM:{
                             $order:1,
                             width:'100%',
                             tagName:'td',
-                            className:'uibar-tdm'
+                            className:'linb-uibar-tdm'
                         },
                         TBARTDR:{
                             $order:2,
                             tagName:'td',
-                            className:'uibar-tdr'
+                            className:'linb-uibar-tdr'
                         }
                     }
                 },
                 BARCMDL:{
                     $order:1,
                     tagName: 'div',
-                    className:'uibar-cmdl',
+                    className:'linb-uibar-cmdl',
                     ICON:{
                         $order:0,
-                        className:'ui-icon {imageClass}',
+                        className:'linb-ui-icon {imageClass}',
                         style:'{backgroundImage} {backgroundPosition} {backgroundRepeat} {imageDisplay}'
                     },
                     CAPTION:{
@@ -37341,50 +37337,50 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                 BARCMDR:{
                     $order:2,
                     tagName: 'div',
-                    className:'uibar-cmdr',
+                    className:'linb-uibar-cmdr',
                     INFO:{
-                        className:'uicmd-info',
+                        className:'linb-uicmd-info',
                         style:'{infoDisplay}',
                         $order:1
                     },
                     OPT:{
-                        className:'uicmd-opt',
+                        className:'linb-uicmd-opt',
                         style:'{optDisplay}',
                         $order:1
                     },
                     PIN:{
                         $order:2,
-                        className:'uicmd-pin',
+                        className:'linb-uicmd-pin',
                         style:'{pinDisplay}'
                     },
                     LAND:{
                         $order:3,
-                        className:'uicmd-land',
+                        className:'linb-uicmd-land',
                         style:'{landDisplay}'
                     },
                     REFRESH:{
-                        className:'uicmd-refresh',
+                        className:'linb-uicmd-refresh',
                         style:'{refreshDisplay}',
                         $order:4
                     },
                     MIN:{
                         $order:5,
-                        className:'uicmd-min',
+                        className:'linb-uicmd-min',
                         style:'{minDisplay}'
                     },
                     RESTORE:{
                         $order:6,
-                        className:'uicmd-restore',
+                        className:'linb-uicmd-restore',
                         style:'display:none;'
                     },
                     MAX:{
                         $order:7,
-                        className:'uicmd-max',
+                        className:'linb-uicmd-max',
                         style:'{maxDisplay}'
                     },
                     CLOSE:{
                         $order:8,
-                        className:'uicmd-close ',
+                        className:'linb-uicmd-close ',
                         style:'{closeDisplay}'
                     }
                 }
@@ -37392,10 +37388,10 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
             MAIN:{
                 $order:2,
                 tagName:'div',
-                className:'uicon-main',
+                className:'linb-uicon-main',
                 MAINI:{
                     tagName:'div',
-                    className:'uicon-maini',
+                    className:'linb-uicon-maini',
                     PANEL:{
                         tagName:'div',
                         style:"{_overflow};",
@@ -37406,30 +37402,30 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
             BBAR:{
                 $order:3,
                 tagName:'div',
-                className:'uibar-bottom',
+                className:'linb-uibar-bottom',
                 BBART:{
                     cellpadding:"0",
                     cellspacing:"0",
                     width:'100%',
                     border:'0',
                     tagName:'table',
-                    className:'uibar-t',
+                    className:'linb-uibar-t',
                     BBARTR:{
                         tagName:'tr',
                         BBARTDL:{
                             tagName:'td',
-                            className:'uibar-tdl'
+                            className:'linb-uibar-tdl'
                         },
                         BBARTDM:{
                             $order:1,
                             width:'100%',
                             tagName:'td',
-                            className:'uibar-tdm'
+                            className:'linb-uibar-tdm'
                         },
                         BBARTDR:{
                             $order:2,
                             tagName:'td',
-                            className:'uibar-tdr'
+                            className:'linb-uibar-tdr'
                         }
                     }
                 }
@@ -38299,6 +38295,11 @@ if(linb.browser.ie){
                 maxBtn:false,
                 pinBtn:false,
                 resizer:false
+            },{
+                onHotKeydown:function(p,k){
+                    if(k.key=='esc')
+                        dialog.close();
+                }
             }),
 
             cmd = dialog.$cmd = new linb.UI.Div({
@@ -38315,7 +38316,7 @@ if(linb.browser.ie){
                     dialog.destroy();
                 },
                 onHotKeydown:function(p,k){
-                    if(k.key=='esc')
+                    if(k.key=='enter')
                         dialog.close();
                 }
             },null,null,{KEY:'margin:0 4px'})),

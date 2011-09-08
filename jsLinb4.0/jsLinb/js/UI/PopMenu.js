@@ -247,7 +247,7 @@ Class("linb.UI.PopMenu",["linb.UI.Widget","linb.absList"],{
                     style:'{itemStyle}{itemDisplay}',
                     ICON:{
                         $order:0,
-                        className:'ui-icon {imageClass}',
+                        className:'linb-ui-icon {imageClass}',
                         style:'{backgroundImage} {backgroundPosition} {backgroundRepeat}'
                     },
                     CAPTION:{
@@ -274,7 +274,7 @@ Class("linb.UI.PopMenu",["linb.UI.Widget","linb.absList"],{
                     style:'{itemStyle}{itemDisplay}',
                     CHECKBOX:{
                         $order:0,
-                         className:'ui-icon {checkboxCls}'
+                         className:'linb-ui-icon {checkboxCls}'
                     },
                     CAPTION:{
                         text : '{caption}',
@@ -299,7 +299,7 @@ Class("linb.UI.PopMenu",["linb.UI.Widget","linb.absList"],{
                     style:'{itemStyle}{itemDisplay}',
                     RADIOBOX:{
                         $order:0,
-                         className:'ui-icon {radioboxCls}'
+                         className:'linb-ui-icon {radioboxCls}'
                     },
                     CAPTION:{
                         text : '{caption}',

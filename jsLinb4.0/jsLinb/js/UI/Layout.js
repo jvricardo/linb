@@ -172,7 +172,7 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
                         MOVE:{
                             $order:0,
                             tagName:'div',
-                            className:'uibg-bar {cls2} ',
+                            className:'linb-uibg-bar {cls2} ',
                             style:'{moveDisplay}'
                         },
                         CMD:{
@@ -183,7 +183,7 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
                         },
                         PANEL:{
                             tagName:'div',
-                            className:'uibg-base',
+                            className:'linb-uibg-base',
                             style:'position:absolute;left:0;top:0;{_overflow};',
                             text:linb.UI.$childTag
                         }

@@ -53,12 +53,12 @@ Class("linb.UI.Group", "linb.UI.Div",{
                     HANDLE:{
                         tabindex: '{tabindex}',
                         TOGGLE:{
-                            className: 'uicmd-toggle2 {toggleCls2}',
+                            className: 'linb-uicmd-toggle2 {toggleCls2}',
                             style:"{toggleDispplay}"
                         },
                         ICON:{
                             $order:1,
-                            className:'ui-icon {imageClass}',
+                            className:'linb-ui-icon {imageClass}',
                             style:'{backgroundImage} {backgroundPosition} {backgroundRepeat} {imageDisplay}'
                         },
                         CAPTION : {
@@ -178,7 +178,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
 
             data.panelDisplay = data.toggleBtn&&!data.toggle?nodisplay:'';
             data.toggleCls = data.toggleBtn&&!data.toggle?profile.getClass('FIELDSET','-checked'):'';
-            data.toggleCls2 = data.toggleBtn&&data.toggle?'uicmd-toggle2-checked':'';
+            data.toggleCls2 = data.toggleBtn&&data.toggle?'linb-uicmd-toggle2-checked':'';
             
             profile._toggle = !!data.toggle;
             

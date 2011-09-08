@@ -507,9 +507,9 @@ Class("linb.UI.Input", ["linb.UI.Widget","linb.absValue"] ,{
                 action: function(v){
                     var i=this.getSubNode('INPUT');
                     if(v)
-                        i.addClass('ui-inputdisabled');
+                        i.addClass('linb-ui-inputdisabled');
                     else
-                        i.removeClass('ui-inputdisabled');
+                        i.removeClass('linb-ui-inputdisabled');
                     if((""+i.get(0).type).toLowerCase()!='button')
                         // use readonly for selection
                         i.attr('readonly'/*'disabled'*/,v);

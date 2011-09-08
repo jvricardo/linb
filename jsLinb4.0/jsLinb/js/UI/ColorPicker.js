@@ -65,10 +65,10 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
             arr.push('<span  '+'id="'+key+'-SC:'+id+':'+list[i]+'" style="background-color:#'+list[i]+'" '+evs+'>'+list[i]+'</span>');
 
         //data
-        data = '<div '+evs+'><span class="'+cls+'-txt"'+evs+'>R: </span><span '+'id="'+key+'-R:'+id+':" class="'+cls+'-dd2 ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>R</span><span style="width:8px;height:8px" '+evs+' ></span><span class="'+cls+'-txt"'+evs+'>H: </span><span '+'id="'+key+'-HH:'+id+':" class="'+cls+'-dd2 ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>H</span><span '+evs+'>\xB0</span></div>' +
-               '<div '+evs+'><span class="'+cls+'-txt"'+evs+'>G: </span><span '+'id="'+key+'-G:'+id+':" class="'+cls+'-dd2 ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>G</span><span style="width:8px;height:8px" '+evs+' ></span><span class="'+cls+'-txt"'+evs+'>S: </span><span '+'id="'+key+'-S:'+id+':" class="'+cls+'-dd2 ui-draggable '+tag+'DD2_CC'+tag+'"  '+evs+'>S</span><span '+evs+'>%</span></div>' +
-               '<div '+evs+'><span class="'+cls+'-txt"'+evs+'>B: </span><span '+'id="'+key+'-B:'+id+':" class="'+cls+'-dd2 ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>B</span><span style="width:8px;height:8px" '+evs+' ></span><span class="'+cls+'-txt"'+evs+'>V: </span><span '+'id="'+key+'-V:'+id+':" class="'+cls+'-dd2 ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>V</span><span '+evs+'>%</span></div>' +
-               '<div '+evs+'><span style="width:38px"'+evs+'>HEX: </span><span '+'id="'+key+'-H:'+id+':" class="'+cls+'-dd3 ui-draggable '+tag+'DD3_CC'+tag+'" '+evs+'>H</span><span '+'id="'+key+'-E:'+id+':" class="'+cls+'-dd3 ui-draggable '+tag+'DD3_CC'+tag+'" '+evs+''+evs+'>E</span><span '+'id="'+key+'-X:'+id+':" class="'+cls+'-dd1 ui-draggable '+tag+'DD1_CC'+tag+'" '+evs+'>X</span></div>'
+        data = '<div '+evs+'><span class="'+cls+'-txt"'+evs+'>R: </span><span '+'id="'+key+'-R:'+id+':" class="'+cls+'-dd2 linb-ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>R</span><span style="width:8px;height:8px" '+evs+' ></span><span class="'+cls+'-txt"'+evs+'>H: </span><span '+'id="'+key+'-HH:'+id+':" class="'+cls+'-dd2 linb-ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>H</span><span '+evs+'>\xB0</span></div>' +
+               '<div '+evs+'><span class="'+cls+'-txt"'+evs+'>G: </span><span '+'id="'+key+'-G:'+id+':" class="'+cls+'-dd2 linb-ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>G</span><span style="width:8px;height:8px" '+evs+' ></span><span class="'+cls+'-txt"'+evs+'>S: </span><span '+'id="'+key+'-S:'+id+':" class="'+cls+'-dd2 linb-ui-draggable '+tag+'DD2_CC'+tag+'"  '+evs+'>S</span><span '+evs+'>%</span></div>' +
+               '<div '+evs+'><span class="'+cls+'-txt"'+evs+'>B: </span><span '+'id="'+key+'-B:'+id+':" class="'+cls+'-dd2 linb-ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>B</span><span style="width:8px;height:8px" '+evs+' ></span><span class="'+cls+'-txt"'+evs+'>V: </span><span '+'id="'+key+'-V:'+id+':" class="'+cls+'-dd2 linb-ui-draggable '+tag+'DD2_CC'+tag+'" '+evs+'>V</span><span '+evs+'>%</span></div>' +
+               '<div '+evs+'><span style="width:38px"'+evs+'>HEX: </span><span '+'id="'+key+'-H:'+id+':" class="'+cls+'-dd3 linb-ui-draggable '+tag+'DD3_CC'+tag+'" '+evs+'>H</span><span '+'id="'+key+'-E:'+id+':" class="'+cls+'-dd3 linb-ui-draggable '+tag+'DD3_CC'+tag+'" '+evs+''+evs+'>E</span><span '+'id="'+key+'-X:'+id+':" class="'+cls+'-dd1 linb-ui-draggable '+tag+'DD1_CC'+tag+'" '+evs+'>X</span></div>'
         ns.setTemplate({
             style:'{_style};height:auto;width:{_width}px;',
             tagName : 'div',
@@ -83,36 +83,36 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
                         cellspacing:"0",
                         width:'100%',
                         border:'0',
-                        className:'uibar-t',
+                        className:'linb-uibar-t',
                         tagName:'table',
                         BARTR:{
                             tagName:'tr',
                             BARTDL:{
                                 tagName:'td',
-                                className:'uibar-tdl'
+                                className:'linb-uibar-tdl'
                             },
                             BARTDM:{
                                 $order:1,
                                 width:'100%',
                                 tagName:'td',
-                                className:'uibar-tdm'
+                                className:'linb-uibar-tdm'
                             },
                             BARTDR:{
                                 $order:2,
                                 tagName:'td',
-                                className:'uibar-tdr'
+                                className:'linb-uibar-tdr'
                             }
                         }
                     },
                     BARCMDL:{
                         tagName: 'div',
-                        className:'uibar-cmdl'
+                        className:'linb-uibar-cmdl'
                     },
                     BARCMDR:{
                         tagName: 'div',
-                        className:'uibar-cmdr',
+                        className:'linb-uibar-cmdr',
                         CLOSE:{
-                            className:'uicmd-close ',
+                            className:'linb-uicmd-close ',
                             style:'{closeDisplay}'
                         }
                     }
@@ -120,10 +120,10 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
                 MAIN:{
                     $order:2,
                     tagName:'div',
-                    className:'uicon-main',
+                    className:'linb-uicon-main',
                     MAINI:{
                         tagName:'div',
-                        className:'uicon-maini',
+                        className:'linb-uicon-maini',
                         CON:{
                             $order:1,
                             tagName:'div',
@@ -179,19 +179,19 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
                 TAIL:{
                     $order:3,
                     tagName:'div',
-                    className:'uicon-main',
+                    className:'linb-uicon-main',
                     TAILI:{
                         tagName:'div',
-                        className:'uicon-maini',
+                        className:'linb-uicon-maini',
                         CAPTION:{
                             text : '{caption}'
                         },
                         SET:{
-                            className:'ui-btn',
+                            className:'linb-ui-btn',
                             SETI:{
-                                className:'ui-btni',
+                                className:'linb-ui-btni',
                                 SETC:{
-                                    className:'ui-btnc',
+                                    className:'linb-ui-btnc',
                                     SETA:{
                                         tabindex: '{tabindex}',
                                         text:linb.wrapRes('inline.set')
@@ -208,30 +208,30 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
                 BBAR:{
                     $order:4,
                     tagName:'div',
-                    className:'uibar-bottom-s',
+                    className:'linb-uibar-bottom-s',
                     BBART:{
                         cellpadding:"0",
                         cellspacing:"0",
                         width:'100%',
                         border:'0',
                         tagName:'table',
-                        className:'uibar-t',
+                        className:'linb-uibar-t',
                         BBARTR:{
                             tagName:'tr',
                             BBARTDL:{
                                 tagName:'td',
-                                className:'uibar-tdl'
+                                className:'linb-uibar-tdl'
                             },
                             BBARTDM:{
                                 $order:1,
                                 width:'100%',
                                 tagName:'td',
-                                className:'uibar-tdm'
+                                className:'linb-uibar-tdm'
                             },
                             BBARTDR:{
                                 $order:2,
                                 tagName:'td',
-                                className:'uibar-tdr'
+                                className:'linb-uibar-tdr'
                             }
                         }
                     }
@@ -257,9 +257,9 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
                 ini:true,
                 action:function(v){
                     if(v)
-                        this.getSubNode('BAR').replaceClass('uibar-top-s','uibar-top');
+                        this.getSubNode('BAR').replaceClass('linb-uibar-top-s','linb-uibar-top');
                     else
-                        this.getSubNode('BAR').replaceClass('uibar-top','uibar-top-s');
+                        this.getSubNode('BAR').replaceClass('linb-uibar-top','linb-uibar-top-s');
                 }
             },
             closeBtn:{
@@ -287,7 +287,7 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
                 padding:'4px 5px 4px 0'
             },
             CON:{
-                height:'196px',
+                height:'198px',
                 padding:'3px',
                 position:'relative',
                 border:'solid 1px #648CB4'
@@ -302,7 +302,6 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
             },
             'DATA div':{
                 'padding-top':'3px',
-                'height':'20px',
                 'clear':'both'
             },
             TXT:{
@@ -681,7 +680,7 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
         _prepareData:function(profile){
             var data=arguments.callee.upper.call(this, profile);
             var nodisplay='display:none';
-            data.classBar= data.barDisplay?'uibar-top':'uibar-top-s';
+            data.classBar= data.barDisplay?'linb-uibar-top':'linb-uibar-top-s';
             data.closeDisplay = data.closeBtn?'':nodisplay;
             data._width = data.advance?'410':'210';
             data.advDispay = data.advance?'':'display:none;';

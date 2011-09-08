@@ -111,7 +111,7 @@ Class('App', 'linb.Com',{
                     caption:"Show Dom id"
                 },{type:'split'},{
                     id:'delete',
-                    imageClass:"uicmd-remove",
+                    imageClass:"linb-uicmd-remove",
                     caption:"Delete Item"
                 }]);
                 this._pop=pop;

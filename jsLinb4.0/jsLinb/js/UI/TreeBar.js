@@ -229,7 +229,7 @@ Class("linb.UI.TreeBar",["linb.UI","linb.absList","linb.absValue"],{
                             },
                             ITEMICON:{
                                 $order:3,
-                                className:'ui-icon {imageClass}',
+                                className:'linb-ui-icon {imageClass}',
                                 style:'{backgroundImage} {backgroundPosition} {backgroundRepeat} {imageDisplay}'
                             },
                             ITEMCAPTION:{
@@ -628,7 +628,7 @@ Class("linb.UI.TreeBar",["linb.UI","linb.absList","linb.absValue"],{
                 oitem._pid=pid;
 
             // set 'visible' will show when parent call .height()
-            item.togglemark = item.sub?'uicmd-toggle':'uicmd-none';
+            item.togglemark = item.sub?'linb-uicmd-toggle':'linb-uicmd-none';
 
             item.disabled = item.disabled?profile.getClass('KEY', '-disabled'):'';
             item.itemDisplay=item.hidden?'display:none;':'';
@@ -772,7 +772,7 @@ Class("linb.UI.TreeBar",["linb.UI","linb.absList","linb.absValue"],{
         },
         _tofold:function(profile,item,pid){
             profile.getSubNodeByItemId('BAR', pid).addClass(profile.getClass('BAR','-fold'));
-            profile.getSubNodeByItemId('TOGGLE', pid).replaceClass(new RegExp("\\buicmd-none\\b"), "uicmd-toggle");
+            profile.getSubNodeByItemId('TOGGLE', pid).replaceClass(new RegExp("\\buicmd-none\\b"), "linb-uicmd-toggle");
         },
         _onresize:function(profile,width,height){
             profile.getSubNode('BORDER').cssSize({ width :width?width:null, height :height?height:null});

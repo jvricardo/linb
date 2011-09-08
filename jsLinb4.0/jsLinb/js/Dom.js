@@ -1058,8 +1058,8 @@ Class('linb.Dom','linb.absBox',{
         },
         setSelectable:function(value){
             var me=arguments.callee,cls;
-            this.removeClass("ui-selectable").removeClass("ui-unselectable");
-            this.addClass(value?"ui-selectable":"ui-unselectable");
+            this.removeClass("linb-ui-selectable").removeClass("linb-ui-unselectable");
+            this.addClass(value?"linb-ui-selectable":"linb-ui-unselectable");
             return this.each(function(o){
                 if(linb.browser.ie)
                     o._onlinbsel=value?"true":"false";

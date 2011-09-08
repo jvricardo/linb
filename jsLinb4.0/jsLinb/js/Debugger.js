@@ -137,7 +137,7 @@ Class('linb.Debugger', null, {
 
            if(!div){
                div =
-               '<div class="uibg-bar uiborder-outset" style="font-size:0;line-height:0;border:solid 1px #cdcdcd;position:absolute;overflow:visible;top:-50px;z-index:'+linb.Dom.TOP_ZINDEX+'">' +
+               '<div class="linb-uibg-bar linb-uiborder-outset" style="font-size:0;line-height:0;border:solid 1px #cdcdcd;position:absolute;overflow:visible;top:-50px;z-index:'+linb.Dom.TOP_ZINDEX+'">' +
                '<div style="font-size:14px;overflow:hidden;font-weight:bold;padding:2px;"></div>'+
                '<div style="padding:5px;overflow:hidden;"></div>'+
                '</div>';

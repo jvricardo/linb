@@ -359,9 +359,9 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     if('sub' in options){
                         t=ns.getSubNode('ROWTOGGLE',rid);
                         if(options.sub)
-                            t.removeClass('uicmd-empty').addClass('uicmd-toggle2')
+                            t.removeClass('linb-uicmd-empty').addClass('linb-uicmd-toggle2')
                         else
-                            t.removeClass('uicmd-toggle2').addClass('uicmd-empty')
+                            t.removeClass('linb-uicmd-toggle2').addClass('linb-uicmd-empty')
                     }
 
                     if(t=options.height)
@@ -619,7 +619,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                 }
             });
             if(prop.dirtyMark && prop.showDirtyMark)
-                linb(arr).removeClass('ui-dirty');
+                linb(arr).removeClass('linb-ui-dirty');
         },
         resetColValue:function(colId){
             var profile=this.get(0),col=this.getHeaderByColId(colId),arr=[],prop=profile.properties;
@@ -632,7 +632,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                 }
             });
             if(prop.dirtyMark && prop.showDirtyMark)
-                linb(arr).removeClass('ui-dirty');
+                linb(arr).removeClass('linb-ui-dirty');
         },
         getActiveRow:function(){
             var ar,profile=this.get(0);
@@ -880,7 +880,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     delete v.dirty;
                 });
                 if(prop.dirtyMark && prop.showDirtyMark)
-                    profile.getSubNode('CELLA',true).removeClass('ui-dirty');
+                    profile.getSubNode('CELLA',true).removeClass('linb-ui-dirty');
             })
         },
         getDirtied:function(rowId, colId){
@@ -940,7 +940,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                                             style:'{rowDDDisplay}'
                                         },
                                         HFMARK:{
-                                            className:"uicmd-check",
+                                            className:"linb-uicmd-check",
                                             style:'{_rowMarkDisplay}'
                                         },
                                         GRIDCAPTION:{
@@ -963,7 +963,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     SCROLL:{
                         $order:1,
                         tagName:'div',
-                        className:'uibg-base ',
+                        className:'linb-uibg-base ',
                         BODY:{
                             tagName:'div',
                             text:'{rows}'
@@ -3327,7 +3327,7 @@ editorDropListHeight
                 cells = t.cells = [];
 
                 t[SubID]=temp;
-                t.subClass = row.sub?'uicmd-toggle2':'uicmd-empty';
+                t.subClass = row.sub?'linb-uicmd-toggle2':'linb-uicmd-empty';
 
                 // id to dom item id
                 a[row.id]=temp;
@@ -3530,11 +3530,11 @@ editorDropListHeight
                 else{
                     if(cell.value===cell.oValue){
                         if(psdm)
-                            node.removeClass('ui-dirty');
+                            node.removeClass('linb-ui-dirty');
                         delete cell.dirty;
                     }else{
                         if(psdm)
-                            node.addClass('ui-dirty');
+                            node.addClass('linb-ui-dirty');
                         cell.dirty=true;
                     }
                 }

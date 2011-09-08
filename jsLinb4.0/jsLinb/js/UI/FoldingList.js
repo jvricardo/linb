@@ -78,7 +78,7 @@ Class("linb.UI.FoldingList", ["linb.UI.List"],{
                                 tagName:'div',
                                 TOGGLE:{
                                     $order:0,
-                                    className:'uicmd-toggle {_tlgchecked}'
+                                    className:'linb-uicmd-toggle {_tlgchecked}'
                                 },
                                 CAP1:{
                                     $order:1,
@@ -95,7 +95,7 @@ Class("linb.UI.FoldingList", ["linb.UI.List"],{
                                 },
                                 OPT:{
                                     $order:1,
-                                    className:'uicmd-opt',
+                                    className:'linb-uicmd-opt',
                                     style:'{_opt}'
                                 }
                             }/*,
@@ -108,7 +108,7 @@ Class("linb.UI.FoldingList", ["linb.UI.List"],{
                     BODY:{
                         $order:1,
                         tagName : 'div',
-                        className:'uibg-base',
+                        className:'linb-uibg-base',
                         BODYI:{
                             $order:0,
                             tagName : 'div',
@@ -131,11 +131,11 @@ Class("linb.UI.FoldingList", ["linb.UI.List"],{
             'items.cmds':{
                 $order:2,
                 CMD:{
-                    className:'ui-btn',
+                    className:'linb-ui-btn',
                     CMDI:{
-                        className:'ui-btni',
+                        className:'linb-ui-btni',
                         CMDC:{
-                            className:'ui-btnc',
+                            className:'linb-ui-btnc',
                             CMDA:{
                                 tabindex: '{_tabindex}',
                                 text:'{caption}'

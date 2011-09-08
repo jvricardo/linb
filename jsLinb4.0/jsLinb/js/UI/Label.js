@@ -20,7 +20,7 @@ Class("linb.UI.Label", "linb.UI.Widget",{
                 style:'display:none;',
                 SICON:{
                     $order:0,
-                    className:'ui-icon {imageClass}',
+                    className:'linb-ui-icon {imageClass}',
                     style:'{backgroundImage} {backgroundPosition} {backgroundRepeat} {imageDisplay}'
                 },
                 SCAPTION:{
@@ -33,7 +33,7 @@ Class("linb.UI.Label", "linb.UI.Widget",{
                 $order:2,
                 ICON:{
                     $order:0,
-                    className:'ui-icon {imageClass}',
+                    className:'linb-ui-icon {imageClass}',
                     style:'{backgroundImage} {backgroundPosition} {backgroundRepeat} {imageDisplay}'
                 },
                 CAPTION:{

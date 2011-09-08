@@ -88,7 +88,7 @@ Class("linb.UI.List", ["linb.UI", "linb.absList","linb.absValue" ],{
         Templates:{
             tagName : 'div',
             style:'{_style}',
-            className:'uibg-base {_className}',
+            className:'linb-uibg-base {_className}',
             ITEMS:{
                $order:10,
                tagName:'div',
@@ -107,7 +107,7 @@ Class("linb.UI.List", ["linb.UI", "linb.absList","linb.absValue" ],{
                         },
                         ICON:{
                             $order:10,
-                            className:'ui-icon {imageClass}',
+                            className:'linb-ui-icon {imageClass}',
                             style:'{backgroundImage} {backgroundPosition} {backgroundRepeat} {imageDisplay}'
                         },
                         CAPTION:{
@@ -337,7 +337,7 @@ Class("linb.UI.List", ["linb.UI", "linb.absList","linb.absValue" ],{
                         p=ns.properties,
                         node=ns.getSubNode('ITEMS'),
                         reg=/^uiborder-/,
-                        pretag='uiborder-',
+                        pretag='linb-uiborder-',
                         root=ns.getRoot();
                     node.removeClass(reg);
                     node.addClass(pretag+v);
@@ -398,7 +398,7 @@ Class("linb.UI.List", ["linb.UI", "linb.absList","linb.absValue" ],{
         },
         _prepareData:function(profile){
             var data=arguments.callee.upper.call(this, profile);
-            data._bordertype='uiborder-'+data.borderType;
+            data._bordertype='linb-uiborder-'+data.borderType;
             return data;
         },
         _prepareItem:function(profile, item){

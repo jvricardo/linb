@@ -894,7 +894,7 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                 },
                 TBAR:{
                     tagName:'div',
-                    className:'uibar-top',
+                    className:'linb-uibar-top',
                     style:'{_bardisplay};',
                     TBART:{
                         cellpadding:"0",
@@ -902,29 +902,29 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                         width:'100%',
                         border:'0',
                         tagName:'table',
-                        className:'uibar-t',
+                        className:'linb-uibar-t',
                         TBARTR:{
                             tagName:'tr',
                             TBARTDL:{
                                 tagName:'td',
-                                className:'uibar-tdl'
+                                className:'linb-uibar-tdl'
                             },
                             TBARTDM:{
                                 $order:1,
                                 width:'100%',
                                 tagName:'td',
-                                className:'uibar-tdm'
+                                className:'linb-uibar-tdm'
                             },
                             TBARTDR:{
                                 $order:2,
                                 tagName:'td',
-                                className:'uibar-tdr'
+                                className:'linb-uibar-tdr'
                             }
                         }
                     },
                     BARCMDL:{
                         tagName:'div',
-                        className:'uibar-cmdl',
+                        className:'linb-uibar-cmdl',
                         DATE:{$order:0,style:'{dateDisplay}'},
                         PRE:{$order:2},
                         'ZOOMIN':{$order:3,style:'{zoomDisplay}'},
@@ -933,15 +933,15 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                     },
                     BARCMDR:{
                         tagName: 'div',
-                        className:'uibar-cmdr',
+                        className:'linb-uibar-cmdr',
                         OPT:{
-                            className:'uicmd-opt',
+                            className:'linb-uicmd-opt',
                             style:'{optDisplay}',
                             $order:0
                         },
                         CLOSE:{
                             $order:4,
-                            className:'uicmd-close ',
+                            className:'linb-uicmd-close ',
                             style:'{closeDisplay}'
                         }
                     }
@@ -949,10 +949,10 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                 MAIN:{
                     $order:2,
                     tagName:'div',
-                    className:'uicon-main',
+                    className:'linb-uicon-main',
                     MAINI:{
                         tagName:'div',
-                        className:'uicon-maini',
+                        className:'linb-uicon-maini',
                         MAINC:{
                             tagName:'div',
                             MAINP:{
@@ -1013,9 +1013,9 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                 TAIL:{
                     $order:4,
                     tagName:'div',
-                    className:'uicon-main',
+                    className:'linb-uicon-main',
                     TIPS:{
-                        className:'uicon-maini',
+                        className:'linb-uicon-maini',
                         style:'z-index:2;{_tipsdisplay};',
                         tagName:'div'
                     }
@@ -1024,30 +1024,30 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                     $order:5,
                     tagName:'div',
                     style:'{_bardisplay};',
-                    className:'uibar-bottom-s',
+                    className:'linb-uibar-bottom-s',
                     BBART:{
                         cellpadding:"0",
                         cellspacing:"0",
                         width:'100%',
                         border:'0',
                         tagName:'table',
-                        className:'uibar-t',
+                        className:'linb-uibar-t',
                         BBARTR:{
                             tagName:'tr',
                             BBARTDL:{
                                 tagName:'td',
-                                className:'uibar-tdl'
+                                className:'linb-uibar-tdl'
                             },
                             BBARTDM:{
                                 $order:1,
                                 width:'100%',
                                 tagName:'td',
-                                className:'uibar-tdm'
+                                className:'linb-uibar-tdm'
                             },
                             BBARTDR:{
                                 $order:2,
                                 tagName:'td',
-                                className:'uibar-tdr'
+                                className:'linb-uibar-tdr'
                             }
                         }
                     }
@@ -2856,7 +2856,7 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                         p=ns.properties,
                         node=ns.getSubNode('BORDER'),
                         reg=/^uiborder-/,
-                        pretag='uiborder-',
+                        pretag='linb-uiborder-',
                         root=ns.getRoot();
                     node.removeClass(reg);
                     node.addClass(pretag+v);
@@ -2969,7 +2969,7 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
         },
         _prepareData:function(profile){
             var data=arguments.callee.upper.call(this, profile);
-            data._bordertype='uiborder-'+data.borderType;
+            data._bordertype='linb-uiborder-'+data.borderType;
             
             
             
@@ -3125,7 +3125,7 @@ Class("linb.UI.FoldingTabs", "linb.UI.Tabs",{
             BOX:{
                 $order:0,
                 tagName : 'div',
-                className:'uibg-base',
+                className:'linb-uibg-base',
                 ITEMS:{
                     tagName : 'div',
                     text:"{items}"
@@ -3148,11 +3148,11 @@ Class("linb.UI.FoldingTabs", "linb.UI.Tabs",{
                                     tagName:'div',
                                     TOGGLE:{
                                         $order:0,
-                                        className:'uicmd-toggle {_tlgchecked}'
+                                        className:'linb-uicmd-toggle {_tlgchecked}'
                                     },
                                     ICON:{
                                         $order:2,
-                                        className:'ui-icon {imageClass}',
+                                        className:'linb-ui-icon {imageClass}',
                                         style:'{backgroundImage} {backgroundPosition} {backgroundRepeat} {imageDisplay}'
                                     },
                                     CAPTION:{
@@ -3172,16 +3172,16 @@ Class("linb.UI.FoldingTabs", "linb.UI.Tabs",{
                                         $order:2,
                                         OPT:{
                                             $order:1,
-                                            className:'uicmd-opt',
+                                            className:'linb-uicmd-opt',
                                             style:'{_opt}'
                                         },
                                         POP:{
-                                            className:'uicmd-pop',
+                                            className:'linb-uicmd-pop',
                                             style:'{popDisplay}',
                                             $order:1
                                         },
                                         CLOSE:{
-                                            className:'uicmd-close ',
+                                            className:'linb-uicmd-close ',
                                             style:'{closeDisplay}',
                                             $order:2
                                         }
@@ -3201,7 +3201,7 @@ Class("linb.UI.FoldingTabs", "linb.UI.Tabs",{
                                 PANEL:{
                                     tagName : 'div',
                                     style:'{_itemHeight}',
-                                    className:'uibg-base',
+                                    className:'linb-uibg-base',
                                     text:linb.UI.$childTag
                                 }
                             }
@@ -3558,21 +3558,21 @@ Class("linb.UI.Poll", "linb.UI.List",{
             tagName : 'DIV',
             style:'{titleDisplay}',
             text : '{title}',
-            className:"uibg-bar uiborder-outset {disabled} {_cls}"
+            className:"linb-uibg-bar linb-uiborder-outset {disabled} {_cls}"
         };
         t.TAIL={
             $order:20,
             tagName : 'DIV',
-            className:"uibg-bar uiborder-outset {disabled}",
+            className:"linb-uibg-bar linb-uiborder-outset {disabled}",
             text:"{cmds}"
         };
         t.$submap={
             items:{
                 OUTER:{
                     tagName:'div',
-                    className:'uibg-bar uiborder-outset',
+                    className:'linb-uibg-bar linb-uiborder-outset',
                     TOGGLE:{
-                        className:'uicmd-toggle',
+                        className:'linb-uicmd-toggle',
                         style:'{_togdisplay}'
                     },
                     ITEM:{
@@ -3605,12 +3605,12 @@ Class("linb.UI.Poll", "linb.UI.List",{
                             },
                             DEL:{
                                 $order:2,
-                                className:'ui-btn',
+                                className:'linb-ui-btn',
                                 style:'{_del}',
                                 DELI:{
-                                    className:'ui-btni',
+                                    className:'linb-ui-btni',
                                     DELC:{
-                                        className:'ui-btnc',
+                                        className:'linb-ui-btnc',
                                         DELA:{
                                             tagName:'button',
                                             text:'{removeText}'
@@ -3633,11 +3633,11 @@ Class("linb.UI.Poll", "linb.UI.List",{
             },
             cmds:{
                 CMD:{
-                    className:'ui-btn',
+                    className:'linb-ui-btn',
                     CMDI:{
-                        className:'ui-btni',
+                        className:'linb-ui-btni',
                         CMDC:{
-                            className:'ui-btnc',
+                            className:'linb-ui-btnc',
                             CMDA:{
                                 tabindex: '{_tabindex}',
                                 text:'{caption}'
@@ -4040,14 +4040,14 @@ Class("linb.UI.Poll", "linb.UI.List",{
             item._body= item._body || 'Loading...'
             if(item.id!='$custom'){
                 item._togdisplay=((p.toggle && item.toggle!==false) || item.toggle)?'':'display:none;';
-                item._optclass=p.selMode=='multi'?'uicmd-check':'uicmd-radio';
+                item._optclass=p.selMode=='multi'?'linb-uicmd-check':'linb-uicmd-radio';
                 item._display='';
                 item.percent = parseFloat(item.percent)||0;
                 if(item.percent<0)item.percent=0;
                 if(item.percent>1)item.percent=1;
                 item._per = 200*(1-item.percent);
             }else{
-                item._optclass='uicmd-add';
+                item._optclass='linb-uicmd-add';
                 item._togdisplay=item._display='display:none;';
                 item._per = 0;
                 item._itemcls=profile.getClass('EDITS');
@@ -4146,7 +4146,7 @@ Class("linb.UI.FoldingList", ["linb.UI.List"],{
                                 tagName:'div',
                                 TOGGLE:{
                                     $order:0,
-                                    className:'uicmd-toggle {_tlgchecked}'
+                                    className:'linb-uicmd-toggle {_tlgchecked}'
                                 },
                                 CAP1:{
                                     $order:1,
@@ -4163,7 +4163,7 @@ Class("linb.UI.FoldingList", ["linb.UI.List"],{
                                 },
                                 OPT:{
                                     $order:1,
-                                    className:'uicmd-opt',
+                                    className:'linb-uicmd-opt',
                                     style:'{_opt}'
                                 }
                             }/*,
@@ -4176,7 +4176,7 @@ Class("linb.UI.FoldingList", ["linb.UI.List"],{
                     BODY:{
                         $order:1,
                         tagName : 'div',
-                        className:'uibg-base',
+                        className:'linb-uibg-base',
                         BODYI:{
                             $order:0,
                             tagName : 'div',
@@ -4199,11 +4199,11 @@ Class("linb.UI.FoldingList", ["linb.UI.List"],{
             'items.cmds':{
                 $order:2,
                 CMD:{
-                    className:'ui-btn',
+                    className:'linb-ui-btn',
                     CMDI:{
-                        className:'ui-btni',
+                        className:'linb-ui-btni',
                         CMDC:{
-                            className:'ui-btnc',
+                            className:'linb-ui-btnc',
                             CMDA:{
                                 tabindex: '{_tabindex}',
                                 text:'{caption}'
@@ -4911,22 +4911,22 @@ Class("linb.UI.Range", ["linb.UI","linb.absValue"],{
 
         self.addTemplateKeys(['H', 'W','COL','DH','DAYBOX','DC','TBODY', 'THEADER', 'TD','DF1','DF2','DF3','DF4']);
         var colgroup = '<colgroup id="'+key+'-COL:'+id+':"  class="'+tag+'COL_CS'+tag+'"  style="'+tag+'COL_CS'+tag+'"><col width="2%"/><col width="14%"/><col width="14%"/><col width="14%"/><col width="14%"/><col width="14%"/><col width="14%"/><col width="14%"/></colgroup>',
-            thead1='<thead ID="'+key+'-THEADER:'+id+':" class="'+tag+'THEADER_CS'+tag+'"  style="'+tag+'THEADER_CS'+tag+'" ><tr height="1%"><th id="'+key+'-H:'+id+':7" class="'+cls+'-h '+tag+'H_CC'+tag+'"  style="'+tag+'H_CS'+tag+'"></th>',
+            thead1='<thead ID="'+key+'-THEADER:'+id+':" class="'+tag+'THEADER_CS'+tag+'"  style="'+tag+'THEADER_CS'+tag+'" ><tr height="1%"><th id="'+key+'-H:'+id+':7" class="linb-node linb-node-th '+cls+'-h '+tag+'H_CC'+tag+'"  style="'+tag+'H_CS'+tag+'"></th>',
             thead2='</tr></thead>',
-            th='<th id="'+key+'-H:'+id+':@" class="'+cls+'-h '+tag+'H_CC'+tag+'"  style="'+tag+'H_CS'+tag+'">@</th>',
+            th='<th id="'+key+'-H:'+id+':@" class="linb-node linb-node-th '+cls+'-h '+tag+'H_CC'+tag+'"  style="'+tag+'H_CS'+tag+'">@</th>',
             tbody1 = '<tbody id="'+key+'-TBODY:'+id +':"  class="'+tag+'TBODY_CS'+tag+'"  style="'+tag+'TBODY_CS'+tag+'">',
             tbody2 = '</tbody>',
             tr1='<tr>',
             tr2='</tr>',
-            td1='<th id="'+key+'-W:'+id+':@"  class="'+cls+'-w '+tag+'W_CC'+tag+'" style="'+tag+'W_CS'+tag+'">@</th>',
-            td2='<td id="'+key+'-TD:'+id+':@" class="'+cls+'-td '+tag+'TD_CC'+tag+'"  style="'+tag+'TD_CS'+tag+'" '+linb.$IEUNSELECTABLE()+'  >'+
-                '<div id="'+key+'-DAYBOX:'+id+':@" class="'+cls+'-daybox '+tag+'DAY_CC'+tag+'"  style="'+tag+'DAY_CS'+tag+'" '+linb.$IEUNSELECTABLE()+' >'+
-                    '<div id="'+key+'-DH:'+id+':@" class="'+cls+'-dh '+tag+'DH_CC'+tag+'"  style="'+tag+'DH_CS'+tag+'"></div>'+
-                    '<div id="'+key+'-DF1:'+id+':@" class="'+cls+'-df1 '+tag+'DF1_CC'+tag+'" style="'+tag+'DF1_CS'+tag+'"></div>'+
-                    '<div id="'+key+'-DF2:'+id+':@" class="'+cls+'-df2 '+tag+'DF2_CC'+tag+'" style="'+tag+'DF2_CS'+tag+'"></div>'+
-                    '<div id="'+key+'-DF3:'+id+':@" class="'+cls+'-df3 '+tag+'DF3_CC'+tag+'" style="'+tag+'DF3_CS'+tag+'"></div>'+
-                    '<div id="'+key+'-DF4:'+id+':@" class="'+cls+'-df4 '+tag+'DF4_CC'+tag+'"  style="'+tag+'DF4_CS'+tag+'"></div>'+
-                    '<div id="'+key+'-DC:'+id+':@" class="'+cls+'-dc '+tag+'DC_CC'+tag+'"  style="'+tag+'DC_CS'+tag+'"></div>'+
+            td1='<th id="'+key+'-W:'+id+':@"  class="linb-node linb-node-th '+cls+'-w '+tag+'W_CC'+tag+'" style="'+tag+'W_CS'+tag+'">@</th>',
+            td2='<td id="'+key+'-TD:'+id+':@" class="linb-node linb-node-td '+cls+'-td '+tag+'TD_CC'+tag+'"  style="'+tag+'TD_CS'+tag+'" '+linb.$IEUNSELECTABLE()+'  >'+
+                '<div id="'+key+'-DAYBOX:'+id+':@" class="linb-node linb-node-div '+cls+'-daybox '+tag+'DAY_CC'+tag+'"  style="'+tag+'DAY_CS'+tag+'" '+linb.$IEUNSELECTABLE()+' >'+
+                    '<div id="'+key+'-DH:'+id+':@" class="linb-node linb-node-div '+cls+'-dh '+tag+'DH_CC'+tag+'"  style="'+tag+'DH_CS'+tag+'"></div>'+
+                    '<div id="'+key+'-DF1:'+id+':@" class="linb-node linb-node-div '+cls+'-df1 '+tag+'DF1_CC'+tag+'" style="'+tag+'DF1_CS'+tag+'"></div>'+
+                    '<div id="'+key+'-DF2:'+id+':@" class="linb-node linb-node-div '+cls+'-df2 '+tag+'DF2_CC'+tag+'" style="'+tag+'DF2_CS'+tag+'"></div>'+
+                    '<div id="'+key+'-DF3:'+id+':@" class="linb-node linb-node-div '+cls+'-df3 '+tag+'DF3_CC'+tag+'" style="'+tag+'DF3_CS'+tag+'"></div>'+
+                    '<div id="'+key+'-DF4:'+id+':@" class="linb-node linb-node-div '+cls+'-df4 '+tag+'DF4_CC'+tag+'"  style="'+tag+'DF4_CS'+tag+'"></div>'+
+                    '<div id="'+key+'-DC:'+id+':@" class="linb-node linb-node-div '+cls+'-dc '+tag+'DC_CC'+tag+'"  style="'+tag+'DC_CS'+tag+'"></div>'+
                 '</div>'+
                 '</td>',
             body,i,j,k,l,a=[],b=[];

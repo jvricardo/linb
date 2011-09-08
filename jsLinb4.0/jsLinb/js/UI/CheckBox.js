@@ -16,7 +16,7 @@ Class("linb.UI.CheckBox", "linb.UI.Button",{
         _.merge(t.FRAME.FOCUS.TB.TR.TD.BOX,{
             MARK:{
                 $order:0,
-                className:'uicmd-check'
+                className:'linb-uicmd-check'
             }
         },'all');
         this.setTemplate(t);

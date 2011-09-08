@@ -28,15 +28,15 @@ Class('linb.UI.DatePicker', ['linb.UI',"linb.absValue"], {
             
         self.addTemplateKeys(['H', 'COL', 'W','TBODY', 'THEADER','TD']);
         var colgroup = '<colgroup id="'+key+'-COL:'+id+':"  class="'+tag+'COL_CS'+tag+'"  style="'+tag+'COL_CS'+tag+'"><col width="2%"/><col width="14%"/><col width="14%"/><col width="14%"/><col width="14%"/><col width="14%"/><col width="14%"/><col width="14%"/></colgroup>',
-            thead1='<thead ID="'+key+'-THEADER:'+id+':" class="'+tag+'THEADER_CS'+tag+'"  style="'+tag+'THEADER_CS'+tag+'" ><tr height="1%"><th id="'+key+'-H:'+id+':7" class="'+cls+'-h '+cls+'-w '+tag+'H_CC'+tag+'" style="'+tag+'H_CS'+tag+'"></th>',
+            thead1='<thead ID="'+key+'-THEADER:'+id+':" class="'+tag+'THEADER_CS'+tag+'"  style="'+tag+'THEADER_CS'+tag+'" ><tr height="1%"><th id="'+key+'-H:'+id+':7" class="linb-node linb-node-th '+cls+'-h '+cls+'-w '+tag+'H_CC'+tag+'" style="'+tag+'H_CS'+tag+'"></th>',
             thead2='</tr></thead>',
-            th='<th id="'+key+'-H:'+id+':@" class="'+cls+'-h '+tag+'H_CC'+tag+'"  style="'+tag+'H_CS'+tag+'">@</th>',
+            th='<th id="'+key+'-H:'+id+':@" class="linb-node linb-node-th '+cls+'-h '+tag+'H_CC'+tag+'"  style="'+tag+'H_CS'+tag+'">@</th>',
             tbody1 = '<tbody id="'+key+'-TBODY:'+id +':"  class="'+tag+'TBODY_CS'+tag+'"  style="'+tag+'TBODY_CS'+tag+'" >',
             tbody2 = '</tbody>',
             tr1='<tr>',
             tr2='</tr>',
-            td1='<th id="'+key+'-W:'+id+':@"  class="'+cls+'-w '+tag+'W_CC'+tag+'"  style="'+tag+'W_CS'+tag+'">@</th>',
-            td2='<td id="'+key+'-TD:'+id+':@" class="'+cls+'-td '+tag+'TD_CC'+tag+'"  style="'+tag+'TD_CS'+tag+'" '+linb.$IEUNSELECTABLE()+' >'+
+            td1='<th id="'+key+'-W:'+id+':@"  class="linb-node linb-node-th '+cls+'-w '+tag+'W_CC'+tag+'"  style="'+tag+'W_CS'+tag+'">@</th>',
+            td2='<td id="'+key+'-TD:'+id+':@" class="linb-node linb-node-td '+cls+'-td '+tag+'TD_CC'+tag+'"  style="'+tag+'TD_CS'+tag+'" '+linb.$IEUNSELECTABLE()+' >'+
                 '</td>',
             body,i,j,k,l,a=[],b=[];
         for(i=0;i<7;i++)
@@ -60,37 +60,37 @@ Class('linb.UI.DatePicker', ['linb.UI',"linb.absValue"], {
                 tagName : 'div',
                 BAR:{
                     tagName:'div',
-                    className:'uibar-top',
+                    className:'linb-uibar-top',
                     style:'{barDisplay};',
                     BART:{
                         cellpadding:"0",
                         cellspacing:"0",
                         width:'100%',
                         border:'0',
-                        className:'uibar-t',
+                        className:'linb-uibar-t',
                         tagName:'table',
                         BARTR:{
                             tagName:'tr',
                             BARTDL:{
                                 tagName:'td',
-                                className:'uibar-tdl'
+                                className:'linb-uibar-tdl'
                             },
                             BARTDM:{
                                 $order:1,
                                 width:'100%',
                                 tagName:'td',
-                                className:'uibar-tdm'
+                                className:'linb-uibar-tdm'
                             },
                             BARTDR:{
                                 $order:2,
                                 tagName:'td',
-                                className:'uibar-tdr'
+                                className:'linb-uibar-tdr'
                             }
                         }
                     },
                     BARCMDL:{
                         tagName:'div',
-                        className:'uibar-cmdl',
+                        className:'linb-uibar-cmdl',
                         PRE2:{
                             $order:0,
                             tabindex: '{tabindex}'
@@ -101,12 +101,12 @@ Class('linb.UI.DatePicker', ['linb.UI',"linb.absValue"], {
                         },
                         YEAR:{
                             $order:2,
-                            className:'ui-draggable'
+                            className:'linb-ui-draggable'
                         },
                         YTXT:{$order:3,text:'-'},
                         MONTH:{
                             $order:4,
-                            className:'ui-draggable'
+                            className:'linb-ui-draggable'
                         },
                         MTXT:{$order:5,text:'-'},
                         DAY:{
@@ -123,9 +123,9 @@ Class('linb.UI.DatePicker', ['linb.UI',"linb.absValue"], {
                     },
                     BARCMDR:{
                         tagName: 'div',
-                        className:'uibar-cmdr',
+                        className:'linb-uibar-cmdr',
                         CLOSE:{
-                            className:'uicmd-close ',
+                            className:'linb-uicmd-close ',
                             style:'{closeDisplay}'
                         }
                     }
@@ -133,10 +133,10 @@ Class('linb.UI.DatePicker', ['linb.UI',"linb.absValue"], {
                 MAIN:{
                     $order:2,
                     tagName:'div',
-                    className:'uicon-main',
+                    className:'linb-uicon-main',
                     MAINI:{
                         tagName:'div',
-                        className:'uicon-maini',
+                        className:'linb-uicon-maini',
                         CON:{
                             tagName:'div',
                             BODY:{
@@ -152,10 +152,10 @@ Class('linb.UI.DatePicker', ['linb.UI',"linb.absValue"], {
                 TAIL:{
                     $order:3,
                     tagName:'div',
-                    className:'uicon-main',
+                    className:'linb-uicon-main',
                     TAILI:{
                         tagName:'div',
-                        className:'uicon-maini',
+                        className:'linb-uicon-maini',
                         CAPTION:{
                             tagName:'div',
                             style:'{_nocap}',
@@ -175,12 +175,12 @@ Class('linb.UI.DatePicker', ['linb.UI',"linb.absValue"], {
                             },
                             HOUR:{
                                 $order:2,
-                                className:'ui-draggable'
+                                className:'linb-ui-draggable'
                             },
                             MTXT:{$order:3,text:':'},
                             MINUTE:{
                                 $order:4,
-                                className:'ui-draggable'
+                                className:'linb-ui-draggable'
                             },
                             TNEXT:{
                                 $order:6,
@@ -196,11 +196,11 @@ Class('linb.UI.DatePicker', ['linb.UI',"linb.absValue"], {
                              title:"{_todaytitle}"
                         },
                         SET:{
-                            className:'ui-btn',
+                            className:'linb-ui-btn',
                             SETI:{
-                                className:'ui-btni',
+                                className:'linb-ui-btni',
                                 SETC:{
-                                    className:'ui-btnc',
+                                    className:'linb-ui-btnc',
                                     SETA:{
                                         tabindex: '{tabindex}',
                                         text:linb.wrapRes('inline.set')
@@ -213,30 +213,30 @@ Class('linb.UI.DatePicker', ['linb.UI',"linb.absValue"], {
                 BBAR:{
                     $order:4,
                     tagName:'div',
-                    className:'uibar-bottom-s',
+                    className:'linb-uibar-bottom-s',
                     BBART:{
                         cellpadding:"0",
                         cellspacing:"0",
                         width:'100%',
                         border:'0',
                         tagName:'table',
-                        className:'uibar-t',
+                        className:'linb-uibar-t',
                         BBARTR:{
                             tagName:'tr',
                             BBARTDL:{
                                 tagName:'td',
-                                className:'uibar-tdl'
+                                className:'linb-uibar-tdl'
                             },
                             BBARTDM:{
                                 $order:1,
                                 width:'100%',
                                 tagName:'td',
-                                className:'uibar-tdm'
+                                className:'linb-uibar-tdm'
                             },
                             BBARTDR:{
                                 $order:2,
                                 tagName:'td',
-                                className:'uibar-tdr'
+                                className:'linb-uibar-tdr'
                             }
                         }
                     }
@@ -387,7 +387,8 @@ Class('linb.UI.DatePicker', ['linb.UI',"linb.absValue"], {
                 $order:1,
                 border:0,
                 'border-right':'solid 1px #648CB4',
-                'border-bottom':'solid 1px #648CB4'
+                'border-bottom':'solid 1px #648CB4',
+                'font-size': '12px'
             },
             'TD .exday':{
                 color:'#C1C1C1'
@@ -771,7 +772,7 @@ Class('linb.UI.DatePicker', ['linb.UI',"linb.absValue"], {
             profile.box._getLabelNodes(profile).each(function(node,i){
                 n=date.add(v,'d',i);
                 daymap[i]=n;
-                t=date.get(n,'m')==m?'#':'<p class="exday">#</p>';
+                t=date.get(n,'m')==m?'#':'<p class="linb-node linb-node-p exday">#</p>';
                 n=date.get(n,'d');
                 node.innerHTML = t.replace('#',n);
             });

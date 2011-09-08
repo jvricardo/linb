@@ -1,27 +1,27 @@
 /*background here*/
-html, .uibg-base{
+html, .linb-uibg-base{
     background:transparent url(Public/bg.png) repeat scroll 0 50%;
 }
-.uibg-bar{
+.linb-uibg-bar{
     background:#EEEEEE;
 }
-.uiborder-inset{
+.linb-uiborder-inset{
     border-color:#6D6D6D #fff #fff #6D6D6D;
 }
-.uiborder-outset{
+.linb-uiborder-outset{
     border-color:#fff #6D6D6D #6D6D6D #fff;
 }
 
 /*
-.ui-draggable{}
-.uiw-shell{}
-.uiw-frame{}
-.uiw-border{}
-.ui-disabled, .ui-disabled *{}
-.ui-invalid, .ui-invalid *{}
-.ui-ctr{}
+.linb-ui-draggable{}
+.linb-uiw-shell{}
+.linb-uiw-frame{}
+.linb-uiw-border{}
+.linb-ui-disabled, .linb-ui-disabled *{}
+.linb-ui-invalid, .linb-ui-invalid *{}
+.linb-ui-ctr{}
 */
-.ui-dirty{
+.linb-ui-dirty{
     background-image: url('Public/icons.gif')
 }
 /*linb-border*/
@@ -75,50 +75,50 @@ html, .uibg-base{
 }
 
 
-.ui-btn, .ui-btni, .ui-btnc{
+.linb-ui-btn, .linb-ui-btni, .linb-ui-btnc{
     background-image:url(Public/button.gif);
 }
 
-.uicmd-close, .uicmd-info, .uicmd-opt, .uicmd-pin, .uicmd-refresh,
-.uicmd-pop, .uicmd-land, .uicmd-min, .uicmd-max, .uicmd-restore,
-.uicmd-check, .uicmd-radio, .uicmd-add,
+.linb-uicmd-close, .linb-uicmd-info, .linb-uicmd-opt, .linb-uicmd-pin, .linb-uicmd-refresh,
+.linb-uicmd-pop, .linb-uicmd-land, .linb-uicmd-min, .linb-uicmd-max, .linb-uicmd-restore,
+.linb-uicmd-check, .linb-uicmd-radio, .linb-uicmd-add,
 /*
-.uicmd-close, .uicmd-info, .uicmd-opt, .uicmd-pin, .uicmd-refresh,
-.uicmd-pop, .uicmd-land, .uicmd-min, .uicmd-max, .uicmd-restore{
+.linb-uicmd-close, .linb-uicmd-info, .linb-uicmd-opt, .linb-uicmd-pin, .linb-uicmd-refresh,
+.linb-uicmd-pop, .linb-uicmd-land, .linb-uicmd-min, .linb-uicmd-max, .linb-uicmd-restore{
     width:28px;
     height:15px;
 }*/
 
-.uicmd-toggle, .uicmd-toggle2{
+.linb-uicmd-toggle, .linb-uicmd-toggle2{
     background-image: url(Public/icons.gif);
 }
 
-.uibar-top td, .uibar-top-s td, .uibar-bottom td, .uibar-bottom-s td{
+.linb-uibar-top td, .linb-uibar-top-s td, .linb-uibar-bottom td, .linb-uibar-bottom-s td{
     background-image: url(Public/bar_vertical.gif);
 }
-.uibar-top .uibar-cmdl{
+.linb-uibar-top .linb-uibar-cmdl{
     top:4px;
 }
-.uibar-top .uibar-cmdr{
+.linb-uibar-top .linb-uibar-cmdr{
     top:4px;
 }
 
 /*set table height for ff2, set uibar height for performance*/
-.uibar-top, .uibar-top .uibar-t{
+.linb-uibar-top, .linb-uibar-top .linb-uibar-t{
     height:25px;
 }
-.uibar-bottom, .uibar-bottom .uibar-t{
+.linb-uibar-bottom, .linb-uibar-bottom .linb-uibar-t{
     height:5px;
 }
-.uibar-top-s, .uibar-top-s .uibar-t, .uibar-bottom-s, .uibar-bottom-s .uibar-t{
+.linb-uibar-top-s, .linb-uibar-top-s .linb-uibar-t, .linb-uibar-bottom-s, .linb-uibar-bottom-s .linb-uibar-t{
     height:5px;
 }
-/*.uibar-top .uibar-cmdr{
+/*.linb-uibar-top .linb-uibar-cmdr{
 }*/
-.uicon-main{
+.linb-uicon-main{
     background-image: url(Public/bar_horizontal.gif);
 }
-.uicon-maini{
+.linb-uicon-maini{
     background-image: url(Public/container_right.gif);
     background-color: #EEEEEE;
 }

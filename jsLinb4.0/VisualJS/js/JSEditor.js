@@ -700,7 +700,7 @@ Class('VisualJS.JSEditor', 'linb.Com',{
             .setTop(2)
             .setWidth(16)
             .setHeight(16)
-            .setCustomClass({KEY:'ui-icon'})
+            .setCustomClass({KEY:'linb-ui-icon'})
             );
 
             host.errmsg.append((new linb.UI.Link)

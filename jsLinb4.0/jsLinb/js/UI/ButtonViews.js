@@ -1,7 +1,7 @@
 Class("linb.UI.ButtonViews", "linb.UI.Tabs",{
     Initialize:function(){
         var t = this.getTemplate();
-        t.LIST.className='uibg-bar uiborder-outset';
+        t.LIST.className='linb-uibg-bar linb-uiborder-outset';
         delete t.LEFT;
         delete t.TOP;
         this.setTemplate(t);

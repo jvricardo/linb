@@ -16104,8 +16104,8 @@ _.set(linb.Locale,["cn","app"], {
                     "cellNode : linb.Dom, 单元格的Dom对象"
                 ]
             },
-            onNewLineTriggerred:{
-                $desc:"当焦点在最后一行的cell上时,用户按下键盘的 'down' 键,会触发此事件.",
+            beforeInitHotRow:{
+                $desc:"在Hot Row初始化之前调用.[当hotRowMode不为'none'] 如果返回false,默认的功能会被禁止.",
                 $paras:[
                     "profile : linb.UIProfile.",
                     "cell : Object, 单元格对象.",

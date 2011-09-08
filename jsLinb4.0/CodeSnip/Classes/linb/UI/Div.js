@@ -7,7 +7,7 @@
             append(
                 (new linb.UI.Image)
                 .setHost(host,"ctl_image5")
-                .setClassName("uicmd-max")
+                .setClassName("linb-uicmd-max")
                 .setLeft(240)
                 .setTop(10)
                 .setZIndex(10)
@@ -16,7 +16,7 @@
             append(
                 (new linb.UI.Span)
                 .setHost(host,"ctl_span5")
-                .setClassName("uicmd-min")
+                .setClassName("linb-uicmd-min")
                 .setLeft(210)
                 .setTop(10)
                 .setWidth(16)

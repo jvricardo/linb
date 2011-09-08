@@ -6,7 +6,7 @@ if(linb.UI){try{
         var a=linb.ini.path.split('/').slice(0,-3),path=a.join('/')+'/VisualJS/UIBuilder.html';
         file=file.split('|');
         _.arr.each(file,function(v){
-            html+='<div><a target=_blank style="font-weight:bold;text-decoration:underline;" href="'+path+ "#url=" + encodeURIComponent(linb.ini.appPath+v)+'">'+'Open "'+v+'" in UI Builder'+'</a></div>';
+            html+='<div><a target=_blank style="font-weight:bold;font-size:12px;text-decoration:underline;" href="'+path+ "#url=" + encodeURIComponent(linb.ini.appPath+v)+'">'+'Open "'+v+'" in UI Builder'+'</a></div>';
         });
         linb('body').append(linb.create('<div style="position:absolute;z-index:5000;top:10px;right:10px;">'+html+'</div>'));
     })()

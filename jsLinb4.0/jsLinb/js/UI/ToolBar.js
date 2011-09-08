@@ -62,9 +62,9 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
                         }
                         if('disabled' in options && options.disabled!=item.disabled){
                             if(options.disabled)
-                                n2.addClass('ui-itemdisabled');
+                                n2.addClass('linb-ui-itemdisabled');
                             else
-                                n2.removeClass('ui-itemdisabled');
+                                n2.removeClass('linb-ui-itemdisabled');
                         }
                         if('image' in options&& options.image!=item.image)
                             n1.css('background-image',options.image);
@@ -128,7 +128,7 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
             className:'{_className}',
             style:'{_style}',
             ITEMS:{
-                className:'uibg-bar uiborder-outset',
+                className:'linb-uibg-bar linb-uiborder-outset',
                 tagName:'div',
                 style:'{mode}',
                 text:'{items}'
@@ -163,19 +163,19 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
                                 text:'{label}'
                             },
                             BTN:{
-                                className:'ui-btn {itemcls} {itemClass}',
+                                className:'linb-ui-btn {itemcls} {itemClass}',
                                 style:'{itemStyle} {boxDisplay}',
                                 BTNI:{
-                                    className:'ui-btni',
+                                    className:'linb-ui-btni',
                                     BTNC:{
-                                        className:'ui-btnc',
+                                        className:'linb-ui-btnc',
                                         BOX:{
                                             tabindex: '{_tabindex}',
                                             BOXWRAP:{
                                                 tagName:'div',
                                                 ICON:{
                                                     $order:1,
-                                                    className:'ui-icon {imageClass}',
+                                                    className:'linb-ui-icon {imageClass}',
                                                     style:'{backgroundImage} {backgroundPosition} {backgroundRepeat}  {imageDisplay}'
                                                 },
                                                 CAPTION:{
@@ -411,7 +411,7 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
                         linb.UI.adjustData(profile,item, dataItem);
 
                         if(item.statusButton && !!item.value)
-                            dataItem.itemcls=" ui-btn-checked "+profile.getClass('BTN','-checked', !!item.value);
+                            dataItem.itemcls=" linb-ui-btn-checked "+profile.getClass('BTN','-checked', !!item.value);
 
                         dataItem.splitDisplay=dataItem.split?'':dn;
                         dataItem.labelDisplay=dataItem.label?'':dn;

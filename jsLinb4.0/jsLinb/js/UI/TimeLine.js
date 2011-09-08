@@ -150,7 +150,7 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                 },
                 TBAR:{
                     tagName:'div',
-                    className:'uibar-top',
+                    className:'linb-uibar-top',
                     style:'{_bardisplay};',
                     TBART:{
                         cellpadding:"0",
@@ -158,29 +158,29 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                         width:'100%',
                         border:'0',
                         tagName:'table',
-                        className:'uibar-t',
+                        className:'linb-uibar-t',
                         TBARTR:{
                             tagName:'tr',
                             TBARTDL:{
                                 tagName:'td',
-                                className:'uibar-tdl'
+                                className:'linb-uibar-tdl'
                             },
                             TBARTDM:{
                                 $order:1,
                                 width:'100%',
                                 tagName:'td',
-                                className:'uibar-tdm'
+                                className:'linb-uibar-tdm'
                             },
                             TBARTDR:{
                                 $order:2,
                                 tagName:'td',
-                                className:'uibar-tdr'
+                                className:'linb-uibar-tdr'
                             }
                         }
                     },
                     BARCMDL:{
                         tagName:'div',
-                        className:'uibar-cmdl',
+                        className:'linb-uibar-cmdl',
                         DATE:{$order:0,style:'{dateDisplay}'},
                         PRE:{$order:2},
                         'ZOOMIN':{$order:3,style:'{zoomDisplay}'},
@@ -189,15 +189,15 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                     },
                     BARCMDR:{
                         tagName: 'div',
-                        className:'uibar-cmdr',
+                        className:'linb-uibar-cmdr',
                         OPT:{
-                            className:'uicmd-opt',
+                            className:'linb-uicmd-opt',
                             style:'{optDisplay}',
                             $order:0
                         },
                         CLOSE:{
                             $order:4,
-                            className:'uicmd-close ',
+                            className:'linb-uicmd-close ',
                             style:'{closeDisplay}'
                         }
                     }
@@ -205,10 +205,10 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                 MAIN:{
                     $order:2,
                     tagName:'div',
-                    className:'uicon-main',
+                    className:'linb-uicon-main',
                     MAINI:{
                         tagName:'div',
-                        className:'uicon-maini',
+                        className:'linb-uicon-maini',
                         MAINC:{
                             tagName:'div',
                             MAINP:{
@@ -269,9 +269,9 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                 TAIL:{
                     $order:4,
                     tagName:'div',
-                    className:'uicon-main',
+                    className:'linb-uicon-main',
                     TIPS:{
-                        className:'uicon-maini',
+                        className:'linb-uicon-maini',
                         style:'z-index:2;{_tipsdisplay};',
                         tagName:'div'
                     }
@@ -280,30 +280,30 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                     $order:5,
                     tagName:'div',
                     style:'{_bardisplay};',
-                    className:'uibar-bottom-s',
+                    className:'linb-uibar-bottom-s',
                     BBART:{
                         cellpadding:"0",
                         cellspacing:"0",
                         width:'100%',
                         border:'0',
                         tagName:'table',
-                        className:'uibar-t',
+                        className:'linb-uibar-t',
                         BBARTR:{
                             tagName:'tr',
                             BBARTDL:{
                                 tagName:'td',
-                                className:'uibar-tdl'
+                                className:'linb-uibar-tdl'
                             },
                             BBARTDM:{
                                 $order:1,
                                 width:'100%',
                                 tagName:'td',
-                                className:'uibar-tdm'
+                                className:'linb-uibar-tdm'
                             },
                             BBARTDR:{
                                 $order:2,
                                 tagName:'td',
-                                className:'uibar-tdr'
+                                className:'linb-uibar-tdr'
                             }
                         }
                     }

@@ -38,7 +38,7 @@ Class('linb.UI.TimePicker', ['linb.UI',"linb.absValue"], {
         cls=this._excls3;
         cls2=this._excls4;
         id=linb.UI.$ID;
-        t='<span id="'+this.KEY+'-HI:'+id+':@" class="'+cls+' !" '+linb.$IEUNSELECTABLE()+' >@</span>';
+        t='<span id="'+this.KEY+'-HI:'+id+':@" class="linb-node linb-node-span '+cls+' !" '+linb.$IEUNSELECTABLE()+' >@</span>';
         a=[];
         for(i=0;i<24;i++)
             a[a.length]=t.replace(/@/g,i<10?('0'+i):i).replace('!',(i%6===0)?cls2:'');
@@ -48,7 +48,7 @@ Class('linb.UI.TimePicker', ['linb.UI',"linb.absValue"], {
         cls=this._excls;
         cls2=this._excls2;
         id=linb.UI.$ID;
-        t='<span id="'+this.KEY+'-MI:'+id+':@" class="'+cls+' !" '+linb.$IEUNSELECTABLE()+' >@</span>';
+        t='<span id="'+this.KEY+'-MI:'+id+':@" class="linb-node linb-node-span '+cls+' !" '+linb.$IEUNSELECTABLE()+' >@</span>';
         a=[];
         for(i=0;i<60;i++)
             a[a.length]=t.replace(/@/g,i<10?('0'+i):i).replace('!',(i%5===0)?cls2:'');
@@ -63,7 +63,7 @@ Class('linb.UI.TimePicker', ['linb.UI',"linb.absValue"], {
                 tagName : 'div',
                 BAR:{
                     tagName:'div',
-                    className:'uibar-top',
+                    className:'linb-uibar-top',
                     style:'{barDisplay};',
                     BART:{
                         cellpadding:"0",
@@ -71,29 +71,29 @@ Class('linb.UI.TimePicker', ['linb.UI',"linb.absValue"], {
                         width:'100%',
                         border:'0',
                         tagName:'table',
-                        className:'uibar-t',
+                        className:'linb-uibar-t',
                         BARTR:{
                             tagName:'tr',
                             BARTDL:{
                                 tagName:'td',
-                                className:'uibar-tdl'
+                                className:'linb-uibar-tdl'
                             },
                             BARTDM:{
                                 $order:1,
                                 width:'100%',
                                 tagName:'td',
-                                className:'uibar-tdm'
+                                className:'linb-uibar-tdm'
                             },
                             BARTDR:{
                                 $order:2,
                                 tagName:'td',
-                                className:'uibar-tdr'
+                                className:'linb-uibar-tdr'
                             }
                         }
                     },
                     BARCMDL:{
                         tagName: 'div',
-                        className:'uibar-cmdl',
+                        className:'linb-uibar-cmdl',
                         PRE2:{
                             $order:0,
                             tabindex: '{tabindex}'
@@ -104,12 +104,12 @@ Class('linb.UI.TimePicker', ['linb.UI',"linb.absValue"], {
                         },
                         HOUR:{
                             $order:2,
-                            className:'ui-draggable'
+                            className:'linb-ui-draggable'
                         },
                         MTXT:{$order:3,text:':'},
                         MINUTE:{
                                 $order:4,
-                                className:'ui-draggable'
+                                className:'linb-ui-draggable'
                             },
                         NEXT:{
                             $order:6,
@@ -122,9 +122,9 @@ Class('linb.UI.TimePicker', ['linb.UI',"linb.absValue"], {
                     },
                     BARCMDR:{
                         tagName: 'div',
-                        className:'uibar-cmdr',
+                        className:'linb-uibar-cmdr',
                         CLOSE:{
-                            className:'uicmd-close ',
+                            className:'linb-uicmd-close ',
                             style:'{closeDisplay}'
                         }
                     }
@@ -132,19 +132,19 @@ Class('linb.UI.TimePicker', ['linb.UI',"linb.absValue"], {
                 MAIN:{
                     $order:2,
                     tagName:'div',
-                    className:'uicon-main',
+                    className:'linb-uicon-main',
                     MAINI:{
                         tagName:'div',
-                        className:'uicon-maini',
+                        className:'linb-uicon-maini',
                         CONH:{
                             tagName:'div',
-                            className:'uiborder-inset',
+                            className:'linb-uiborder-inset',
                             text:h
                         },
                         CONM:{
                             $order:2,
                             tagName:'div',
-                            className:'uiborder-inset',
+                            className:'linb-uiborder-inset',
                             text:m
                         }
                     }
@@ -152,19 +152,19 @@ Class('linb.UI.TimePicker', ['linb.UI',"linb.absValue"], {
                 TAIL:{
                     $order:3,
                     tagName:'div',
-                    className:'uicon-main',
+                    className:'linb-uicon-main',
                     TAILI:{
                         tagName:'div',
-                        className:'uicon-maini',
+                        className:'linb-uicon-maini',
                         CAPTION:{
                             text : '{caption}'
                         },
                         SET:{
-                            className:'ui-btn',
+                            className:'linb-ui-btn',
                             SETI:{
-                                className:'ui-btni',
+                                className:'linb-ui-btni',
                                 SETC:{
-                                    className:'ui-btnc',
+                                    className:'linb-ui-btnc',
                                     SETA:{
                                         tabindex: '{tabindex}',
                                         text:linb.wrapRes('inline.set')
@@ -177,30 +177,30 @@ Class('linb.UI.TimePicker', ['linb.UI',"linb.absValue"], {
                 BBAR:{
                     $order:4,
                     tagName:'div',
-                    className:'uibar-bottom-s',
+                    className:'linb-uibar-bottom-s',
                     BBART:{
                         cellpadding:"0",
                         cellspacing:"0",
                         width:'100%',
                         border:'0',
                         tagName:'table',
-                        className:'uibar-t',
+                        className:'linb-uibar-t',
                         BBARTR:{
                             tagName:'tr',
                             BBARTDL:{
                                 tagName:'td',
-                                className:'uibar-tdl'
+                                className:'linb-uibar-tdl'
                             },
                             BBARTDM:{
                                 $order:1,
                                 width:'100%',
                                 tagName:'td',
-                                className:'uibar-tdm'
+                                className:'linb-uibar-tdm'
                             },
                             BBARTDR:{
                                 $order:2,
                                 tagName:'td',
-                                className:'uibar-tdr'
+                                className:'linb-uibar-tdr'
                             }
                         }
                     }

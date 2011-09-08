@@ -352,7 +352,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                                         RULER:{},
                                         ICON:{
                                             $order:0,
-                                            className:'ui-icon {imageClass}',
+                                            className:'linb-ui-icon {imageClass}',
                                             style:'{backgroundImage} {backgroundPosition} {backgroundRepeat} {imageDisplay}'
                                         },
                                         CAPTION:{
@@ -363,16 +363,16 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                                             $order:2,
                                             OPT:{
                                                 $order:1,
-                                                className:'uicmd-opt',
+                                                className:'linb-uicmd-opt',
                                                 style:'{_opt}'
                                             },
                                             POP:{
-                                                className:'uicmd-pop',
+                                                className:'linb-uicmd-pop',
                                                 style:'{popDisplay}',
                                                 $order:1
                                             },
                                             CLOSE:{
-                                                className:'uicmd-close ',
+                                                className:'linb-uicmd-close ',
                                                 style:'{closeDisplay}',
                                                 $order:2
                                             }
@@ -386,7 +386,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                 panels:{
                     PANEL:{
                         tagName : 'div',
-                        className:'uibg-base',
+                        className:'linb-uibg-base',
                         style:"{_overflow};",
                         text:linb.UI.$childTag
                     }

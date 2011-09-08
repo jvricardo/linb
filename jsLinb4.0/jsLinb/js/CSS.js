@@ -258,39 +258,30 @@ Class("linb.CSS", null,{
         }
     },
     Initialize:function(){
-        var b=linb.browser;
-        this.addStyleSheet(""+
-// cross browser reset
-            "html{color:#000;background:#FFF;}"+
-            "body{cursor:default;font:13px/1.231 arial,helvetica,clean,sans-serif;}"+
-            (linb.browser.ie?"body{font-size:small;font:x-small;}":"")+
-            "body *{line-height:1.22em;}"+
-            "body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}"+
-            "table{border-collapse:collapse;border-spacing:0;empty-cells:show;font-size:inherit;"+(linb.browser.ie?"font:100%;":"")+"}"+
-            "fieldset,img,body,html{border:0;}"+
-            "address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}"+
-            "ol,ul,li{list-style:none;}"+
-            "caption,th{text-align:left;}"+
-            "h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}"+
-            "q:before,q:after{content:'';}"+
-            "abbr,acronym {border:0;font-variant:normal;}"+
-            "sup {vertical-align:text-top;}"+
-            "sub {vertical-align:text-bottom;}"+
-            "input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}"+
-            (b.ie?"input,textarea,select{font-size:100%;}":"")+
-            "legend{color:#000;}"+
-            "del,ins{text-decoration:none;}"+
-            "pre,code,kbd,samp,tt{font-family:monospace;"+(b.ie?"font-size:108%;":"")+"line-height:100%;}"+
-            "select,input,button,textarea{font:99% arial,helvetica,clean,sans-serif;border-width:1px;}"+
+        var b=linb.browser,
+// cross browser reset 
+            css=".linb-node{margin:0;padding:0;line-height:1.22em;}"+
+            ".linb-node-table{border-collapse:collapse;border-spacing:0;empty-cells:show;font-size:inherit;"+(b.ie?"font:100%;":"")+"}"+
+            ".linb-node-fieldset,.linb-node-img{border:0;}"+
+            ".linb-node-ol,.linb-node-ul,.linb-node-li{list-style:none;}"+
+            ".linb-node-caption,.linb-node-th{text-align:left;}"+
+            ".linb-node-th{font-weight:normal;}"+
+            ".linb-node-q:before,.linb-node-q:after{content:'';}"+
+            ".linb-node-abbr,.linb-node-acronym{border:0;font-variant:normal;}"+
+            ".linb-node-sup{vertical-align:text-top;}"+
+            ".linb-node-sub{vertical-align:text-bottom;}"+
+            ".linb-node-input,.linb-node-textarea,.linb-node-select{cursor:text;font-family:inherit;font-size:inherit;font-weight:inherit;"+(b.ie?"font-size:100%;":"")+"}"+
+            ".linb-node-del,.linb-node-ins{text-decoration:none;}"+
+            ".linb-node-pre,.linb-node-code,.linb-node-kbd,.linb-node-samp,.linb-node-tt{font-family:monospace;"+(b.ie?"font-size:108%;":"")+"line-height:100%;}"+
+            ".linb-node-select,.linb-node-input,.linb-node-button,.linb-node-textarea{font:99% arial,helvetica,clean,sans-serif;border-width:1px;}"+
 // base setting
-            (linb.browser.ie6?("#"+linb.$localeDomId+"{vertical-align:baseline;}"):"")+
-            "a{color:#0000ee;text-decoration:none;}"+
-            "a:hover{color:red}"+
-            (b.gek? ("a:focus{outline-offset:-1px;"+ (parseInt(b.ver)<3?"-moz-outline-offset:-1px !important":"") +"}" ):"")+
-            "div{font-size:12px;}"+
-            "span{outline-offset:-1px;"+
+            ".linb-node-a{cursor:pointer;color:#0000ee;text-decoration:none;}"+
+            ".linb-node-a:hover{color:red}"+
+            (b.gek? (".linb-node-a:focus{outline-offset:-1px;"+ (parseInt(b.ver)<3?"-moz-outline-offset:-1px !important":"") +"}" ):"")+
+            ".linb-node-span, .linb-node-div{font-size:12px;}"+
+            ".linb-node-span{outline-offset:-1px;"+
             (b.gek
-                ? parseFloat(linb.browser.ver)<3 
+                ? parseFloat(b.ver)<3 
                     ? ((parseInt(b.ver)<3?"-moz-outline-offset:-1px !important;":"") + "display:-moz-inline-block;display:-moz-inline-box;display:inline-block;")
                     :"display:inline-block;"
                 : b.ie6
@@ -298,12 +289,14 @@ Class("linb.CSS", null,{
                 :"display:inline-block;")+
             (b.ie?"zoom:1;":"")+
             "}"+
-            "h1{font-size:138.5%;}"+
-            "h2{font-size:123.1%;}"+
-            "h3{font-size:108%;}"+
-            "h1,h2,h3{margin:1em 0;}"+
-            "h1,h2,h3,h4,h5,h6,strong {font-weight:bold;}"+
-            "em{font-style:italic;}"
-        , 'linb.CSS');
+            ".linb-node-h1{font-size:138.5%;}"+
+            ".linb-node-h2{font-size:123.1%;}"+
+            ".linb-node-h3{font-size:108%;}"+
+            ".linb-node-h1,.linb-node-h2,.linb-node-h3{margin:1em 0;}"+
+            ".linb-node-h1,.linb-node-h2,.linb-node-h3,.linb-node-h4,.linb-node-h5,.linb-node-h6,.linb-node-strong{font-weight:bold;}"+
+            ".linb-node-em{font-style:italic;}"+
+            (b.ie6?("#"+linb.$localeDomId+"{vertical-align:baseline;}"):"");
+
+        this.addStyleSheet(css, 'linb.CSS');
     }   
 });

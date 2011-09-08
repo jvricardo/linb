@@ -87,7 +87,7 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
                 style:'position:absolute;display:none;',
                 POP:{
                     tagName:'div',
-                    className:'uibg-base'
+                    className:'linb-uibg-base'
                 }
             },
             LABEL:{
@@ -95,11 +95,11 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
             },
             FIRST:{
                 $order:1,
-                className:'ui-btn',
+                className:'linb-ui-btn',
                 FIRSTI:{
-                    className:'ui-btni',
+                    className:'linb-ui-btni',
                     FIRSTC:{
-                        className:'ui-btnc',
+                        className:'linb-ui-btnc',
                         FIRSTA:{
                             tagName:'a',
                             href:'#',
@@ -110,11 +110,11 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
             },
             PREM:{
                 $order:2,
-                className:'ui-btn',
+                className:'linb-ui-btn',
                 PREMI:{
-                    className:'ui-btni',
+                    className:'linb-ui-btni',
                     PREMC:{
-                        className:'ui-btnc',
+                        className:'linb-ui-btnc',
                         PREMA:{
                             tagName:'a',
                             href:'#',
@@ -125,11 +125,11 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
             },
             PREV:{
                 $order:3,
-                className:'ui-btn',
+                className:'linb-ui-btn',
                 PREVI:{
-                    className:'ui-btni',
+                    className:'linb-ui-btni',
                     PREVC:{
-                        className:'ui-btnc',
+                        className:'linb-ui-btnc',
                         PREVA:{
                             tagName:'a',
                             href:'#',
@@ -141,11 +141,11 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
             },
             CUR:{
                 $order:4,
-                className:'ui-btn ui-btn-focus',
+                className:'linb-ui-btn linb-ui-btn-focus',
                 CURI:{
-                    className:'ui-btni',
+                    className:'linb-ui-btni',
                     CURC:{
-                        className:'ui-btnc',
+                        className:'linb-ui-btnc',
                         CURA:{
                             tagName:'a',
                             href:'#',
@@ -156,11 +156,11 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
             },
             NEXT:{
                 $order:5,
-                className:'ui-btn',
+                className:'linb-ui-btn',
                 NEXTI:{
-                    className:'ui-btni',
+                    className:'linb-ui-btni',
                     NEXTC:{
-                        className:'ui-btnc',
+                        className:'linb-ui-btnc',
                         NEXTA:{
                             tagName:'a',
                             href:'#',
@@ -172,11 +172,11 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
             },
             NEXTM:{
                 $order:6,
-                className:'ui-btn',
+                className:'linb-ui-btn',
                 NEXTMI:{
-                    className:'ui-btni',
+                    className:'linb-ui-btni',
                     NEXTMC:{
-                        className:'ui-btnc',
+                        className:'linb-ui-btnc',
                         NEXTMA:{
                             tagName:'a',
                             href:'#',
@@ -187,11 +187,11 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
             },
             LAST:{
                 $order:7,
-                className:'ui-btn',
+                className:'linb-ui-btn',
                 LASTI:{
-                    className:'ui-btni',
+                    className:'linb-ui-btni',
                     LASTC:{
-                        className:'ui-btnc',
+                        className:'linb-ui-btnc',
                         LASTA:{
                             tagName:'a',
                             href:'#',
@@ -216,10 +216,10 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
                 'outline-offset':'',
                 '-moz-outline-offset': (linb.browser.gek && parseInt(linb.browser.ver)<3)?'':null
             },
-            'KEY .ui-btn, POP .ui-btn':{
+            'KEY .linb-ui-btn, POP .linb-ui-btn':{
                 'margin-right':'3px'
             },
-            'KEY .ui-btn a, POP .ui-btn a':{
+            'KEY .linb-ui-btn a, POP .linb-ui-btn a':{
                 padding:'0 3px 0 3px'
             },
             'PREV,CUR,NEXT':{
@@ -377,7 +377,7 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
             var _id=profile.keys.POPI+':'+profile.serialId+':';
             while(n<l){
                 //margin-top for ie6
-                a.push('<span style="margin-top:3px;" id="'+_id+n+'" class="ui-btn"><span class="ui-btni"><span class="ui-btnc"><a href="'+prop.uriTpl.replace('*',n)+'">'+prop.textTpl.replace('*',n)+'</a></span></span></span>')
+                a.push('<span style="margin-top:3px;" id="'+_id+n+'" class="linb-node linb-node-span linb-ui-btn"><span class="linb-node linb-node-span linb-ui-btni"><span class="linb-node linb-node-span linb-ui-btnc"><a class="linb-node linb-node-a" href="'+prop.uriTpl.replace('*',n)+'">'+prop.textTpl.replace('*',n)+'</a></span></span></span>')
                 n=n+m;
             }
             pop.width('auto');
