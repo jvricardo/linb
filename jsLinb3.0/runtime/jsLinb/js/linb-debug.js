@@ -25158,8 +25158,6 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                     nitemId, nItem,
                     temp,t;
 
-                    if(value===uiv)
-                        return;
                     if(itemId){
                         if(!p.noPanel){
                             var pn=box.getPanel(uiv).get(0);
