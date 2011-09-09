@@ -1698,7 +1698,6 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
             },
             'BARCMDL span':{
                 $order:0,
-                position:'relative',
                 width:'15px',
                 height:'15px',
                 margin:'2px',

@@ -279,7 +279,7 @@ Class("linb.CSS", null,{
             ".linb-node-a{cursor:pointer;color:#0000ee;text-decoration:none;}"+
             ".linb-node-a:hover{color:red}"+
             (b.gek? (".linb-node-a:focus{outline-offset:-1px;"+ (parseInt(b.ver)<3?"-moz-outline-offset:-1px !important":"") +"}" ):"")+
-            ".linb-node-span, .linb-node-div{font-size:12px;}"+
+            ".linb-node-span, .linb-node-div{border:0;font-size:12px;}"+
             ".linb-node-span{outline-offset:-1px;"+
             (b.gek
                 ? parseFloat(b.ver)<3 

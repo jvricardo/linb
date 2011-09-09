@@ -6016,7 +6016,7 @@ Class("linb.CSS", null,{
             ".linb-node-a{cursor:pointer;color:#0000ee;text-decoration:none;}"+
             ".linb-node-a:hover{color:red}"+
             (b.gek? (".linb-node-a:focus{outline-offset:-1px;"+ (parseInt(b.ver)<3?"-moz-outline-offset:-1px !important":"") +"}" ):"")+
-            ".linb-node-span, .linb-node-div{font-size:12px;}"+
+            ".linb-node-span, .linb-node-div{border:0;font-size:12px;}"+
             ".linb-node-span{outline-offset:-1px;"+
             (b.gek
                 ? parseFloat(b.ver)<3 
@@ -21128,6 +21128,10 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                     linb.Event.keyboardHook('esc');
                     box._cache();
                 });
+                
+                if(profile.afterPopShow)
+                    box.afterPopShow(profile, profile.$drop);
+
             });
         },
         expand:function(){
@@ -21139,6 +21143,11 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
             var profile=this.get(0);
             if(profile.renderId && profile.$poplink)
                 profile.boxing()._cache();
+        },
+        getPopWnd:function(force){
+            var profile=this.get(0);
+            if(profile.$drop && (force||profile.$poplink))
+                return profile.$drop.boxing();
         }
     },
     /*Initialize*/
@@ -21721,6 +21730,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
             onCommand:function(profile, node){},
             beforeComboPop:function(profile, pos, e, src){},
             beforePopShow:function(profile, popCtl){},
+            afterPopShow:function(profile, popCtl){},
             onClick:function(profile, e, src, value){}
         },
         _posMap:{

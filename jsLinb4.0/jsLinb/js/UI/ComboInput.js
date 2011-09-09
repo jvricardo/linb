@@ -355,6 +355,10 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                     linb.Event.keyboardHook('esc');
                     box._cache();
                 });
+                
+                if(profile.afterPopShow)
+                    box.afterPopShow(profile, profile.$drop);
+
             });
         },
         expand:function(){
@@ -366,6 +370,11 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
             var profile=this.get(0);
             if(profile.renderId && profile.$poplink)
                 profile.boxing()._cache();
+        },
+        getPopWnd:function(force){
+            var profile=this.get(0);
+            if(profile.$drop && (force||profile.$poplink))
+                return profile.$drop.boxing();
         }
     },
     /*Initialize*/
@@ -948,6 +957,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
             onCommand:function(profile, node){},
             beforeComboPop:function(profile, pos, e, src){},
             beforePopShow:function(profile, popCtl){},
+            afterPopShow:function(profile, popCtl){},
             onClick:function(profile, e, src, value){}
         },
         _posMap:{
