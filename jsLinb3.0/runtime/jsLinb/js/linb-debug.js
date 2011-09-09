@@ -26478,7 +26478,7 @@ Class("linb.UI.ButtonViews", "linb.UI.Tabs",{
                 top, left,
                 hs = profile.getSubNode('LIST'),
                 hl = profile.getSubNode('ITEMS'),
-                wc=null,hc=null;
+                wc=null,hc=null,itmsH;
 
             if(t.barLocation=='top'||t.barLocation=='bottom'){
                 if(width){
@@ -35709,7 +35709,7 @@ if(linb.browser.ie){
             },
             TABSTOP2:{
                 onFocus:function(profile,e,src){
-                    tabindex = parseInt(linb.use(src).get(0).tabIndex||1 +"")+1;
+                    var tabindex = parseInt(linb.use(src).get(0).tabIndex||1 +"")+1;
                     var children = profile.getRoot().get(0).getElementsByTagName('*'),t,n;
                     for(var i=0,l=children.length,o;o=children[i];i++){
                         if(o.nodeType==1){
