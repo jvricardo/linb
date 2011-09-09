@@ -342,7 +342,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 //for on blur disappear
                 node.setBlurTrigger(profile.key+":"+profile.$linbid, function(){
                     box._cache();
-                }, null, profile.$linbid);
+                });
 
                 //for esc
                 linb.Event.keyboardHookUp('esc',0,0,0,function(){

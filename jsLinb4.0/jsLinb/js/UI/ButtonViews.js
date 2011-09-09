@@ -190,7 +190,7 @@ Class("linb.UI.ButtonViews", "linb.UI.Tabs",{
                 top, left,
                 hs = profile.getSubNode('LIST'),
                 hl = profile.getSubNode('ITEMS'),
-                wc=null,hc=null;
+                wc=null,hc=null,itmsH;
 
             if(t.barLocation=='top'||t.barLocation=='bottom'){
                 if(width){

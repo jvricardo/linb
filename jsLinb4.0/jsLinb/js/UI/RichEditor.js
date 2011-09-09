@@ -138,6 +138,8 @@ Class("linb.UI.RichEditor", ["linb.UI","linb.absValue"],{
         },
         _updateToolbar:function(domId, clear){
             var profile=linb.$cache.profileMap[domId],toolbar;
+            if(!profile)return;
+
             if(profile.properties.disabled || profile.properties.readonly)return;
 
             if(profile && (toolbar=profile.$toolbar)){

@@ -54,7 +54,7 @@ Class('linb.Debugger', null, {
             }
 
             if(!linb.Dom.byId(self._id2)){
-                var ns=linb.create('<div id='+self._id1+' style="left:5px;top:'+(linb.win.scrollTop()+5)+'px;" class="linb-dbg-frm"><div class="linb-dbg-box"><div id='+self._id4+' class="linb-dbg-header">&nbsp;&nbsp;:&nbsp;)&nbsp;&nbsp;jsLINB Monitor window <span class="linb-dbg-cmds"><a href="javascript:;" onclick="linb(\''+self._id2+'\').empty();">Clear</a><a href="javascript:;" onclick="linb(\''+self._id1+'\').remove();"> &Chi; </a></span></div><div id='+self._id2+' class="linb-dbg-content"></div><div class="linb-dbg-tail"><table><tr><td style="font-family:serif;">&nbsp;>>>&nbsp;</td><td style="width:100%"><input id='+self._id3+' /></td></tr></table></div></div></div>');
+                var ns=linb.create('<div id='+self._id1+' style="left:5px;top:'+(linb.win.scrollTop()+5)+'px;" class="linb-node linb-node-div linb-wrapper linb-dbg-frm"><div class="linb-node linb-node-div linb-dbg-box"><div id='+self._id4+' class="linb-node linb-node-div linb-dbg-header">&nbsp;&nbsp;:&nbsp;)&nbsp;&nbsp;jsLINB Monitor window <span class="linb-node linb-node-span linb-dbg-cmds"><a class="linb-node linb-node-a" href="javascript:;" onclick="linb(\''+self._id2+'\').empty();">Clear</a><a class="linb-node linb-node-a" href="javascript:;" onclick="linb(\''+self._id1+'\').remove();"> &Chi; </a></span></div><div id='+self._id2+' class="linb-node linb-node-div linb-dbg-content"></div><div class="linb-node linb-node-div linb-dbg-tail"><table class="linb-node linb-node-table"><tr><td style="font-family:serif;">&nbsp;>>>&nbsp;</td><td style="width:100%"><input class="linb-node linb-node-input" id='+self._id3+' /></td></tr></table></div></div></div>');
                 linb('body').append(ns);
                 self.$con=linb(self._id2);
                 linb(self._id4).onMousedown(function(p,e,s){
@@ -72,7 +72,7 @@ Class('linb.Debugger', null, {
                         switch(s.value){
                             case '?':
                             case 'help':
-                                self.$con.append(linb.create("<div class='linb-dbg-con3'><p><strong>vailable commands:</strong></p><ul><li> -- <strong>[clr]</strong> or <strong>[clear]</strong> : clears the message</li><li> -- <strong>[?]</strong> or <strong>[help]</strong> : shows this message</li><li> -- <strong>any other</strong>: shows its string representation</li></ul></div>"));
+                                self.$con.append(linb.create("<div class='linb-node linb-node-div linb-dbg-con3'><p class='linb-node linb-node-p'><strong  class='linb-node linb-node-strong'>vailable commands:</strong></p><ul  class='linb-node linb-node-ul'><li  class='linb-node linb-node-li'> -- <strong  class='linb-node linb-node-strong'>[clr]</strong> or <strong>[clear]</strong> : clears the message</li><li  class='linb-node linb-node-li'> -- <strong  class='linb-node linb-node-strong'>[?]</strong> or <strong  class='linb-node linb-node-strong'>[help]</strong> : shows this message</li><li  class='linb-node linb-node-li'> -- <strong class='linb-node linb-node-strong'>any other</strong>: shows its string representation</li></ul></div>"));
                                 break;
                             case 'clr':
                             case 'clear':
@@ -83,7 +83,7 @@ Class('linb.Debugger', null, {
                                     temp=s.value;
                                     if(/^\s*\x7b/.test(temp))temp='('+temp+')';
                                     self.log(eval(temp));
-                                }catch(e){self.$con.append(linb.create("<div  class='linb-dbg-con4'>"+String(e)+"</div>"));return;}
+                                }catch(e){self.$con.append(linb.create("<div  class='linb-node linb-node-div linb-dbg-con4'>"+String(e)+"</div>"));return;}
                         }
                         bak=s.value;
                         s.value='';
@@ -137,9 +137,9 @@ Class('linb.Debugger', null, {
 
            if(!div){
                div =
-               '<div class="linb-uibg-bar linb-uiborder-outset" style="font-size:0;line-height:0;border:solid 1px #cdcdcd;position:absolute;overflow:visible;top:-50px;z-index:'+linb.Dom.TOP_ZINDEX+'">' +
-               '<div style="font-size:14px;overflow:hidden;font-weight:bold;padding:2px;"></div>'+
-               '<div style="padding:5px;overflow:hidden;"></div>'+
+               '<div class="linb-node linb-node-div linb-wrapper linb-uibg-bar linb-uiborder-outset" style="font-size:0;line-height:0;border:solid 1px #cdcdcd;position:absolute;overflow:visible;top:-50px;z-index:'+linb.Dom.TOP_ZINDEX+'">' +
+                   '<div class="linb-node linb-node-div" style="font-size:14px;overflow:hidden;font-weight:bold;padding:2px;"></div>'+
+                   '<div class="linb-node linb-node-div" style="font-size:12px;padding:5px;overflow:hidden;"></div>'+
                '</div>';
                div = linb.create(div);
                if(div.addBorder)div.addBorder();
@@ -149,8 +149,11 @@ Class('linb.Debugger', null, {
             div.__hide=0;
 
             div.css({left:left+'px', width:width+'px', visibility:'visible'})
-            .first().html(head||'').css('visibility',head?'visible':'hidden')
+            .first().html(head||'').css('display',head?'':'none')
             .next().html(body||'');
+
+            if(linb.browser.id)
+                div.ieRemedy();
 
             if(me.last && div!=me.last){
                 var last=me.last;

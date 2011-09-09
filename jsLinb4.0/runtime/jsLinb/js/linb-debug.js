@@ -5998,6 +5998,7 @@ Class("linb.CSS", null,{
         var b=linb.browser,
 // cross browser reset 
             css=".linb-node{margin:0;padding:0;line-height:1.22em;}"+
+            ".linb-wrapper{color:#000;font-family:arial,helvetica,clean,sans-serif;font-style:normal;font-weight:normal;font-size:12px;vertical-align:middle;}"+
             ".linb-node-table{border-collapse:collapse;border-spacing:0;empty-cells:show;font-size:inherit;"+(b.ie?"font:100%;":"")+"}"+
             ".linb-node-fieldset,.linb-node-img{border:0;}"+
             ".linb-node-ol,.linb-node-ul,.linb-node-li{list-style:none;}"+
@@ -10261,7 +10262,7 @@ Class('linb.DragDrop',null,{
                 case 'icon':
                     pos.left=_.isNumb(p.targetLeft)?p.targetLeft:(mousePos.left - linb.win.scrollLeft() + 16);
                     pos.top=_.isNumb(p.targetTop)?p.targetTop:(mousePos.top - linb.win.scrollTop() + 16);
-                    t='<table border="0"><tr><td valign="top"><span style="background:url('+p.dragIcon+') no-repeat left top;width:'+(_.isNumb(p.targetWidth)?p.targetWidth:16)+'px;height:'+(_.isNumb(p.targetHeight)?p.targetHeight:16)+'px;" ></span></td><td id="linb:dd:shadow" '+(p.shadowFrom?'style="border:solid 1px #e5e5e5;background:#fff;font-size:12px;line-height:14px;"':'')+'>'+(p.shadowFrom?
+                    t='<table border="0" class="linb-node linb-node-table"><tr><td valign="top"><span class="linb-node linb-node-span" style="background:url('+p.dragIcon+') no-repeat left top;width:'+(_.isNumb(p.targetWidth)?p.targetWidth:16)+'px;height:'+(_.isNumb(p.targetHeight)?p.targetHeight:16)+'px;" ></span></td><td id="linb:dd:shadow" '+(p.shadowFrom?'style="border:solid 1px #e5e5e5;background:#fff;font-size:12px;line-height:14px;"':'')+'>'+(p.shadowFrom?
 
                     linb(p.shadowFrom).clone(true)
                     .css({left:'auto',top:'auto', position:'relative'})
@@ -10532,8 +10533,8 @@ Class("linb.Tips", null,{
 
                     var self=this,node,_ruler,s,w,h;
                     if(!(node=self.node) || !node.get(0)){
-                        node = self.node = linb.create('<div class="linb-tips"><div class="linb-tips-i"></div></div>');
-                        _ruler = self._ruler = linb.create('<div class="linb-tips" style="position:absolute;visibility:hidden;left:-10000px;"><div class="linb-tips-i" style="position:relative;"></div></div>');
+                        node = self.node = linb.create('<div class="linb-node linb-node-div linb-tips"><div class="linb-node linb-node-div linb-tips-i"></div></div>');
+                        _ruler = self._ruler = linb.create('<div class="linb-node linb-node-div linb-tips" style="position:absolute;visibility:hidden;left:-10000px;"><div class="linb-node linb-node-div linb-tips-i" style="position:relative;"></div></div>');
                         self.n = node.first();
                         self._n = _ruler.first();
                         if(typeof node.addShadow == 'function'){
@@ -10558,7 +10559,7 @@ Class("linb.Tips", null,{
                         });
                         linb.Tips._curTips=s;
                         if(!item.transTips || !html)
-                            s='<div style="border:solid gray 1px;background-color:#FFF8DC;padding:1px 2px 2px 2px;">'+s+'</div>';
+                            s='<div class="linb-node linb-node-div" style="border:solid gray 1px;background-color:#FFF8DC;padding:1px 2px 2px 2px;">'+s+'</div>';
                         //set to this one
                         self._n.get(0).innerHTML=s;
 
@@ -10604,7 +10605,7 @@ Class("linb.Tips", null,{
                 this.threadid='$tips:1$';
                 this.show=function(item, pos){
                     if(!this.node){
-                        this.node = linb.create('<div style="position:absolute;border:solid gray 1px;background-color:#FFFACD;font-size:12px;padding:3px;overflow:hidden;"></div>');
+                        this.node = linb.create('<div class="linb-node linb-node-div" style="position:absolute;border:solid gray 1px;background-color:#FFFACD;font-size:12px;padding:3px;overflow:hidden;"></div>');
                         linb('body').append(this.node);
                     }
                     pos.left+=12;
@@ -11083,7 +11084,7 @@ Class("linb.Tips", null,{
             }
 
             if(!linb.Dom.byId(self._id2)){
-                var ns=linb.create('<div id='+self._id1+' style="left:5px;top:'+(linb.win.scrollTop()+5)+'px;" class="linb-dbg-frm"><div class="linb-dbg-box"><div id='+self._id4+' class="linb-dbg-header">&nbsp;&nbsp;:&nbsp;)&nbsp;&nbsp;jsLINB Monitor window <span class="linb-dbg-cmds"><a href="javascript:;" onclick="linb(\''+self._id2+'\').empty();">Clear</a><a href="javascript:;" onclick="linb(\''+self._id1+'\').remove();"> &Chi; </a></span></div><div id='+self._id2+' class="linb-dbg-content"></div><div class="linb-dbg-tail"><table><tr><td style="font-family:serif;">&nbsp;>>>&nbsp;</td><td style="width:100%"><input id='+self._id3+' /></td></tr></table></div></div></div>');
+                var ns=linb.create('<div id='+self._id1+' style="left:5px;top:'+(linb.win.scrollTop()+5)+'px;" class="linb-node linb-node-div linb-wrapper linb-dbg-frm"><div class="linb-node linb-node-div linb-dbg-box"><div id='+self._id4+' class="linb-node linb-node-div linb-dbg-header">&nbsp;&nbsp;:&nbsp;)&nbsp;&nbsp;jsLINB Monitor window <span class="linb-node linb-node-span linb-dbg-cmds"><a class="linb-node linb-node-a" href="javascript:;" onclick="linb(\''+self._id2+'\').empty();">Clear</a><a class="linb-node linb-node-a" href="javascript:;" onclick="linb(\''+self._id1+'\').remove();"> &Chi; </a></span></div><div id='+self._id2+' class="linb-node linb-node-div linb-dbg-content"></div><div class="linb-node linb-node-div linb-dbg-tail"><table class="linb-node linb-node-table"><tr><td style="font-family:serif;">&nbsp;>>>&nbsp;</td><td style="width:100%"><input class="linb-node linb-node-input" id='+self._id3+' /></td></tr></table></div></div></div>');
                 linb('body').append(ns);
                 self.$con=linb(self._id2);
                 linb(self._id4).onMousedown(function(p,e,s){
@@ -11101,7 +11102,7 @@ Class("linb.Tips", null,{
                         switch(s.value){
                             case '?':
                             case 'help':
-                                self.$con.append(linb.create("<div class='linb-dbg-con3'><p><strong>vailable commands:</strong></p><ul><li> -- <strong>[clr]</strong> or <strong>[clear]</strong> : clears the message</li><li> -- <strong>[?]</strong> or <strong>[help]</strong> : shows this message</li><li> -- <strong>any other</strong>: shows its string representation</li></ul></div>"));
+                                self.$con.append(linb.create("<div class='linb-node linb-node-div linb-dbg-con3'><p class='linb-node linb-node-p'><strong  class='linb-node linb-node-strong'>vailable commands:</strong></p><ul  class='linb-node linb-node-ul'><li  class='linb-node linb-node-li'> -- <strong  class='linb-node linb-node-strong'>[clr]</strong> or <strong>[clear]</strong> : clears the message</li><li  class='linb-node linb-node-li'> -- <strong  class='linb-node linb-node-strong'>[?]</strong> or <strong  class='linb-node linb-node-strong'>[help]</strong> : shows this message</li><li  class='linb-node linb-node-li'> -- <strong class='linb-node linb-node-strong'>any other</strong>: shows its string representation</li></ul></div>"));
                                 break;
                             case 'clr':
                             case 'clear':
@@ -11112,7 +11113,7 @@ Class("linb.Tips", null,{
                                     temp=s.value;
                                     if(/^\s*\x7b/.test(temp))temp='('+temp+')';
                                     self.log(eval(temp));
-                                }catch(e){self.$con.append(linb.create("<div  class='linb-dbg-con4'>"+String(e)+"</div>"));return;}
+                                }catch(e){self.$con.append(linb.create("<div  class='linb-node linb-node-div linb-dbg-con4'>"+String(e)+"</div>"));return;}
                         }
                         bak=s.value;
                         s.value='';
@@ -11166,9 +11167,9 @@ Class("linb.Tips", null,{
 
            if(!div){
                div =
-               '<div class="linb-uibg-bar linb-uiborder-outset" style="font-size:0;line-height:0;border:solid 1px #cdcdcd;position:absolute;overflow:visible;top:-50px;z-index:'+linb.Dom.TOP_ZINDEX+'">' +
-               '<div style="font-size:14px;overflow:hidden;font-weight:bold;padding:2px;"></div>'+
-               '<div style="padding:5px;overflow:hidden;"></div>'+
+               '<div class="linb-node linb-node-div linb-wrapper linb-uibg-bar linb-uiborder-outset" style="font-size:0;line-height:0;border:solid 1px #cdcdcd;position:absolute;overflow:visible;top:-50px;z-index:'+linb.Dom.TOP_ZINDEX+'">' +
+                   '<div class="linb-node linb-node-div" style="font-size:14px;overflow:hidden;font-weight:bold;padding:2px;"></div>'+
+                   '<div class="linb-node linb-node-div" style="font-size:12px;padding:5px;overflow:hidden;"></div>'+
                '</div>';
                div = linb.create(div);
                if(div.addBorder)div.addBorder();
@@ -11178,8 +11179,11 @@ Class("linb.Tips", null,{
             div.__hide=0;
 
             div.css({left:left+'px', width:width+'px', visibility:'visible'})
-            .first().html(head||'').css('visibility',head?'visible':'hidden')
+            .first().html(head||'').css('display',head?'':'none')
             .next().html(body||'');
+
+            if(linb.browser.id)
+                div.ieRemedy();
 
             if(me.last && div!=me.last){
                 var last=me.last;
@@ -12557,7 +12561,7 @@ Class("linb.UI",  "linb.absObj", {
         self.setDataModel(hash);
 
         linb.UI.$cache_css += linb.UI.buildCSSText({
-            '.linb-css-noscroll, .linb-css-noscroll BODY, .linb-css-viewport, .linb-css-viewport BODY':{
+            '.linb-css-noscroll, .linb-css-noscroll body, .linb-css-viewport, .linb-css-viewport body':{
                 overflow:'hidden',
                 height:'100%',
                 border:'0 none',
@@ -15763,7 +15767,8 @@ new function(){
             Appearances:{
                 KEY:{
                    'font-size':linb.browser.ie?'12px':null,
-                   'line-height':linb.browser.ie?'14px':null
+                   'line-height':linb.browser.ie?'14px':null,
+                   cursor:'pointer'
                 }
             },
             Templates:{
@@ -20152,6 +20157,8 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
         },
         _updateToolbar:function(domId, clear){
             var profile=linb.$cache.profileMap[domId],toolbar;
+            if(!profile)return;
+
             if(profile.properties.disabled || profile.properties.readonly)return;
 
             if(profile && (toolbar=profile.$toolbar)){
@@ -21108,7 +21115,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 //for on blur disappear
                 node.setBlurTrigger(profile.key+":"+profile.$linbid, function(){
                     box._cache();
-                }, null, profile.$linbid);
+                });
 
                 //for esc
                 linb.Event.keyboardHookUp('esc',0,0,0,function(){
@@ -27924,7 +27931,7 @@ Class("linb.UI.ButtonViews", "linb.UI.Tabs",{
                 top, left,
                 hs = profile.getSubNode('LIST'),
                 hl = profile.getSubNode('ITEMS'),
-                wc=null,hc=null;
+                wc=null,hc=null,itmsH;
 
             if(t.barLocation=='top'||t.barLocation=='bottom'){
                 if(width){
@@ -37539,7 +37546,7 @@ if(linb.browser.ie){
             },
             TABSTOP2:{
                 onFocus:function(profile,e,src){
-                    tabindex = parseInt(linb.use(src).get(0).tabIndex||1 +"")+1;
+                    var tabindex = parseInt(linb.use(src).get(0).tabIndex||1 +"")+1;
                     var children = profile.getRoot().get(0).getElementsByTagName('*'),t,n;
                     for(var i=0,l=children.length,o;o=children[i];i++){
                         if(o.nodeType==1){

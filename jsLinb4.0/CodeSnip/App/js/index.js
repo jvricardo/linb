@@ -64,7 +64,7 @@ Class('App', 'linb.Com',{
                 .setHeight("30")
                 .setBorderType('none')
                 .setBorder(true)
-                .setHtml('<div style="text-align:center;font-size:20px;">jsLinb Code Snippets</div>')
+                .setHtml('<div style="text-align:center;font-size:20px;line-height:28px;">jsLinb Code Snippets</div>')
             );
             
             return children;

@@ -1327,7 +1327,7 @@ Class("linb.UI",  "linb.absObj", {
         self.setDataModel(hash);
 
         linb.UI.$cache_css += linb.UI.buildCSSText({
-            '.linb-css-noscroll, .linb-css-noscroll BODY, .linb-css-viewport, .linb-css-viewport BODY':{
+            '.linb-css-noscroll, .linb-css-noscroll body, .linb-css-viewport, .linb-css-viewport body':{
                 overflow:'hidden',
                 height:'100%',
                 border:'0 none',
@@ -4533,7 +4533,8 @@ new function(){
             Appearances:{
                 KEY:{
                    'font-size':linb.browser.ie?'12px':null,
-                   'line-height':linb.browser.ie?'14px':null
+                   'line-height':linb.browser.ie?'14px':null,
+                   cursor:'pointer'
                 }
             },
             Templates:{

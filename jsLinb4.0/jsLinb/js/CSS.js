@@ -261,6 +261,7 @@ Class("linb.CSS", null,{
         var b=linb.browser,
 // cross browser reset 
             css=".linb-node{margin:0;padding:0;line-height:1.22em;}"+
+            ".linb-wrapper{color:#000;font-family:arial,helvetica,clean,sans-serif;font-style:normal;font-weight:normal;font-size:12px;vertical-align:middle;}"+
             ".linb-node-table{border-collapse:collapse;border-spacing:0;empty-cells:show;font-size:inherit;"+(b.ie?"font:100%;":"")+"}"+
             ".linb-node-fieldset,.linb-node-img{border:0;}"+
             ".linb-node-ol,.linb-node-ul,.linb-node-li{list-style:none;}"+
