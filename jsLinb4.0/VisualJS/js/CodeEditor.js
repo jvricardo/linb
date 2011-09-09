@@ -37,7 +37,8 @@ Class("VisualJS.CodeEditor", ["linb.UI.Widget","linb.absValue"] ,{
             }            
         },
         replaceCode:function(code, crack){
-            var profile = this.get(0),
+            var ns=this,
+                profile = this.get(0),
                 cm=profile.$editor;
             if(cm){
                 // alway used after selectioin
@@ -52,6 +53,9 @@ Class("VisualJS.CodeEditor", ["linb.UI.Widget","linb.absValue"] ,{
                     // remove the extra <br>
                     if(br)
                         br.parentNode.removeChild(br);
+                    
+ns.__forcrackignorechange=true;
+
                     cm.editor.history.reset();
                 }
                 cm.focus();
@@ -72,7 +76,8 @@ Class("VisualJS.CodeEditor", ["linb.UI.Widget","linb.absValue"] ,{
         // locate to {}
         // crack is [true], for replaceSelection action
         locateTo:function(id, crack){
-            var profile = this.get(0),
+            var ns=this,
+                profile = this.get(0),
                 cm=profile.$editor;
             if(cm){
                 cm.focus();
@@ -86,7 +91,9 @@ Class("VisualJS.CodeEditor", ["linb.UI.Widget","linb.absValue"] ,{
                     if(crack){
                         // add an extra <br>
                         cm.insertIntoLine(elem2,0," \n");
-                        cm.editor.highlightDirty();
+                        cm.editor.highlightDirty(true);
+ns.__forcrackignorechange=true;
+
                         elem2=elem2.nextSibling;
                     }
                     

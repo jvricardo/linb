@@ -573,7 +573,9 @@ Class('VisualJS.JSEditor', 'linb.Com',{
                             ns._uicode=""+(new Function([],code.slice(code.indexOf('{')+1, code.lastIndexOf('}'))));
                             ns._uicode=ns._uicode.slice(ns._uicode.indexOf('{')+1, ns._uicode.lastIndexOf('}'));
     
-                            ns._buildNameSpace(true);
+                            _.asyRun(function(){
+                                ns._buildNameSpace(true);
+                            });
                         }
                     }else{
                         ns.addCodeToInstance(key, code);
@@ -871,9 +873,15 @@ Class('VisualJS.JSEditor', 'linb.Com',{
             }
             ns._renderStatus=!!finished;
         },
-        _codeeditor_onChange:function(profile){
-           this._dirty=true;
-           this.fireEvent('onValueChanged', [this, true]);
+        _codeeditor_onChange:function(profile){       
+            var ns=this;
+            if(ns.codeeditor.__forcrackignorechange){
+                delete ns.codeeditor.__forcrackignorechange;
+                return;
+            }
+            ns._dirty=true;
+
+            ns.fireEvent('onValueChanged', [ns, true]);
         },
         _codeeditor_onblockchange:function(profile, BracesMap){
             var ns=this,
