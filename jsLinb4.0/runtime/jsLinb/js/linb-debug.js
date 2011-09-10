@@ -11127,7 +11127,8 @@ Class("linb.Tips", null,{
 
                 if(linb.browser.ie6){
                     ns.height(ns.offsetHeight());
-                    ns.width(ns.offsetWidth()+2);
+                    ns.width(299);
+                    _.asyRun(function(){ns.width(300);})
                 }
                 var bak='',temp;
                 linb(self._id3).onKeydown(function(p,e,s){
@@ -11173,10 +11174,10 @@ Class("linb.Tips", null,{
             '.linb-dbg-cmds a{margin:2px;}'+
             '.linb-dbg-box{position:relative;overflow:hidden;border:solid 1px #AAA;}'+
             '.linb-dbg-content{position:relative;width:100%;overflow:auto;height:300px;background:#fff;}'+
-            '.linb-dbg-con1{background-color:#CCC}'+
-            '.linb-dbg-con2{padding-left:6px;border-bottom:dashed 1px #CCC}'+
-            '.linb-dbg-con3{padding-left:6px;border-bottom:dashed 1px #CCC;background:#EEE;color:#0000ff;}'+
-            '.linb-dbg-con4{padding-left:6px;border-bottom:dashed 1px #CCC;background:#EEE;color:#ff0000;}'+
+            '.linb-dbg-con1{background-color:#CCC;width:298px;}'+
+            '.linb-dbg-con2{padding-left:6px;border-bottom:dashed 1px #CCC;width:292px;}'+
+            '.linb-dbg-con3{padding-left:6px;border-bottom:dashed 1px #CCC;background:#EEE;color:#0000ff;width:292px;}'+
+            '.linb-dbg-con4{padding-left:6px;border-bottom:dashed 1px #CCC;background:#EEE;color:#ff0000;width:292px;}'+
             '.linb-dbg-tail{overflow:hidden;position:relative;border-top:solid 1px #CCC;height:16px;background:#fff;color:#0000ff;}'+
             '.linb-dbg-tail input{width:100%;border:0;background:transparent;}'
         ,this.KEY);
