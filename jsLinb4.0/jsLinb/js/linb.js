@@ -1079,7 +1079,7 @@ new function(){
         if(_.isNumb(dm))
             b["ie"+(b.ver=dm)]=true;
         else
-            v('ie','msie ');
+            b[v('ie','msie ')]=true;
         if(b.ie6){
             //ex funs for ie6
             try {document.execCommand('BackgroundImageCache', false, true)}catch(e){}

@@ -1079,7 +1079,7 @@ new function(){
         if(_.isNumb(dm))
             b["ie"+(b.ver=dm)]=true;
         else
-            v('ie','msie ');
+            b[v('ie','msie ')]=true;
         if(b.ie6){
             //ex funs for ie6
             try {document.execCommand('BackgroundImageCache', false, true)}catch(e){}
@@ -5992,6 +5992,35 @@ Class("linb.CSS", null,{
             target.disabled=true;
             target.disabled=false;
             return ns;
+        },
+        resetCSS:function(){
+            var b=linb.browser,
+            css="html{color:#000;background:#FFF;}"+
+                "body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}"+
+                "table{border-collapse:collapse;border-spacing:0;}"+
+                "fieldset,img{border:0;}"+
+                "address,caption,cite,code,dfn,em,strong,th,ar{font-style:normal;font-weight:normal;}"+
+                "li{list-style:none;}"+
+                "caption,th{text-align:left;}"+
+                "h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}"+
+                "q:before,q:after{content:'';}"+
+                "abbr,acronym{border:0;font-variant:normal;}"+
+                "sup{vertical-align:text-top;}"+
+                "sub{vertical-align:text-bottom;}"+
+                "input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}"+
+                "input,textarea,select{*font-size:100%;}"+
+                "legend{color:#000;}"+
+                "span{outline-offset:-1px;"+
+                 (b.gek
+                    ? parseFloat(b.ver)<3 
+                        ? ((parseInt(b.ver)<3?"-moz-outline-offset:-1px !important;":"") + "display:-moz-inline-block;display:-moz-inline-box;display:inline-block;")
+                        :"display:inline-block;"
+                    : b.ie6
+                        ?"display:inline-box;display:inline;"
+                    :"display:inline-block;")+
+                (b.ie?"zoom:1;":"")+
+                "}";
+            this.addStyleSheet(css,"linb.CSSreset");
         }
     },
     Initialize:function(){
@@ -6017,7 +6046,7 @@ Class("linb.CSS", null,{
             ".linb-node-a:hover{color:red}"+
             (b.gek? (".linb-node-a:focus{outline-offset:-1px;"+ (parseInt(b.ver)<3?"-moz-outline-offset:-1px !important":"") +"}" ):"")+
             ".linb-node-span, .linb-node-div{border:0;font-size:12px;}"+
-            ".linb-node-span{outline-offset:-1px;"+
+            ".linb-node-span, .linb-wrapper span{outline-offset:-1px;"+
             (b.gek
                 ? parseFloat(b.ver)<3 
                     ? ((parseInt(b.ver)<3?"-moz-outline-offset:-1px !important;":"") + "display:-moz-inline-block;display:-moz-inline-box;display:inline-block;")
@@ -6027,12 +6056,14 @@ Class("linb.CSS", null,{
                 :"display:inline-block;")+
             (b.ie?"zoom:1;":"")+
             "}"+
+            ".linb-node-h1,.linb-node-h2,.linb-node-h3,.linb-node-h4,.linb-node-h5,.linb-node-h6{font-size:100%;font-weight:normal;}"+
             ".linb-node-h1{font-size:138.5%;}"+
             ".linb-node-h2{font-size:123.1%;}"+
             ".linb-node-h3{font-size:108%;}"+
             ".linb-node-h1,.linb-node-h2,.linb-node-h3{margin:1em 0;}"+
             ".linb-node-h1,.linb-node-h2,.linb-node-h3,.linb-node-h4,.linb-node-h5,.linb-node-h6,.linb-node-strong{font-weight:bold;}"+
             ".linb-node-em{font-style:italic;}"+
+            ".linb-node-legend{color:#000;}"+
             (b.ie6?("#"+linb.$localeDomId+"{vertical-align:baseline;}"):"");
 
         this.addStyleSheet(css, 'linb.CSS');
@@ -11092,8 +11123,12 @@ Class("linb.Tips", null,{
                     linb.use(s).parent(2).startDrag(e);
                 });
 
-                if(linb.browser.ie6)ns.height(ns.offsetHeight());
                 if(ns.addShadow)ns.addShadow();
+
+                if(linb.browser.ie6){
+                    ns.height(ns.offsetHeight());
+                    ns.width(ns.offsetWidth()+2);
+                }
                 var bak='',temp;
                 linb(self._id3).onKeydown(function(p,e,s){
                     var k=linb.Event.getKey(e).key;

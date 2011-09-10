@@ -3538,6 +3538,9 @@ _.set(linb.Locale,["en","app"], {
     _.set(linb.Locale,["en","doc","linb","CSS"], {
         KEY:{$desc:"Class Name"},
         $desc:"linb.CSS Class(static)",
+        resetCSS:{
+            $desc:"Add reset CSS to the current page."
+        },
         addStyleSheet:{
             $desc:"Adds a &lt;style> element to DOM &lt;head>.",
             $rtn:"Element",

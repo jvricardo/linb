@@ -62,8 +62,12 @@ Class('linb.Debugger', null, {
                     linb.use(s).parent(2).startDrag(e);
                 });
 
-                if(linb.browser.ie6)ns.height(ns.offsetHeight());
                 if(ns.addShadow)ns.addShadow();
+
+                if(linb.browser.ie6){
+                    ns.height(ns.offsetHeight());
+                    ns.width(ns.offsetWidth()+2);
+                }
                 var bak='',temp;
                 linb(self._id3).onKeydown(function(p,e,s){
                     var k=linb.Event.getKey(e).key;

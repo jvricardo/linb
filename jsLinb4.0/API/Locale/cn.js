@@ -3551,6 +3551,9 @@ _.set(linb.Locale,["cn","app"], {
     _.set(linb.Locale,["cn","doc","linb","CSS"], {
         KEY:{$desc:"本类名"},
         $desc:"linb.CSS 类(静态类)",
+        resetCSS:{
+            $desc:"给当前文档添加reset CSS."
+        },
         addStyleSheet:{
             $desc:"添加一个&lt;style>元素到&lt;head>区域中.",
             $rtn:"Element",

@@ -96,12 +96,13 @@
                     showErr(this.uri, this.queryString, msg);
                 };
 
+var linbService='request.php';
                 //use linb.Ajax get method
                 linb('ajax_get').onClick(function(){
                     var hash=getRequest();
                     if(hash)
                         linb.Thread.observableRun(function(threadid){
-                            linb.Ajax('request.php',hash, onOK, onFail,threadid).start();
+                            linb.Ajax(linbService,hash, onOK, onFail,threadid).start();
                         });
                 });
                 //use linb.Ajax post
@@ -109,7 +110,7 @@
                     var hash=getRequest();
                     if(hash)
                         linb.Thread.observableRun(function(threadid){
-                            linb.Ajax('request.php',hash, onOK, onFail,threadid,{method:'POST'}).start();
+                            linb.Ajax(linbService,hash, onOK, onFail,threadid,{method:'POST'},{reqType:'xml'}).start();
                         });
                 });
                 //use linb.SAjax
@@ -117,7 +118,7 @@
                     var hash=getRequest();
                     if(hash)
                         linb.Thread.observableRun(function(threadid){
-                            linb.SAjax('request.php',hash, onOK, onFail,threadid).start();
+                            linb.SAjax(linbService,hash, onOK, onFail,threadid).start();
                         });
                 });
                 //use linb.IAjax get
@@ -125,7 +126,7 @@
                     var hash=getRequest();
                     if(hash)
                         linb.Thread.observableRun(function(threadid){
-                            linb.IAjax('request.php',hash, onOK, onFail,threadid,{method:'GET'}).start();
+                            linb.IAjax(linbService,hash, onOK, onFail,threadid,{method:'GET'}).start();
                         });
                 });
                 //use linb.IAjax post
@@ -133,7 +134,7 @@
                     var hash=getRequest();
                     if(hash)
                         linb.Thread.observableRun(function(threadid){
-                            linb.IAjax('request.php',hash, onOK, onFail,threadid).start();
+                            linb.IAjax(linbService,hash, onOK, onFail,threadid).start();
                         });
                 });
                 //use linb.request function
@@ -141,7 +142,7 @@
                     var hash=getRequest();
                     if(hash)
                         linb.Thread.observableRun(function(threadid){
-                            linb.request('request.php',hash, onOK, onFail,threadid);
+                            linb.request(linbService,hash, onOK, onFail,threadid);
                         });
                 });
             });
