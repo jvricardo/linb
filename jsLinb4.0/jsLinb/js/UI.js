@@ -4900,6 +4900,8 @@ new function(){
                         id="biframe_"+_(),
                         e=linb.browser.ie && parseInt(linb.browser.ver)<9,
                         ifr=document.createElement(e?"<iframe name='"+id+"'>":"iframe");
+                    if(!hash.query)hash.query={};
+                    hash.query._rand=_();
                     prop.iframeAutoLoad.frameName=ifr.id=ifr.name=id;
                     ifr.src=hash.url;
                     ifr.frameBorder='0';
@@ -4916,6 +4918,8 @@ new function(){
                     if(typeof prop.ajaxAutoLoad=='string')
                         prop.ajaxAutoLoad={url:prop.ajaxAutoLoad};
                     var hash=prop.ajaxAutoLoad,options={rspType:"text"};
+                    if(!hash.query)hash.query={};
+                    hash.query._rand=_();
                     _.merge(options, hash.options);
                     ins.busy();
                     linb.Ajax(hash.url, hash.query, function(rsp){

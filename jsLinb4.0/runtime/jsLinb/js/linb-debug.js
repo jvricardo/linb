@@ -16170,6 +16170,8 @@ new function(){
                         id="biframe_"+_(),
                         e=linb.browser.ie && parseInt(linb.browser.ver)<9,
                         ifr=document.createElement(e?"<iframe name='"+id+"'>":"iframe");
+                    if(!hash.query)hash.query={};
+                    hash.query._rand=_();
                     prop.iframeAutoLoad.frameName=ifr.id=ifr.name=id;
                     ifr.src=hash.url;
                     ifr.frameBorder='0';
@@ -16186,6 +16188,8 @@ new function(){
                     if(typeof prop.ajaxAutoLoad=='string')
                         prop.ajaxAutoLoad={url:prop.ajaxAutoLoad};
                     var hash=prop.ajaxAutoLoad,options={rspType:"text"};
+                    if(!hash.query)hash.query={};
+                    hash.query._rand=_();
                     _.merge(options, hash.options);
                     ins.busy();
                     linb.Ajax(hash.url, hash.query, function(rsp){
@@ -26920,7 +26924,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                         tagName : 'div',
                         className:'linb-uibg-base',
                         style:"{_overflow};",
-                        text:linb.UI.$childTag
+                        text:'{html}'+linb.UI.$childTag
                     }
                 }
             }
@@ -27530,6 +27534,8 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                         e=linb.browser.ie && parseInt(linb.browser.ver)<9,
                         ifr=document.createElement(e?"<iframe name='"+id+"'>":"iframe");
                     item.iframeAutoLoad.frameName=ifr.id=ifr.name=id;
+                    if(!hash.query)hash.query={};
+                    hash.query._rand=_();
                     ifr.src=hash.url;
                     ifr.frameBorder='0';
                     ifr.marginWidth='0';
@@ -27539,25 +27545,25 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                     ifr.allowTransparency='true';
                     ifr.width='100%';
                     ifr.height='100%';
-                    box.getPanel(item.id).append(ifr);
+                    box.getPanel(item.id).html("").append(ifr);
                     linb.Dom.submit(hash.url, hash.query, hash.method, id, hash.enctype);
                 }else if(item.ajaxAutoLoad){
                     if(typeof item.ajaxAutoLoad=='string')
                         item.ajaxAutoLoad={url:item.ajaxAutoLoad};
                     var hash=item.ajaxAutoLoad,options={rspType:"text"};
                     _.merge(options, hash.options);
+                    if(!hash.query)hash.query={};
+                    hash.query._rand=_();
                     box.busy(null,null,"PANEL",profile.getSubIdByItemId(item.id));
                     linb.Ajax(hash.url, hash.query, function(rsp){
                         var n=linb.create("div");
                         n.html(rsp,false,true);
-                        box.getPanel(item.id).append(n.children());
+                        box.getPanel(item.id).html("").append(n.children());
                         box.free();
                     }, function(err){
-                        box.getPanel(item.id).append("<div>"+err+"</div>");
+                        box.getPanel(item.id).html("").append("<div>"+err+"</div>");
                         box.free();
                     }, null, options).start();
-                }else if(item.html){
-                    box.getPanel(item.id).append(item.html);
                 }
             }
         },
@@ -32667,12 +32673,14 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             var prf=this.get(0);
             if(prf.renderId)
                 prf.box._addTempRow(prf);
+            return this;
         },
         removeHotRow:function(){
             var profile=this.get(0);
             profile.box._sethotrowoutterblur(profile,true);
             delete profile.__hastmpRow;
             this.removeRows([profile.box._temprowid]);
+            return this;
         },
         isDirtied:function(){
             var dirty=false;
