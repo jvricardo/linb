@@ -10068,6 +10068,10 @@ _.set(linb.Locale,["cn","app"], {
                 ],
                 $memo:"需要在控件产生前调用"
             },
+            getPopWnd:{
+                $desc:"得到弹出窗口.",
+                $rtn:"[linb.UI]"
+            },
             getPopCtrlEvents:{
                 $desc:"得到固定弹出窗口('combobox,listbox,helpinput,date,time,datetime,color')的事件.",
                 $rtn:"Object"
@@ -10291,6 +10295,13 @@ _.set(linb.Locale,["cn","app"], {
             },
             beforePopShow:{
                 $desc:"在弹出窗口显示前调用.如返false,弹出窗口不会显示.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "popCtl : linb.UI, 弹出窗口对象."
+                ]
+            },
+            afterPopShow:{
+                $desc:"在弹出窗口显示后调用.",
                 $paras:[
                     "profile : linb.UIProfile.",
                     "popCtl : linb.UI, 弹出窗口对象."
@@ -15961,6 +15972,66 @@ _.set(linb.Locale,["cn","app"], {
                     "}"
                 ]
             },
+            getRowOptions:{
+                $desc:"得到行的自定义属性.",
+                $rtn:"Object"
+            },
+            setRowOptions :{
+                $desc:"设置行的自定义属性.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : Object.",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为 [false]."
+                ]
+            },
+            getColOptions:{
+                $desc:"得到列的自定义属性.",
+                $rtn:"Object"
+            },
+            setColOptions:{
+                $desc:"设置列的自定义属性.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : Object.",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为 [false]."
+                ]
+            },
+            getTreeMode:{
+                $desc:"得到Grid是否在树状模式.",
+                $rtn:"Boolean"
+            },
+            setTreeMode:{
+                $desc:"设置Grid是否为树状模式.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : Boolean.",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为 [false]."
+                ]
+            },
+            getHotRowMode:{
+                $desc:"得到Grid的[热行]模式.",
+                $rtn:"String. 'none'[没有热行模式], 'auto'[热行自动显示或隐藏] 或 'show'[热行始终显示]."
+            },
+            setHotRowMode:{
+                $desc:"设置Grid的[热行]模式.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : String. 'none'[没有热行模式], 'auto'[热行自动显示或隐藏] 或 'show'[热行始终显示] 之一.",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为 [false]."
+                ]
+            },
+            getHotRowNumber:{
+                $desc:"得到Grid[热行]的自定义行号.",
+                $rtn:"String."
+            },
+            setHotRowNumber:{
+                $desc:"设置Grid[热行]的自定义行号.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : String.",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为 [false]."
+                ]
+            },
             resetGridValue:{
                 $desc:"重新设置所有单元格的值, 并清除脏标志.",
                 $rtn:"[self]",
@@ -16042,7 +16113,14 @@ _.set(linb.Locale,["cn","app"], {
                     "}"
                 ]
             },
-
+            addHotRow:{
+                $desc:"加[热行](如果没有的话).",
+                $rtn:"[self]"
+            },
+            removeHotRow:{
+                $desc:"去除[热行].",
+                $rtn:"[self]"
+            },
             beforeCellActive:{
                 $desc:"在单元格激活前被调用. 返回false将阻止单元格被激活.",
                 $paras:[
@@ -16113,6 +16191,34 @@ _.set(linb.Locale,["cn","app"], {
                     "profile : linb.UIProfile.",
                     "cell : Object, 单元格对象.",
                     "row : Object, 单元格的行对象"
+                ]
+            },
+            onInitHotRow:{
+                $desc:"当[热行]需要数据初始化时调用, 需要返回初始化的行数据.",
+                $paras:[
+                    "profile : linb.UIProfile."
+                ]
+            },
+            beforeHotRowAdded:{
+                $desc:"在[热行]被加到Grid前调用. 如果返回[true], [热行]被加入; 如果返回[false],[热行]被删除; 如果返回cell，[热行]保留，并且cell获得焦点; 如果返回[null],没有影响.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "row : Object. 行对象",
+                    "leaveGrid : Booean. 是否触发事件的光标在Grid之外."
+                ]
+            },
+            afterHotRowAdded:{
+                $desc:"在[热行]被加到Grid后调用.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "row : Object. 行对象"
+                ]
+            },
+            onRowDirtied:{
+                $desc:"当行被改变后调用，[异步调用].",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "row : Object. 行对象"
                 ]
             },
             afterRowActive:{

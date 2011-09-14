@@ -10142,6 +10142,10 @@ _.set(linb.Locale,["en","app"], {
                 ],
                 $memo:"You have to use this function before the UIProfile is rendered."
             },
+            getPopWnd:{
+                $desc:"Gets the Pop up windows.",
+                $rtn:"[linb.UI]"
+            },
             getPopCtrlEvents:{
                 $desc:"Gets events of the standard pop control('combobox,listbox,helpinput,date,time,datetime,color').",
                 $rtn:"Object"
@@ -10365,6 +10369,13 @@ _.set(linb.Locale,["en","app"], {
             },
             beforePopShow:{
                 $desc:"Fired before the pop-up window shows. If returns false, the default pop action won't show.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "popCtl : linb.UI, pop-up window UI Control."
+                ]
+            },
+            afterPopShow:{
+                $desc:"Fired after the pop-up window shows.",
                 $paras:[
                     "profile : linb.UIProfile.",
                     "popCtl : linb.UI, pop-up window UI Control."
@@ -16038,6 +16049,66 @@ _.set(linb.Locale,["en","app"], {
                     "}"
                 ]
             },
+            getRowOptions:{
+                $desc:"Gets the grid rows' customized prop.",
+                $rtn:"Object"
+            },
+            setRowOptions :{
+                $desc:"Sets the grid rows' customized prop.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : Object.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getColOptions:{
+                $desc:"Gets the grid cols' customized prop.",
+                $rtn:"Object"
+            },
+            setColOptions:{
+                $desc:"Sets the grid cols' customized prop.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : Object.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getTreeMode:{
+                $desc:"Gets whether the grid is in tree mode or not.",
+                $rtn:"Boolean"
+            },
+            setTreeMode:{
+                $desc:"To determine whether the grid is in tree mode or not.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : Boolean.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getHotRowMode:{
+                $desc:"Gets the grid's hot row mode.",
+                $rtn:"String. 'none'[no hot row], 'auto'[auto show or hide] or 'show'[always show]."
+            },
+            setHotRowMode:{
+                $desc:"Sets the grid's hot row mode.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : String. 'none'[no hot row], 'auto'[auto show or hide] or 'show'[always show].",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getHotRowNumber:{
+                $desc:"Gets the Grid's hot row's number string.",
+                $rtn:"String."
+            },
+            setHotRowNumber:{
+                $desc:"Sets the Grid's hot row's number string.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : String.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
             resetGridValue:{
                 $desc:"Resets all cells' value in the grid, and clears all dirty marks.",
                 $rtn:"[self]",
@@ -16118,7 +16189,14 @@ _.set(linb.Locale,["en","app"], {
                     "}"
                 ]
             },
-
+            addHotRow:{
+                $desc:"To add the hot row.",
+                $rtn:"[self]"
+            },
+            removeHotRow:{
+                $desc:"To remove the hot row.",
+                $rtn:"[self]"
+            },
             beforeCellActive:{
                 $desc:"Fired before the cell is activated. If returns false, the activation will be ignored.",
                 $paras:[
@@ -16206,6 +16284,34 @@ _.set(linb.Locale,["en","app"], {
                     "profile : linb.UIProfile.",
                     "cell : Object. cell object.",
                     "row : Object, cell's row object."
+                ]
+            },
+            onInitHotRow:{
+                $desc:"Fired when the hot row need to be inited. [Needs to return an init row object.]",
+                $paras:[
+                    "profile : linb.UIProfile."
+                ]
+            },
+            beforeHotRowAdded:{
+                $desc:"Fired before the hot row is added. If it returns true, the new row will be added; if it returns false, the hot row will be removed; if it returns cell, the new row will not be added, and the cell in the hot row will be focused; if it returns [null], do nothing.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "row : Object. row object",
+                    "leaveGrid : Booean. to determine the event cursor leaves grid or not."
+                ]
+            },
+            afterHotRowAdded:{
+                $desc:"Fired after the hot row is added.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "row : Object. row object"
+                ]
+            },
+            onRowDirtied:{
+                $desc:"Fired when the row is dirtied in asynchronous mode.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "row : Object. row object"
                 ]
             },
             afterRowActive:{
@@ -16480,7 +16586,8 @@ _.set(linb.Locale,["en","app"], {
                 $paras:[
                     "profile : linb.UIProfile.",
                     "cell :Object, the cell Object.",
-                    "options : Object, the keys/values to be updated."
+                    "options : Object, the keys/values to be updated.",
+                    "isHotRow : Boolean. Is the cell in the hot row. "
                 ],
                 $snippet:[
                     "var id='linb.temp.grid61'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -16497,7 +16604,8 @@ _.set(linb.Locale,["en","app"], {
                 $paras:[
                     "profile : linb.UIProfile.",
                     "cell : Object, the cell Object.",
-                    "options : Object, the keys/values to be updated."
+                    "options : Object, the keys/values to be updated.",
+                    "isHotRow : Boolean. Is the cell in the hot row. "
                 ],
                 $snippet:[
                     "var id='linb.temp.grid62'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -17438,4 +17546,3 @@ _.set(linb.Locale,["en","app"], {
  
 
 })();
-

@@ -190,12 +190,14 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             var prf=this.get(0);
             if(prf.renderId)
                 prf.box._addTempRow(prf);
+            return this;
         },
         removeHotRow:function(){
             var profile=this.get(0);
             profile.box._sethotrowoutterblur(profile,true);
             delete profile.__hastmpRow;
             this.removeRows([profile.box._temprowid]);
+            return this;
         },
         isDirtied:function(){
             var dirty=false;
