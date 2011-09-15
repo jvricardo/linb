@@ -542,7 +542,7 @@ class IO{
 	 * @param string $path
 	 * @param string $s
 	 */
-	function setString($path,$s,$flag=null){
+	function setString($path,$s,$flag=false){
 		return file_put_contents($path,$s,$flag);
 	}
 	/**

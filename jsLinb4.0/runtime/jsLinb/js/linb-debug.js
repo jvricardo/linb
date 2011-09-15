@@ -3267,7 +3267,8 @@ Class('linb.absObj',"linb.absBox",{
                 queryURL=(hashModel?(((prop.queryURL.lastIndexOf("/")!=prop.queryURL.length-1)?(prop.queryURL+"/"):prop.queryURL)+prop.queryModel):prop.queryURL),
                 queryUserName=prop.queryUserName;
                 queryPasswrod=prop.queryPasswrod;
-                queryArgs=_.copy(prop.queryArgs);
+                queryArgs=_.copy(prop.queryArgs),
+                queryOptions=_.copy(prop.queryOptions);
             if(dsType!="remoting")return;
 
             // Normally, Gives a change to modify "queryArgs" for XML
@@ -3370,6 +3371,7 @@ Class('linb.absObj',"linb.absBox",{
                 options.onEnd=onEnd;
             if(!("onStart" in options))
                 options.onStart=onStart;
+            _.merge(options, queryOptions);
 
             _.merge(options, rMap, 'all');
 
@@ -3565,6 +3567,7 @@ Class('linb.absObj',"linb.absBox",{
                 delete p.queryPassword;
                 delete p.queryModel;
                 delete p.queryArgs;
+                delete p.queryOptions;
                 delete p.proxyType;
                 delete p.queryAsync;
                 delete p.queryMethod;
@@ -3575,6 +3578,8 @@ Class('linb.absObj',"linb.absBox",{
                 delete p.data;
             if(p.queryArgs && _.isEmpty(p.queryArgs))
                 delete p.queryArgs;
+            if(p.queryOptions && _.isEmpty(p.queryOptions))
+                delete p.queryOptions;
             return o;
         },
         DataModel:{
@@ -3609,6 +3614,9 @@ Class('linb.absObj',"linb.absBox",{
                 listbox:["JSON","XML","SOAP"]
             },
             queryArgs:{
+                ini:{}
+            },
+            queryOptions:{
                 ini:{}
             },
             proxyType:{

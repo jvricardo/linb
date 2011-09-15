@@ -5385,7 +5385,7 @@ _.set(linb.Locale,["cn","app"], {
                 $desc:"设置数据源的类型.",
                 $rtn:"[self].",
                 $paras:[
-                    "value [必需参数] : String, 数据源的类型. 'none','memory','remoting' 之一,默认为none. 只有设置为'remoting', queryURL,queryUserName, queryPassword, queryMethod,queryAsync,queryModel,queryArgs,proxyType,requestType,responseType等属性才会有效.",
+                    "value [必需参数] : String, 数据源的类型. 'none','memory','remoting' 之一,默认为none. 只有设置为'remoting', queryURL,queryUserName, queryPassword, queryMethod,queryAsync,queryModel,queryArgs,queryOptions,proxyType,requestType,responseType等属性才会有效.",
                     "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为 [false]."
                 ]
             },
@@ -5467,6 +5467,18 @@ _.set(linb.Locale,["cn","app"], {
             },
             setQueryArgs:{
                 $desc:"设置远程数据源的数据请求参数.",
+                $rtn:"[self].",
+                $paras:[
+                    "value [必需参数] : Object.",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为 [false]."
+                ]
+            },
+            getQueryOptions:{
+                $desc:"获取远程数据源数据请求时的自定义选项[同 Ajax/SAjax/IAjax 的 options].",
+                $rtn:"Object"
+            },
+            setQueryOptions:{
+                $desc:"设置远程数据源数据请求时的自定义选项[同 Ajax/SAjax/IAjax 的 options].",
                 $rtn:"[self].",
                 $paras:[
                     "value [必需参数] : Object.",
