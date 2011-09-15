@@ -1733,7 +1733,7 @@ Class('linb.Ajax','linb.absIO',{
                     }
                     try {
                         if(_.isHash(header))
-                            _.each(header,function(i,o){
+                            _.each(header,function(o,i){
                                 self._header(i, o);
                             });
                     } catch(e) {}
