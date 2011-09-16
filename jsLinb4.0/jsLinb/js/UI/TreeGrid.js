@@ -765,7 +765,17 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                 profile.box._ajdustBody(profile);
             return true;
         },
-
+        sortColumn:function(colId, desc, sortby){
+            var prf=this.get(0), sId=prf.colMap2[colId],col=prf.colMap[sId];
+            if(sId && col){
+                if(_.isBool(desc))
+                    col._order=!desc;
+                if(_.isFun(sortby))
+                    col.sortby=sortby;
+                prf.getSubNode("HCELLA",sId).onClick();
+            }
+            return this;
+        },
         /*cell realted*/
         getCell:function(cellId, type){
             var self=this,profile=this.get(0),v;

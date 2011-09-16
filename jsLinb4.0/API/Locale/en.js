@@ -16162,7 +16162,7 @@ _.set(linb.Locale,["en","app"], {
                 $rtn:"[self]",
                 $paras:[
                     "colId [Required] : String, the column id.",
-                    "flag [Optional] : Boolean, to determine to show or hide the specified column. Default is true(to show)."
+                    "flag [Required] : Boolean, to determine to show or hide the specified column. Default is true(to show)."
                 ],
                 $snippet:[
                     "var id='linb.temp.grid42'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;width:300px;height:200px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -16172,6 +16172,15 @@ _.set(linb.Locale,["en","app"], {
                     "_.asyRun(function(){o.showColumn('col1',false)},1000);"+
                     "_.asyRun(function(){o.showColumn('col1')},2000);"+
                     "}"
+                ]
+            },
+            sortColumn:{
+                $desc:"To sort column.",
+                $rtn:"[self]",
+                $paras:[
+                    "colId [Required] : String, the column id.",
+                    "desc [Required] : Boolean, [True] for desc, [false] for asc. No-specified or null for switching between desc and asc.",
+                    "sortby [Required] : Function, sortby function. function(x,y){return 0|1|-1}" 
                 ]
             },
             removeAllRows:{

@@ -17,7 +17,7 @@ Added property to linb.Com:
 Added functions to linb.Com:
     getDataBinders
 Added functions to linb.UI.TreeGrid:
-    offEditor, autoRowHeight, autoColWidth, addHotRow, removeHotRow
+    offEditor, autoRowHeight, autoColWidth, addHotRow, removeHotRow, sortColumn
 Added properties to linb.UI.Input:
     labelSize, labelPos, labelGap, labelCaption, labelHAlign 
 Added events to linb.UI.Input:
