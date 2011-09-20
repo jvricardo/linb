@@ -29222,7 +29222,8 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
                         return false;
                     }
                 });
-                profile.getSubNodeByItemId('GROUP', grpId).css('display',value===false?'none':'');
+                var n=profile.getSubNodeByItemId('GROUP', grpId);
+                n.css('display',value===false?'none':'');    
                 if(profile.renderId && profile.getRootNode().offsetWidth)
                     linb.UI.$dock(profile,true,true);
             });
@@ -29281,6 +29282,7 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
                                             tabindex: '{_tabindex}',
                                             BOXWRAP:{
                                                 tagName:'div',
+                                                RULER:{},
                                                 ICON:{
                                                     $order:1,
                                                     className:'ui-icon {imageClass}',
@@ -29311,6 +29313,7 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
                 'font-size':0,
                 'line-height':0,
                 position:'absolute',
+                overflow:'hidden',
                 left:0,
                 top:0
             },
@@ -29318,9 +29321,14 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
                 'vertical-align':'middle',
                 'margin-left':'4px'
             },
+            RULER:{
+                padding:'0px',
+                margin:'0px',
+                width:'0px'
+            },
             ICON:{
                 margin:0,
-                'vertical-align':'text-top'
+                'vertical-align':'middle'
             },
             ITEMS:{
                 display:'block',
@@ -29338,7 +29346,8 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
             GROUP:{
                 'font-size':0,
                 'line-height':0,
-                position:'relative',
+                // crack for: The IE 'non-disappearing content' bug
+                position:'static',
                 padding:'2px 4px 0px 2px',
                 'vertical-align':'middle'
             },
@@ -29365,7 +29374,7 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
             DROP:{
                 width:'14px',
                 height:'16px',
-                'vertical-align':'top',
+                'vertical-align':'middle',
                 background: linb.UI.$bg('drop.gif', 'no-repeat left center', 'Button')
             },
             'BTN-mouseover DROP':{
@@ -29480,6 +29489,7 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
         },
         _prepareItem:function(profile, oitem, sitem, pid, index,len, mapCache, serialId){
             var dn='display:none',
+                tabindex = profile.properties.tabindex,
                 fun=function(profile, dataItem, item, pid, index,len, mapCache,serialId){
                     var id=dataItem[linb.UI.$tag_subId]=typeof serialId=='string'?serialId:('a_'+profile.pickSubId('aitem')), t;
                     if(typeof item=='string')
@@ -29503,6 +29513,7 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
                         item.$linbid=t.$linbid;
                         t.$item=item;
                         t.$holder=profile;
+                        if(!t.host||t.host===t)t.boxing().setHost(profile.host,t.alias);
                         if(!profile.$attached)profile.$attached=[];
                         profile.$attached.push(t);
                     }else{
@@ -29518,6 +29529,7 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
                         if(item.statusButton && !!item.value)
                             dataItem.itemcls=" ui-btn-checked "+profile.getClass('BTN','-checked', !!item.value);
 
+                        dataItem._tabindex=tabindex;
                         dataItem.splitDisplay=dataItem.split?'':dn;
                         dataItem.labelDisplay=dataItem.label?'':dn;
                         dataItem.captionDisplay=dataItem.caption?'':dn;
@@ -29536,7 +29548,7 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
                 a=sitem.sub||[];
 
                 pid=sitem.id;
-                oitem.mode2 = profile.properties.handler ? '' : dn;
+                oitem.mode2 = ('handler'in sitem)?(sitem.handler?'':dn):(profile.properties.handler?'':dn);
                 oitem.grpDisplay=sitem.hidden?dn:'';
                 oitem.sub = arr;
                 
