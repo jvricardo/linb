@@ -173,6 +173,7 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
                                             tabindex: '{_tabindex}',
                                             BOXWRAP:{
                                                 tagName:'div',
+                                                RULER:{},
                                                 ICON:{
                                                     $order:1,
                                                     className:'linb-ui-icon {imageClass}',
@@ -211,9 +212,14 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
                 'vertical-align':'middle',
                 'margin-left':'4px'
             },
+            RULER:{
+                padding:'0px',
+                margin:'0px',
+                width:'0px'
+            },
             ICON:{
                 margin:0,
-                'vertical-align':'text-top'
+                'vertical-align':'middle'
             },
             ITEMS:{
                 display:'block',
@@ -259,7 +265,7 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
             DROP:{
                 width:'14px',
                 height:'16px',
-                'vertical-align':'top',
+                'vertical-align':'middle',
                 background: linb.UI.$bg('drop.gif', 'no-repeat left center', 'Button')
             },
             'BTN-mouseover DROP':{
@@ -374,6 +380,7 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
         },
         _prepareItem:function(profile, oitem, sitem, pid, index,len, mapCache, serialId){
             var dn='display:none',
+                tabindex = profile.properties.tabindex,
                 fun=function(profile, dataItem, item, pid, index,len, mapCache,serialId){
                     var id=dataItem[linb.UI.$tag_subId]=typeof serialId=='string'?serialId:('a_'+profile.pickSubId('aitem')), t;
                     if(typeof item=='string')
@@ -413,6 +420,7 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
                         if(item.statusButton && !!item.value)
                             dataItem.itemcls=" linb-ui-btn-checked "+profile.getClass('BTN','-checked', !!item.value);
 
+                        dataItem._tabindex=tabindex;
                         dataItem.splitDisplay=dataItem.split?'':dn;
                         dataItem.labelDisplay=dataItem.label?'':dn;
                         dataItem.captionDisplay=dataItem.caption?'':dn;
@@ -431,10 +439,10 @@ Class("linb.UI.ToolBar",["linb.UI","linb.absList"],{
                 a=sitem.sub||[];
 
                 pid=sitem.id;
-                oitem.mode2 = profile.properties.handler ? '' : dn;
+                oitem.mode2 = ('handler'in sitem)?(sitem.handler?'':dn):(profile.properties.handler?'':dn);
                 oitem.grpDisplay=sitem.hidden?dn:'';
                 oitem.sub = arr;
-                
+
                 _.arr.each(a,function(item){
                     dataItem={id: item.id};
                     fun(profile,dataItem,item,pid,index,len,mapCache,serialId);
