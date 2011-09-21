@@ -8,8 +8,8 @@
             "colSortable":false,
             "colResizer":false,
             "type" : "label",
-            "renderer" : function(cell){return "<span style='width:16px;height:16px;background:url(img/img.gif) left top'></span>"+cell.caption},
-            "cellRenderer" : function(cell){return "<span style='width:16px;height:16px;background:url(img/img.gif) left -16px'></span>"+cell.value},
+            "renderer" : function(cell){return "<span  class='linb-node-span' style='width:16px;height:16px;background:url(img/img.gif) left top'></span>"+cell.caption},
+            "cellRenderer" : function(cell){return "<span class='linb-node-span' style='width:16px;height:16px;background:url(img/img.gif) left -16px'></span>"+cell.value},
             "width" : 120
         },
         {
@@ -148,7 +148,7 @@
             {
                 "value":(new Date).getTime(),
                 "editable":true,
-                "cellRenderer" : function(cell){return linb.Date.getText(new Date(parseInt(cell.value)), 'ymd2')}
+                "cellRenderer" : function(cell){return linb.Date.getText(cell.value, 'ymd2')}
             },
             '00:00',
             {

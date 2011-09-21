@@ -249,7 +249,7 @@ Class('App', 'linb.Com',{
                     caption:'group layer 1',
                     summary:'summary',
                     preview:'preview',
-                    renderer : function(row){return "<span style='width:16px;height:16px;background:url(img/img.gif) left -32px'></span>"+row.caption},
+                    renderer : function(row){return "<span class='linb-node-span'  style='width:16px;height:16px;background:url(img/img.gif) left -32px'></span>"+row.caption},
                     sub:[['11-11','12-11','13-11','14-11'],{id:'grp2',group:true,caption:'group layer2',sub:[['21-11','22-11','23-11','24-11'],['21-21','22-21','23-21','24-21']]},['11-21','12-21','13-21','14-21']]},{cells:['31','32','33','34'],sub:[['a','b','c','d'],['aa','bb','cc','dd']]},['41','42','43','44']]);
                     SPA.tg6.setHeader(['col1','col2','col3','col4'])
                     .setRows([{cells:['11','12','13','14'],sub:[
