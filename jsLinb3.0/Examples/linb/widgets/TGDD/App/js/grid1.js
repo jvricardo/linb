@@ -148,7 +148,7 @@
             {
                 "value":(new Date).getTime(),
                 "editable":true,
-                "cellRenderer" : function(cell){return linb.Date.getText(new Date(parseInt(cell.value)), 'ymd2')}
+                "cellRenderer" : function(cell){return linb.Date.getText(cell.value, 'ymd2')}
             },
             '00:00',
             {
