@@ -14371,7 +14371,7 @@ Class("linb.UI",  "linb.absObj", {
         getCachedData:function(key){
             var r = _.get(linb.$cache,['UIDATA', key]);
             if(typeof r == 'function')r=r();
-            return _.clone(r);
+            return r;
         },
 
         Behaviors:{
@@ -15360,7 +15360,7 @@ Class("linb.absList", "linb.absObj",{
                     var o=this,
                         t = o.box.getCachedData(value);
                     if(t)
-                        o.boxing().setItems(t);
+                        o.boxing().setItems(_.clone(t));
                     else
                         o.boxing().setItems(o.properties.items);
                     o.properties.listKey = value;
@@ -21824,7 +21824,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 set:function(value){
                     var t = linb.UI.getCachedData(value),
                         o=this;
-                    o.boxing().setItems(t?t:o.properties.items);
+                    o.boxing().setItems(t?_.clone(t):o.properties.items);
                     o.properties.listKey = value;
                 }
             },
@@ -35630,6 +35630,17 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                         return v.join(".")
                     }else 
                         return "";
+               }),
+               f6=me._f6=(me._f6=function(v,profile,cell){
+                    var t=getPro(profile,cell,'editorListItems');
+                    if(!t)
+                        if(t=getPro(profile,cell,'editorListKey'))
+                           t=linb.UI.getCachedData(t); 
+                    if(t && t.length)
+                        for(var i=0,l=t.length;i<l;i++)
+                            if(t[i].id===v)
+                                return t[i].caption||v;
+                    return v;
                })
             ;
 
@@ -35712,6 +35723,11 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     }else
                         node.progress=caption;
 
+                break;
+                case 'listbox':
+                    cell.value=cell.hasOwnProperty("value")?cell.value:"";
+                    caption= capOut ||ren(profile,cell,ncell,f6);
+                    if(dom)node.html((caption===null||caption===undefined)?cell.value:caption,false);
                 break;
                 default:
                     cell.value=cell.hasOwnProperty("value")?cell.value:"";

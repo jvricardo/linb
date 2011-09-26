@@ -1003,7 +1003,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 set:function(value){
                     var t = linb.UI.getCachedData(value),
                         o=this;
-                    o.boxing().setItems(t?t:o.properties.items);
+                    o.boxing().setItems(t?_.clone(t):o.properties.items);
                     o.properties.listKey = value;
                 }
             },

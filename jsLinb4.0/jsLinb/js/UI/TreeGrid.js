@@ -3131,6 +3131,17 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                         return v.join(".")
                     }else 
                         return "";
+               }),
+               f6=me._f6=(me._f6=function(v,profile,cell){
+                    var t=getPro(profile,cell,'editorListItems');
+                    if(!t)
+                        if(t=getPro(profile,cell,'editorListKey'))
+                           t=linb.UI.getCachedData(t); 
+                    if(t && t.length)
+                        for(var i=0,l=t.length;i<l;i++)
+                            if(t[i].id===v)
+                                return t[i].caption||v;
+                    return v;
                })
             ;
 
@@ -3213,6 +3224,11 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     }else
                         node.progress=caption;
 
+                break;
+                case 'listbox':
+                    cell.value=cell.hasOwnProperty("value")?cell.value:"";
+                    caption= capOut ||ren(profile,cell,ncell,f6);
+                    if(dom)node.html((caption===null||caption===undefined)?cell.value:caption,false);
                 break;
                 default:
                     cell.value=cell.hasOwnProperty("value")?cell.value:"";

@@ -3093,7 +3093,7 @@ Class("linb.UI",  "linb.absObj", {
         getCachedData:function(key){
             var r = _.get(linb.$cache,['UIDATA', key]);
             if(typeof r == 'function')r=r();
-            return _.clone(r);
+            return r;
         },
 
         Behaviors:{
@@ -4082,7 +4082,7 @@ Class("linb.absList", "linb.absObj",{
                     var o=this,
                         t = o.box.getCachedData(value);
                     if(t)
-                        o.boxing().setItems(t);
+                        o.boxing().setItems(_.clone(t));
                     else
                         o.boxing().setItems(o.properties.items);
                     o.properties.listKey = value;
