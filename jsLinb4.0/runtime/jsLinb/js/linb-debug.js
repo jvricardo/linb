@@ -20806,7 +20806,12 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
 
             if(width || height){
                 var itb=profile._$tb,
-                    _top=(itb?(profile.$_tbH-1):0);
+                    tbh=itb.getRoot().height();
+                if(tbh)
+                    profile.$_tbH=tbh;
+                else
+                    tbh=profile.$_tbH;
+                var _top=(itb?(tbh-1):0);
                 if(!height)
                     height=profile.properties.height;
                 size.height=height-_top-1;
