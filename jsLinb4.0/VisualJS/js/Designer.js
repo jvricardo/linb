@@ -2648,7 +2648,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                     //self.properties.text = '';
                     self.layoutBase.reBoxing().css('display','none').parent().css('background','url(img/error.gif)');
                     linb.message(linb.getRes('VisualJS.designer.comCodeErr'));
-                    linb.message(String(e));
+                    linb.pop(e.description||e.message);
                 }
                 linb.Dom.setCover(false);
 

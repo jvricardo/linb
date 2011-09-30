@@ -13125,7 +13125,6 @@ Class("linb.UI",  "linb.absObj", {
             },
             '.linb-ui-ctrl':{
                 cursor:'default',
-                color:'#000',
                 'font-family':'arial,helvetica,clean,sans-serif',
                 'font-style':'normal',
                 'font-weight':'normal',
