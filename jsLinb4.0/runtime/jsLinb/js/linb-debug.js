@@ -15946,6 +15946,22 @@ new function(){
                     profile.getSubNode('FOCUS').focus();
                     if(profile.onClick)
                         profile.boxing().onClick(profile, e, src);
+                },
+                onKeydown:function(profile, e, src){
+                    var keys=linb.Event.getKey(e), key = keys.key;
+                    if(key==' '||key=='enter'){
+                        profile.getSubNode('BTN').afterMousedown();
+                        profile.__fakeclick=1;
+                    }
+                },
+                onKeyup:function(profile, e, src){
+                    var keys=linb.Event.getKey(e), key = keys.key;
+                    if(key==' '||key=='enter'){
+                        profile.getSubNode('BTN').afterMouseup();
+                        if(profile.__fakeclick)
+                            linb.use(src).onClick();
+                    }
+                    delete profile.__fakeclick;
                 }
             },
             DataModel:{
@@ -18416,6 +18432,22 @@ Class("linb.UI.Button", ["linb.UI.Widget","linb.absValue"],{
                 if(profile.onClick)
                     b.onClick(profile, e, src, p.$UIvalue);
 
+            },
+            onKeydown:function(profile, e, src){
+                var keys=linb.Event.getKey(e), key = keys.key;
+                if(key==' '||key=='enter'){
+                    profile.getSubNode('KEY').afterMousedown();
+                    profile.__fakeclick=1;
+                }
+            },
+            onKeyup:function(profile, e, src){
+                var keys=linb.Event.getKey(e), key = keys.key;
+                if(key==' '||key=='enter'){
+                    profile.getSubNode('KEY').afterMouseup();
+                    if(profile.__fakeclick)
+                        linb.use(src).onClick();
+                }
+                delete profile.__fakeclick;
             },
             TDR:{
                 onMousedown:function(profile,e,src){

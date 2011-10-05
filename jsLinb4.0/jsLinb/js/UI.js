@@ -4668,6 +4668,22 @@ new function(){
                     profile.getSubNode('FOCUS').focus();
                     if(profile.onClick)
                         profile.boxing().onClick(profile, e, src);
+                },
+                onKeydown:function(profile, e, src){
+                    var keys=linb.Event.getKey(e), key = keys.key;
+                    if(key==' '||key=='enter'){
+                        profile.getSubNode('BTN').afterMousedown();
+                        profile.__fakeclick=1;
+                    }
+                },
+                onKeyup:function(profile, e, src){
+                    var keys=linb.Event.getKey(e), key = keys.key;
+                    if(key==' '||key=='enter'){
+                        profile.getSubNode('BTN').afterMouseup();
+                        if(profile.__fakeclick)
+                            linb.use(src).onClick();
+                    }
+                    delete profile.__fakeclick;
                 }
             },
             DataModel:{
