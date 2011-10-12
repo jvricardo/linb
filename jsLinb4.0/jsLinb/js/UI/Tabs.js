@@ -955,7 +955,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                 arr=profile.exchildren;
                 if(arr && arr.length){
                     a=[];
-                    _.arr.filter(arr,function(o){
+                    _.filter(arr,function(o){
                         if(o[1]==value){
                             a.push(o[0]);
                             return false;
@@ -970,7 +970,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                 arr=profile.excoms;
                 if(arr && arr.length){
                     a=[];
-                    _.arr.filter(arr,function(o){
+                    _.filter(arr,function(o){
                         if(o[1]==value){
                             a.push(o[0]);
                             return false;

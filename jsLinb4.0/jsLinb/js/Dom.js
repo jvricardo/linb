@@ -1364,7 +1364,7 @@ type:4
             return this;
         },
         //for remove obj when blur
-        setBlurTrigger : function(id, trigger, group, checkChild){
+        setBlurTrigger : function(id, trigger, group, checkChild, triggerNext){
             var ns=this,
                 doc=document,
                 sid='$blur_triggers$',
@@ -1402,7 +1402,7 @@ type:4
                             }
                         };
                         
-                        if(!checkChild || isChild()){
+                        if(!v.checkChild || isChild()){
                             v.target.each(function(o){
                                 if(o.parentNode && (w=o.offsetWidth) && (h=o.offsetHeight)){
                                     pos=linb([o]).offset();
@@ -1416,9 +1416,10 @@ type:4
                             _.tryF(v.trigger,[p,e],v.target);
                             _.arr.removeValue(arr,i);
                             delete arr[i];
-                        }else
+                        }else if(v.stopNext){
                             //if the top layer popwnd cant be triggerred, prevent the other layer popwnd trigger
                             return false;
+                        }
                     },null,true);
                     a.length=0;
                 }),
@@ -1449,7 +1450,9 @@ type:4
                 }
                 arr[id]={
                     trigger:trigger,
-                    target:target
+                    target:target,
+                    checkChild:!!checkChild,
+                    stopNext:!triggerNext
                 };
                 arr.push(id);
             return this;

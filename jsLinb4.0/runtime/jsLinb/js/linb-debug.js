@@ -7442,7 +7442,7 @@ type:4
             return this;
         },
         //for remove obj when blur
-        setBlurTrigger : function(id, trigger, group, checkChild){
+        setBlurTrigger : function(id, trigger, group, checkChild, triggerNext){
             var ns=this,
                 doc=document,
                 sid='$blur_triggers$',
@@ -7480,7 +7480,7 @@ type:4
                             }
                         };
                         
-                        if(!checkChild || isChild()){
+                        if(!v.checkChild || isChild()){
                             v.target.each(function(o){
                                 if(o.parentNode && (w=o.offsetWidth) && (h=o.offsetHeight)){
                                     pos=linb([o]).offset();
@@ -7494,9 +7494,10 @@ type:4
                             _.tryF(v.trigger,[p,e],v.target);
                             _.arr.removeValue(arr,i);
                             delete arr[i];
-                        }else
+                        }else if(v.stopNext){
                             //if the top layer popwnd cant be triggerred, prevent the other layer popwnd trigger
                             return false;
+                        }
                     },null,true);
                     a.length=0;
                 }),
@@ -7527,7 +7528,9 @@ type:4
                 }
                 arr[id]={
                     trigger:trigger,
-                    target:target
+                    target:target,
+                    checkChild:!!checkChild,
+                    stopNext:!triggerNext
                 };
                 arr.push(id);
             return this;
@@ -27535,7 +27538,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                 arr=profile.exchildren;
                 if(arr && arr.length){
                     a=[];
-                    _.arr.filter(arr,function(o){
+                    _.filter(arr,function(o){
                         if(o[1]==value){
                             a.push(o[0]);
                             return false;
@@ -27550,7 +27553,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                 arr=profile.excoms;
                 if(arr && arr.length){
                     a=[];
-                    _.arr.filter(arr,function(o){
+                    _.filter(arr,function(o){
                         if(o[1]==value){
                             a.push(o[0]);
                             return false;
@@ -33955,7 +33958,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                 color:'#000',
                 //ie need this
                 width:linb.browser.ie?'100%':'',
-                'line-height':'19px'
+                'line-height':'20px'
             },
             'CELLA-inline':{
                 $order:5,
@@ -34135,6 +34138,8 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                         profile.box._setRowHanderW(profile,true);
                         return;
                     }
+                    if(profile.getRootNode().clientHeight<=0)return;
+                    
                     //for other rows
                     var p = profile.properties,
                         sid = profile.getSubId(src),
@@ -34152,7 +34157,6 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     ws.push(p._minColW);
                     w=parseInt(Math.max.apply(null,ws));
                     if(w>p._maxColW)w=p._maxColW;
-                    
 
                     if(profile.beforeColResized && false===profile.boxing().beforeColResized(profile,header?header.id:null,w))
                         return;
@@ -34243,6 +34247,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     var p = profile.properties,
                         sid = profile.getSubId(src),
                         row,cells;
+                    if(profile.getRootNode().clientHeight<=0)return;
             
                     if(sid){
                         row=profile.rowMap[sid];
@@ -34256,7 +34261,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     }else{
                         cells=profile.getSubNode('HCELLS');
                         var h=cells.height('auto').height();
-                        
+                    
                         if(profile.beforeRowResized && false===profile.boxing().beforeRowResized(profile, null, h))
                             return;
 
@@ -34744,6 +34749,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                         var row = profile.rowMap[profile.getSubId(src)];
                         if(p.disabled || row.disabled)
                             return false;
+
                         if(p.activeMode=='row'){
                             id = linb(src).parent(3).id();
                             box._sel(profile, 'row', src, id, e);
@@ -35374,7 +35380,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     if(profile.box)
                         profile.box._checkNewLine(profile,trigger);
                 });
-            });
+            },null,null,true);
             if(clear){
                 if(profile.__tmpRowBlurTrigger){
                     clearTimeout(profile.__tmpRowBlurTrigger);
@@ -35418,6 +35424,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             //set width
             if(w){
                 if(w<pro._minColW)w=pro._minColW;
+                if(w<=0)return;
                 if(pro.rowHandlerWidth!=w){
                     hcell.width(pro.rowHandlerWidth=w);
                     profile.getSubNode('FCELL',true).width(w);

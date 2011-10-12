@@ -1420,7 +1420,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                 color:'#000',
                 //ie need this
                 width:linb.browser.ie?'100%':'',
-                'line-height':'19px'
+                'line-height':'20px'
             },
             'CELLA-inline':{
                 $order:5,
@@ -1600,6 +1600,8 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                         profile.box._setRowHanderW(profile,true);
                         return;
                     }
+                    if(profile.getRootNode().clientHeight<=0)return;
+                    
                     //for other rows
                     var p = profile.properties,
                         sid = profile.getSubId(src),
@@ -1617,7 +1619,6 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     ws.push(p._minColW);
                     w=parseInt(Math.max.apply(null,ws));
                     if(w>p._maxColW)w=p._maxColW;
-                    
 
                     if(profile.beforeColResized && false===profile.boxing().beforeColResized(profile,header?header.id:null,w))
                         return;
@@ -1708,6 +1709,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     var p = profile.properties,
                         sid = profile.getSubId(src),
                         row,cells;
+                    if(profile.getRootNode().clientHeight<=0)return;
             
                     if(sid){
                         row=profile.rowMap[sid];
@@ -1721,7 +1723,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     }else{
                         cells=profile.getSubNode('HCELLS');
                         var h=cells.height('auto').height();
-                        
+                    
                         if(profile.beforeRowResized && false===profile.boxing().beforeRowResized(profile, null, h))
                             return;
 
@@ -2209,6 +2211,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                         var row = profile.rowMap[profile.getSubId(src)];
                         if(p.disabled || row.disabled)
                             return false;
+
                         if(p.activeMode=='row'){
                             id = linb(src).parent(3).id();
                             box._sel(profile, 'row', src, id, e);
@@ -2839,7 +2842,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                     if(profile.box)
                         profile.box._checkNewLine(profile,trigger);
                 });
-            });
+            },null,null,true);
             if(clear){
                 if(profile.__tmpRowBlurTrigger){
                     clearTimeout(profile.__tmpRowBlurTrigger);
@@ -2883,6 +2886,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             //set width
             if(w){
                 if(w<pro._minColW)w=pro._minColW;
+                if(w<=0)return;
                 if(pro.rowHandlerWidth!=w){
                     hcell.width(pro.rowHandlerWidth=w);
                     profile.getSubNode('FCELL',true).width(w);
