@@ -38259,10 +38259,11 @@ if(linb.browser.ie){
             if(!linb.Dom.byId(ID)){
                 n2 = me._cache=node.clone(false);
                 linb('body').append(n2);
-                n2.css({width:'auto',height:'auto',overflow:'visible',position:'absolute',visibility:'visible',left:linb.Dom.HIDE_VALUE,top:linb.Dom.HIDE_VALUE})
+                n2.css({overflow:'visible',position:'absolute',visibility:'visible',left:linb.Dom.HIDE_VALUE,top:linb.Dom.HIDE_VALUE})
                 .id(ID,true);
             }
             var n2 = me._cache;
+            n2.width('auto').height('auto');
             n2.html(content,false);
             var size = n2.cssSize();
 
@@ -38275,6 +38276,7 @@ if(linb.browser.ie){
                 n2.width('auto');
             }
             n2.html("",false);
+            size.height += 10;
             if(size.height>400)size.height=400;
             if(size.width<150)size.width=150;
             if(size.height<30)size.height=30;
@@ -38290,6 +38292,7 @@ if(linb.browser.ie){
             var me=arguments.callee, dialog;
             if(noCache || !(dialog=me.dialog) || !dialog.get(0) || (!dialog.get(0).renderId)){
                 dialog = new linb.UI.Dialog({
+                    overflow:'hidden',
                     minBtn:false,
                     maxBtn:false,
                     pinBtn:false,
@@ -38360,6 +38363,7 @@ if(linb.browser.ie){
 
             if(noCache || !(dialog=me.dialog) || !dialog.get(0) || (!dialog.get(0).renderId)){
                 dialog = new linb.UI.Dialog({
+                    overflow:'hidden',
                     minBtn:false,
                     maxBtn:false,
                     pinBtn:false,
@@ -38437,6 +38441,7 @@ if(linb.browser.ie){
         },
         pop:function(title, content, btnCap, left, top, parent, subId){
             var dialog = new linb.UI.Dialog({
+                overflow:'hidden',
                 minBtn:false,
                 maxBtn:false,
                 pinBtn:false,
@@ -38496,6 +38501,7 @@ if(linb.browser.ie){
                 me=arguments.callee;
             if(noCache || !(dialog=me.dialog) || !dialog.get(0) || (!dialog.get(0).renderId)){
                 dialog = new linb.UI.Dialog({
+                    overflow:'hidden',
                     minBtn:false,
                     maxBtn:false,
                     pinBtn:false,
