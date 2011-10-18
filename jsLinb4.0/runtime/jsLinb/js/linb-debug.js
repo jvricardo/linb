@@ -1631,7 +1631,7 @@ Class('linb.absIO',null,{
             return obj;
         },
         _if:function(doc,id,onLoad){
-            var ie8=linb.browser.ie && parseInt(linb.browser.ver)<9,
+            var ie8=linb.browser.ie && parseInt(linb.browser.ver,10)<9,
                 scr=ie8
                     ? ("<iframe "+(id?("name='"+"linb_IAajax_"+id+"'"):"")+(onLoad?(" onload='linb.IAjax._o(\""+id+"\")'"):"")+">")
                     : "iframe";
@@ -4438,11 +4438,11 @@ Class('linb.Event',null,{
             ww : function(d,w,firstDayOfWeek){return linb.Date.getWeek(d, firstDayOfWeek) + (w?"":linb.wrapRes('date.W'))},
             m:function(d,w){return (d.getMonth()+1) + (w?"":linb.wrapRes('date.M'))},
             mm:function(d,w){return linb.Date._fix(d.getMonth()+1) + (w?"":linb.wrapRes('date.M'))},
-            q : function(d,w){return (parseInt((d.getMonth()+3)/3-1) + 1) + (w?"":linb.wrapRes('date.Q'))},
+            q : function(d,w){return (parseInt((d.getMonth()+3)/3-1,10) + 1) + (w?"":linb.wrapRes('date.Q'))},
             y :function(d,w){return d.getYear() + (w?"":linb.wrapRes('date.Y'))},
             yyyy :function(d,w){return d.getFullYear() + (w?"":linb.wrapRes('date.Y'))},
-            de:function(d,w){return parseInt(d.getFullYear()/10) + (w?"":linb.wrapRes('date.DE'))},
-            c:function(d,w){return parseInt(d.getFullYear()/100) + (w?"":linb.wrapRes('date.C'))},
+            de:function(d,w){return parseInt(d.getFullYear()/10,10) + (w?"":linb.wrapRes('date.DE'))},
+            c:function(d,w){return parseInt(d.getFullYear()/100,10) + (w?"":linb.wrapRes('date.C'))},
 
             hn:function(d,w){return linb.wrapRes('date.HN-'+d.getHours()+"-"+d.getMinutes())},
             dhn:function(d,w){return linb.wrapRes('date.DHN-'+d.getDate()+"-"+d.getHours()+"-"+d.getMinutes())},
@@ -4450,7 +4450,7 @@ Class('linb.Event',null,{
             hns:function(d,w){return linb.wrapRes('date.HNS-'+d.getHours()+"-"+d.getMinutes()+"-"+d.getSeconds())},
             hnsms:function(d,w){return linb.wrapRes('date.HNSMS-'+d.getHours()+"-"+d.getMinutes()+"-"+d.getSeconds()+"-"+d.getMilliseconds())},
 
-            yq:function(d,w){return linb.wrapRes('date.YQ-'+d.getFullYear()+"-"+(parseInt((d.getMonth()+3)/3-1)+1))},
+            yq:function(d,w){return linb.wrapRes('date.YQ-'+d.getFullYear()+"-"+(parseInt((d.getMonth()+3)/3-1,10)+1))},
 
             ym :   function(d,w){return linb.wrapRes('date.YM-'+d.getFullYear()+"-"+(d.getMonth()+1))},
             md :  function(d,w){return linb.wrapRes('date.MD-'+(d.getMonth()+1)+"-"+d.getDate())},
@@ -5375,7 +5375,7 @@ Class('linb.Event',null,{
             return this.$UNIT[datepart]?datepart:'d';
         },
         _isDate:function(target)  {return !!target && target.constructor == Date},
-        _date:function(value,df){return this._isDate(value) ? value : ((value || value===0)&&isFinite(value)) ? new Date(parseInt(value)) : this._isDate(df) ? df : new Date},
+        _date:function(value,df){return this._isDate(value) ? value : ((value || value===0)&&isFinite(value)) ? new Date(parseInt(value,10)) : this._isDate(df) ? df : new Date},
         _isNumb:function(target)  {return typeof target == 'number' && isFinite(target)},
         _numb:function(value,df){return this._isNumb(value)?value:this._isNumb(df)?df:0},
         //time Zone like: -8
@@ -5399,10 +5399,10 @@ Class('linb.Event',null,{
                     ww:function(d,fd){return linb.Date.getWeek(d, fd)},
                     w :function(d,fd){return (7+d.getDay()-fd)%7},
                     m:function(d){return d.getMonth()},
-                    q:function(d){return parseInt((d.getMonth()+3)/3-1)},
+                    q:function(d){return parseInt((d.getMonth()+3)/3-1,10)},
                     y :function(d){return d.getFullYear()},
-                    de:function(d){return parseInt(d.getFullYear()/10)},
-                    c:function(d){return parseInt(d.getFullYear()/100)}
+                    de:function(d){return parseInt(d.getFullYear()/10,10)},
+                    c:function(d){return parseInt(d.getFullYear()/100,10)}
                 });
             return map[datepart](date,firstDayOfWeek);
         },
@@ -5508,10 +5508,10 @@ Class('linb.Event',null,{
                         return t/tu.ww;
                     },
                     MONTH:function(startdate,enddate){return (enddate.getFullYear()-startdate.getFullYear())*12 + (enddate.getMonth()-startdate.getMonth())},
-                    QUARTER:function(startdate,enddate){return (enddate.getFullYear()-startdate.getFullYear())*4 + parseInt((enddate.getMonth()-startdate.getMonth())/3)},
-                    YEAR:function(startdate,enddate){return parseInt((enddate.getFullYear()-startdate.getFullYear()))},
-                    DECADE:function(startdate,enddate){return parseInt((enddate.getFullYear()-startdate.getFullYear())/10)},
-                    CENTURY:function(startdate,enddate){return parseInt((enddate.getFullYear()-startdate.getFullYear())/100)}
+                    QUARTER:function(startdate,enddate){return (enddate.getFullYear()-startdate.getFullYear())*4 + parseInt((enddate.getMonth()-startdate.getMonth())/3,10)},
+                    YEAR:function(startdate,enddate){return parseInt((enddate.getFullYear()-startdate.getFullYear()),10)},
+                    DECADE:function(startdate,enddate){return parseInt((enddate.getFullYear()-startdate.getFullYear())/10,10)},
+                    CENTURY:function(startdate,enddate){return parseInt((enddate.getFullYear()-startdate.getFullYear())/100,10)}
                 };
                 self._mapKeys(map);
             }
@@ -5669,7 +5669,7 @@ Class('linb.Event',null,{
                 // avoid null
                 str+="";
                 if(isFinite(str)){
-                    rtn=new Date(parseInt(str));
+                    rtn=new Date(parseInt(str,10));
                 }else{
                     if(typeof format=='string'){
                         var a=format.split(/[^ymdhns]+/),
@@ -5678,7 +5678,7 @@ Class('linb.Event',null,{
                         if(a.length && a.length===b.length){
                             for(var i=0;i<a.length;i++)
                                 if(a[i].length)
-                                    n[a[i]=='ms'?'ms':a[i].charAt(0)]=parseInt(b[i].replace(/^0*/,''));
+                                    n[a[i]=='ms'?'ms':a[i].charAt(0)]=parseInt(b[i].replace(/^0*/,''),10);
                             rtn=new Date(n.y,n.m-1,n.d,n.h,n.n,n.s,n.ms);
                         }else
                             rtn=null;
@@ -6021,7 +6021,7 @@ Class("linb.CSS", null,{
                 "span{outline-offset:-1px;"+
                  (b.gek
                     ? parseFloat(b.ver)<3 
-                        ? ((parseInt(b.ver)<3?"-moz-outline-offset:-1px !important;":"") + "display:-moz-inline-block;display:-moz-inline-box;display:inline-block;")
+                        ? ((parseInt(b.ver,10)<3?"-moz-outline-offset:-1px !important;":"") + "display:-moz-inline-block;display:-moz-inline-box;display:inline-block;")
                         :"display:inline-block;"
                     : b.ie6
                         ?"display:inline-box;display:inline;"
@@ -6052,12 +6052,12 @@ Class("linb.CSS", null,{
 // base setting
             ".linb-node-a{cursor:pointer;color:#0000ee;text-decoration:none;}"+
             ".linb-node-a:hover{color:red}"+
-            (b.gek? (".linb-node-a:focus{outline-offset:-1px;"+ (parseInt(b.ver)<3?"-moz-outline-offset:-1px !important":"") +"}" ):"")+
+            (b.gek? (".linb-node-a:focus{outline-offset:-1px;"+ (parseInt(b.ver,10)<3?"-moz-outline-offset:-1px !important":"") +"}" ):"")+
             ".linb-node-span, .linb-node-div{border:0;font-size:12px;}"+
             ".linb-node-span, .linb-wrapper span{outline-offset:-1px;"+
             (b.gek
                 ? parseFloat(b.ver)<3 
-                    ? ((parseInt(b.ver)<3?"-moz-outline-offset:-1px !important;":"") + "display:-moz-inline-block;display:-moz-inline-box;display:inline-block;")
+                    ? ((parseInt(b.ver,10)<3?"-moz-outline-offset:-1px !important;":"") + "display:-moz-inline-block;display:-moz-inline-box;display:inline-block;")
                     :"display:inline-block;"
                 : b.ie6
                     ?"display:inline-box;display:inline;"
@@ -6498,7 +6498,7 @@ Class('linb.Dom','linb.absBox',{
         loadIframe:function(options){
             if(typeof options=='string')options={url:options};
             var id="aiframe_"+_(),
-                e=linb.browser.ie && parseInt(linb.browser.ver)<9,
+                e=linb.browser.ie && parseInt(linb.browser.ver,10)<9,
                 ifr=document.createElement(e?"<iframe name='"+id+"'>":"iframe");
             ifr.id=ifr.name=id;
             ifr.src=options.url;
@@ -6792,7 +6792,7 @@ Class('linb.Dom','linb.absBox',{
                 r=this;
             }else{
                 f=dom.getStyle;
-                r={left :parseInt(f(node, 'left'))||0,  top :parseInt(f(node, 'top'))||0};
+                r={left :parseInt(f(node, 'left'),10)||0,  top :parseInt(f(node, 'top'),10)||0};
             }
             node=null;
             return r;
@@ -7121,7 +7121,7 @@ Class('linb.Dom','linb.absBox',{
                 node.focus &&
                 //IE bug: It can't be focused with 'default tabIndex 0'; but if you set it to 0, it can be focused.
                 //So, for cross browser, don't set tabIndex to 0
-                (((t=map[node.tagName.toLowerCase()]) && !(parseInt(node.tabIndex)<=-1)) || (!t && parseInt(node.tabIndex)>=(linb.browser.ie?1:0))) &&
+                (((t=map[node.tagName.toLowerCase()]) && !(parseInt(node.tabIndex,10)<=-1)) || (!t && parseInt(node.tabIndex,10)>=(linb.browser.ie?1:0))) &&
                 getStyle(node,'display')!='none' &&
                 getStyle(node,'visibility')!='hidden' &&
                 node.offsetWidth>0 &&
@@ -7167,7 +7167,7 @@ Class('linb.Dom','linb.absBox',{
             t=p.childNodes;
             for(k=0;o=t[k];k++){
                 if(o==node || o.nodeType !=1 || !o.$linbid || o.style.display=='none' || o.style.visibility=='hidden' ||  linb.getNodeData(o,'zIndexIgnore') )continue;
-                j = parseInt(o.style && o.style.zIndex) || 0 ;
+                j = parseInt(o.style && o.style.zIndex,10) || 0 ;
                 i=i>j?i:j;
             }
             i++;
@@ -7177,7 +7177,7 @@ Class('linb.Dom','linb.absBox',{
             if(flag)
                  node.style.zIndex = i;
             else{
-                j = parseInt(node.style.zIndex) || 0;
+                j = parseInt(node.style.zIndex,10) || 0;
                 return i>j?i:j;
             }
             return this;
@@ -7713,7 +7713,7 @@ type:4
             if(node.nodeType != 1)return false;
             var style=node.style;
             if(value || value===0){
-                value = ((''+parseFloat(value))==(''+value)) ? (parseInt(value)||0) + "px" : value +'';
+                value = ((''+parseFloat(value))==(''+value)) ? (parseInt(value,10)||0) + "px" : value +'';
                 if((key=='width'||key=='height') && value.charAt(0)=='-')value='0';
                 if(style[key]!=value){
                     style[key]=value;
@@ -7902,7 +7902,7 @@ type:4
             var node,fun=linb.Dom.getStyle;
             self.plugIn(o[0],function(){
                 node = this.get(0);
-                return (parseInt(fun(node, o[1])) + parseInt(fun(node, o[2]))) || 0;
+                return (parseInt(fun(node, o[1]),10) + parseInt(fun(node, o[2]),10)) || 0;
             })
         });
         /*
@@ -7966,9 +7966,9 @@ type:4
                     switch(index){
                         case 1:
                             r=getStyle(node,o[1]);
-                            if(isNaN(parseInt(r)) || r1.test(r))
+                            if(isNaN(parseInt(r,10)) || r1.test(r))
                                 r = me(node,2) - (contentBox?t[o[2]]():0);
-                            r=parseInt(r)||0;
+                            r=parseInt(r,10)||0;
                             break;
                         case 2:
                             r=node[o[6]]-t[o[3]]();
@@ -7999,7 +7999,7 @@ type:4
                         t.swap(temp);
                         temp.empty(false);
                     }
-                    return parseInt(r)||0;
+                    return parseInt(r,10)||0;
                 }else{
                     switch(index){
                         case 1:
@@ -8043,7 +8043,7 @@ type:4
                 var m,args,k=o[1],fun=linb.Dom.getStyle;
                 return this.each(function(node){
                     m=fun(node,k);
-                    m=(parseInt(m)||0)+offset;
+                    m=(parseInt(m,10)||0)+offset;
                     if(k=='width'||k=='height')m=m>0?m:0;
                     node.style[k]=m+'px';
                     if(triggerEvent){
@@ -8085,11 +8085,11 @@ type:4
                         if(window===node)return b.opr?Math.max(doc.body['client'+t],window['inner'+t]):b.kde?window['inner'+t]:(linb.browser.contentBox && doc.documentElement['client'+t]) ||doc.body['client'+t];
                     }
                     //give shortcut
-                    if(o=='width')value=parseInt(node.style.width)||self._W(node,1,value);
-                    else if(o=='height')value=parseInt(node.style.height)||self._H(node,1,value);
+                    if(o=='width')value=parseInt(node.style.width,10)||self._W(node,1,value);
+                    else if(o=='height')value=parseInt(node.style.height,10)||self._H(node,1,value);
                     else
                         value = linb.Dom.getStyle(node, o);
-                    return value=='auto'?value:(parseInt(value)||0);
+                    return value=='auto'?value:(parseInt(value,10)||0);
                 }else{
                     var f=linb.Dom._setPxStyle,t,a;
                     return self.each(function(v){
@@ -9260,25 +9260,25 @@ Class("linb.Cookies", null,{
                     switch(typeElem.nodeName.toLowerCase()){
                         case 'i4':
                         case 'int':
-                            value=parseInt(typeElem.firstChild.nodeValue);
+                            value=parseInt(typeElem.firstChild.nodeValue,10);
                             return isNaN(value)?null:value;
                         case 'double':
                             value=parseFloat(typeElem.firstChild.nodeValue);
                             return isNaN(value)?null:value;
                         case 'boolean':
-                            return Boolean(parseInt(typeElem.firstChild.nodeValue)!==0);
+                            return Boolean(parseInt(typeElem.firstChild.nodeValue,10)!==0);
                         case 'string':
                             return typeElem.firstChild?typeElem.firstChild.nodeValue:"";
                         case 'datetime.iso8601':
                             if(tmp=typeElem.firstChild.nodeValue.match(ns._dateMatcher)){
                                 value = new Date;
-                                if(tmp[1]) value.setUTCFullYear(parseInt(tmp[1]));
-                                if(tmp[2]) value.setUTCMonth(parseInt(tmp[2]-1));
-                                if(tmp[3]) value.setUTCDate(parseInt(tmp[3]));
-                                if(tmp[4]) value.setUTCHours(parseInt(tmp[4]));
-                                if(tmp[5]) value.setUTCMinutes(parseInt(tmp[5]));
-                                if(tmp[6]) value.setUTCSeconds(parseInt(tmp[6]));
-                                if(tmp[7]) value.setUTCMilliseconds(parseInt(tmp[7]));
+                                if(tmp[1]) value.setUTCFullYear(parseInt(tmp[1],10));
+                                if(tmp[2]) value.setUTCMonth(parseInt(tmp[2]-1,10));
+                                if(tmp[3]) value.setUTCDate(parseInt(tmp[3],10));
+                                if(tmp[4]) value.setUTCHours(parseInt(tmp[4],10));
+                                if(tmp[5]) value.setUTCMinutes(parseInt(tmp[5],10));
+                                if(tmp[6]) value.setUTCSeconds(parseInt(tmp[6],10));
+                                if(tmp[7]) value.setUTCMilliseconds(parseInt(tmp[7],10));
                                 return value;
                             }
                             return null;
@@ -9356,7 +9356,7 @@ Class("linb.Cookies", null,{
             switch(typeof value){
                 case 'number':
                     xml.push(!isFinite(value)?'<nil/>':
-                        parseInt(value)===Math.ceil(value)?('<int>'+value+'</int>'):
+                        parseInt(value,10)===Math.ceil(value)?('<int>'+value+'</int>'):
                         ('<double>'+value+'</double>')
                     );
                     break;
@@ -9502,13 +9502,13 @@ Class("linb.Cookies", null,{
                         else{
                             if(tmp=value.match(ns._dateMatcher)){
                                 var d = new Date;
-                                if(tmp[1]) d.setUTCFullYear(parseInt(tmp[1]));
-                                if(tmp[2]) d.setUTCMonth(parseInt(tmp[2]-1));
-                                if(tmp[3]) d.setUTCDate(parseInt(tmp[3]));
-                                if(tmp[4]) d.setUTCHours(parseInt(tmp[4]));
-                                if(tmp[5]) d.setUTCMinutes(parseInt(tmp[5]));
-                                if(tmp[6]) d.setUTCSeconds(parseInt(tmp[6]));
-                                if(tmp[7]) d.setUTCMilliseconds(parseInt(tmp[7]));
+                                if(tmp[1]) d.setUTCFullYear(parseInt(tmp[1],10));
+                                if(tmp[2]) d.setUTCMonth(parseInt(tmp[2]-1,10));
+                                if(tmp[3]) d.setUTCDate(parseInt(tmp[3],10));
+                                if(tmp[4]) d.setUTCHours(parseInt(tmp[4],10));
+                                if(tmp[5]) d.setUTCMinutes(parseInt(tmp[5],10));
+                                if(tmp[6]) d.setUTCSeconds(parseInt(tmp[6],10));
+                                if(tmp[7]) d.setUTCMilliseconds(parseInt(tmp[7],10));
                                 return d;
                             }
                             return null;
@@ -9581,7 +9581,7 @@ Class("linb.Cookies", null,{
                             value=param[p];
                             switch(typeof value){
                                 case 'number':
-                                    type=parseInt(value)===Math.ceil(value)?'int':'double';
+                                    type=parseInt(value,10)===Math.ceil(value)?'int':'double';
                                     break;
                                 case 'boolean':
                                     type='bool';
@@ -10468,8 +10468,8 @@ Class("linb.Tips", null,{
             }else if(tips._showed && tips.MOVABLE){
                 p=event.getPos(e);
                 n=tips._Node.style;
-                n.left = (parseInt(n.left)||0) + (p.left-tips._pos.left) +'px';
-                n.top = (parseInt(n.top)||0) + (p.top-tips._pos.top) +'px';
+                n.left = (parseInt(n.left,10)||0) + (p.left-tips._pos.left) +'px';
+                n.top = (parseInt(n.top,10)||0) + (p.top-tips._pos.top) +'px';
                 tips._pos=p;
                 n=null;
             }
@@ -10775,7 +10775,7 @@ Class("linb.Tips", null,{
         		if(linb.browser.ie) {
         			if(self._lastFI=='')self._lastFI = '#';
     
-                    if(parseInt(linb.browser.ver)<9) {
+                    if(parseInt(linb.browser.ver,10)<9) {
                         var n=document.createElement("div");
                         n.style.display = "none";
                         document.body.appendChild(n);
@@ -10814,7 +10814,7 @@ Class("linb.Tips", null,{
     	    }
 
     		if(linb.browser.ie) {
-		        if(parseInt(linb.browser.ver)<9) {
+		        if(parseInt(linb.browser.ver,10)<9) {
         		    var ihistory = document.getElementById(self._fid), 
         		        iframe = ihistory.contentWindow.document;
         		    hash = iframe.location.hash;
@@ -10879,7 +10879,7 @@ Class("linb.Tips", null,{
             if(self._lastFI == '#' + fi)return false;
 
     		if(linb.browser.ie) {
-    		    if(parseInt(linb.browser.ver)<9) {
+    		    if(parseInt(linb.browser.ver,10)<9) {
         			var ihistory = document.getElementById(self._fid), iframe = ihistory.contentWindow.document;
                     iframe.open();
         			iframe.close();
@@ -11605,7 +11605,7 @@ Class('linb.UIProfile','linb.Profile', {
             //children
             if(o.children && o.children.length){
                 o.children.sort(function(x,y){
-                    x=parseInt(x[0].properties.tabindex);y=parseInt(y[0].properties.tabindex);
+                    x=parseInt(x[0].properties.tabindex,10);y=parseInt(y[0].properties.tabindex,10);
                     return x>y?1:x==y?0:-1;
                 });
                 t=r.children=[];
@@ -12098,8 +12098,8 @@ Class("linb.UI",  "linb.absObj", {
         show:function(parent,subId,left,top){
             return this.each(function(o){
                 var t=o.properties,b;
-                left=(left||left===0)?(parseInt(left)||0):null;
-                top=(top||top===0)?(parseInt(top)||0):null;
+                left=(left||left===0)?(parseInt(left,10)||0):null;
+                top=(top||top===0)?(parseInt(top,10)||0):null;
                 if(left!==null)t.left=left;
                 if(top!==null)t.top=top;
                 if(linb.getNodeData(o.renderId,'_linbhide')){
@@ -13897,7 +13897,7 @@ Class("linb.UI",  "linb.absObj", {
             if(ck in cache)return cache[ck];
             var c=linb.Dom.getEmptyDiv().get(0),r;
             c.className=cls;
-            r=cache[ck]=parseInt(linb.Dom.getStyle(c,key))||0;
+            r=cache[ck]=parseInt(linb.Dom.getStyle(c,key),10)||0;
             c.className="";
             return r;
         },
@@ -14113,7 +14113,7 @@ Class("linb.UI",  "linb.absObj", {
             for(var i in hash){
                 o=hash[i];
                 t=i.replace(r1,function(a,b,c){return  b + '.' + (ks[c]||c)}).toLowerCase();
-                o.$order=parseInt(o.$order)||0;
+                o.$order=parseInt(o.$order,10)||0;
                 o.$=t;
                 h[h.length]=o;
             };
@@ -14517,9 +14517,9 @@ Class("linb.UI",  "linb.absObj", {
             var s=profile.box,t=s._onresize;
             if(t&&(force||w||h)){
                 //adjust width and height
-                //w=parseInt(w)||null;
-                w=((w===""||w=='auto')?"auto":parseInt(w))||null
-                h=((h===""||h=='auto')?"auto":parseInt(h))||null;
+                //w=parseInt(w,10)||null;
+                w=((w===""||w=='auto')?"auto":parseInt(w,10))||null
+                h=((h===""||h=='auto')?"auto":parseInt(h,10))||null;
 
                 //if it it has delay resize, overwrite arguments
                 if('_$visibility' in profile){
@@ -14583,7 +14583,7 @@ Class("linb.UI",  "linb.absObj", {
                 value = prop.dock || 'none',
                 pid=linb.Event.getId(p.get(0)),
                 order=function(x,y){
-                    x=parseInt(x.properties.dockOrder)||0;y=parseInt(y.properties.dockOrder)||0;
+                    x=parseInt(x.properties.dockOrder,10)||0;y=parseInt(y.properties.dockOrder,10)||0;
                     return x>y?1:x==y?0:-1;
                 },
                 region,
@@ -14687,7 +14687,7 @@ Class("linb.UI",  "linb.absObj", {
                             //any node resize
                             if( arg.$dockid || !win || (_() - linb.$cache._resizeTime > 100)){
                                 //recruit call, give a short change
-                                obj = {left:0,top:0,right:0,bottom:0,width:parseInt(style&&style.width)||node.width(),height:parseInt(style&&style.height)||node.height()};
+                                obj = {left:0,top:0,right:0,bottom:0,width:parseInt(style&&style.width,10)||node.width(),height:parseInt(style&&style.height,10)||node.height()};
 
                                 for(k=0;key=arr[k++];){
                                     target = me[key];
@@ -14769,8 +14769,8 @@ Class("linb.UI",  "linb.absObj", {
                                 node = profile.getRoot(),
                                 style = profile.getRootNode().style,
                                 left, top, right, bottom,temp, other,
-                                x = parseInt(prop._dockBorderWidth) || 0,
-                                y = parseInt(prop._dockBorderHeight) || 0,
+                                x = parseInt(prop._dockBorderWidth,10) || 0,
+                                y = parseInt(prop._dockBorderHeight,10) || 0,
                                 region={}
                                 ;
                             if(style.display=='none')
@@ -14851,7 +14851,7 @@ Class("linb.UI",  "linb.absObj", {
                                     if(!w)return;
                                     left = (prop.dock=='cover'?0:(flt?0:obj.left)) + margin.left;
                                     right = (prop.dock=='cover'?0:(flt?0:obj.right))  + margin.right;
-                                    top = prop.dock=='width'?(parseInt(prop.top) || 0):( (prop.dock=='cover'?0:(flt?0:obj.top)) + margin.top);
+                                    top = prop.dock=='width'?(parseInt(prop.top,10) || 0):( (prop.dock=='cover'?0:(flt?0:obj.top)) + margin.top);
                                     //later call for w/h change once
                                     temp=obj.width - left - right - x;
                                     obj.later=obj.later||{};
@@ -14868,7 +14868,7 @@ Class("linb.UI",  "linb.absObj", {
                                     if(!h)return;
                                     top = (prop.dock=='cover'?0:(flt?0:obj.top)) + margin.top;
                                     bottom = (prop.dock=='cover'?0:(flt?0:obj.bottom))  + margin.bottom;
-                                    left = prop.dock=='height'?(parseInt(prop.left) || 0):((prop.dock=='cover'?0:(flt?0:obj.left))+ margin.left);
+                                    left = prop.dock=='height'?(parseInt(prop.left,10) || 0):((prop.dock=='cover'?0:(flt?0:obj.left))+ margin.left);
                                     //later call for w/h change once
                                     temp=obj.height - top - bottom - y;
                                     obj.later=obj.later||{};
@@ -15010,7 +15010,7 @@ Class("linb.UI",  "linb.absObj", {
             for(var j=0,i;i=map[j];j++){
                 if(prop[i] || prop[i]===0){
                     if(String(parseFloat(prop[i]))==String(prop[i]))
-                        a[a.length]=i+':'+(parseInt(prop[i])||0)+'px';
+                        a[a.length]=i+':'+(parseInt(prop[i],10)||0)+'px';
                     else if(prop[i]!='auto' && prop[i])
                         a[a.length]=i+':'+prop[i];
                 }
@@ -15789,12 +15789,12 @@ new function(){
                     /*for ie6 bug*/
                     /*for example, if single number, 100% width will add 1*/
                     /*for example, if single number, attached shadow will overlap*/
-                    if(linb.browser.ie6)ww=(parseInt(ww/2))*2;
+                    if(linb.browser.ie6)ww=(parseInt(ww/2,10))*2;
                 }
                 if(hh&&'auto'!==hh){
                     hh -=Math.max((t.$vborder||0)*2, (t.$b_lw||0) + (t.$b_rw||0));
 
-                    if(linb.browser.ie6)hh=(parseInt(hh/2))*2;
+                    if(linb.browser.ie6)hh=(parseInt(hh/2,10))*2;
                     /*for ie6 bug*/
                     if(linb.browser.ie6&&null===width)o.ieRemedy();
                 }
@@ -16012,7 +16012,7 @@ new function(){
             _prepareData:function(profile){
                 var data=arguments.callee.upper.call(this, profile);
                 data._align = 'text-align:'+data.hAlign+';';
-                data._clsName=parseInt(data.width)?'':profile.getClass('KEY','-auto');
+                data._clsName=parseInt(data.width,10)?'':profile.getClass('KEY','-auto');
                 return data;
             }
         }
@@ -16194,7 +16194,7 @@ new function(){
                         prop.iframeAutoLoad={url:prop.iframeAutoLoad};
                     var hash=prop.iframeAutoLoad,
                         id="biframe_"+_(),
-                        e=linb.browser.ie && parseInt(linb.browser.ver)<9,
+                        e=linb.browser.ie && parseInt(linb.browser.ver,10)<9,
                         ifr=document.createElement(e?"<iframe name='"+id+"'>":"iframe");
                     if(!hash.query)hash.query={};
                     hash.query._rand=_();
@@ -16361,8 +16361,8 @@ new function(){
         _adjust:function(profile,width,height){
             var pro=profile.properties,
                 src=profile.getRootNode();
-            width=parseInt(width)||0;
-            height=parseInt(height)||0;
+            width=parseInt(width,10)||0;
+            height=parseInt(height,10)||0;
             src.style.width=src.style.height='';
             if(width>0 && height>0){
                 var r1=pro.maxWidth/width, r2=pro.maxHeight/height,r= r1<r2?r1:r2;
@@ -16394,7 +16394,7 @@ new function(){
                         prop=this.properties,
                         i=new Image();
                     i.src=src.src;
-                    this.box._adjust(this, _.isFinite(v)?parseInt(v):i.width, _.isFinite(prop.height)?prop.height:i.height);
+                    this.box._adjust(this, _.isFinite(v)?parseInt(v,10):i.width, _.isFinite(prop.height)?prop.height:i.height);
                 }
             },
             height:{
@@ -16404,7 +16404,7 @@ new function(){
                         prop=this.properties,
                         i=new Image();
                     i.src=src.src;
-                    this.box._adjust(this,_.isFinite(prop.width)?prop.width:i.width,_.isFinite(v)?parseInt(v):i.height);
+                    this.box._adjust(this,_.isFinite(prop.width)?prop.width:i.width,_.isFinite(v)?parseInt(v,10):i.height);
                 }
             },
             src:{
@@ -17020,7 +17020,7 @@ Class("linb.UI.Shadow","linb.UI",{
         },
         _prepareData:function(profile){
             var t = arguments.callee.upper.call(this, profile);
-            t.pos = (parseInt(t.shadowSize)||0) + (parseInt(t.shadowOffset)||0);
+            t.pos = (parseInt(t.shadowSize,10)||0) + (parseInt(t.shadowOffset,10)||0);
             t.rbsize=t.shadowSize+4;
             return t;
         },
@@ -17130,11 +17130,11 @@ Class("linb.UI.Resizer","linb.UI",{
                                 instance.onResize(profile,w,h);
                         }
                         if(cssPos){
-                            if((t=cssPos.left) && !(prop.left=='auto'&&parseInt(prop.right)>=0)){
+                            if((t=cssPos.left) && !(prop.left=='auto'&&parseInt(prop.right,10)>=0)){
                                 node.leftBy(t);
                                 prop.left= node.left();
                             }
-                            if((t=cssPos.top) && !(prop.top=='auto'&&parseInt(prop.bottom)>=0)){
+                            if((t=cssPos.top) && !(prop.top=='auto'&&parseInt(prop.bottom,10)>=0)){
                                 node.topBy(t);
                                 prop.top = node.top();
                             }
@@ -17598,7 +17598,7 @@ Class("linb.UI.Resizer","linb.UI",{
             if(typeof t.forceMovable=="boolean")
                 t._move=t.forceMovable;
 
-            t.extend =  (parseInt(t.handlerSize)||0)/2 + (parseInt(t.handlerOffset)||0);
+            t.extend =  (parseInt(t.handlerSize,10)||0)/2 + (parseInt(t.handlerOffset,10)||0);
 
             t._showCofigBtn=t.configBtn?'':'display:none';
             return arguments.callee.upper.call(this, profile);
@@ -17612,9 +17612,9 @@ Class("linb.UI.Resizer","linb.UI",{
                 if(size)target.widthBy(size.width,true).heightBy(size.height,true);
                 if(cssPos){
                     var t=target.get(0).style;
-                    if(t.left=='auto'&&(parseInt(t.right)>=0)){}else
+                    if(t.left=='auto'&&(parseInt(t.right,10)>=0)){}else
                     target.leftBy(cssPos.left)
-                    if(t.top=='auto'&&(parseInt(t.bottom)>=0)){}else
+                    if(t.top=='auto'&&(parseInt(t.bottom,10)>=0)){}else
                     target.topBy(cssPos.top);
                 }
             }
@@ -18168,7 +18168,7 @@ Class("linb.UI.Label", "linb.UI.Widget",{
             return data;
         },
         _ensureValue:function(profile,value){
-            return parseInt(value)||0;
+            return parseInt(value,10)||0;
         },
         _onresize:function(profile,width,height){
             var size = arguments.callee.upper.apply(this,arguments),h;
@@ -18395,7 +18395,7 @@ Class("linb.UI.Button", ["linb.UI.Widget","linb.absValue"],{
                 height:'100%',
                 position:'absolute',
                 'outline-offset':'-1px',
-                '-moz-outline-offset':(linb.browser.gek && parseInt(linb.browser.ver)<3)?'-1px !important':null
+                '-moz-outline-offset':(linb.browser.gek && parseInt(linb.browser.ver,10)<3)?'-1px !important':null
             },
             /*span*/
             BOX:{
@@ -18601,7 +18601,7 @@ Class("linb.UI.Button", ["linb.UI.Widget","linb.absValue"],{
                 width:'100%',
                 height:'100%',
                 'outline-offset':'-1px',
-                '-moz-outline-offset':(linb.browser.gek && parseInt(linb.browser.ver)<3)?'-1px !important':null
+                '-moz-outline-offset':(linb.browser.gek && parseInt(linb.browser.ver,10)<3)?'-1px !important':null
             },
             /*span*/
             BOX:{
@@ -20064,12 +20064,12 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                     /*for ie6 bug*/
                     /*for example, if single number, 100% width will add 1*/
                     /*for example, if single number, attached shadow will overlap*/
-                    if(linb.browser.ie6)ww=(parseInt(ww/2))*2;
+                    if(linb.browser.ie6)ww=(parseInt(ww/2,10))*2;
                 }
                 if(null!==hh){
                     hh -=Math.max($vborder*2, (t.$b_lw||0) + (t.$b_rw||0));
 
-                    if(linb.browser.ie6)hh=(parseInt(hh/2))*2;
+                    if(linb.browser.ie6)hh=(parseInt(hh/2,10))*2;
                     /*for ie6 bug*/
                     if(linb.browser.ie6&&null===width)o.ieRemedy();
                 }
@@ -20867,7 +20867,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 v=(''+v).replace(/[^\d.-]/g,'');
                 v=_.isNumb(parseFloat(v))?parseFloat(v):null;
             }else if(profile.properties.type=='datepicker'||profile.properties.type=='date'||profile.properties.type=='datetime'){
-                v=_.isDate(v)?v:_.isFinite(v)?new Date(parseInt(v)):null;                
+                v=_.isDate(v)?v:_.isFinite(v)?new Date(parseInt(v,10)):null;                
             }
             return v;
         },
@@ -21180,7 +21180,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                     case 'datetime':
                         var t = profile.$drop.properties;
                         if(t=profile.properties.$UIvalue)
-                            o.setValue(new Date( parseInt(t) ), true);
+                            o.setValue(new Date( parseInt(t,10)), true);
                         break;
                     case 'color':
                     case 'colorpicker':
@@ -21311,12 +21311,12 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                         if(p.properties.dateEditorTpl)
                             return v?date.format(v, p.properties.dateEditorTpl):'';
                         else
-                            return v?date.getText(new Date(parseInt(v)), p.properties.type=='datetime'?'ymdhn':'ymd'):'';
+                            return v?date.getText(new Date(parseInt(v,10)), p.properties.type=='datetime'?'ymdhn':'ymd'):'';
                     },
                     $toEditor : function(p,v){
                         if(!v)return "";
 
-                        v=new Date(parseInt(v)||0);
+                        v=new Date(parseInt(v,10)||0);
                         if(p.properties.dateEditorTpl)
                             return date.format(v, p.properties.dateEditorTpl);
                         else{
@@ -21335,7 +21335,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                             // set to old UIvalue
                             if(!v){
                                 v=p.properties.$UIvalue;
-                                if(_.isFinite(v))v=new Date(parseInt(v));
+                                if(_.isFinite(v))v=new Date(parseInt(v,10));
                             }
                             if(v){
                                 if(p.properties.type!='datetime')
@@ -22090,7 +22090,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                         if(_.isDate(value))
                             d=value;
                         else if(_.isFinite(value))
-                            d=new Date(parseInt(value));
+                            d=new Date(parseInt(value,10));
                     }
                     return d?String(profile.properties.type=='datetime'?d.getTime():linb.Date.getTimSpanStart(d,'d',1).getTime()):"";
                 case 'color':
@@ -22121,12 +22121,12 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                  value=_.toFixedNumber(value,prop.precision);
                  
             return value;
-            //var n=Math.pow(10,Math.max(parseInt(prop.precision)||0,0));
+            //var n=Math.pow(10,Math.max(parseInt(prop.precision,10)||0,0));
             //value=(+value||0);
             //value=Math.ceil((value-0.0000000000003)*n)/n;
         },
         formatCurrency:function(value, precision){
-            if(_.isSet(precision))precision=parseInt(precision);
+            if(_.isSet(precision))precision=parseInt(precision,10);
             precision=(precision||precision===0)?precision:2;
             value=parseFloat(value);
             if((value+"").indexOf('e')==-1){
@@ -22171,12 +22171,12 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 /*for ie6 bug*/
                 /*for example, if single number, 100% width will add 1*/
                 /*for example, if single number, attached shadow will overlap*/
-                if(linb.browser.ie6)ww=(parseInt(ww/2))*2;
+                if(linb.browser.ie6)ww=(parseInt(ww/2,10))*2;
             }
             if(null!==hh){
                 hh -=Math.max($vborder*2, (t.$b_lw||0) + (t.$b_rw||0));
 
-                if(linb.browser.ie6)hh=(parseInt(hh/2))*2;
+                if(linb.browser.ie6)hh=(parseInt(hh/2,10))*2;
                 /*for ie6 bug*/
                 if(linb.browser.ie6&&null===width)o.ieRemedy();
             }
@@ -22489,7 +22489,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                     rgb = profile.$rgb = cls.hex2rgb(value),
                     hsv = profile.$hsv = cls.rgb2hsv(rgb),
                     f=function(s,v){profile.getSubNode(s).get(0).firstChild.nodeValue=String(v)},
-                    ff=function(v){return parseInt(v*100)};
+                    ff=function(v){return parseInt(v*100,10)};
 
                 f('R',rgb[0]);
                 f('G',rgb[1]);
@@ -23208,7 +23208,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 rate = type=='hsv1'?361:type=='hsv2'?101:256,
                 v;
 
-            count = (type=='hsv2'?parseInt(profile.$start[i]*100):parseInt(profile.$start[i]))+parseInt(off.x/2);
+            count = (type=='hsv2'?parseInt(profile.$start[i]*100,10):parseInt(profile.$start[i],10))+parseInt(off.x/2,10);
 
             count=(count%rate+rate)%rate;
             if(profile.$temp!=count){
@@ -23263,7 +23263,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
         //0...255 to 00...FF
         _toFF: function(n) {
             var C16=this._C16;
-            n = parseInt(n)||0;
+            n = parseInt(n,10)||0;
             n = (n>255||n<0)?0:n;
             return C16.charAt((n-n%16)/16) + C16.charAt(n%16);
         },
@@ -23275,7 +23275,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
         _webSafe:function(r, g, b){
             //safe divisor is 51, smart divisor is 17
             var me=arguments.callee,f=me.f||(me.f=function(n){
-                return parseInt(n/51)*51;
+                return parseInt(n/51,10)*51;
             });
             if(typeof r=='object'){
                 g=r[1];b=r[2];r=r[0];
@@ -23368,9 +23368,9 @@ Class("linb.UI.Group", "linb.UI.Div",{
             if(reg.test(v)){
                 v=v.replace(reg,'$1');
                 v=v.split(',');
-                v[0]=parseInt(v[0])||0;
-                v[1]=parseInt(v[1])||0;
-                v[2]=parseInt(v[2])||0;
+                v[0]=parseInt(v[0],10)||0;
+                v[1]=parseInt(v[1],10)||0;
+                v[2]=parseInt(v[2],10)||0;
                 v=ns.rgb2hex(v);
             }
             if(v.charAt(0)=='#')v=v.substr(1,v.length);
@@ -24004,9 +24004,9 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 },
                 onDrag:function(profile, e, src){
                     var count,off = linb.DragDrop.getProfile().offset;
-                    count=parseInt(profile.$year)+parseInt(off.x/10);
+                    count=parseInt(profile.$year,10)+parseInt(off.x/10,10);
                     if(profile.$temp!=count){
-                        profile.$temp2=parseInt(off.x/10);
+                        profile.$temp2=parseInt(off.x/10,10);
                         profile.getSubNode('YEAR').html(count,false);
                     }
                 },
@@ -24020,7 +24020,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 },
                 onDrag:function(profile, e, src){
                     var count,off = linb.DragDrop.getProfile().offset;
-                    count=parseInt(profile.$month)+(parseInt(off.x/20)%12);
+                    count=parseInt(profile.$month,10)+(parseInt(off.x/20,10)%12);
                     count=(count%12+12)%12;
                     if(profile.$temp!=count){
                         profile.$temp=count;
@@ -24043,7 +24043,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                     var p=profile.properties,
                         count,
                         off = linb.DragDrop.getProfile().offset;
-                    count=parseInt(profile.$day)+(parseInt(off.x/10)%days);
+                    count=parseInt(profile.$day,10)+(parseInt(off.x/10,10)%days);
                     count=(count%days+days)%days + 1;
                     if(profile.$temp!=count){
                         profile.$temp=count;
@@ -24154,7 +24154,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 if(_.isDate(value))
                     d=value;
                 else if(_.isFinite(value))
-                    d=new Date(parseInt(value));
+                    d=new Date(parseInt(value,10));
             }
             d = d||new Date;
             if(!profile.properties.timeInput)
@@ -24198,7 +24198,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 // The special one
                 if(id=='7')return id;
                 
-                id=(parseInt(id)+fw);
+                id=(parseInt(id,10)+fw);
                 return id<7?id:(id-7);
             };
 
@@ -24217,12 +24217,12 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 fdmap={};
             if(p.offDays){
                 _.arr.each(p.offDays.split(""),function(i){
-                    i=parseInt(i);
+                    i=parseInt(i,10);
                     if(i>=0 && i<=6)
                         fdmap[i]=1;
                 });
                 profile.box._getTDNodes(profile).each(function(node,i){
-                    i = ((i+fw) - 7*parseInt((i+fw)/7)) ;
+                    i = ((i+fw) - 7*parseInt((i+fw)/7,10)) ;
                     if(fdmap[i])
                         node.className=node.className + " " +cls2;
                 });
@@ -24321,7 +24321,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
             var p=profile.properties,
                 count,
                 off = linb.DragDrop.getProfile().offset;
-            count=parseInt(data)+(parseInt(off.x/increment)%max);
+            count=parseInt(data,10)+(parseInt(off.x/increment,10)%max);
             count=(count%max+max)%max;
             if(profile.$temp!=count){
                 profile.$temp=count;
@@ -24730,7 +24730,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 },
                 onDrag:function(profile, e, src){
                     var count,off = linb.DragDrop.getProfile().offset,v=profile.properties.$UIvalue,a=v.split(':');
-                    a[0]=(parseFloat(a[0])||0)+parseInt(off.x/10);
+                    a[0]=(parseFloat(a[0])||0)+parseInt(off.x/10,10);
                     a[0]=(a[0]%24+24)%24;
                     profile.$temp2=(a[0]<=9?'0':'')+a[0];
 
@@ -24759,7 +24759,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 },
                 onDrag:function(profile, e, src){
                     var count,off = linb.DragDrop.getProfile().offset,v=profile.properties.$UIvalue,a=v.split(':');
-                    a[0]=(parseFloat(a[0])||0)+parseInt(off.x/20);
+                    a[0]=(parseFloat(a[0])||0)+parseInt(off.x/20,10);
                     a[0]=(a[0]%60+60)%60;
                     profile.$temp2=(a[0]<=9?'0':'')+a[0];
 
@@ -26134,7 +26134,7 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                 }
             }
             if(width)
-                isize.width=width-(parseInt(v6.css('paddingRight'))||0)-(parseInt(v5.css('paddingLeft'))||0)-v2._borderW();
+                isize.width=width-(parseInt(v6.css('paddingRight'),10)||0)-(parseInt(v5.css('paddingLeft'),10)||0)-v2._borderW();
             v2.cssSize(isize, true);
         },
 
@@ -26261,7 +26261,7 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
             return this.each(function(o){
                 var v=o.properties.value,
                     a=v.split(':');
-                a[1]=parseInt(value)||a[0];
+                a[1]=parseInt(value,10)||a[0];
                 o.boxing().setValue(a.join(':'));
             });
         }
@@ -26401,7 +26401,7 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
             },
             'KEY a:focus, POP a:focus':{
                 'outline-offset':'',
-                '-moz-outline-offset': (linb.browser.gek && parseInt(linb.browser.ver)<3)?'':null
+                '-moz-outline-offset': (linb.browser.gek && parseInt(linb.browser.ver,10)<3)?'':null
             },
             'KEY .linb-ui-btn, POP .linb-ui-btn':{
                 'margin-right':'3px'
@@ -26504,7 +26504,7 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
         _ensureValue:function(profile,value){
             var a = value.split(':'),
                 b=[],
-                fun=function(a){return parseInt(a)||1};
+                fun=function(a){return parseInt(a,10)||1};
             b[0]=fun(a[0]);
             b[1]=fun(a[1]);
             b[2]=fun(a[2]);
@@ -26517,7 +26517,7 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
         },
         _v2a:function(v){
             v = typeof v == 'string'? v.split(':') : v;
-            v[0]=parseInt(v[0]);v[1]=parseInt(v[1]);v[2]=parseInt(v[2]);
+            v[0]=parseInt(v[0],10);v[1]=parseInt(v[1],10);v[2]=parseInt(v[2],10);
             return v;
         },
         _click:function(profile, src){
@@ -26525,7 +26525,7 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
                 v=b.getValue(),
                 a=v.split(':');
 
-            var r = b.onClick(profile, parseInt(linb(src).first(3).attr('href').split('#')[1])||a[0]);
+            var r = b.onClick(profile, parseInt(linb(src).first(3).attr('href').split('#')[1],10)||a[0]);
             return typeof r=="boolean"?r:false;
         },
         _show:function(profile, e, src, flag){
@@ -27578,7 +27578,7 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
                         item.iframeAutoLoad={url:item.iframeAutoLoad};
                     var hash=item.iframeAutoLoad,
                         id="diframe_"+_(),
-                        e=linb.browser.ie && parseInt(linb.browser.ver)<9,
+                        e=linb.browser.ie && parseInt(linb.browser.ver,10)<9,
                         ifr=document.createElement(e?"<iframe name='"+id+"'>":"iframe");
                     item.iframeAutoLoad.frameName=ifr.id=ifr.name=id;
                     if(!hash.query)hash.query={};
@@ -28603,7 +28603,7 @@ Class("linb.UI.TreeBar",["linb.UI","linb.absList","linb.absValue"],{
                padding:'2px 4px',
                border: '1px solid',
                'outline-offset':'-1px',
-               '-moz-outline-offset':(linb.browser.gek && parseInt(linb.browser.ver)<3)?'-1px !important':null,
+               '-moz-outline-offset':(linb.browser.gek && parseInt(linb.browser.ver,10)<3)?'-1px !important':null,
                'border-color':'#EDF4FC #698AB3 #698AB3 #EDF4FC',
                'background-color':'#CCE4FC'
             },
@@ -29237,7 +29237,7 @@ Class("linb.UI.TreeView","linb.UI.TreeBar",{
             ITEMCAPTION:{
                 cursor:'pointer',
                'outline-offset':'-1px',
-               '-moz-outline-offset':(linb.browser.gek && parseInt(linb.browser.ver)<3)?'-1px !important':null
+               '-moz-outline-offset':(linb.browser.gek && parseInt(linb.browser.ver,10)<3)?'-1px !important':null
             },
             'ITEMCAPTION-mouseover':{
                 $order:12,
@@ -31218,7 +31218,7 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
                 node=profile.getSubNodeByItemId('ITEM',subId);
                 if(!node.isEmpty()){
                     if(options.hasOwnProperty('size')){
-                        options.size = parseInt(''+options.size);
+                        options.size = parseInt(''+options.size,10);
                         if(options.size!=item.size){
                             item.size=options.size;
                             if(vertical)
@@ -31480,9 +31480,9 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
                         mh = m.height();
                         if(item.pos=='before'){
                             offset1 = h - item.min;
-                            offset2 = item.max?Math.min(parseInt(item.max)-h, (mh-main.min)):(mh-main.min);
+                            offset2 = item.max?Math.min(parseInt(item.max,10)-h, (mh-main.min)):(mh-main.min);
                         }else{
-                            offset1 = item.max?Math.min(parseInt(item.max)-h, (mh-main.min)):(mh-main.min);
+                            offset1 = item.max?Math.min(parseInt(item.max,10)-h, (mh-main.min)):(mh-main.min);
                             offset2 = h - item.min;
                         }
 
@@ -31503,9 +31503,9 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
                         mw = m.width();
                         if(item.pos=='before'){
                             offset1 = w - item.min;
-                            offset2 = item.max?Math.min(parseInt(item.max)-w, (mw-main.min)):(mw-main.min);
+                            offset2 = item.max?Math.min(parseInt(item.max,10)-w, (mw-main.min)):(mw-main.min);
                         }else{
-                            offset1 = item.max?Math.min(parseInt(item.max)-w, (mw-main.min)):(mw-main.min);
+                            offset1 = item.max?Math.min(parseInt(item.max,10)-w, (mw-main.min)):(mw-main.min);
                             offset2 = w - item.min;
                         }
 
@@ -31765,7 +31765,7 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
             _.arr.each(arr,function(o){
                 o.id = _.isStr(o.id)?o.id:_.id();
                 o.min = o.min || 10;
-                o.size = parseInt(o.size) || 80;
+                o.size = parseInt(o.size,10) || 80;
                 o.locked= typeof o.locked=='boolean'?o.locked:false;
                 o.folded = typeof o.folded=='boolean'?o.folded:false;
                 o.hidden = typeof o.hidden=='boolean'?o.hidden:false;
@@ -33953,7 +33953,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                 overflow:'hidden',
                 '-moz-box-flex':'1',
                 'outline-offset':'-1px',
-                '-moz-outline-offset':(linb.browser.gek && parseInt(linb.browser.ver)<3)?'-1px !important':null,
+                '-moz-outline-offset':(linb.browser.gek && parseInt(linb.browser.ver,10)<3)?'-1px !important':null,
                 height:'100%',
                 color:'#000',
                 //ie need this
@@ -34155,7 +34155,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                         }
                     });
                     ws.push(p._minColW);
-                    w=parseInt(Math.max.apply(null,ws));
+                    w=parseInt(Math.max.apply(null,ws),10);
                     if(w>p._maxColW)w=p._maxColW;
 
                     if(profile.beforeColResized && false===profile.boxing().beforeColResized(profile,header?header.id:null,w))
@@ -34349,7 +34349,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                                     break;
                                 case 'datetime':
                                 case 'date':
-                                    ff=function(n){return _.isDate(n)?n.getTime():_.isFinite(n)?parseInt(n):0};
+                                    ff=function(n){return _.isDate(n)?n.getTime():_.isFinite(n)?parseInt(n,10):0};
                                     break;
                                 default:
                                     ff=function(n){return n||''};
@@ -35417,7 +35417,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                             ws.push(linb([o]).width() + n._layer*ww);
                 });
                 ws.push(pro._minColW);
-                w=parseInt(Math.max.apply(null,ws))+ww*2;
+                w=parseInt(Math.max.apply(null,ws),10)+ww*2;
             }else
                 w=hcell.width();
 
@@ -35709,13 +35709,13 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                 break;
                 case 'date':
                 case 'datepicker':
-                    cell.value= _.isDate(cell.value)?cell.value:_.isFinite(cell.value)?new Date(parseInt(cell.value)):null;
+                    cell.value= _.isDate(cell.value)?cell.value:_.isFinite(cell.value)?new Date(parseInt(cell.value,10)):null;
                     caption= capOut || ren(profile,cell,ncell,f1);
                     if(dom)
                         node.html(caption, false);
                 break;
                 case 'datetime':
-                    cell.value= _.isDate(cell.value)?cell.value:_.isFinite(cell.value)?new Date(parseInt(cell.value)):null;
+                    cell.value= _.isDate(cell.value)?cell.value:_.isFinite(cell.value)?new Date(parseInt(cell.value,10)):null;
                     caption= capOut || ren(profile,cell,ncell,f0);
                     if(dom)
                         node.html(caption, false);
@@ -37355,7 +37355,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                         var tt=profile._$rs_args;
                         // resize immidiately here, maybe max here
                         linb.UI.$doResize(profile, (tt&&tt[1])||p.width, (tt&&tt[2])||p.height);
-                        root.show(left?(parseInt(left)||0)+'px':null, top?(parseInt(top)||0)+'px':null);
+                        root.show(left?(parseInt(left,10)||0)+'px':null, top?(parseInt(top,10)||0)+'px':null);
 
                         if(p.iframeAutoLoad||p.ajaxAutoLoad)
                             linb.UI.Div._applyAutoLoad(profile);
@@ -37659,7 +37659,7 @@ if(linb.browser.ie){
             },
             TABSTOP1:{
                 onFocus:function(profile,e,src){
-                    var tabindex = parseInt(linb.use(src).get(0).tabIndex||1 +"")-1;
+                    var tabindex = parseInt(linb.use(src).get(0).tabIndex||1 +"",10)-1;
                     var children = profile.getRoot().get(0).getElementsByTagName('*'),t,n;
                     for(var i=0,l=children.length,o;o=children[i];i++){
                         if(o.nodeType==1){
@@ -38169,7 +38169,7 @@ if(linb.browser.ie){
                         });
                     },"dialog:"+profile.serialId);
 
-                    s.css('zIndex',(parseInt(cover.css('zIndex'))||0)+1);
+                    s.css('zIndex',(parseInt(cover.css('zIndex'),10)||0)+1);
 
                     /*
                     //bak dlg tabzindnex
@@ -38191,7 +38191,7 @@ if(linb.browser.ie){
                             h[j].tabIndex=i;
                     }
                     linb.Event.pushTabOutTrigger(profile.renderId, function(src,tabindex){
-                        tabindex = parseInt(tabindex||1 +"");
+                        tabindex = parseInt(tabindex||1 +"",10);
                         var children = linb.use(src).get(0).getElementsByTagName('*'),t,n;
                         for(var i=0,l=children.length,o;o=children[i];i++){
                             if(o.nodeType==1){
@@ -38611,7 +38611,7 @@ if(linb.browser.ie){
             }
 
             if(width)
-                isize.width=size.width-(parseInt(v6.css('paddingRight'))||0)-(parseInt(v5.css('paddingLeft'))||0);
+                isize.width=size.width-(parseInt(v6.css('paddingRight'),10)||0)-(parseInt(v5.css('paddingLeft'),10)||0);
             v2.cssSize(isize, true);
         }
     }

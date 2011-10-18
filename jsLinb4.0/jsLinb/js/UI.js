@@ -324,7 +324,7 @@ Class('linb.UIProfile','linb.Profile', {
             //children
             if(o.children && o.children.length){
                 o.children.sort(function(x,y){
-                    x=parseInt(x[0].properties.tabindex);y=parseInt(y[0].properties.tabindex);
+                    x=parseInt(x[0].properties.tabindex,10);y=parseInt(y[0].properties.tabindex,10);
                     return x>y?1:x==y?0:-1;
                 });
                 t=r.children=[];
@@ -817,8 +817,8 @@ Class("linb.UI",  "linb.absObj", {
         show:function(parent,subId,left,top){
             return this.each(function(o){
                 var t=o.properties,b;
-                left=(left||left===0)?(parseInt(left)||0):null;
-                top=(top||top===0)?(parseInt(top)||0):null;
+                left=(left||left===0)?(parseInt(left,10)||0):null;
+                top=(top||top===0)?(parseInt(top,10)||0):null;
                 if(left!==null)t.left=left;
                 if(top!==null)t.top=top;
                 if(linb.getNodeData(o.renderId,'_linbhide')){
@@ -2616,7 +2616,7 @@ Class("linb.UI",  "linb.absObj", {
             if(ck in cache)return cache[ck];
             var c=linb.Dom.getEmptyDiv().get(0),r;
             c.className=cls;
-            r=cache[ck]=parseInt(linb.Dom.getStyle(c,key))||0;
+            r=cache[ck]=parseInt(linb.Dom.getStyle(c,key),10)||0;
             c.className="";
             return r;
         },
@@ -2832,7 +2832,7 @@ Class("linb.UI",  "linb.absObj", {
             for(var i in hash){
                 o=hash[i];
                 t=i.replace(r1,function(a,b,c){return  b + '.' + (ks[c]||c)}).toLowerCase();
-                o.$order=parseInt(o.$order)||0;
+                o.$order=parseInt(o.$order,10)||0;
                 o.$=t;
                 h[h.length]=o;
             };
@@ -3236,9 +3236,9 @@ Class("linb.UI",  "linb.absObj", {
             var s=profile.box,t=s._onresize;
             if(t&&(force||w||h)){
                 //adjust width and height
-                //w=parseInt(w)||null;
-                w=((w===""||w=='auto')?"auto":parseInt(w))||null
-                h=((h===""||h=='auto')?"auto":parseInt(h))||null;
+                //w=parseInt(w,10)||null;
+                w=((w===""||w=='auto')?"auto":parseInt(w,10))||null
+                h=((h===""||h=='auto')?"auto":parseInt(h,10))||null;
 
                 //if it it has delay resize, overwrite arguments
                 if('_$visibility' in profile){
@@ -3302,7 +3302,7 @@ Class("linb.UI",  "linb.absObj", {
                 value = prop.dock || 'none',
                 pid=linb.Event.getId(p.get(0)),
                 order=function(x,y){
-                    x=parseInt(x.properties.dockOrder)||0;y=parseInt(y.properties.dockOrder)||0;
+                    x=parseInt(x.properties.dockOrder,10)||0;y=parseInt(y.properties.dockOrder,10)||0;
                     return x>y?1:x==y?0:-1;
                 },
                 region,
@@ -3406,7 +3406,7 @@ Class("linb.UI",  "linb.absObj", {
                             //any node resize
                             if( arg.$dockid || !win || (_() - linb.$cache._resizeTime > 100)){
                                 //recruit call, give a short change
-                                obj = {left:0,top:0,right:0,bottom:0,width:parseInt(style&&style.width)||node.width(),height:parseInt(style&&style.height)||node.height()};
+                                obj = {left:0,top:0,right:0,bottom:0,width:parseInt(style&&style.width,10)||node.width(),height:parseInt(style&&style.height,10)||node.height()};
 
                                 for(k=0;key=arr[k++];){
                                     target = me[key];
@@ -3488,8 +3488,8 @@ Class("linb.UI",  "linb.absObj", {
                                 node = profile.getRoot(),
                                 style = profile.getRootNode().style,
                                 left, top, right, bottom,temp, other,
-                                x = parseInt(prop._dockBorderWidth) || 0,
-                                y = parseInt(prop._dockBorderHeight) || 0,
+                                x = parseInt(prop._dockBorderWidth,10) || 0,
+                                y = parseInt(prop._dockBorderHeight,10) || 0,
                                 region={}
                                 ;
                             if(style.display=='none')
@@ -3570,7 +3570,7 @@ Class("linb.UI",  "linb.absObj", {
                                     if(!w)return;
                                     left = (prop.dock=='cover'?0:(flt?0:obj.left)) + margin.left;
                                     right = (prop.dock=='cover'?0:(flt?0:obj.right))  + margin.right;
-                                    top = prop.dock=='width'?(parseInt(prop.top) || 0):( (prop.dock=='cover'?0:(flt?0:obj.top)) + margin.top);
+                                    top = prop.dock=='width'?(parseInt(prop.top,10) || 0):( (prop.dock=='cover'?0:(flt?0:obj.top)) + margin.top);
                                     //later call for w/h change once
                                     temp=obj.width - left - right - x;
                                     obj.later=obj.later||{};
@@ -3587,7 +3587,7 @@ Class("linb.UI",  "linb.absObj", {
                                     if(!h)return;
                                     top = (prop.dock=='cover'?0:(flt?0:obj.top)) + margin.top;
                                     bottom = (prop.dock=='cover'?0:(flt?0:obj.bottom))  + margin.bottom;
-                                    left = prop.dock=='height'?(parseInt(prop.left) || 0):((prop.dock=='cover'?0:(flt?0:obj.left))+ margin.left);
+                                    left = prop.dock=='height'?(parseInt(prop.left,10) || 0):((prop.dock=='cover'?0:(flt?0:obj.left))+ margin.left);
                                     //later call for w/h change once
                                     temp=obj.height - top - bottom - y;
                                     obj.later=obj.later||{};
@@ -3729,7 +3729,7 @@ Class("linb.UI",  "linb.absObj", {
             for(var j=0,i;i=map[j];j++){
                 if(prop[i] || prop[i]===0){
                     if(String(parseFloat(prop[i]))==String(prop[i]))
-                        a[a.length]=i+':'+(parseInt(prop[i])||0)+'px';
+                        a[a.length]=i+':'+(parseInt(prop[i],10)||0)+'px';
                     else if(prop[i]!='auto' && prop[i])
                         a[a.length]=i+':'+prop[i];
                 }
@@ -4508,12 +4508,12 @@ new function(){
                     /*for ie6 bug*/
                     /*for example, if single number, 100% width will add 1*/
                     /*for example, if single number, attached shadow will overlap*/
-                    if(linb.browser.ie6)ww=(parseInt(ww/2))*2;
+                    if(linb.browser.ie6)ww=(parseInt(ww/2,10))*2;
                 }
                 if(hh&&'auto'!==hh){
                     hh -=Math.max((t.$vborder||0)*2, (t.$b_lw||0) + (t.$b_rw||0));
 
-                    if(linb.browser.ie6)hh=(parseInt(hh/2))*2;
+                    if(linb.browser.ie6)hh=(parseInt(hh/2,10))*2;
                     /*for ie6 bug*/
                     if(linb.browser.ie6&&null===width)o.ieRemedy();
                 }
@@ -4731,7 +4731,7 @@ new function(){
             _prepareData:function(profile){
                 var data=arguments.callee.upper.call(this, profile);
                 data._align = 'text-align:'+data.hAlign+';';
-                data._clsName=parseInt(data.width)?'':profile.getClass('KEY','-auto');
+                data._clsName=parseInt(data.width,10)?'':profile.getClass('KEY','-auto');
                 return data;
             }
         }
@@ -4913,7 +4913,7 @@ new function(){
                         prop.iframeAutoLoad={url:prop.iframeAutoLoad};
                     var hash=prop.iframeAutoLoad,
                         id="biframe_"+_(),
-                        e=linb.browser.ie && parseInt(linb.browser.ver)<9,
+                        e=linb.browser.ie && parseInt(linb.browser.ver,10)<9,
                         ifr=document.createElement(e?"<iframe name='"+id+"'>":"iframe");
                     if(!hash.query)hash.query={};
                     hash.query._rand=_();

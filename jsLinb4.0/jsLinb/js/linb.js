@@ -1631,7 +1631,7 @@ Class('linb.absIO',null,{
             return obj;
         },
         _if:function(doc,id,onLoad){
-            var ie8=linb.browser.ie && parseInt(linb.browser.ver)<9,
+            var ie8=linb.browser.ie && parseInt(linb.browser.ver,10)<9,
                 scr=ie8
                     ? ("<iframe "+(id?("name='"+"linb_IAajax_"+id+"'"):"")+(onLoad?(" onload='linb.IAjax._o(\""+id+"\")'"):"")+">")
                     : "iframe";

@@ -7,7 +7,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 v=(''+v).replace(/[^\d.-]/g,'');
                 v=_.isNumb(parseFloat(v))?parseFloat(v):null;
             }else if(profile.properties.type=='datepicker'||profile.properties.type=='date'||profile.properties.type=='datetime'){
-                v=_.isDate(v)?v:_.isFinite(v)?new Date(parseInt(v)):null;                
+                v=_.isDate(v)?v:_.isFinite(v)?new Date(parseInt(v,10)):null;                
             }
             return v;
         },
@@ -320,7 +320,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                     case 'datetime':
                         var t = profile.$drop.properties;
                         if(t=profile.properties.$UIvalue)
-                            o.setValue(new Date( parseInt(t) ), true);
+                            o.setValue(new Date( parseInt(t,10)), true);
                         break;
                     case 'color':
                     case 'colorpicker':
@@ -451,12 +451,12 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                         if(p.properties.dateEditorTpl)
                             return v?date.format(v, p.properties.dateEditorTpl):'';
                         else
-                            return v?date.getText(new Date(parseInt(v)), p.properties.type=='datetime'?'ymdhn':'ymd'):'';
+                            return v?date.getText(new Date(parseInt(v,10)), p.properties.type=='datetime'?'ymdhn':'ymd'):'';
                     },
                     $toEditor : function(p,v){
                         if(!v)return "";
 
-                        v=new Date(parseInt(v)||0);
+                        v=new Date(parseInt(v,10)||0);
                         if(p.properties.dateEditorTpl)
                             return date.format(v, p.properties.dateEditorTpl);
                         else{
@@ -475,7 +475,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                             // set to old UIvalue
                             if(!v){
                                 v=p.properties.$UIvalue;
-                                if(_.isFinite(v))v=new Date(parseInt(v));
+                                if(_.isFinite(v))v=new Date(parseInt(v,10));
                             }
                             if(v){
                                 if(p.properties.type!='datetime')
@@ -1230,7 +1230,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                         if(_.isDate(value))
                             d=value;
                         else if(_.isFinite(value))
-                            d=new Date(parseInt(value));
+                            d=new Date(parseInt(value,10));
                     }
                     return d?String(profile.properties.type=='datetime'?d.getTime():linb.Date.getTimSpanStart(d,'d',1).getTime()):"";
                 case 'color':
@@ -1261,12 +1261,12 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                  value=_.toFixedNumber(value,prop.precision);
                  
             return value;
-            //var n=Math.pow(10,Math.max(parseInt(prop.precision)||0,0));
+            //var n=Math.pow(10,Math.max(parseInt(prop.precision,10)||0,0));
             //value=(+value||0);
             //value=Math.ceil((value-0.0000000000003)*n)/n;
         },
         formatCurrency:function(value, precision){
-            if(_.isSet(precision))precision=parseInt(precision);
+            if(_.isSet(precision))precision=parseInt(precision,10);
             precision=(precision||precision===0)?precision:2;
             value=parseFloat(value);
             if((value+"").indexOf('e')==-1){
@@ -1311,12 +1311,12 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 /*for ie6 bug*/
                 /*for example, if single number, 100% width will add 1*/
                 /*for example, if single number, attached shadow will overlap*/
-                if(linb.browser.ie6)ww=(parseInt(ww/2))*2;
+                if(linb.browser.ie6)ww=(parseInt(ww/2,10))*2;
             }
             if(null!==hh){
                 hh -=Math.max($vborder*2, (t.$b_lw||0) + (t.$b_rw||0));
 
-                if(linb.browser.ie6)hh=(parseInt(hh/2))*2;
+                if(linb.browser.ie6)hh=(parseInt(hh/2,10))*2;
                 /*for ie6 bug*/
                 if(linb.browser.ie6&&null===width)o.ieRemedy();
             }

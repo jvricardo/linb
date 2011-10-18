@@ -340,8 +340,8 @@ Class("linb.UI.Range", ["linb.UI","linb.absValue"],{
         _keydown:function(profile, e, src,type){
             var key=linb.Event.getKey(e);
             if(key.key=='left' || key.key=='right'){
-                var s=linb.use(src).get(0).style, left=parseInt(s.left), pro=profile.properties, steps=pro.steps, span=300/steps, v,f=function(key){
-                    return parseInt(profile.getSubNode(key).get(0).style.left);
+                var s=linb.use(src).get(0).style, left=parseInt(s.left,10), pro=profile.properties, steps=pro.steps, span=300/steps, v,f=function(key){
+                    return parseInt(profile.getSubNode(key).get(0).style.left,10);
                 };
                 left += key.key=='left'?-1:1;
                 if(steps){

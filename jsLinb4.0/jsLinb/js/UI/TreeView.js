@@ -135,7 +135,7 @@ Class("linb.UI.TreeView","linb.UI.TreeBar",{
             ITEMCAPTION:{
                 cursor:'pointer',
                'outline-offset':'-1px',
-               '-moz-outline-offset':(linb.browser.gek && parseInt(linb.browser.ver)<3)?'-1px !important':null
+               '-moz-outline-offset':(linb.browser.gek && parseInt(linb.browser.ver,10)<3)?'-1px !important':null
             },
             'ITEMCAPTION-mouseover':{
                 $order:12,

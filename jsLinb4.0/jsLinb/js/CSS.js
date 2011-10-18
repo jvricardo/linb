@@ -276,7 +276,7 @@ Class("linb.CSS", null,{
                 "span{outline-offset:-1px;"+
                  (b.gek
                     ? parseFloat(b.ver)<3 
-                        ? ((parseInt(b.ver)<3?"-moz-outline-offset:-1px !important;":"") + "display:-moz-inline-block;display:-moz-inline-box;display:inline-block;")
+                        ? ((parseInt(b.ver,10)<3?"-moz-outline-offset:-1px !important;":"") + "display:-moz-inline-block;display:-moz-inline-box;display:inline-block;")
                         :"display:inline-block;"
                     : b.ie6
                         ?"display:inline-box;display:inline;"
@@ -307,12 +307,12 @@ Class("linb.CSS", null,{
 // base setting
             ".linb-node-a{cursor:pointer;color:#0000ee;text-decoration:none;}"+
             ".linb-node-a:hover{color:red}"+
-            (b.gek? (".linb-node-a:focus{outline-offset:-1px;"+ (parseInt(b.ver)<3?"-moz-outline-offset:-1px !important":"") +"}" ):"")+
+            (b.gek? (".linb-node-a:focus{outline-offset:-1px;"+ (parseInt(b.ver,10)<3?"-moz-outline-offset:-1px !important":"") +"}" ):"")+
             ".linb-node-span, .linb-node-div{border:0;font-size:12px;}"+
             ".linb-node-span, .linb-wrapper span{outline-offset:-1px;"+
             (b.gek
                 ? parseFloat(b.ver)<3 
-                    ? ((parseInt(b.ver)<3?"-moz-outline-offset:-1px !important;":"") + "display:-moz-inline-block;display:-moz-inline-box;display:inline-block;")
+                    ? ((parseInt(b.ver,10)<3?"-moz-outline-offset:-1px !important;":"") + "display:-moz-inline-block;display:-moz-inline-box;display:inline-block;")
                     :"display:inline-block;"
                 : b.ie6
                     ?"display:inline-box;display:inline;"

@@ -13,7 +13,7 @@ Class("linb.History",null,{
         		if(linb.browser.ie) {
         			if(self._lastFI=='')self._lastFI = '#';
     
-                    if(parseInt(linb.browser.ver)<9) {
+                    if(parseInt(linb.browser.ver,10)<9) {
                         var n=document.createElement("div");
                         n.style.display = "none";
                         document.body.appendChild(n);
@@ -52,7 +52,7 @@ Class("linb.History",null,{
     	    }
 
     		if(linb.browser.ie) {
-		        if(parseInt(linb.browser.ver)<9) {
+		        if(parseInt(linb.browser.ver,10)<9) {
         		    var ihistory = document.getElementById(self._fid), 
         		        iframe = ihistory.contentWindow.document;
         		    hash = iframe.location.hash;
@@ -117,7 +117,7 @@ Class("linb.History",null,{
             if(self._lastFI == '#' + fi)return false;
 
     		if(linb.browser.ie) {
-    		    if(parseInt(linb.browser.ver)<9) {
+    		    if(parseInt(linb.browser.ver,10)<9) {
         			var ihistory = document.getElementById(self._fid), iframe = ihistory.contentWindow.document;
                     iframe.open();
         			iframe.close();

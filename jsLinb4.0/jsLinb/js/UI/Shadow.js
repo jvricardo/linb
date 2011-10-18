@@ -140,7 +140,7 @@ Class("linb.UI.Shadow","linb.UI",{
         },
         _prepareData:function(profile){
             var t = arguments.callee.upper.call(this, profile);
-            t.pos = (parseInt(t.shadowSize)||0) + (parseInt(t.shadowOffset)||0);
+            t.pos = (parseInt(t.shadowSize,10)||0) + (parseInt(t.shadowOffset,10)||0);
             t.rbsize=t.shadowSize+4;
             return t;
         },

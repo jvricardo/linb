@@ -158,7 +158,7 @@ Class("linb.UI.FoldingList", ["linb.UI.List"],{
                 zoom:linb.browser.ie?1:null,
                 'padding-top':'8px'//,
                 //for ie6 1px bug,  HR/TR(position:absolute;right:0;)
-                //'margin-right':linb.browser.ie6?'expression(this.parentNode.offsetWidth?(this.parentNode.offsetWidth-(parseInt(this.parentNode.style.paddingLeft)||0)-(parseInt(this.parentNode.style.paddingRight)||0) )%2+"px":"auto")':null
+                //'margin-right':linb.browser.ie6?'expression(this.parentNode.offsetWidth?(this.parentNode.offsetWidth-(parseInt(this.parentNode.style.paddingLeft,10)||0)-(parseInt(this.parentNode.style.paddingRight,10)||0) )%2+"px":"auto")':null
             },
             ITEM:{
                 border:0,

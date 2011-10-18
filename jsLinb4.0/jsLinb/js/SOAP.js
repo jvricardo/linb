@@ -104,13 +104,13 @@ Class('linb.SOAP',null,{
                         else{
                             if(tmp=value.match(ns._dateMatcher)){
                                 var d = new Date;
-                                if(tmp[1]) d.setUTCFullYear(parseInt(tmp[1]));
-                                if(tmp[2]) d.setUTCMonth(parseInt(tmp[2]-1));
-                                if(tmp[3]) d.setUTCDate(parseInt(tmp[3]));
-                                if(tmp[4]) d.setUTCHours(parseInt(tmp[4]));
-                                if(tmp[5]) d.setUTCMinutes(parseInt(tmp[5]));
-                                if(tmp[6]) d.setUTCSeconds(parseInt(tmp[6]));
-                                if(tmp[7]) d.setUTCMilliseconds(parseInt(tmp[7]));
+                                if(tmp[1]) d.setUTCFullYear(parseInt(tmp[1],10));
+                                if(tmp[2]) d.setUTCMonth(parseInt(tmp[2]-1,10));
+                                if(tmp[3]) d.setUTCDate(parseInt(tmp[3],10));
+                                if(tmp[4]) d.setUTCHours(parseInt(tmp[4],10));
+                                if(tmp[5]) d.setUTCMinutes(parseInt(tmp[5],10));
+                                if(tmp[6]) d.setUTCSeconds(parseInt(tmp[6],10));
+                                if(tmp[7]) d.setUTCMilliseconds(parseInt(tmp[7],10));
                                 return d;
                             }
                             return null;
@@ -183,7 +183,7 @@ Class('linb.SOAP',null,{
                             value=param[p];
                             switch(typeof value){
                                 case 'number':
-                                    type=parseInt(value)===Math.ceil(value)?'int':'double';
+                                    type=parseInt(value,10)===Math.ceil(value)?'int':'double';
                                     break;
                                 case 'boolean':
                                     type='bool';

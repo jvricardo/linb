@@ -201,7 +201,7 @@ Class("linb.UI.Poll", "linb.UI.List",{
                 if(r.top<0)r.top=0;
 
                 o.setValue(value||'',true)
-                .setWidth(r.width + (parseInt(node.css('paddingLeft'))||0)+ (parseInt(node.css('paddingRight'))||0))
+                .setWidth(r.width + (parseInt(node.css('paddingLeft'),10)||0)+ (parseInt(node.css('paddingRight'),10)||0))
                 .onCommand(function(p){
                     var pro=p.properties,v=pro.$UIvalue, ov=pro.value;
                     if(v!=ov)

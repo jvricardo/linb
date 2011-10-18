@@ -99,11 +99,11 @@ Class("linb.UI.Resizer","linb.UI",{
                                 instance.onResize(profile,w,h);
                         }
                         if(cssPos){
-                            if((t=cssPos.left) && !(prop.left=='auto'&&parseInt(prop.right)>=0)){
+                            if((t=cssPos.left) && !(prop.left=='auto'&&parseInt(prop.right,10)>=0)){
                                 node.leftBy(t);
                                 prop.left= node.left();
                             }
-                            if((t=cssPos.top) && !(prop.top=='auto'&&parseInt(prop.bottom)>=0)){
+                            if((t=cssPos.top) && !(prop.top=='auto'&&parseInt(prop.bottom,10)>=0)){
                                 node.topBy(t);
                                 prop.top = node.top();
                             }
@@ -567,7 +567,7 @@ Class("linb.UI.Resizer","linb.UI",{
             if(typeof t.forceMovable=="boolean")
                 t._move=t.forceMovable;
 
-            t.extend =  (parseInt(t.handlerSize)||0)/2 + (parseInt(t.handlerOffset)||0);
+            t.extend =  (parseInt(t.handlerSize,10)||0)/2 + (parseInt(t.handlerOffset,10)||0);
 
             t._showCofigBtn=t.configBtn?'':'display:none';
             return arguments.callee.upper.call(this, profile);
@@ -581,9 +581,9 @@ Class("linb.UI.Resizer","linb.UI",{
                 if(size)target.widthBy(size.width,true).heightBy(size.height,true);
                 if(cssPos){
                     var t=target.get(0).style;
-                    if(t.left=='auto'&&(parseInt(t.right)>=0)){}else
+                    if(t.left=='auto'&&(parseInt(t.right,10)>=0)){}else
                     target.leftBy(cssPos.left)
-                    if(t.top=='auto'&&(parseInt(t.bottom)>=0)){}else
+                    if(t.top=='auto'&&(parseInt(t.bottom,10)>=0)){}else
                     target.topBy(cssPos.top);
                 }
             }

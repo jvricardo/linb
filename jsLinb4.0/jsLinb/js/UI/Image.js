@@ -57,8 +57,8 @@ Class("linb.UI.Image", "linb.UI",{
         _adjust:function(profile,width,height){
             var pro=profile.properties,
                 src=profile.getRootNode();
-            width=parseInt(width)||0;
-            height=parseInt(height)||0;
+            width=parseInt(width,10)||0;
+            height=parseInt(height,10)||0;
             src.style.width=src.style.height='';
             if(width>0 && height>0){
                 var r1=pro.maxWidth/width, r2=pro.maxHeight/height,r= r1<r2?r1:r2;
@@ -90,7 +90,7 @@ Class("linb.UI.Image", "linb.UI",{
                         prop=this.properties,
                         i=new Image();
                     i.src=src.src;
-                    this.box._adjust(this, _.isFinite(v)?parseInt(v):i.width, _.isFinite(prop.height)?prop.height:i.height);
+                    this.box._adjust(this, _.isFinite(v)?parseInt(v,10):i.width, _.isFinite(prop.height)?prop.height:i.height);
                 }
             },
             height:{
@@ -100,7 +100,7 @@ Class("linb.UI.Image", "linb.UI",{
                         prop=this.properties,
                         i=new Image();
                     i.src=src.src;
-                    this.box._adjust(this,_.isFinite(prop.width)?prop.width:i.width,_.isFinite(v)?parseInt(v):i.height);
+                    this.box._adjust(this,_.isFinite(prop.width)?prop.width:i.width,_.isFinite(v)?parseInt(v,10):i.height);
                 }
             },
             src:{

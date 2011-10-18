@@ -61,25 +61,25 @@ Class('linb.XMLRPC',null,{
                     switch(typeElem.nodeName.toLowerCase()){
                         case 'i4':
                         case 'int':
-                            value=parseInt(typeElem.firstChild.nodeValue);
+                            value=parseInt(typeElem.firstChild.nodeValue,10);
                             return isNaN(value)?null:value;
                         case 'double':
                             value=parseFloat(typeElem.firstChild.nodeValue);
                             return isNaN(value)?null:value;
                         case 'boolean':
-                            return Boolean(parseInt(typeElem.firstChild.nodeValue)!==0);
+                            return Boolean(parseInt(typeElem.firstChild.nodeValue,10)!==0);
                         case 'string':
                             return typeElem.firstChild?typeElem.firstChild.nodeValue:"";
                         case 'datetime.iso8601':
                             if(tmp=typeElem.firstChild.nodeValue.match(ns._dateMatcher)){
                                 value = new Date;
-                                if(tmp[1]) value.setUTCFullYear(parseInt(tmp[1]));
-                                if(tmp[2]) value.setUTCMonth(parseInt(tmp[2]-1));
-                                if(tmp[3]) value.setUTCDate(parseInt(tmp[3]));
-                                if(tmp[4]) value.setUTCHours(parseInt(tmp[4]));
-                                if(tmp[5]) value.setUTCMinutes(parseInt(tmp[5]));
-                                if(tmp[6]) value.setUTCSeconds(parseInt(tmp[6]));
-                                if(tmp[7]) value.setUTCMilliseconds(parseInt(tmp[7]));
+                                if(tmp[1]) value.setUTCFullYear(parseInt(tmp[1],10));
+                                if(tmp[2]) value.setUTCMonth(parseInt(tmp[2]-1,10));
+                                if(tmp[3]) value.setUTCDate(parseInt(tmp[3],10));
+                                if(tmp[4]) value.setUTCHours(parseInt(tmp[4],10));
+                                if(tmp[5]) value.setUTCMinutes(parseInt(tmp[5],10));
+                                if(tmp[6]) value.setUTCSeconds(parseInt(tmp[6],10));
+                                if(tmp[7]) value.setUTCMilliseconds(parseInt(tmp[7],10));
                                 return value;
                             }
                             return null;
@@ -157,7 +157,7 @@ Class('linb.XMLRPC',null,{
             switch(typeof value){
                 case 'number':
                     xml.push(!isFinite(value)?'<nil/>':
-                        parseInt(value)===Math.ceil(value)?('<int>'+value+'</int>'):
+                        parseInt(value,10)===Math.ceil(value)?('<int>'+value+'</int>'):
                         ('<double>'+value+'</double>')
                     );
                     break;

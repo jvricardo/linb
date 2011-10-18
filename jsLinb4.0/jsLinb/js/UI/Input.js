@@ -822,12 +822,12 @@ Class("linb.UI.Input", ["linb.UI.Widget","linb.absValue"] ,{
                     /*for ie6 bug*/
                     /*for example, if single number, 100% width will add 1*/
                     /*for example, if single number, attached shadow will overlap*/
-                    if(linb.browser.ie6)ww=(parseInt(ww/2))*2;
+                    if(linb.browser.ie6)ww=(parseInt(ww/2,10))*2;
                 }
                 if(null!==hh){
                     hh -=Math.max($vborder*2, (t.$b_lw||0) + (t.$b_rw||0));
 
-                    if(linb.browser.ie6)hh=(parseInt(hh/2))*2;
+                    if(linb.browser.ie6)hh=(parseInt(hh/2,10))*2;
                     /*for ie6 bug*/
                     if(linb.browser.ie6&&null===width)o.ieRemedy();
                 }

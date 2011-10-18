@@ -1415,7 +1415,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                 overflow:'hidden',
                 '-moz-box-flex':'1',
                 'outline-offset':'-1px',
-                '-moz-outline-offset':(linb.browser.gek && parseInt(linb.browser.ver)<3)?'-1px !important':null,
+                '-moz-outline-offset':(linb.browser.gek && parseInt(linb.browser.ver,10)<3)?'-1px !important':null,
                 height:'100%',
                 color:'#000',
                 //ie need this
@@ -1617,7 +1617,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                         }
                     });
                     ws.push(p._minColW);
-                    w=parseInt(Math.max.apply(null,ws));
+                    w=parseInt(Math.max.apply(null,ws),10);
                     if(w>p._maxColW)w=p._maxColW;
 
                     if(profile.beforeColResized && false===profile.boxing().beforeColResized(profile,header?header.id:null,w))
@@ -1811,7 +1811,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                                     break;
                                 case 'datetime':
                                 case 'date':
-                                    ff=function(n){return _.isDate(n)?n.getTime():_.isFinite(n)?parseInt(n):0};
+                                    ff=function(n){return _.isDate(n)?n.getTime():_.isFinite(n)?parseInt(n,10):0};
                                     break;
                                 default:
                                     ff=function(n){return n||''};
@@ -2879,7 +2879,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                             ws.push(linb([o]).width() + n._layer*ww);
                 });
                 ws.push(pro._minColW);
-                w=parseInt(Math.max.apply(null,ws))+ww*2;
+                w=parseInt(Math.max.apply(null,ws),10)+ww*2;
             }else
                 w=hcell.width();
 
@@ -3171,13 +3171,13 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                 break;
                 case 'date':
                 case 'datepicker':
-                    cell.value= _.isDate(cell.value)?cell.value:_.isFinite(cell.value)?new Date(parseInt(cell.value)):null;
+                    cell.value= _.isDate(cell.value)?cell.value:_.isFinite(cell.value)?new Date(parseInt(cell.value,10)):null;
                     caption= capOut || ren(profile,cell,ncell,f1);
                     if(dom)
                         node.html(caption, false);
                 break;
                 case 'datetime':
-                    cell.value= _.isDate(cell.value)?cell.value:_.isFinite(cell.value)?new Date(parseInt(cell.value)):null;
+                    cell.value= _.isDate(cell.value)?cell.value:_.isFinite(cell.value)?new Date(parseInt(cell.value,10)):null;
                     caption= capOut || ren(profile,cell,ncell,f0);
                     if(dom)
                         node.html(caption, false);

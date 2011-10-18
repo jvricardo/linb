@@ -38,8 +38,8 @@ Class("linb.Tips", null,{
             }else if(tips._showed && tips.MOVABLE){
                 p=event.getPos(e);
                 n=tips._Node.style;
-                n.left = (parseInt(n.left)||0) + (p.left-tips._pos.left) +'px';
-                n.top = (parseInt(n.top)||0) + (p.top-tips._pos.top) +'px';
+                n.left = (parseInt(n.left,10)||0) + (p.left-tips._pos.left) +'px';
+                n.top = (parseInt(n.top,10)||0) + (p.top-tips._pos.top) +'px';
                 tips._pos=p;
                 n=null;
             }

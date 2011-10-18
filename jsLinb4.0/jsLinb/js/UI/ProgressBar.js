@@ -88,7 +88,7 @@ Class("linb.UI.ProgressBar", ["linb.UI.Widget","linb.absValue"] ,{
             return data;
         },
         _ensureValue:function(profile,value){
-            return parseInt(value)||0;
+            return parseInt(value,10)||0;
         },
         _onresize:function(profile,width,height){
             var size = arguments.callee.upper.apply(this,arguments),h;

@@ -14,7 +14,7 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
                     rgb = profile.$rgb = cls.hex2rgb(value),
                     hsv = profile.$hsv = cls.rgb2hsv(rgb),
                     f=function(s,v){profile.getSubNode(s).get(0).firstChild.nodeValue=String(v)},
-                    ff=function(v){return parseInt(v*100)};
+                    ff=function(v){return parseInt(v*100,10)};
 
                 f('R',rgb[0]);
                 f('G',rgb[1]);
@@ -733,7 +733,7 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
                 rate = type=='hsv1'?361:type=='hsv2'?101:256,
                 v;
 
-            count = (type=='hsv2'?parseInt(profile.$start[i]*100):parseInt(profile.$start[i]))+parseInt(off.x/2);
+            count = (type=='hsv2'?parseInt(profile.$start[i]*100,10):parseInt(profile.$start[i],10))+parseInt(off.x/2,10);
 
             count=(count%rate+rate)%rate;
             if(profile.$temp!=count){
@@ -788,7 +788,7 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
         //0...255 to 00...FF
         _toFF: function(n) {
             var C16=this._C16;
-            n = parseInt(n)||0;
+            n = parseInt(n,10)||0;
             n = (n>255||n<0)?0:n;
             return C16.charAt((n-n%16)/16) + C16.charAt(n%16);
         },
@@ -800,7 +800,7 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
         _webSafe:function(r, g, b){
             //safe divisor is 51, smart divisor is 17
             var me=arguments.callee,f=me.f||(me.f=function(n){
-                return parseInt(n/51)*51;
+                return parseInt(n/51,10)*51;
             });
             if(typeof r=='object'){
                 g=r[1];b=r[2];r=r[0];
@@ -893,9 +893,9 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
             if(reg.test(v)){
                 v=v.replace(reg,'$1');
                 v=v.split(',');
-                v[0]=parseInt(v[0])||0;
-                v[1]=parseInt(v[1])||0;
-                v[2]=parseInt(v[2])||0;
+                v[0]=parseInt(v[0],10)||0;
+                v[1]=parseInt(v[1],10)||0;
+                v[2]=parseInt(v[2],10)||0;
                 v=ns.rgb2hex(v);
             }
             if(v.charAt(0)=='#')v=v.substr(1,v.length);

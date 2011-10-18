@@ -151,7 +151,7 @@ Class("linb.UI.TagEditor", ['linb.UI',"linb.absValue"], {
                 ini:6,
                 action:function(v){
                     var i=this.boxing().getTagInput();
-                    if(i)i.setCustomStyle("KEY","margin-right:"+(parseInt(v)||0)+"px;margin-bottom:"+(parseInt(v)||0)+"px;");
+                    if(i)i.setCustomStyle("KEY","margin-right:"+(parseInt(v,10)||0)+"px;margin-bottom:"+(parseInt(v,10)||0)+"px;");
                 }
             },
             width:300,
