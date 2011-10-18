@@ -38,7 +38,7 @@ Class('linb.Com.TimeSpan', 'linb.Com',{
                 v=ns.timeline.getUIValue(),
                 tz=ns._timezone,
                 uv=v.split(":");
-            return [date.offsetTimeZone(new Date(parseInt(uv[0])),tz,true), date.offsetTimeZone(new Date(parseInt(uv[1])),tz,true)];
+            return [date.offsetTimeZone(new Date(parseInt(uv[0],10)),tz,true), date.offsetTimeZone(new Date(parseInt(uv[1],10)),tz,true)];
         },
         setValue:function(iniFrom, iniTo, force){
             var ns=this,
@@ -88,7 +88,7 @@ Class('linb.Com.TimeSpan', 'linb.Com',{
             ns._timezone=ns._getTimezone(ns.timezone=tz);
             if(uv){
                 uv=uv.split(':');
-                ns.setValue(date.offsetTimeZone(new Date(parseInt(uv[0])),old,true), date.offsetTimeZone(new Date(parseInt(uv[1])),old,true), false);
+                ns.setValue(date.offsetTimeZone(new Date(parseInt(uv[0],10)),old,true), date.offsetTimeZone(new Date(parseInt(uv[1],10)),old,true), false);
             }
         },
         events:{
@@ -140,7 +140,7 @@ Class('linb.Com.TimeSpan', 'linb.Com',{
             if(!ns.timezone)
                 ns.timezone=(function(){
                     var d=((new Date).getTimezoneOffset()/60),
-                        i=parseInt(d),
+                        i=parseInt(d,10),
                         v=Math.abs(i)!==i,
                         j=(d-i)*60;
                     i=Math.abs(i);
@@ -361,8 +361,8 @@ Class('linb.Com.TimeSpan', 'linb.Com',{
             var self=this,
                 date=linb.Date,
                 a=newValue.split(':'),
-                dateFrom=new Date(parseInt(a[0])),
-                dateTo=new Date(parseInt(a[1])),
+                dateFrom=new Date(parseInt(a[0],10)),
+                dateTo=new Date(parseInt(a[1],10)),
                 df,dt,
                 r,
                 arr = self._adjustTime(dateFrom,dateTo);
@@ -377,8 +377,8 @@ Class('linb.Com.TimeSpan', 'linb.Com',{
         },
         _change2:function(dateFrom,dateTo,timeFrom,timeTo){
             var self=this,r;
-            if(!dateFrom)dateFrom=new Date(parseInt(self.dateFrom.getUIValue()));
-            if(!dateTo)dateTo=new Date(parseInt(self.dateTo.getUIValue()));
+            if(!dateFrom)dateFrom=new Date(parseInt(self.dateFrom.getUIValue(),10));
+            if(!dateTo)dateTo=new Date(parseInt(self.dateTo.getUIValue(),10));
             if(!timeFrom)timeFrom=self.timeFrom.getUIValue().split(':');
             if(!timeTo)timeTo=self.timeTo.getUIValue().split(':');
             //if set manully, all need
@@ -416,7 +416,7 @@ Class('linb.Com.TimeSpan', 'linb.Com',{
             var self=this,r;
             if(!self.$lock){
                 self.$lock=1;
-                r=self._change2(new Date(parseInt(newValue)));
+                r=self._change2(new Date(parseInt(newValue,10)));
                 self.$lock=0;
                 return r;
             }
@@ -434,7 +434,7 @@ Class('linb.Com.TimeSpan', 'linb.Com',{
             var self=this,r;
             if(!self.$lock){
                 self.$lock=1;
-                r=self._change2(null,new Date(parseInt(newValue)));
+                r=self._change2(null,new Date(parseInt(newValue,10)));
                 self.$lock=0;
                 return r;
             }

@@ -749,14 +749,14 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                 p=profile.properties,
                 box=this.constructor,
                 a=value.split(':'),
-                from=new Date(parseInt(a[0])),
-                to=new Date(parseInt(a[1])),
+                from=new Date(parseInt(a[0],10)),
+                to=new Date(parseInt(a[1],10)),
                 pxStart=box._getX(profile,from),
                 pxEnd=box._getX(profile,to),
                 task;
 
             if(p.items.length===0)
-                this.insertItems([{id:'$', caption:p.dftTaskName, from:parseInt(a[0]), to:parseInt(a[1])}],null,true);
+                this.insertItems([{id:'$', caption:p.dftTaskName, from:parseInt(a[0],10), to:parseInt(a[1],10)}],null,true);
             else
                 box._resetItem(profile,{left:pxStart,width:pxEnd-pxStart},profile.getSubNodeByItemId('ITEM',p.items[0].id)._get(0));
         },
@@ -1273,7 +1273,7 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
             ACTIVE:{
                 onDragbegin:function(profile, e, src){
                     profile.$dd_ox = linb.DragDrop.getProfile().x;
-                    profile.$dd_oleft = parseInt(linb.use(src).get(0).style.left)||0;
+                    profile.$dd_oleft = parseInt(linb.use(src).get(0).style.left,10)||0;
                     linb.use(src).css('cursor','e-resize')
                     .parent().css('cursor','e-resize');
                 },
@@ -1410,8 +1410,8 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                         cursor=type?'e-resize':'move',
                         ac=profile.$active;
                     profile.$dd_ox = linb.DragDrop.getProfile().x;
-                    profile.$dd_oleft = parseInt(linb.use(src).get(0).style.left);
-                    profile.$dd_owidth = Math.min(t._realwidth, parseInt(linb.use(src).get(0).style.width));
+                    profile.$dd_oleft = parseInt(linb.use(src).get(0).style.left,10);
+                    profile.$dd_owidth = Math.min(t._realwidth, parseInt(linb.use(src).get(0).style.width,10));
                     linb([ac]).css('display','block').cssPos({left :profile.$dd_oleft,  top :null}).width(profile.$dd_owidth-2);
                     linb([ac,ac.parentNode]).css('cursor',cursor);
                 },
@@ -2266,7 +2266,7 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
             y=src=null;
         },
         _deActive:function(profile){
-            var t=profile.$active.style, x=parseInt(t.left)||0, w=(parseInt(t.width)||0)+2;
+            var t=profile.$active.style, x=parseInt(t.left,10)||0, w=(parseInt(t.width,10)||0)+2;
             t.visibility='hidden';
             t.left=linb.Dom.HIDE_VALUE;
             t.width=0;
@@ -2369,7 +2369,7 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
 
             // if offset out a bar width
             if(Math.abs(offset)/t._unitPixs >=1 || left){
-                var offsetCount = parseInt(offset/t._unitPixs),
+                var offsetCount = parseInt(offset/t._unitPixs,10),
                     bak_s = t._smallLabelStart,
                     bak_e = t._smallLabelEnd,
                     _c=-offsetCount*t._smallLabelCount,
@@ -2628,7 +2628,7 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
             items.top(b?-f('SCROLL').scrollTop():0);
             lines.top(b?-f('SCROLL').scrollTop():0);
             
-            var len=parseInt(h/p.taskHeight)+1, 
+            var len=parseInt(h/p.taskHeight,10)+1, 
                 size=f('LINES').get(0).childNodes.length;
             if(size<len){
                 f('LINES').append(linb.create(_.str.repeat('<div style="height:'+p.taskHeight+'px;"></div>',len-size)));
@@ -2957,7 +2957,7 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                 if(r.top<0)r.top=0;
 
                 o.setValue(value||'',true)
-                .setWidth(r.width + (parseInt(node.css('paddingLeft'))||0)+ (parseInt(node.css('paddingRight'))||0))
+                .setWidth(r.width + (parseInt(node.css('paddingLeft'),10)||0)+ (parseInt(node.css('paddingRight'),10)||0))
                 .onCommand(function(p){
                     var pro=p.properties,v=pro.$UIvalue, ov=pro.value;
                     if(v!=ov)
@@ -3476,7 +3476,7 @@ Class("linb.UI.FoldingList", ["linb.UI.List"],{
                 zoom:linb.browser.ie?1:null,
                 'padding-top':'8px'//,
                 //for ie6 1px bug,  HR/TR(position:absolute;right:0;)
-                //'margin-right':linb.browser.ie6?'expression(this.parentNode.offsetWidth?(this.parentNode.offsetWidth-(parseInt(this.parentNode.style.paddingLeft)||0)-(parseInt(this.parentNode.style.paddingRight)||0) )%2+"px":"auto")':null
+                //'margin-right':linb.browser.ie6?'expression(this.parentNode.offsetWidth?(this.parentNode.offsetWidth-(parseInt(this.parentNode.style.paddingLeft,10)||0)-(parseInt(this.parentNode.style.paddingRight,10)||0) )%2+"px":"auto")':null
             },
             ITEM:{
                 border:0,
@@ -4061,8 +4061,8 @@ Class("linb.UI.Range", ["linb.UI","linb.absValue"],{
         _keydown:function(profile, e, src,type){
             var key=linb.Event.getKey(e);
             if(key.key=='left' || key.key=='right'){
-                var s=linb.use(src).get(0).style, left=parseInt(s.left), pro=profile.properties, steps=pro.steps, span=300/steps, v,f=function(key){
-                    return parseInt(profile.getSubNode(key).get(0).style.left);
+                var s=linb.use(src).get(0).style, left=parseInt(s.left,10), pro=profile.properties, steps=pro.steps, span=300/steps, v,f=function(key){
+                    return parseInt(profile.getSubNode(key).get(0).style.left,10);
                 };
                 left += key.key=='left'?-1:1;
                 if(steps){

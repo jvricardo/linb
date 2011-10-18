@@ -24,7 +24,7 @@ Class("linb.UI.Dialog","linb.UI.Widget",{
                         var tt=profile._$rs_args;
                         // resize immidiately here, maybe max here
                         linb.UI.$doResize(profile, (tt&&tt[1])||p.width, (tt&&tt[2])||p.height);
-                        root.show(left?(parseInt(left)||0)+'px':null, top?(parseInt(top)||0)+'px':null);
+                        root.show(left?(parseInt(left,10)||0)+'px':null, top?(parseInt(top,10)||0)+'px':null);
 
                         if(p.iframeAutoLoad||p.ajaxAutoLoad)
                             linb.UI.Div._applyAutoLoad(profile);
@@ -326,7 +326,7 @@ if(linb.browser.ie){
             },
             TABSTOP1:{
                 onFocus:function(profile,e,src){
-                    var tabindex = parseInt(linb.use(src).get(0).tabIndex||1 +"")-1;
+                    var tabindex = parseInt(linb.use(src).get(0).tabIndex||1 +"",10)-1;
                     var children = profile.getRoot().get(0).getElementsByTagName('*'),t,n;
                     for(var i=0,l=children.length,o;o=children[i];i++){
                         if(o.nodeType==1){
@@ -352,7 +352,7 @@ if(linb.browser.ie){
             },
             TABSTOP2:{
                 onFocus:function(profile,e,src){
-                    var tabindex = parseInt(linb.use(src).get(0).tabIndex||1 +"")+1;
+                    var tabindex = parseInt(linb.use(src).get(0).tabIndex||1 +"",10)+1;
                     var children = profile.getRoot().get(0).getElementsByTagName('*'),t,n;
                     for(var i=0,l=children.length,o;o=children[i];i++){
                         if(o.nodeType==1){
@@ -821,7 +821,7 @@ if(linb.browser.ie){
                         });
                     },"dialog:"+profile.serialId);
 
-                    s.css('zIndex',(parseInt(cover.css('zIndex'))||0)+1);
+                    s.css('zIndex',(parseInt(cover.css('zIndex'),10)||0)+1);
 
                     /*
                     //bak dlg tabzindnex
@@ -843,7 +843,7 @@ if(linb.browser.ie){
                             h[j].tabIndex=i;
                     }
                     linb.Event.pushTabOutTrigger(profile.renderId, function(src,tabindex){
-                        tabindex = parseInt(tabindex||1 +"");
+                        tabindex = parseInt(tabindex||1 +"",10);
                         var children = linb.use(src).get(0).getElementsByTagName('*'),t,n;
                         for(var i=0,l=children.length,o;o=children[i];i++){
                             if(o.nodeType==1){
@@ -1221,7 +1221,7 @@ if(linb.browser.ie){
             }
 
             if(width)
-                isize.width=size.width-(parseInt(v6.css('paddingRight'))||0)-(parseInt(v5.css('paddingLeft'))||0);
+                isize.width=size.width-(parseInt(v6.css('paddingRight'),10)||0)-(parseInt(v5.css('paddingLeft'),10)||0);
             v2.cssSize(isize, true);
         }
     }

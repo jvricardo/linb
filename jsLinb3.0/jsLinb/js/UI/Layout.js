@@ -106,7 +106,7 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
                 node=profile.getSubNodeByItemId('ITEM',subId);
                 if(!node.isEmpty()){
                     if(options.hasOwnProperty('size')){
-                        options.size = parseInt(''+options.size);
+                        options.size = parseInt(''+options.size,10);
                         if(options.size!=item.size){
                             item.size=options.size;
                             if(vertical)
@@ -367,9 +367,9 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
                         mh = m.height();
                         if(item.pos=='before'){
                             offset1 = h - item.min;
-                            offset2 = item.max?Math.min(parseInt(item.max)-h, (mh-main.min)):(mh-main.min);
+                            offset2 = item.max?Math.min(parseInt(item.max,10)-h, (mh-main.min)):(mh-main.min);
                         }else{
-                            offset1 = item.max?Math.min(parseInt(item.max)-h, (mh-main.min)):(mh-main.min);
+                            offset1 = item.max?Math.min(parseInt(item.max,10)-h, (mh-main.min)):(mh-main.min);
                             offset2 = h - item.min;
                         }
 
@@ -390,9 +390,9 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
                         mw = m.width();
                         if(item.pos=='before'){
                             offset1 = w - item.min;
-                            offset2 = item.max?Math.min(parseInt(item.max)-w, (mw-main.min)):(mw-main.min);
+                            offset2 = item.max?Math.min(parseInt(item.max,10)-w, (mw-main.min)):(mw-main.min);
                         }else{
-                            offset1 = item.max?Math.min(parseInt(item.max)-w, (mw-main.min)):(mw-main.min);
+                            offset1 = item.max?Math.min(parseInt(item.max,10)-w, (mw-main.min)):(mw-main.min);
                             offset2 = w - item.min;
                         }
 
@@ -646,7 +646,7 @@ Class("linb.UI.Layout",["linb.UI", "linb.absList"],{
             _.arr.each(arr,function(o){
                 o.id = _.isStr(o.id)?o.id:_.id();
                 o.min = o.min || 10;
-                o.size = parseInt(o.size) || 80;
+                o.size = parseInt(o.size,10) || 80;
                 o.locked= typeof o.locked=='boolean'?o.locked:false;
                 o.folded = typeof o.folded=='boolean'?o.folded:false;
                 o.hidden = typeof o.hidden=='boolean'?o.hidden:false;

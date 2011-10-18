@@ -74,7 +74,7 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
             return this.each(function(o){
                 var v=o.properties.value,
                     a=v.split(':');
-                a[1]=parseInt(value)||a[0];
+                a[1]=parseInt(value,10)||a[0];
                 o.boxing().setValue(a.join(':'));
             });
         }
@@ -317,7 +317,7 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
         _ensureValue:function(profile,value){
             var a = value.split(':'),
                 b=[],
-                fun=function(a){return parseInt(a)||1};
+                fun=function(a){return parseInt(a,10)||1};
             b[0]=fun(a[0]);
             b[1]=fun(a[1]);
             b[2]=fun(a[2]);
@@ -330,7 +330,7 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
         },
         _v2a:function(v){
             v = typeof v == 'string'? v.split(':') : v;
-            v[0]=parseInt(v[0]);v[1]=parseInt(v[1]);v[2]=parseInt(v[2]);
+            v[0]=parseInt(v[0],10);v[1]=parseInt(v[1],10);v[2]=parseInt(v[2],10);
             return v;
         },
         _click:function(profile, src){
@@ -338,7 +338,7 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
                 v=b.getValue(),
                 a=v.split(':');
 
-            var r = b.onClick(profile, parseInt(linb(src).first(3).attr('href').split('#')[1])||a[0]);
+            var r = b.onClick(profile, parseInt(linb(src).first(3).attr('href').split('#')[1],10)||a[0]);
             return typeof r=="boolean"?r:false;
         },
         _show:function(profile, e, src, flag){

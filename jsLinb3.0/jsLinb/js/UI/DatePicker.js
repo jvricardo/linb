@@ -531,9 +531,9 @@ Class('linb.UI.DatePicker', ['linb.UI',"linb.absValue"], {
                 },
                 onDrag:function(profile, e, src){
                     var count,off = linb.DragDrop.getProfile().offset;
-                    count=parseInt(profile.$year)+parseInt(off.x/10);
+                    count=parseInt(profile.$year,10)+parseInt(off.x/10,10);
                     if(profile.$temp!=count){
-                        profile.$temp2=parseInt(off.x/10);
+                        profile.$temp2=parseInt(off.x/10,10);
                         profile.getSubNode('YEAR').html(count,false);
                     }
                 },
@@ -547,7 +547,7 @@ Class('linb.UI.DatePicker', ['linb.UI',"linb.absValue"], {
                 },
                 onDrag:function(profile, e, src){
                     var count,off = linb.DragDrop.getProfile().offset;
-                    count=parseInt(profile.$month)+(parseInt(off.x/20)%12);
+                    count=parseInt(profile.$month,10)+(parseInt(off.x/20,10)%12);
                     count=(count%12+12)%12;
                     if(profile.$temp!=count){
                         profile.$temp=count;
@@ -570,7 +570,7 @@ Class('linb.UI.DatePicker', ['linb.UI',"linb.absValue"], {
                     var p=profile.properties,
                         count,
                         off = linb.DragDrop.getProfile().offset;
-                    count=parseInt(profile.$day)+(parseInt(off.x/10)%days);
+                    count=parseInt(profile.$day,10)+(parseInt(off.x/10,10)%days);
                     count=(count%days+days)%days + 1;
                     if(profile.$temp!=count){
                         profile.$temp=count;
@@ -681,7 +681,7 @@ Class('linb.UI.DatePicker', ['linb.UI',"linb.absValue"], {
                 if(_.isDate(value))
                     d=value;
                 else if(_.isFinite(value))
-                    d=new Date(parseInt(value));
+                    d=new Date(parseInt(value,10));
             }
             d = d||new Date;
             if(!profile.properties.timeInput)
@@ -725,7 +725,7 @@ Class('linb.UI.DatePicker', ['linb.UI',"linb.absValue"], {
                 // The special one
                 if(id=='7')return id;
                 
-                id=(parseInt(id)+fw);
+                id=(parseInt(id,10)+fw);
                 return id<7?id:(id-7);
             };
 
@@ -744,12 +744,12 @@ Class('linb.UI.DatePicker', ['linb.UI',"linb.absValue"], {
                 fdmap={};
             if(p.offDays){
                 _.arr.each(p.offDays.split(""),function(i){
-                    i=parseInt(i);
+                    i=parseInt(i,10);
                     if(i>=0 && i<=6)
                         fdmap[i]=1;
                 });
                 profile.box._getTDNodes(profile).each(function(node,i){
-                    i = ((i+fw) - 7*parseInt((i+fw)/7)) ;
+                    i = ((i+fw) - 7*parseInt((i+fw)/7,10)) ;
                     if(fdmap[i])
                         node.className=node.className + " " +cls2;
                 });
@@ -848,7 +848,7 @@ Class('linb.UI.DatePicker', ['linb.UI',"linb.absValue"], {
             var p=profile.properties,
                 count,
                 off = linb.DragDrop.getProfile().offset;
-            count=parseInt(data)+(parseInt(off.x/increment)%max);
+            count=parseInt(data,10)+(parseInt(off.x/increment,10)%max);
             count=(count%max+max)%max;
             if(profile.$temp!=count){
                 profile.$temp=count;

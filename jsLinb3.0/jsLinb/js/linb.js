@@ -1554,7 +1554,7 @@ Class('linb.absIO',null,{
             return obj;
         },
         _if:function(doc,id,onLoad){
-            var e=linb.browser.ie && parseInt(linb.browser.ver)<9,n = doc.createElement(e?"<iframe name='"+id+"' "+(onLoad?"onload='linb.IAjax._o(\""+id+"\")'":"")+">":"iframe"),w;
+            var e=linb.browser.ie && parseInt(linb.browser.ver,10)<9,n = doc.createElement(e?"<iframe name='"+id+"' "+(onLoad?"onload='linb.IAjax._o(\""+id+"\")'":"")+">":"iframe"),w;
             if(id)n.id=n.name=id;
             if(!e&&onLoad)n.onload=onLoad;
             n.style.display = "none";

@@ -509,7 +509,7 @@ Class('linb.Dom','linb.absBox',{
         loadIframe:function(options){
             if(typeof options=='string')options={url:options};
             var id="aiframe_"+_(),
-                e=linb.browser.ie && parseInt(linb.browser.ver)<9,
+                e=linb.browser.ie && parseInt(linb.browser.ver,10)<9,
                 ifr=document.createElement(e?"<iframe name='"+id+"'>":"iframe");
             ifr.id=ifr.name=id;
             ifr.src=options.url;
@@ -803,7 +803,7 @@ Class('linb.Dom','linb.absBox',{
                 r=this;
             }else{
                 f=dom.getStyle;
-                r={left :parseInt(f(node, 'left'))||0,  top :parseInt(f(node, 'top'))||0};
+                r={left :parseInt(f(node, 'left'),10)||0,  top :parseInt(f(node, 'top'),10)||0};
             }
             node=null;
             return r;
@@ -1132,7 +1132,7 @@ Class('linb.Dom','linb.absBox',{
                 node.focus &&
                 //IE bug: It can't be focused with 'default tabIndex 0'; but if you set it to 0, it can be focused.
                 //So, for cross browser, don't set tabIndex to 0
-                (((t=map[node.tagName.toLowerCase()]) && !(parseInt(node.tabIndex)<=-1)) || (!t && parseInt(node.tabIndex)>=(linb.browser.ie?1:0))) &&
+                (((t=map[node.tagName.toLowerCase()]) && !(parseInt(node.tabIndex,10)<=-1)) || (!t && parseInt(node.tabIndex,10)>=(linb.browser.ie?1:0))) &&
                 getStyle(node,'display')!='none' &&
                 getStyle(node,'visibility')!='hidden' &&
                 node.offsetWidth>0 &&
@@ -1178,7 +1178,7 @@ Class('linb.Dom','linb.absBox',{
             t=p.childNodes;
             for(k=0;o=t[k];k++){
                 if(o==node || o.nodeType !=1 || !o.$linbid || o.style.display=='none' || o.style.visibility=='hidden' ||  linb.getNodeData(o,'zIndexIgnore') )continue;
-                j = parseInt(o.style && o.style.zIndex) || 0 ;
+                j = parseInt(o.style && o.style.zIndex,10) || 0 ;
                 i=i>j?i:j;
             }
             i++;
@@ -1188,7 +1188,7 @@ Class('linb.Dom','linb.absBox',{
             if(flag)
                  node.style.zIndex = i;
             else{
-                j = parseInt(node.style.zIndex) || 0;
+                j = parseInt(node.style.zIndex,10) || 0;
                 return i>j?i:j;
             }
             return this;
@@ -1707,7 +1707,7 @@ type:4
             if(node.nodeType != 1)return false;
             var style=node.style;
             if(value || value===0){
-                value = ((''+parseFloat(value))==(''+value)) ? (parseInt(value)||0) + "px" : value +'';
+                value = ((''+parseFloat(value))==(''+value)) ? (parseInt(value,10)||0) + "px" : value +'';
                 if((key=='width'||key=='height') && value.charAt(0)=='-')value='0';
                 if(style[key]!=value){
                     style[key]=value;
@@ -1896,7 +1896,7 @@ type:4
             var node,fun=linb.Dom.getStyle;
             self.plugIn(o[0],function(){
                 node = this.get(0);
-                return (parseInt(fun(node, o[1])) + parseInt(fun(node, o[2]))) || 0;
+                return (parseInt(fun(node, o[1]),10) + parseInt(fun(node, o[2]),10)) || 0;
             })
         });
         /*
@@ -1960,9 +1960,9 @@ type:4
                     switch(index){
                         case 1:
                             r=getStyle(node,o[1]);
-                            if(isNaN(parseInt(r)) || r1.test(r))
+                            if(isNaN(parseInt(r,10)) || r1.test(r))
                                 r = me(node,2) - (contentBox?t[o[2]]():0);
-                            r=parseInt(r)||0;
+                            r=parseInt(r,10)||0;
                             break;
                         case 2:
                             r=node[o[6]]-t[o[3]]();
@@ -1993,7 +1993,7 @@ type:4
                         t.swap(temp);
                         temp.empty(false);
                     }
-                    return parseInt(r)||0;
+                    return parseInt(r,10)||0;
                 }else{
                     switch(index){
                         case 1:
@@ -2037,7 +2037,7 @@ type:4
                 var m,args,k=o[1],fun=linb.Dom.getStyle;
                 return this.each(function(node){
                     m=fun(node,k);
-                    m=(parseInt(m)||0)+offset;
+                    m=(parseInt(m,10)||0)+offset;
                     if(k=='width'||k=='height')m=m>0?m:0;
                     node.style[k]=m+'px';
                     if(triggerEvent){
@@ -2079,11 +2079,11 @@ type:4
                         if(window===node)return b.opr?Math.max(doc.body['client'+t],window['inner'+t]):b.kde?window['inner'+t]:(linb.browser.contentBox && doc.documentElement['client'+t]) ||doc.body['client'+t];
                     }
                     //give shortcut
-                    if(o=='width')value=parseInt(node.style.width)||self._W(node,1,value);
-                    else if(o=='height')value=parseInt(node.style.height)||self._H(node,1,value);
+                    if(o=='width')value=parseInt(node.style.width,10)||self._W(node,1,value);
+                    else if(o=='height')value=parseInt(node.style.height,10)||self._H(node,1,value);
                     else
                         value = linb.Dom.getStyle(node, o);
-                    return value=='auto'?value:(parseInt(value)||0);
+                    return value=='auto'?value:(parseInt(value,10)||0);
                 }else{
                     var f=linb.Dom._setPxStyle,t,a;
                     return self.each(function(v){

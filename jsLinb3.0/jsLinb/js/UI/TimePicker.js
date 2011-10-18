@@ -389,7 +389,7 @@ Class('linb.UI.TimePicker', ['linb.UI',"linb.absValue"], {
                 },
                 onDrag:function(profile, e, src){
                     var count,off = linb.DragDrop.getProfile().offset,v=profile.properties.$UIvalue,a=v.split(':');
-                    a[0]=(parseFloat(a[0])||0)+parseInt(off.x/10);
+                    a[0]=(parseFloat(a[0])||0)+parseInt(off.x/10,10);
                     a[0]=(a[0]%24+24)%24;
                     profile.$temp2=(a[0]<=9?'0':'')+a[0];
 
@@ -418,7 +418,7 @@ Class('linb.UI.TimePicker', ['linb.UI',"linb.absValue"], {
                 },
                 onDrag:function(profile, e, src){
                     var count,off = linb.DragDrop.getProfile().offset,v=profile.properties.$UIvalue,a=v.split(':');
-                    a[0]=(parseFloat(a[0])||0)+parseInt(off.x/20);
+                    a[0]=(parseFloat(a[0])||0)+parseInt(off.x/20,10);
                     a[0]=(a[0]%60+60)%60;
                     profile.$temp2=(a[0]<=9?'0':'')+a[0];
 

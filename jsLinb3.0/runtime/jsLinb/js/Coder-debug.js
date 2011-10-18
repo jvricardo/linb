@@ -199,7 +199,7 @@ Class("linb.Coder", null,{
                     if (reg3.test(n)) {
                         //if only one para and valid
                         if (reg4.test(n)) {
-                            _t = parseInt(n.slice(1));
+                            _t = parseInt(n.slice(1),10);
                             if(_t<=len)n=_t;
                         }else{
                             flag = reg5.test(n.replace(reg6, "")) ? '"' : "'";

@@ -413,7 +413,7 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                 }
             }
             if(width)
-                isize.width=width-(parseInt(v6.css('paddingRight'))||0)-(parseInt(v5.css('paddingLeft'))||0)-v2._borderW();
+                isize.width=width-(parseInt(v6.css('paddingRight'),10)||0)-(parseInt(v5.css('paddingLeft'),10)||0)-v2._borderW();
             v2.cssSize(isize, true);
         },
 
