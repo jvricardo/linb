@@ -29,6 +29,7 @@ Class("linb.UI.RadioBox", "linb.UI.List",{
     },
     Static:{
         _DIRTYKEY:'MARK',
+        _ITEMMARKED:true,
         Appearances:{
             ITEM:{
                display:linb.$inlineBlock,
