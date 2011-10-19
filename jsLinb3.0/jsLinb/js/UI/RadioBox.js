@@ -2,7 +2,7 @@ Class("linb.UI.RadioBox", "linb.UI.List",{
     Initialize:function(){
         //modify default template for shell
         var t = this.getTemplate();
-        t.className=t.ITEMS.className='';
+        t.className='{_className}';
         t.$submap={
             items:{
                 ITEM:{
@@ -64,6 +64,9 @@ Class("linb.UI.RadioBox", "linb.UI.List",{
             }
         },
         DataModel:{
+            borderType:{
+                ini:'none'
+            },
             checkBox:{
                 ini:false,
                 action:function(v){

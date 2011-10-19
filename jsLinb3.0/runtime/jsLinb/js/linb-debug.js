@@ -26528,7 +26528,7 @@ Class("linb.UI.ButtonViews", "linb.UI.Tabs",{
     Initialize:function(){
         //modify default template for shell
         var t = this.getTemplate();
-        t.className=t.ITEMS.className='';
+        t.className='{_className}';
         t.$submap={
             items:{
                 ITEM:{
@@ -26590,6 +26590,9 @@ Class("linb.UI.ButtonViews", "linb.UI.Tabs",{
             }
         },
         DataModel:{
+            borderType:{
+                ini:'none'
+            },
             checkBox:{
                 ini:false,
                 action:function(v){
