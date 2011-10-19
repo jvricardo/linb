@@ -362,7 +362,7 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                     var ns=this,
                         p=ns.properties,
                         node=ns.getSubNode('PANEL'),
-                        reg=/^uiborder-/,
+                        reg=/^linb-uiborder-/,
                         pretag='linb-uiborder-',
                         root=ns.getRoot();
                     node.removeClass(reg);

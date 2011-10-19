@@ -2854,7 +2854,7 @@ Class('linb.UI.TimeLine', ['linb.UI','linb.absList',"linb.absValue"], {
                     var ns=this,
                         p=ns.properties,
                         node=ns.getSubNode('BORDER'),
-                        reg=/^uiborder-/,
+                        reg=/^linb-uiborder-/,
                         pretag='linb-uiborder-',
                         root=ns.getRoot();
                     node.removeClass(reg);

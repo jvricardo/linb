@@ -57,7 +57,7 @@ Class("linb.UI.Block", "linb.UI.Widget",{
                     var ns=this,
                         p=ns.properties,
                         n1=ns.getSubNode('BORDER'), n2=ns.getSubNode('PANEL'),
-                        reg=/^uiborder-/,
+                        reg=/^linb-uiborder-/,
                         flat='linb-uiborder-flat',
                         ins='linb-uiborder-inset',
                         outs='linb-uiborder-outset',

@@ -17823,7 +17823,7 @@ Class("linb.UI.Resizer","linb.UI",{
                     var ns=this,
                         p=ns.properties,
                         n1=ns.getSubNode('BORDER'), n2=ns.getSubNode('PANEL'),
-                        reg=/^uiborder-/,
+                        reg=/^linb-uiborder-/,
                         flat='linb-uiborder-flat',
                         ins='linb-uiborder-inset',
                         outs='linb-uiborder-outset',
@@ -25292,7 +25292,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                     var ns=this,
                         p=ns.properties,
                         node=ns.getSubNode('ITEMS'),
-                        reg=/^uiborder-/,
+                        reg=/^linb-uiborder-/,
                         pretag='linb-uiborder-',
                         root=ns.getRoot();
                     node.removeClass(reg);
@@ -26067,7 +26067,7 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                     var ns=this,
                         p=ns.properties,
                         node=ns.getSubNode('PANEL'),
-                        reg=/^uiborder-/,
+                        reg=/^linb-uiborder-/,
                         pretag='linb-uiborder-',
                         root=ns.getRoot();
                     node.removeClass(reg);

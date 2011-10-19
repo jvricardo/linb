@@ -337,7 +337,7 @@ Class("linb.UI.List", ["linb.UI", "linb.absList","linb.absValue" ],{
                     var ns=this,
                         p=ns.properties,
                         node=ns.getSubNode('ITEMS'),
-                        reg=/^uiborder-/,
+                        reg=/^linb-uiborder-/,
                         pretag='linb-uiborder-',
                         root=ns.getRoot();
                     node.removeClass(reg);

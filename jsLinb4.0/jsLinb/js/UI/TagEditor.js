@@ -88,7 +88,7 @@ Class("linb.UI.TagEditor", ['linb.UI',"linb.absValue"], {
                     var ns=this,
                         p=ns.properties,
                         node=ns.getSubNode('BORDER'),
-                        reg=/^uiborder-/,
+                        reg=/^linb-uiborder-/,
                         pretag='linb-uiborder-',
                         root=ns.getRoot();
                     node.removeClass(reg);
