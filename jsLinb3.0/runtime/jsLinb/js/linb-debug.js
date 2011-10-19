@@ -23865,7 +23865,8 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 ini:'single',
                 listbox:['single','none','multi','multibycheckbox'],
                 action:function(value){
-                    this.getSubNode('MARK',true).css('display',(value=='multi'||value=='multibycheckbox')?'':'none');
+                    if(!this.box._ITEMMARKED)
+                        this.getSubNode('MARK',true).css('display',(value=='multi'||value=='multibycheckbox')?'':'none');
                 }  
             },
             borderType:{
@@ -26554,6 +26555,7 @@ Class("linb.UI.ButtonViews", "linb.UI.Tabs",{
     },
     Static:{
         _DIRTYKEY:'MARK',
+        _ITEMMARKED:true,
         Appearances:{
             ITEM:{
                display:linb.$inlineBlock,

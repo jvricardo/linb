@@ -323,7 +323,8 @@ Class("linb.UI.List", ["linb.UI", "linb.absList","linb.absValue" ],{
                 ini:'single',
                 listbox:['single','none','multi','multibycheckbox'],
                 action:function(value){
-                    this.getSubNode('MARK',true).css('display',(value=='multi'||value=='multibycheckbox')?'':'none');
+                    if(!this.box._ITEMMARKED)
+                        this.getSubNode('MARK',true).css('display',(value=='multi'||value=='multibycheckbox')?'':'none');
                 }  
             },
             borderType:{
