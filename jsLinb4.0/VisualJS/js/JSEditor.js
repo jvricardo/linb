@@ -578,7 +578,7 @@ Class('VisualJS.JSEditor', 'linb.Com',{
                             });
                         }
                     }else{
-                        ns.addCodeToInstance(key, code);
+                        ns.addCodeToEditor(pkey, key, code);
                         ns.$transTaskListCached[pkey+":"+key]=code;
                     }
                     
@@ -594,7 +594,7 @@ Class('VisualJS.JSEditor', 'linb.Com',{
                     if(ns.$transTaskListCached[pkey+":"+key]===code)
                         return;
 
-                    ns.addCodeToInstance(key, code);
+                    ns.addCodeToEditor("Instance", key, code);
                     ns.$transTaskListCached[pkey+":"+key]=code;
 
                 };
@@ -618,7 +618,11 @@ Class('VisualJS.JSEditor', 'linb.Com',{
             designer.refreshFromCode=function(){
                 var obj=ns.check(ns._ovalue = ns.codeeditor.getUIValue());
                 if(obj.ok){
-                    this.refreshView(obj.ok);
+                    
+
+                    ns.$transTaskListCached["Static:viewSize"]=this.refreshViewSize(obj.ok);
+                    ns.$transTaskListCached["Instance:iniComponents"]=this.refreshView(obj.ok);
+                    
                     linb.message(linb.getRes('VisualJS.designer.refreshOK'));
                 }
             };
@@ -767,6 +771,8 @@ Class('VisualJS.JSEditor', 'linb.Com',{
                 var obj=ns.check();
                 if(obj.ok){
                     var needRef=false;
+                    var needRefSize=false;
+                    
                     if(!ns._uicode)
                         needRef=true;
                     else{
@@ -785,9 +791,28 @@ Class('VisualJS.JSEditor', 'linb.Com',{
                             }
                         }
                     }
+                    if(!ns._uiviewsize)
+                        needRefSize=true;
+                    else{
+                        var w=parseInt(_.get(obj.ok,['Static','viewSize','width']),10),
+                            h=parseInt(_.get(obj.ok,['Static','viewSize','height']),10);
+                        if(!w||!h){
+                            needRefSize=true;
+                        }else{
+                            if(w!=ns._uiviewsize.w || h!=ns._uiviewsize.h){
+                                // reset _uiviewsize
+                                ns._uiviewsize={w:w,h:h};
+                                needRefSize=true;
+                            }
+                        }
+                    }
+
+                    if(needRefSize)
+                        ns.$transTaskListCached["Static:viewSize"]=ns._designer.refreshViewSize(obj.ok);
 
                     if(needRef)
-                        ns._designer.refreshView(obj.ok);
+                        ns.$transTaskListCached["Instance:iniComponents"]=ns._designer.refreshView(obj.ok);
+
                     ns.paneCode
                         .setDockIgnore(true)
                         .setLeft(-10000)
@@ -918,7 +943,7 @@ Class('VisualJS.JSEditor', 'linb.Com',{
             ns._renderStatus=false;
             ns.codeeditor.replaceCode(code, reset);
         },
-        ensureInstanceExpand:function(){
+        ensureBlockExpand:function(pkey){
             var ns=this;
             var pid="b:1",
                 index=0,
@@ -928,17 +953,18 @@ Class('VisualJS.JSEditor', 'linb.Com',{
                 key=ns.codeeditor.findFunctionInfo(id);
                 if(!key[0])
                     break;
-                if(key[0]=="Instance"){
+                if(key[0]==pkey){
                     ns.codeeditor.expandBraces(id);
                     return;
                 }
             }
         },
-        addCodeToInstance:function(key, code){
-            this.ensureInstanceExpand();
-//console.log("addCodeToInstance", key, code);
+        addCodeToEditor:function(pkey, key, code){
+            this.ensureBlockExpand(pkey);
+//console.log("addCodeToEditor", key, code);
             var ns=this;
             var pid="b:1",
+                pid2="e:1",
                 index=0,
                 id,keys,
                 instanceId;
@@ -947,22 +973,25 @@ Class('VisualJS.JSEditor', 'linb.Com',{
                 keys=ns.codeeditor.findFunctionInfo(id);
                 if(!keys[0])
                     break;
-                if(keys[0]=="Instance"){
+                if(keys[0]==pkey){
                     instanceId=id;
                     break;
                 }
             }
-            if(instanceId){
+
+            ns._renderStatus=false;
+            if(!instanceId){
+                ns.codeeditor.addCodeInto(pid2, ",\n"+pkey+" : {"+"\n    "+key+" : "+code+"\n}");
+            }else{
                 instanceId='e'+instanceId.slice(1);
-                ns._renderStatus=false;
                 ns.codeeditor.addCodeInto(instanceId, ",\n"+key+" : "+code);
-                _.asyRun(function(){
-                    ns.codeeditor.activate();
-                });
             }
+            _.asyRun(function(){
+                ns.codeeditor.activate();
+            });
         },
         tryToLocale:function(arr, crack){
-            this.ensureInstanceExpand();
+            this.ensureBlockExpand(arr[0]);
 //console.log("tryToLocale", arr, crack);
             var ns=this;
             var index=0,id,key;

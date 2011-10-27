@@ -36,10 +36,6 @@ Class('VisualJS.Designer', 'linb.Com',{
                 page.resizer.setTag(ids[0]);
             },
             onReady:function(page){
-                page.setViewSize(page.$viewSize['800']);
-
-                page.$curViewSize='800';
-
                 var tbpath = linb.ini.appPath+'img/designer/toolbar.gif',
                     tbk='$VisualJS.designer.tool.',
                     showRefresh = CONF.designer_editMode != "simple";
@@ -340,7 +336,7 @@ Class('VisualJS.Designer', 'linb.Com',{
             }
         },
         isDirty:function(){
-            return !!this._dirty;
+            return !!this._dirty || !!this._demenstiondirty;
         },
         $tryToRefreshSel:function(profile){
             var page=this,t;
@@ -365,8 +361,12 @@ Class('VisualJS.Designer', 'linb.Com',{
                 var code = ('{\n' + page.getJSCode(nodes) ).replace(/\n/g, '\n'+_.str.repeat(' ',12))
                     + '\n'+_.str.repeat(' ',8)+ '}';
                 page.resetCode("Instance", "iniComponents", code, !!sync);
-
+                
                 page._dirty=false;
+            }
+            if(page._demenstiondirty){
+                page.resetCode("Static", "viewSize", _.stringify(page.$curViewSize), !!sync);
+                page._demenstiondirty=false;
             }
         },
         _inplaceedit:function(prf, nodeKey, multi, conf, node, left, top, w, h){
@@ -1474,8 +1474,8 @@ Class('VisualJS.Designer', 'linb.Com',{
                     });
                 });
                 var rows=[
-                    {id:'properties:width', caption:'width',tips:'Canvas width', cells:[{value: pro.properties.width}] },
-                    {id:'properties:height',caption:'height', tips:'Canvas height', cells:[{value: pro.properties.height}] }
+                    {id:'properties:width', caption:'width',tips:'Canvas width', cells:[{type:'number',value: pro.properties.width}] },
+                    {id:'properties:height',caption:'height', tips:'Canvas height', cells:[{type:'number',value: pro.properties.height}] }
                 ];
                 if(CONF.designer_editMode != "simple"){
                     rows.push({id:'UIE', group:true, caption:'events', sub:arr});
@@ -2658,17 +2658,30 @@ Class('VisualJS.Designer', 'linb.Com',{
             self._dirty=false;
             self._clearSelect();
             self._setSelected([], true);
-            return self;
+            return fun;
         },
+        refreshViewSize:function(obj){
+            var self=this;
+            var viewSize=_.get(obj,['Static','viewSize']) || self.$viewSize['800'];
+            self.setViewSize(viewSize);
+            self._demenstiondirty=false;
+            return _.stringify(viewSize);
+        },
+        
         _popvs_onmenusel:function(p,item){
             var page=this;
             page.setViewSize(page.$viewSize[item.id]);
         },
-        setViewSize:function(size){
+        setViewSize:function(size){           
             var page=this,
                 w=page.canvas.getWidth(),
                 h=page.canvas.getHeight(),
                 b;
+            size.width=parseInt(size.width,10);
+            size.height=parseInt(size.height,10);
+            if(!_.isNumb(size.width) || size.width<=0 || !_.isNumb(size.height) || size.height<=0)
+                size=page.$viewSize['800'];
+
             if(size.width && String(size.width)!=String(w)){
                 page.canvas.setWidth(size.width);
                 page.panelBG.setWidth(size.width);
@@ -2685,6 +2698,9 @@ Class('VisualJS.Designer', 'linb.Com',{
 
                 //update toolbar caption
                 page.toolbar.updateItem('viewsize', {caption:w + " &#215 " + h});
+                page.$curViewSize={width:w,height:h};
+                page._demenstiondirty=true;
+
                 //update properties treegrid value
                 var t=page.profileGrid;
                 if(t&&(t=t.get(0).$widget)&&(t.get(0) == page.canvas.get(0))){
