@@ -124,7 +124,7 @@ var CodeMirror = (function(){
 
     var div = this.wrapping = document.createElement("DIV");
     div.style.position = "relative";
-    div.className = "CodeMirror-wrapping";
+    div.className = "CodeMirror-wrapping linb-wrapper";
     div.style.width = options.width;
     div.style.height = (options.height == "dynamic") ? options.minHeight + "px" : options.height;
     // This is used by Editor.reroutePasteEvent
