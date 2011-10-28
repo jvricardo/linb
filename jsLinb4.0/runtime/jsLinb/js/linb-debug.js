@@ -15726,7 +15726,7 @@ Class("linb.absValue", "linb.absObj",{
                 }
                 if(!p.$UIvalue)
                     p.$UIvalue=p.value;
-                b._setCtrlValue(p.$UIvalue);
+                b._setCtrlValue(p.$UIvalue,true);
             }            
         }
     }
@@ -24350,11 +24350,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
             return this.each(function(profile){
                 if(!profile.renderId)return;
 
-                var instance = profile.boxing(),
-                    cls = profile.box,
-                    p = profile.properties,
-                    uiv = p.$UIvalue,
-                    arr1=cls._v2a(uiv),
+                var cls = profile.box,
                     arr2=cls._v2a(value);
                 profile.$hour=arr2[0];
                 profile.$minute=arr2[1];

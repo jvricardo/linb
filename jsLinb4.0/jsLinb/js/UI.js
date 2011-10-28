@@ -4445,7 +4445,7 @@ Class("linb.absValue", "linb.absObj",{
                 }
                 if(!p.$UIvalue)
                     p.$UIvalue=p.value;
-                b._setCtrlValue(p.$UIvalue);
+                b._setCtrlValue(p.$UIvalue,true);
             }            
         }
     }

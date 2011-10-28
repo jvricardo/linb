@@ -9,11 +9,7 @@ Class('linb.UI.TimePicker', ['linb.UI',"linb.absValue"], {
             return this.each(function(profile){
                 if(!profile.renderId)return;
 
-                var instance = profile.boxing(),
-                    cls = profile.box,
-                    p = profile.properties,
-                    uiv = p.$UIvalue,
-                    arr1=cls._v2a(uiv),
+                var cls = profile.box,
                     arr2=cls._v2a(value);
                 profile.$hour=arr2[0];
                 profile.$minute=arr2[1];

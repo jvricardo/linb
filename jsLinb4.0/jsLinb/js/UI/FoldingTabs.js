@@ -1,10 +1,10 @@
 Class("linb.UI.FoldingTabs", "linb.UI.Tabs",{
     Instance:{
-        _setCtrlValue:function(value){
+        _setCtrlValue:function(value,init){
             this.each(function(profile){
                 var id=profile.domId,
                     box = profile.boxing(),
-                    uiv = box.getUIValue(),
+                    uiv = init?'':box.getUIValue(),
                     prop = profile.properties,
 
                     fold=function(itemId, arr){
