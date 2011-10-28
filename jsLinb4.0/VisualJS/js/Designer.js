@@ -2677,10 +2677,17 @@ Class('VisualJS.Designer', 'linb.Com',{
                 w=page.canvas.getWidth(),
                 h=page.canvas.getHeight(),
                 b;
-            size.width=parseInt(size.width,10);
-            size.height=parseInt(size.height,10);
-            if(!_.isNumb(size.width) || size.width<=0 || !_.isNumb(size.height) || size.height<=0)
-                size=page.$viewSize['800'];
+            if('width' in size){
+                size.width=parseInt(size.width,10);
+                if(!_.isNumb(size.width) || size.width<=0)
+                    size.width=page.$viewSize['800'].width;
+            }
+            if('height' in size){
+                size.height=parseInt(size.height,10);
+                if(!_.isNumb(size.height) || size.height<=0)
+                    size.height=page.$viewSize['800'].height;
+            }
+
 
             if(size.width && String(size.width)!=String(w)){
                 page.canvas.setWidth(size.width);
