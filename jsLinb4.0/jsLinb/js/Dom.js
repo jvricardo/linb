@@ -540,7 +540,7 @@ Class('linb.Dom','linb.absBox',{
             }else{
                 var r,o=self.get(0);
                 if(iestyle) return o.style.cssText;
-                if(name=="selected"&&linb.browser.kde) o.parentNode.selectedIndex;
+                if(name=="selected"&&linb.browser.kde) return o.parentNode.selectedIndex;
                 r=((name in o) && normal)?o[name]:o.getAttribute(name, linb.browser.ie && !normal ? 2 : undefined );
                 o=null;
                 return r;
