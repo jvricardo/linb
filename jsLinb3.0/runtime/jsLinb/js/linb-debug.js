@@ -18170,7 +18170,8 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
 
                overflow:'auto',
                'overflow-y':'auto',
-               'overflow-x':'hidden'
+               'overflow-x':'hidden',
+               resize:'none'
             },
             ERROR:{
                 width:'9px',
