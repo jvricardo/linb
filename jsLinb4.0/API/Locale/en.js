@@ -751,6 +751,15 @@ _.set(linb.Locale,["en","app"], {
                     "alert(typeof _.unserialize(_.serialize(linb.UIProfile.getFromDom('btnLang'))))",
                     "alert(typeof _.unserialize(_.serialize(linb.UIProfile.getFromDom('btnLang').boxing())))"
                 ]
+            },
+            preLoadImage:{
+                $desc:"preLoad Image(s).",
+                $rtn:"Integer",
+                $paras:[
+                    "src [Required]: String, image's url address, or an Array of url address.",
+                    "onSuccess [Optional]: Function, function(img), callback function for image loaded successfully. ",
+                    "onFail [Optional]: Function, function(img), callback function for image loaded ."
+                ]
             }
          }
     });
@@ -5955,6 +5964,7 @@ _.set(linb.Locale,["en","app"], {
                 $desc:"Gets the sub DOM element) according to a specified item id.",
                 $rtn:"linb.Dom",
                 $paras:[
+                    "key [Required] : String, key string.",
                     "itemId [Required] :String, item id."
                 ],
                 $snippet:[

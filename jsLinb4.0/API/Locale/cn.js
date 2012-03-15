@@ -748,6 +748,15 @@ _.set(linb.Locale,["cn","app"], {
                     "alert(typeof _.unserialize(_.serialize(linb.UIProfile.getFromDom('btnLang'))))",
                     "alert(typeof _.unserialize(_.serialize(linb.UIProfile.getFromDom('btnLang').boxing())))"
                 ]
+            },
+            preLoadImage:{
+                $desc:"预加载图片.",
+                $rtn:"Integer",
+                $paras:[
+                    "src [必需参数]: String, 图片地址，可以是图片地址的Array.",
+                    "onSuccess [可选参数]: Function, function(img), 图片加载成功时触发的回调函数. ",
+                    "onFail [可选参数]: Function, function(img), 图片加载失败时触发的回调函数."
+                ]
             }
          }
     });
@@ -5977,6 +5986,7 @@ _.set(linb.Locale,["cn","app"], {
                 $desc:"获取子项对应的DOM元素.",
                 $rtn:"linb.Dom",
                 $paras:[
+                    "key [必需参数] : String, key 字符串.",
                     "itemId [必需参数] :String, 项id."
                 ],
                 $snippet:[
