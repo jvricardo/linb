@@ -117,3 +117,9 @@ a:hover, a:hover *{
     padding:2px 4px;
     display:block;
 }
+
+.price{
+    color: #22529F;
+    font-size: 18px;
+    font-weight: bold;
+}

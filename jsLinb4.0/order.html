@@ -1,0 +1,386 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="keywords" content="javascript_UI_Builder, javascript, UI Builder, RIA, SPA, client SOA, linb, jsLinb, IDE, UI, GUI, javascript OOP, opensource, open-source, Ajax, cross-browser, WYSIWYG editor" />
+    <meta name="description" content="LINB - JavaScript framework, WYSIWYG GUI builder, Editor with javascript-based code intellisense, code folding, syntax check and undo/redo." />
+    <meta name="copyright" content="copyright@www.linb.net" />
+    <meta http-equiv="imagetoolbar" content="no" />
+    <meta content="IE=EmulateIE7" http-equiv="X-UA-Compatible">
+    <link rel="stylesheet" href="css/default.css" />
+    <title>jsLINB_AJAX_Builder</title>
+</head>
+<body>
+    <div id="layout">
+        <div id="head">
+            <div>
+                <img style="float:right;" border=0 src=img/logo.gif />
+                <span id='flag'><img style="vertical-align:middle;" border=0 src=img/supported.png /> Web application (Ajax RIA) solution with UI Builder</span>
+            </div>
+        </div>
+        <div id="body">
+            <div class='block'>
+<div><div class=b1></div><div class=b2></div><div class=b3></div></div><div class=bi>
+                    <strong> jsLinb is a Cross-Browser javascript framework with WYSIWYG GUI builder and javascript-based source code Editor</strong>
+</div><div><div class=b3></div><div class=b2></div><div class=b1></div></div>
+            </div>
+            <div class='content'>
+<div><div class=b1></div><div class=b2></div><div class=b3></div></div><div class=bi>
+
+                                                    <p>
+                                                        <img src="img/paypal_logo.gif" height="43" width="285">&nbsp;</p>
+                                                    <p style="font-weight:bold">
+
+                                                        1. Single Developer License - <a href="license_v.html">[Full Text]</a></p>
+
+                                                    <table width="100%" border="0" cellpadding="0">
+
+                                                        <tbody><tr>
+
+                                                            <td height="98">
+
+                                                                <table width="100%" border="0" cellpadding="0">
+
+                                                                    <tbody><tr>
+
+                                                                        <td style="width: 13%" height="121">
+
+                                                                            <img src="img/box_visual.png" height="120" width="90"></td>
+
+                                                                        <td width="87%">
+
+                                                                            <ul>
+
+                                                                            <li>jsLinb library + UI builder</li>
+                                                                            <li>Applications source code(<a target="_blank" href="http://jsoneditor.appspot.com/">JSON Editor</a>, <a target="_blank" href="http://www.linb.net/Examples/app/PicEditor/">Photo Editor</a> and <a target="_blank" href="http://www.linb.net/FormBuilder/">Form Builder</a>)</li>
+
+                                                                                <li>One developer to use. One web application distribution on one web site. </li>
+
+                                                                                <li>Tech support on the product within 3 months</li>
+
+                                                                                <li>Elimination of any found bugs during within 3 months </li>
+
+                                                                                <li>Free upgrade for 3 months</li>
+
+                                                                            </ul>
+
+                                                                        </td>
+
+                                                                    </tr>
+
+                                                                </tbody></table>
+                                                            </td>
+
+                                                        </tr>
+
+                                                        <tr>
+
+                                                            <td align="right">
+
+                                                                <span class="price"><strong>Price</strong>: USD 399.00</span></td>
+
+                                                        </tr>
+
+                                                        <tr>
+
+                                                            <td align="right">
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input name="cmd" value="_s-xclick" type="hidden">
+<input name="encrypted" value="-----BEGIN PKCS7-----MIIHbwYJKoZIhvcNAQcEoIIHYDCCB1wCAQExggEwMIIBLAIBADCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwDQYJKoZIhvcNAQEBBQAEgYBMIxfviVhUhE+nCEiT5Oj8r1ocUScK8/mUGIqlqmoiqOcHRX1Gaq4mmIgZFEuhcxx/0kj6W38fqF9xXhfRgOrrMn/zWYhHcwcFT5+rsFWX2AtWpgVyZ8FdICgsAol1IahdDXrUgETRq7kbyN4KHgxqAW+CA93PZ22cMuMi7rUmbjELMAkGBSsOAwIaBQAwgewGCSqGSIb3DQEHATAUBggqhkiG9w0DBwQINVaPsAWqhauAgcjjQYafUotI1MtqvYfI7DAOKEYXVKkeVa1a992NF4xW65FjfPxHbDm3Rd/zf0fg/JBRbKQqklioI0TDggkYzfucWu678I59CGTt1AOKi6jvVx2iBJ6aKp2UrUn/UNjcmmybbqPhp66MF4MxomRSZ6f1reC6WcpHM2dw36ohW2AXmTrmd/0cI4VMCFzwx0LTwHbJ/I1xnR0MjMseDINgbi58jUvbiDMIXmdsjJj4PESqPMbWt//jN+K6Y45UO7Z0Od0oqsm1q6NsO6CCA4cwggODMIIC7KADAgECAgEAMA0GCSqGSIb3DQEBBQUAMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbTAeFw0wNDAyMTMxMDEzMTVaFw0zNTAyMTMxMDEzMTVaMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAwUdO3fxEzEtcnI7ZKZL412XvZPugoni7i7D7prCe0AtaHTc97CYgm7NsAtJyxNLixmhLV8pyIEaiHXWAh8fPKW+R017+EmXrr9EaquPmsVvTywAAE1PMNOKqo2kl4Gxiz9zZqIajOm1fZGWcGS0f5JQ2kBqNbvbg2/Za+GJ/qwUCAwEAAaOB7jCB6zAdBgNVHQ4EFgQUlp98u8ZvF71ZP1LXChvsENZklGswgbsGA1UdIwSBszCBsIAUlp98u8ZvF71ZP1LXChvsENZklGuhgZSkgZEwgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tggEAMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEFBQADgYEAgV86VpqAWuXvX6Oro4qJ1tYVIT5DgWpE692Ag422H7yRIr/9j/iKG4Thia/Oflx4TdL+IFJBAyPK9v6zZNZtBgPBynXb048hsP16l2vi0k5Q2JKiPDsEfBhGI+HnxLXEaUWAcVfCsQFvd2A1sxRr67ip5y2wwBelUecP3AjJ+YcxggGaMIIBlgIBATCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwCQYFKw4DAhoFAKBdMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTEwMDcxNjAyNTEzOFowIwYJKoZIhvcNAQkEMRYEFG8hF3hmPMOqirxFSTHxu38uTsYqMA0GCSqGSIb3DQEBAQUABIGAlr6bhVwEOP9KH1oBfYTGwau7d9mhMsvlYYttyhweQ7s0ofyKOdNsMwu+OoawCz7v1N5lIsEHzmsmdGDchADWG6uFZDHEqAWQrAaX+5++YajCBsQbht5xzEbOBoYs/NU3e0Xa0Kb2kxRxzvwa5RMdUzTNkNEt8dpevAJozRoD1hc=-----END PKCS7-----
+" type="hidden">
+<input src="https://www.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif" name="submit" alt="PayPal - The safer, easier way to pay online!" type="image" border="0">
+<img alt="" src="https://www.paypal.com/en_US/i/scr/pixel.gif" height="1" width="1" border="0">
+</form>
+
+
+
+                                                                
+
+                                                            </td>
+
+                                                        </tr>
+
+                                                    </tbody></table>
+<hr>
+
+                                                    <p style="font-weight:bold">
+                                                        2. Team License - <a href="license2.html">[Full Text]</a></p>
+
+                                                    <table width="100%" border="0" cellpadding="0">
+
+                                                        <tbody><tr>
+
+                                                            <td height="98">
+
+                                                                <table width="100%" border="0" cellpadding="0">
+
+                                                                    <tbody><tr>
+
+                                                                        <td height="121" width="13%">
+
+                                                                            <img src="img/box_visual.png" height="120" width="90"></td>
+
+                                                                        <td width="87%">
+
+                                                                            <ul>
+
+                                                                            <li>jsLinb library + UI builder</li>
+                                                                            <li>Applications source code(<a target="_blank" href="http://jsoneditor.appspot.com/">JSON Editor</a>, <a target="_blank" href="http://www.linb.net/Examples/app/PicEditor/">Photo Editor</a> and <a target="_blank" href="http://www.linb.net/FormBuilder/">Form Builder</a>)</li>
+                                                                                <li>Up to 10 developers to use. Royalty-free distribution on unlimited applications and web
+
+                                                                                    sites. </li>
+
+                                                                                <li>Tech support on the product within 12 months since purchasing the product </li>
+
+                                                                                <li>Bug fixing during within 12 months since purchasing the product </li>
+
+                                                                                <li>Free upgrade for 12 months since purchasing the product </li>
+
+                                                                            </ul>
+
+                                                                        </td>
+
+                                                                    </tr>
+
+                                                                </tbody></table>
+
+                                                            </td>
+
+                                                        </tr>
+
+                                                        <tr>
+
+                                                            <td align="right">
+
+                                                                <span class="price"><strong>Price</strong>: USD 899.00</span></td>
+
+                                                        </tr>
+
+                                                        <tr>
+
+                                                            <td align="right">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input name="cmd" value="_s-xclick" type="hidden">
+<input name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+" type="hidden">
+<input src="https://www.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif" name="submit" alt="PayPal - The safer, easier way to pay online!" type="image" border="0">
+<img alt="" src="https://www.paypal.com/en_US/i/scr/pixel.gif" height="1" width="1" border="0">
+</form>
+
+
+
+
+                                                            </td>
+
+                                                        </tr>
+
+                                                    </tbody></table>
+<hr>
+
+                                                <p style="font-weight:bold">
+                                                        3. Online Debugging Support(pay-per-time)</p>
+
+                                                    <table width="100%" border="0" cellpadding="0">
+
+                                                        <tbody><tr>
+
+                                                            <td>
+
+                                                                <table width="100%" border="0" cellpadding="0">
+
+                                                                    <tbody><tr>
+
+                                                                        <td width="13%">
+                                                                            <img src="img/box_visual.png" height="120" width="90"></td>
+
+                                                                        <td width="87%">
+
+                                                                            <ul>
+
+                                                                            <li>1 hour limit Online Debugging Support. </li>
+
+                                                                            </ul>
+
+                                                                        </td>
+
+                                                                    </tr>
+
+                                                                </tbody></table>
+
+                                                            </td>
+
+                                                        </tr>
+
+                                                        <tr>
+
+                                                            <td align="right">
+
+                                                                <span class="price"><strong>Price</strong>: USD 200.00</span></td>
+
+                                                        </tr>
+
+                                                        <tr>
+
+                                                            <td align="right">
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input name="cmd" value="_s-xclick" type="hidden">
+<input name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+" type="hidden">
+<input src="https://www.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif" name="submit" alt="PayPal - The safer, easier way to pay online!" type="image" border="0">
+<img alt="" src="https://www.paypal.com/en_US/i/scr/pixel.gif" height="1" width="1" border="0">
+</form>
+
+
+                                                            </td>
+
+                                                        </tr>
+
+                                                    </tbody></table>
+
+<hr>
+
+                                                <p style="font-weight:bold">
+                                                        4. Team License - <a href="license2.html">[Full Text]</a> + 3 months Online Debugging Support</p>
+
+                                                    <table width="100%" border="0" cellpadding="0">
+
+                                                        <tbody><tr>
+
+                                                            <td>
+
+                                                                <table width="100%" border="0" cellpadding="0">
+
+                                                                    <tbody><tr>
+
+                                                                        <td width="13%">
+                                                                            <img src="img/box_visual.png" height="120" width="90"></td>
+
+                                                                        <td width="87%">
+
+                                                                            <ul>
+
+                                                                            <li>Team License</li>
+                                                                            <li>1 hour per day limit Online Debugging Support for 3 months since purchasing the product. </li>
+
+                                                                            </ul>
+
+                                                                        </td>
+
+                                                                    </tr>
+
+                                                                </tbody></table>
+
+                                                            </td>
+
+                                                        </tr>
+
+                                                        <tr>
+
+                                                            <td align="right">
+
+                                                                <span class="price"><strong>Price</strong>: USD 3,999.00</span></td>
+
+                                                        </tr>
+
+                                                        <tr>
+
+                                                            <td align="right">
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input name="cmd" value="_s-xclick" type="hidden">
+<input name="encrypted" value="-----BEGIN PKCS7-----MIIHmAYJKoZIhvcNAQcEoIIHiTCCB4UCAQExggEwMIIBLAIBADCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwDQYJKoZIhvcNAQEBBQAEgYCkvaGRpoeIwBRCwHxFFChmdXzRG8xQhuxU3D0THl1tphPgQHG3LA2Z8giengfSt58IqoPCUBlgvGV+I4Sq30JOoWZ2z40YJ/Cq4ftqKstWObGEcBv5oiMPWNXrM1DBfP2JYNaPQUz2i9MEtWPELmiWjUdXi1PsIV4pE+2dzuSN6DELMAkGBSsOAwIaBQAwggEUBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECKWXF9MZDPQhgIHwCGPhE50U9CZG/gRQt9S3SwRewRNKhwiIvvlb4pDd+DICiLl9XlEV4NkGDkJWKd4OB/ul1AeV7uh3JKZLcc/J+eS3ICPFh3TgRgv4nJIB2oadJLLPy5t2ENtllpvFmJ+XWAL1glOEGZvOooJqzjW6Fgyyl2NGBjV6xRMPujvvfjC6NvaG7ZR+oQA2ocFow4ggCAkoLLLDpMc4vJWZUmT1H4KZRrHUxdYWKPoSMtKuD0WA8hixFe8jJfEX8GqtqmLByJS1Kjy8ltSzoNiDFtEea9tpS9yLFGfFCsJ6wdA1WKcNZiEIMnUuYminb/JNlRcAoIIDhzCCA4MwggLsoAMCAQICAQAwDQYJKoZIhvcNAQEFBQAwgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tMB4XDTA0MDIxMzEwMTMxNVoXDTM1MDIxMzEwMTMxNVowgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDBR07d/ETMS1ycjtkpkvjXZe9k+6CieLuLsPumsJ7QC1odNz3sJiCbs2wC0nLE0uLGaEtXynIgRqIddYCHx88pb5HTXv4SZeuv0Rqq4+axW9PLAAATU8w04qqjaSXgbGLP3NmohqM6bV9kZZwZLR/klDaQGo1u9uDb9lr4Yn+rBQIDAQABo4HuMIHrMB0GA1UdDgQWBBSWn3y7xm8XvVk/UtcKG+wQ1mSUazCBuwYDVR0jBIGzMIGwgBSWn3y7xm8XvVk/UtcKG+wQ1mSUa6GBlKSBkTCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb22CAQAwDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0BAQUFAAOBgQCBXzpWmoBa5e9fo6ujionW1hUhPkOBakTr3YCDjbYfvJEiv/2P+IobhOGJr85+XHhN0v4gUkEDI8r2/rNk1m0GA8HKddvTjyGw/XqXa+LSTlDYkqI8OwR8GEYj4efEtcRpRYBxV8KxAW93YDWzFGvruKnnLbDAF6VR5w/cCMn5hzGCAZowggGWAgEBMIGUMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbQIBADAJBgUrDgMCGgUAoF0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTAwNzE2MDMwODI4WjAjBgkqhkiG9w0BCQQxFgQUOfykHk5VqXUIXn4HEk2XNUI/8aUwDQYJKoZIhvcNAQEBBQAEgYCTheHT36E0CSmzems+xKkcsFR9o/3R2jkYkz4zJnvIWdc2OH9cwKoDb+/3Nal6VciznKJN4EybYghxnUaEOlgyo5rxxH25fUeeCFTBasGpMumtndD0B0OQ68XY/SdijLFvgGPlIvuhK6+t1ku8ZC7T53oLetNPaz1ZmmJnWt8MWg==-----END PKCS7-----
+" type="hidden">
+<input src="https://www.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif" name="submit" alt="PayPal - The safer, easier way to pay online!" type="image" border="0">
+<img alt="" src="https://www.paypal.com/en_US/i/scr/pixel.gif" height="1" width="1" border="0">
+</form>
+
+
+                                                            </td>
+
+                                                        </tr>
+
+                                                    </tbody></table>
+<hr>
+
+                                                <p style="font-weight:bold">
+                                                        5. Customization Fee</p>
+                                                    <table width="100%" border="0" cellpadding="0">
+                                                        <tbody><tr>
+                                                            <td>
+                                                                <table width="100%" border="0" cellpadding="0">
+                                                                    <tbody><tr>
+                                                                        <td width="13%">
+                                                                            <img src="img/box_visual.png" height="120" width="90"></td>
+                                                                        <td width="87%">
+                                                                            <ul>
+                                                                            <li>Customization Fee</li>
+                                                                            <li>According to the specific requirement. </li>
+                                                                            </ul>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody></table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="right">
+                                                                <span class="price"><strong>Price</strong>: USD 30 - 50 per Hour</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="right">
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input name="cmd" value="_s-xclick" type="hidden">
+<input name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+" type="hidden">
+<input src="https://www.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif" name="submit" alt="PayPal - The safer, easier way to pay online!" type="image" border="0">
+<img alt="" src="https://www.paypal.com/en_US/i/scr/pixel.gif" height="1" width="1" border="0">
+</form>
+
+                                                            </td>
+
+                                                        </tr>
+
+                                                    </tbody></table>
+
+                        <hr>
+
+                        <p style='text-align:right;font-weight:bold;'>
+                            For Reseller, OEM or other License, please contact <span style="color: #ff9933">linb[at]gmail[dot]com</span>
+                            for details. 
+                            <br>
+                        </p>
+                
+
+</div><div><div class=b3></div><div class=b2></div><div class=b1></div></div>
+            </div>
+        </div>
+        
+        <div class='linksblock'>
+<div><div class=b1></div><div class=b2></div><div class=b3></div></div><div class=bi style="position:relative;">
+            <A href="http://www.twitter.com" target="_blank">Twitter</A>
+            <A href="http://www.facebook.com" target="_blank">Facebook</A>
+            <A href="http://www.google.com" target="_blank">Google</A>
+            <A href="http://www.yahoo.com" target="_blank">Yahoo!</A>
+            <A href="http://www.msn.com" target="_blank">MSN.com</A>
+            <A href="http://www.baidu.com" target="_blank">BaiDu</A>
+            <A href="http://www.youtube.com" target="_blank">YouTube</A>
+            <A href="http://jquery.com/" target="_blank">JQuery</A>
+            <A href="http://www.fusioncharts.com/" target="_blank">FusionCharts Free</A>
+            <A href="http://codemirror.net" target="_blank">CodeMirror</A>
+</div><div><div class=b3></div><div class=b2></div><div class=b1></div></div>
+        </div>
+
+        <div id="tail">
+            <img border=0 src=img/sign.gif /> <br />
+            You can reach me at: linb.net[at]gmail.com
+        </div>
+    </div>
+
+<style>#linbar a, #linbar span{font-size:12px;margin-right:2px;padding:2px;}#linbar a{text-decoration:underline;}#linbar_more a{text-decoration:none;padding:3px;font-size:12px;text-decoration:none;display:block;}#linbar a:hover, #linbar_more a:hover{text-decoration:none;color:#fff!important;background:#598EDD;}#linbar small{font-size:9px;}#linbar_more{position:absolute;display:none;top:19px;z-index:6000;border:solid 1px;border-color:#E4F1FD #598EDD #598EDD #598EDD; background:#E4F1FD;}#linbar_more{width:100px;}</style><script>var linbar={byId:function(id){return document.getElementById(id).style},get1:function(){return this.byId('linbar')},get2:function(id){return this.byId(id)},get3:function(){return this.byId('linbar_l')},show:function(){var n=this;if(n._t1){clearTimeout(n._t1);delete n._t1;}var s=n.get1();s.height='19px';s.backgroundColor='#E4F1FD';n.get3().display='block';},hide:function(){var n=this;if(n._t1){clearTimeout(n._t1);delete n._t1;}n._t1=setTimeout(function(){var s=n.get1();s.height='3px';s.backgroundColor='#598EDD';n.get3().display='none';if(n.showed)n.get2(n.showed).display='none';},600);},showPop:function(ele){var n=this,id=ele.id.replace(/.*:/,'');if(n.showed&&id!=n.showed)n.get2(n.showed).display='none';if(n._t1){clearTimeout(n._t1);delete n._t1;}if(n._t2){clearTimeout(n._t2);delete n._t2;}n.showed=id;if(ele.id.indexOf('pop:')==0){var s=n.get2(id);s.left=(ele.offsetLeft-4)+'px';s.display='block';}},hidePop:function(){var n=this;if(n._t2){clearTimeout(n._t2);delete n._t2;}n._t2=setTimeout(function(){n.get2('linbar_more').display='none';},100);n.hide();}};</script><div id='linbar' onmouseout="linbar.hide()"  onmouseover="linbar.show()" style='position:absolute;width:100%;left:0;top:0;height:3px;z-index:5000;background:#598EDD;line-height:19px;overflow:hidden;'><nobr><a target=_blank href='http://www.linb.net'><strong>jsLinb Home</strong></a><a target=_blank href="mailto:&#108;&#105;&#110;&#98;&#46;&#110;&#101;&#116;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">Contact</a><a target=_blank href='http://linb.googlecode.com/files/linb.package.zip'>Download</a><a target=_blank href='http://linb.googlecode.com/svn/trunk/'>SVN</a><a target=_blank href='http://www.sigmawidgets.com/forum/'>forum</a><a target=_blank href='http://www.linb.net/API'>API</a><a target=_blank href='http://www.linb.net/CodeSnip'>CodeSnip</a><a target=_blank href='http://www.linb.net/VisualJS/UIBuilder.html'>UI Builder</a><a target=_blank href='http://www.linb.net/FormBuilder/index.html'>Form Builder</a><a target=_blank href='http://www.linb.net/VisualJS'>IDE</a><a target=_blank href='http://linb.googlecode.com/files/linb.cookbook.zip'>Cookbook</a><a target=_blank href='http://www.linb.net/video/simple.html'>Video</a><a target=_blank href='http://linb.googlecode.com/files/linb.backend.zip'>Back-end code</a><a target=_blank href='http://www.linb.net/Examples' id="pop:linbar_more" onmouseout="linbar.hidePop()"  onmouseover="linbar.showPop(this)">Examples</a><small style="margin-left:-3px;">&#9660;</small></nobr></div><div id='linbar_l' style="left:0;position:absolute;top:19px;display:none;border-top:1px solid #598EDD;font-size:0;line-height:0;width:100%;z-index:5500;"></div><div id='linbar_more' onmouseout="linbar.hidePop()"  onmouseover="linbar.showPop(this)"><a target=_blank href='http://www.linb.net/Examples/app/PicEditor'>PicEditor</a><a target=_blank href='http://jsoneditor.appspot.com'>JSONEditor</a><a target=_blank href='http://www.linb.net/Examples/comb/Themes'>Themes</a><a target=_blank href='http://www.linb.net/Examples/comb/JSONWSClient'>JSON RPC Client</a><a target=_blank href='http://www.linb.net/Examples/comb/XMLRPCWSClient'>XML RPC Client</a><a target=_blank href='http://www.linb.net/Examples/comb/SOAPWSClient'>SOAP Client</a><a target=_blank href='http://www.linb.net/Examples'>more ...</a></div>
+<script type="text/javascript">var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript">var pageTracker = _gat._getTracker("UA-414967-1");pageTracker._initData();pageTracker._trackPageview();</script>
+
+</body>
+</html>
