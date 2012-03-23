@@ -5990,7 +5990,7 @@ _.set(linb.Locale,["cn","app"], {
                     "itemId [必需参数] :String, 项id."
                 ],
                 $snippet:[
-                    "var pro=linb.UIProfile.getFromDom('linb.UI.TreeBar:a:').boxing();alert(pro.getSubNodeByItemId('Namespace') )"
+                    "var pro=linb.UIProfile.getFromDom('linb.UI.TreeBar:a:').boxing();alert(pro.getSubNodeByItemId('ITEM','Namespace') )"
                 ]
             }
         }
