@@ -60,7 +60,7 @@ Class("linb.Tips", null,{
                 //for inner renderer
                 while((!node.id || node.id==linb.$localeDomId) && node.parentNode!==document && index++<10)
                     node=node.parentNode;
-                if(!(id=node.id)){
+                if(!(id=(typeof node.id=="string"?node.id:null))){
                     node=null;
                     return rt;
                 }
@@ -120,7 +120,7 @@ Class("linb.Tips", null,{
                         //for inner renderer
                         while((!node.id || node.id==linb.$localeDomId) && node.parentNode!==document && index++<10)
                             node=node.parentNode;
-                        if(!(id=node.id)){
+                        if(!(id=(typeof node.id=="string"?node.id:null))){
                             node=null;
                             clear=1;
                         }

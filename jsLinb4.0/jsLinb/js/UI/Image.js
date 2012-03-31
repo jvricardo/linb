@@ -119,7 +119,7 @@ Class("linb.UI.Image", "linb.UI",{
                 }
             },
             cursor:{
-                ini:"default",
+                ini:"auto",
                 action:function(v){
                     this.getRoot().css('cursor',v);
                 }

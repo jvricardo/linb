@@ -184,7 +184,8 @@ Class("linb.UI.Input", ["linb.UI.Widget","linb.absValue"] ,{
 
                overflow:'auto',
                'overflow-y':'auto',
-               'overflow-x':'hidden'
+               'overflow-x':'hidden',
+               resize:'none'
             },
             ERROR:{
                 width:'9px',

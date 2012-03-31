@@ -1119,7 +1119,7 @@ Class('linb.Dom','linb.absBox',{
 
         /*
         args:{
-            with:[0,100],
+            width:[0,100],
             height:[0,100],
             left:[0,100]
             top:[0,100]

@@ -69,7 +69,8 @@ Class("linb.UI.TextEditor", ["linb.UI.Widget","linb.absValue"] ,{
                 padding:0,
                 overflow:'auto',
                 'overflow-y':'auto',
-                'overflow-x':'hidden'
+                'overflow-x':'hidden',
+                resize:'none'
             },
             'BAK1, BAK2':{
                 'font-family': 'Courier New, Courier, monospace',

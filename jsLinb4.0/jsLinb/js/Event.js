@@ -164,7 +164,7 @@ Class('linb.Event',null,{
             return (name=this._map1[name]) && ((pos===0||pos==1||pos==2) ? name[pos] : name);
         },
         _getProfile:function(id,a,b){
-            return id && ((a=(b=linb.$cache.profileMap)[id])
+            return id && (typeof id=='string') && ((a=(b=linb.$cache.profileMap)[id])
                             ?
                             a['linb.UIProfile']
                                 ?
