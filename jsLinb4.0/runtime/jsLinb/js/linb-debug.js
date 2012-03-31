@@ -4088,7 +4088,7 @@ Class('linb.Event',null,{
             return (name=this._map1[name]) && ((pos===0||pos==1||pos==2) ? name[pos] : name);
         },
         _getProfile:function(id,a,b){
-            return id && ((a=(b=linb.$cache.profileMap)[id])
+            return id && (typeof id=='string') && ((a=(b=linb.$cache.profileMap)[id])
                             ?
                             a['linb.UIProfile']
                                 ?
@@ -7197,7 +7197,7 @@ Class('linb.Dom','linb.absBox',{
 
         /*
         args:{
-            with:[0,100],
+            width:[0,100],
             height:[0,100],
             left:[0,100]
             top:[0,100]
@@ -10490,7 +10490,7 @@ Class("linb.Tips", null,{
                 //for inner renderer
                 while((!node.id || node.id==linb.$localeDomId) && node.parentNode!==document && index++<10)
                     node=node.parentNode;
-                if(!(id=node.id)){
+                if(!(id=(typeof node.id=="string"?node.id:null))){
                     node=null;
                     return rt;
                 }
@@ -10550,7 +10550,7 @@ Class("linb.Tips", null,{
                         //for inner renderer
                         while((!node.id || node.id==linb.$localeDomId) && node.parentNode!==document && index++<10)
                             node=node.parentNode;
-                        if(!(id=node.id)){
+                        if(!(id=(typeof node.id=="string"?node.id:null))){
                             node=null;
                             clear=1;
                         }
@@ -16423,7 +16423,7 @@ new function(){
                 }
             },
             cursor:{
-                ini:"default",
+                ini:"auto",
                 action:function(v){
                     this.getRoot().css('cursor',v);
                 }
@@ -19426,7 +19426,8 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
 
                overflow:'auto',
                'overflow-y':'auto',
-               'overflow-x':'hidden'
+               'overflow-x':'hidden',
+               resize:'none'
             },
             ERROR:{
                 width:'9px',
