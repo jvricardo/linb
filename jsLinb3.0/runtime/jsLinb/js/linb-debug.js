@@ -19647,11 +19647,12 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 c.onchange=o.onchange;
 
                 //remove those
-                if(linb.browser.ie)
-                    o.removeAttribute('$linbid');
-                else
-                    delete o.$linbid;
-                o.id=o.onclick=o.onchange=null;
+                //if(linb.browser.ie)
+                //    o.removeAttribute('$linbid');
+                //else
+                //    delete o.$linbid;
+                //**: "removeAttribute" doesn't work in IE9+
+                o.$linbid=null;
 
                 //a special node, must delete if from cache here:
                 delete profile.$_domid[profile.keys['FILE']];
