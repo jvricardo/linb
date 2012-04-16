@@ -7693,7 +7693,9 @@ type:4
             if(typeof name == 'string'){
                 var me=this.getStyle,
                 c1 = me._c1 || (me._c1={}),
-                r1 = me._r1 || (me._r1=/alpha\([^\)]*\)/ig);
+                r1 = me._r1 || (me._r1=/alpha\([^\)]*\)/ig),
+                map = me.map || (me.map = {'float':1,'cssFloat':1,'styleFloat':1});
+
                 name = c1[name] || (c1[name] = name.replace(/\-(\w)/g, function(a,b){return b.toUpperCase()}));
                 if(name=='opacity'){
                     value=parseFloat(value)||0;
@@ -7703,6 +7705,8 @@ type:4
                         name='filter';
                         value = node.style.filter.replace(r1, "") + value;
                     }
+                }else if(map[name]){
+                    name = linb.browser.ie?"styleFloat":"cssFloat";
                 }
                 node.style[name]=value;
             }else
