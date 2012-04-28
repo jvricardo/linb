@@ -1966,9 +1966,9 @@ type:4
         _.arr.each([[l+'By',l],[t+'By',t],[w+'By',w],[h+'By',h]],function(o){
             self.plugIn(o[0],function(offset,triggerEvent){
                 if(offset===0)return this;
-                var m,args,k=o[1],fun=linb.Dom.getStyle;
+                var m,args,k=o[1];
                 return this.each(function(node){
-                    m=fun(node,k);
+                    m=linb.use(node.$linbid)[k]();
                     m=(parseInt(m,10)||0)+offset;
                     if(k=='width'||k=='height')m=m>0?m:0;
                     node.style[k]=m+'px';

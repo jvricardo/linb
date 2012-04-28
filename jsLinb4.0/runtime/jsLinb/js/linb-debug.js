@@ -8044,9 +8044,9 @@ type:4
         _.arr.each([[l+'By',l],[t+'By',t],[w+'By',w],[h+'By',h]],function(o){
             self.plugIn(o[0],function(offset,triggerEvent){
                 if(offset===0)return this;
-                var m,args,k=o[1],fun=linb.Dom.getStyle;
+                var m,args,k=o[1];
                 return this.each(function(node){
-                    m=fun(node,k);
+                    m=linb.use(node.$linbid)[k]();
                     m=(parseInt(m,10)||0)+offset;
                     if(k=='width'||k=='height')m=m>0?m:0;
                     node.style[k]=m+'px';
@@ -20312,6 +20312,9 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                             if(kprf._onchangethread){
                                 clearInterval(kprf._onchangethread);
                                 kprf._onchangethread=null;
+                                // check again
+                                if(kprf && kprf.box)
+                                    kprf.box._checkc(profile);
                             }
                         },
                         gekfix=function(e){
@@ -20511,10 +20514,14 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
         },
         _onchange:function(profile){
             if(profile.onChange){
+                if(profile._onchangethread){
+                    clearInterval(profile._onchangethread);
+                    profile._onchangethread=null;
+                }
                 profile._onchangethread=setInterval(function(){
                     if(profile && profile.box)
                         profile.box._checkc(profile);
-                }, 300);
+                }, 500);
             }
         },
         _clearPool:function(profile){
