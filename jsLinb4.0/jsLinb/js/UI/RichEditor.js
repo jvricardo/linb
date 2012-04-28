@@ -206,6 +206,9 @@ Class("linb.UI.RichEditor", ["linb.UI","linb.absValue"],{
                             if(kprf._onchangethread){
                                 clearInterval(kprf._onchangethread);
                                 kprf._onchangethread=null;
+                                // check again
+                                if(kprf && kprf.box)
+                                    kprf.box._checkc(profile);
                             }
                         },
                         gekfix=function(e){
@@ -405,10 +408,14 @@ Class("linb.UI.RichEditor", ["linb.UI","linb.absValue"],{
         },
         _onchange:function(profile){
             if(profile.onChange){
+                if(profile._onchangethread){
+                    clearInterval(profile._onchangethread);
+                    profile._onchangethread=null;
+                }
                 profile._onchangethread=setInterval(function(){
                     if(profile && profile.box)
                         profile.box._checkc(profile);
-                }, 300);
+                }, 500);
             }
         },
         _clearPool:function(profile){
