@@ -2625,10 +2625,10 @@ Class('VisualJS.Designer', 'linb.Com',{
                             return false;
                         }
                     });
-                    self.canvas.append(linb.UI.pack(nodes, false));
                     _.arr.each(nodes,function(o){
                         self._designable(o);
                     });
+                    self.canvas.append(linb.UI.pack(nodes, false));
                     _.arr.each(n2,function(target){
                         self.iconlist.insertItems([{id:target.$linbid, image:linb.ini.img_bg, tips:target.key, imgStyle:'background:url(' + CONF.mapWidgets[target.box.KEY].image + ') '+ CONF.mapWidgets[target.box.KEY].imagePos}],null,false);
                     });
