@@ -135,7 +135,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                         t=parseInt(profile.getRoot().css(key))||0;
                         if(t!=v){
                             // if in selected, refresh
-                            if((t=profile.parent) && t.reSelectObject &&_.arr.indexOf(page.tempSelected, profile.$linbid)!=-1){
+                            if((t=profile.parent) && t.reSelectObject &&page.tempSelected&&_.arr.indexOf(page.tempSelected, profile.$linbid)!=-1){
                                 _.resetRun(":"+page.tempSelected.join(':'), function(){
                                     if(!profile.box)return;
                                     if(page.tempSelected.length>1)
@@ -341,7 +341,7 @@ Class('VisualJS.Designer', 'linb.Com',{
         $tryToRefreshSel:function(profile){
             var page=this,t;
 
-            if((t=profile.parent) && t.reSelectObject &&_.arr.indexOf(page.tempSelected, profile.$linbid)!=-1){
+            if((t=profile.parent) && t.reSelectObject &&page.tempSelected&&_.arr.indexOf(page.tempSelected, profile.$linbid)!=-1){
                 _.resetRun(":"+page.tempSelected.join(':'), function(){
                     if(!profile.box)return;
                     if(page.tempSelected.length>1)
@@ -419,7 +419,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                 page._dirty=true;
                 
                 // if single selected, refresh grid data
-                if(page.tempSelected.length==1 && prf.parent && prf.parent.selectObject)
+                if(page.tempSelected && page.tempSelected.length==1 && prf.parent && prf.parent.selectObject)
                     prf.parent.selectObject.call(prf.parent,prf, prf.getRoot().parent());
                 
             });
@@ -706,7 +706,7 @@ Class('VisualJS.Designer', 'linb.Com',{
             .onDblclick(function(profile, e, src){
                 if(CONF.designer_editMode != "simple"){
                     var arr = this.tempSelected;
-                    if(arr.length){
+                    if(arr && arr.length){
                         var o = linb.getObject(arr[0]);
                         page.resetTaskList();
                         // if dirty
@@ -722,7 +722,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                 }else if(typeof CONF.designer_ctrldblclick=='function'){
                     var arr = this.tempSelected,
                         prf;
-                    if(arr.length)
+                    if(arr && arr.length)
                         prf = linb.getObject(arr[0]);
 
                     CONF.designer_ctrldblclick(page, prf, e, src);
