@@ -108,7 +108,7 @@ Class('linb.Dom','linb.absBox',{
             return this.$sum(function(){
                 var n = this.cloneNode(deep?true:false),
                     children=n.getElementsByTagName('*'),
-                    ie=linb.browser.ie,
+                    ie=linb.browser.ie && parseInt(linb.browser.ver,10)<9,
                     i=0,o;
                 if(ie) n.removeAttribute('$linbid');
                 else delete n.$linbid;
