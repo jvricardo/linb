@@ -113,6 +113,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                 page.popViewSize.setItems(page.$canvasMenuItems1);
 
                 page.toolbar.setItems(page.$canvasMenuItems);
+                
             },
             onRender:function(page){
                 var _refresh=page._refresh=function(obj, key, region){
@@ -2025,7 +2026,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                                         this._change();
                                         var tagVar = page.properties.tagVar,
                                             code=page.properties.result.code;
-                                        tagVar.profile.properties.renderer = code!==null?new Function(_.fun.args(code), _.fun.body(code)):null;
+                                        o.ini = tagVar.profile.properties.renderer = code!==null?new Function(_.fun.args(code), _.fun.body(code)):null;
                                         node.focus();
                                     }
                                 });
