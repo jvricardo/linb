@@ -3489,7 +3489,7 @@ Class('linb.absObj',"linb.absBox",{
         $nameTag:"databinder_",
         _pool:{},
         destroyAll:function(){
-            this.pack(this._pool,false).destroy();
+            this.pack(_.toArr(this._pool,false),false).destroy();
             this._pool={};
         },
         getFromName:function(name){
