@@ -143,7 +143,7 @@ Class("linb.UI.Input", ["linb.UI.Widget","linb.absValue"] ,{
                 left:0,
                 //for firefox bug: cursor not show
                 position:'absolute',
-                overflow:linb.browser.gek?'auto':'hidden'
+                overflow:(linb.browser.gek&&parseInt(linb.browser.ver,10)<3)?'auto':'hidden'
             },
             BOX:{
                 left:0,
