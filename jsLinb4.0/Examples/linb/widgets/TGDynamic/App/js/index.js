@@ -462,7 +462,7 @@ Class('App', 'linb.Com',{
                 .setLeft(40)
                 .setTop(630)
                 .setWidth(720)
-                .setHeight(90)
+                .setHeight(100)
                 .setCaption("Others")
                 .setToggleBtn(false)
             );
@@ -714,7 +714,7 @@ Class('App', 'linb.Com',{
             var css =   ".gridcellnoborder .linb-treegrid-fcell,"
                       + ".gridcellnoborder .linb-treegrid-cell,"
                       + ".gridcellnoborder .linb-treegrid-cells"
-                      + "{border-color:transparent;}";
+                      + "{border-color:none;}";
     
             linb.CSS.addStyleSheet(css , "gridcellnoborder");
         },
