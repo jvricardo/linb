@@ -1,11 +1,12 @@
 Class('App', 'linb.Com',{
     Instance:{
-        events:{"onReady":"_onready"}, 
+        events:{"onReady":"_onready"},
         iniComponents:function(){
             // [[code created by jsLinb UI Builder
             var host=this, children=[], append=function(child){children.push(child.get(0))};
             
-            append((new linb.UI.Panel)
+            append(
+                (new linb.UI.Panel)
                 .setHost(host,"panel4")
                 .setDock("none")
                 .setLeft(30)
@@ -16,12 +17,14 @@ Class('App', 'linb.Com',{
                 .setCaption("Update Grid dynamically!")
             );
             
-            host.panel4.append((new linb.UI.TreeGrid)
+            host.panel4.append(
+                (new linb.UI.TreeGrid)
                 .setHost(host,"treegrid")
                 .setSelMode("single")
             );
             
-            append((new linb.UI.Group)
+            append(
+                (new linb.UI.Group)
                 .setHost(host,"group1")
                 .setLeft(40)
                 .setTop(340)
@@ -31,7 +34,8 @@ Class('App', 'linb.Com',{
                 .setToggleBtn(false)
             );
             
-            host.group1.append((new linb.UI.SButton)
+            host.group1.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton1")
                 .setLeft(40)
                 .setTop(20)
@@ -40,7 +44,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton1_onclick")
             );
             
-            host.group1.append((new linb.UI.SButton)
+            host.group1.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton2")
                 .setLeft(40)
                 .setTop(50)
@@ -49,7 +54,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton2_onclick")
             );
             
-            host.group1.append((new linb.UI.SButton)
+            host.group1.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton5")
                 .setLeft(40)
                 .setTop(80)
@@ -58,7 +64,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton5_onclick")
             );
             
-            host.group1.append((new linb.UI.SButton)
+            host.group1.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton6")
                 .setLeft(40)
                 .setTop(110)
@@ -67,7 +74,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton6_onclick")
             );
             
-            host.group1.append((new linb.UI.Div)
+            host.group1.append(
+                (new linb.UI.Div)
                 .setHost(host,"div1")
                 .setLeft(160)
                 .setTop(20)
@@ -75,7 +83,8 @@ Class('App', 'linb.Com',{
                 .setHeight(20)
             );
             
-            host.group1.append((new linb.UI.Div)
+            host.group1.append(
+                (new linb.UI.Div)
                 .setHost(host,"div2")
                 .setLeft(160)
                 .setTop(50)
@@ -83,7 +92,8 @@ Class('App', 'linb.Com',{
                 .setHeight(20)
             );
             
-            host.group1.append((new linb.UI.Div)
+            host.group1.append(
+                (new linb.UI.Div)
                 .setHost(host,"div5")
                 .setLeft(160)
                 .setTop(80)
@@ -91,7 +101,8 @@ Class('App', 'linb.Com',{
                 .setHeight(20)
             );
             
-            host.group1.append((new linb.UI.Div)
+            host.group1.append(
+                (new linb.UI.Div)
                 .setHost(host,"div6")
                 .setLeft(160)
                 .setTop(110)
@@ -99,7 +110,8 @@ Class('App', 'linb.Com',{
                 .setHeight(20)
             );
             
-            host.group1.append((new linb.UI.SButton)
+            host.group1.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton8")
                 .setLeft(220)
                 .setTop(190)
@@ -108,7 +120,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton8_onclick")
             );
             
-            host.group1.append((new linb.UI.SButton)
+            host.group1.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton54")
                 .setLeft(40)
                 .setTop(160)
@@ -117,7 +130,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton54_onclick")
             );
             
-            host.group1.append((new linb.UI.SButton)
+            host.group1.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton94")
                 .setLeft(40)
                 .setTop(190)
@@ -126,7 +140,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton94_onclick")
             );
             
-            host.group1.append((new linb.UI.SButton)
+            host.group1.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton95")
                 .setLeft(40)
                 .setTop(220)
@@ -135,7 +150,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton95_onclick")
             );
             
-            host.group1.append((new linb.UI.Div)
+            host.group1.append(
+                (new linb.UI.Div)
                 .setHost(host,"div10")
                 .setLeft(360)
                 .setTop(190)
@@ -143,7 +159,8 @@ Class('App', 'linb.Com',{
                 .setHeight(20)
             );
             
-            host.group1.append((new linb.UI.SButton)
+            host.group1.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton252")
                 .setLeft(220)
                 .setTop(220)
@@ -152,7 +169,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton252_onclick")
             );
             
-            host.group1.append((new linb.UI.SButton)
+            host.group1.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton253")
                 .setLeft(230)
                 .setTop(20)
@@ -161,7 +179,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton253_onclick")
             );
             
-            host.group1.append((new linb.UI.SButton)
+            host.group1.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton254")
                 .setLeft(230)
                 .setTop(50)
@@ -170,7 +189,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton254_onclick")
             );
             
-            host.group1.append((new linb.UI.SButton)
+            host.group1.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton30")
                 .setLeft(230)
                 .setTop(80)
@@ -179,7 +199,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton30_onclick")
             );
             
-            host.group1.append((new linb.UI.SButton)
+            host.group1.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton31")
                 .setLeft(230)
                 .setTop(110)
@@ -188,7 +209,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton31_onclick")
             );
             
-            host.group1.append((new linb.UI.SButton)
+            host.group1.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton32")
                 .setLeft(230)
                 .setTop(140)
@@ -197,7 +219,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton32_onclick")
             );
             
-            append((new linb.UI.Group)
+            append(
+                (new linb.UI.Group)
                 .setHost(host,"group2")
                 .setLeft(480)
                 .setTop(340)
@@ -207,7 +230,8 @@ Class('App', 'linb.Com',{
                 .setToggleBtn(false)
             );
             
-            host.group2.append((new linb.UI.SButton)
+            host.group2.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton3")
                 .setLeft(30)
                 .setTop(110)
@@ -216,7 +240,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton3_onclick")
             );
             
-            host.group2.append((new linb.UI.SButton)
+            host.group2.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton4")
                 .setLeft(30)
                 .setTop(80)
@@ -225,7 +250,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton4_onclick")
             );
             
-            host.group2.append((new linb.UI.SButton)
+            host.group2.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton17")
                 .setLeft(30)
                 .setTop(20)
@@ -234,7 +260,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton17_onclick")
             );
             
-            host.group2.append((new linb.UI.SButton)
+            host.group2.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton18")
                 .setLeft(30)
                 .setTop(50)
@@ -243,7 +270,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton18_onclick")
             );
             
-            host.group2.append((new linb.UI.Div)
+            host.group2.append(
+                (new linb.UI.Div)
                 .setHost(host,"div3")
                 .setLeft(150)
                 .setTop(80)
@@ -251,7 +279,8 @@ Class('App', 'linb.Com',{
                 .setHeight(20)
             );
             
-            host.group2.append((new linb.UI.Div)
+            host.group2.append(
+                (new linb.UI.Div)
                 .setHost(host,"div4")
                 .setLeft(150)
                 .setTop(110)
@@ -259,7 +288,8 @@ Class('App', 'linb.Com',{
                 .setHeight(20)
             );
             
-            host.group2.append((new linb.UI.Div)
+            host.group2.append(
+                (new linb.UI.Div)
                 .setHost(host,"div7")
                 .setLeft(150)
                 .setTop(20)
@@ -267,7 +297,8 @@ Class('App', 'linb.Com',{
                 .setHeight(20)
             );
             
-            host.group2.append((new linb.UI.Div)
+            host.group2.append(
+                (new linb.UI.Div)
                 .setHost(host,"div8")
                 .setLeft(150)
                 .setTop(50)
@@ -275,7 +306,8 @@ Class('App', 'linb.Com',{
                 .setHeight(20)
             );
             
-            host.group2.append((new linb.UI.SButton)
+            host.group2.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton7")
                 .setLeft(30)
                 .setTop(150)
@@ -284,7 +316,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton7_onclick")
             );
             
-            host.group2.append((new linb.UI.SButton)
+            host.group2.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton53")
                 .setLeft(30)
                 .setTop(190)
@@ -293,7 +326,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton53_onclick")
             );
             
-            host.group2.append((new linb.UI.SButton)
+            host.group2.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton128")
                 .setLeft(170)
                 .setTop(220)
@@ -302,7 +336,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton128_onclick")
             );
             
-            host.group2.append((new linb.UI.SButton)
+            host.group2.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton129")
                 .setLeft(170)
                 .setTop(190)
@@ -311,7 +346,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton129_onclick")
             );
             
-            host.group2.append((new linb.UI.SButton)
+            host.group2.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton208")
                 .setLeft(30)
                 .setTop(220)
@@ -320,7 +356,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton208_onclick")
             );
             
-            host.group2.append((new linb.UI.Div)
+            host.group2.append(
+                (new linb.UI.Div)
                 .setHost(host,"div9")
                 .setLeft(170)
                 .setTop(150)
@@ -328,7 +365,8 @@ Class('App', 'linb.Com',{
                 .setHeight(20)
             );
             
-            append((new linb.UI.Group)
+            append(
+                (new linb.UI.Group)
                 .setHost(host,"group3")
                 .setLeft(590)
                 .setTop(190)
@@ -338,7 +376,8 @@ Class('App', 'linb.Com',{
                 .setToggleBtn(false)
             );
             
-            host.group3.append((new linb.UI.SButton)
+            host.group3.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton67")
                 .setLeft(20)
                 .setTop(20)
@@ -347,7 +386,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton67_onclick")
             );
             
-            host.group3.append((new linb.UI.SButton)
+            host.group3.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton207")
                 .setLeft(20)
                 .setTop(60)
@@ -356,7 +396,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton207_onclick")
             );
             
-            append((new linb.UI.Group)
+            append(
+                (new linb.UI.Group)
                 .setHost(host,"group4")
                 .setLeft(590)
                 .setTop(20)
@@ -366,7 +407,8 @@ Class('App', 'linb.Com',{
                 .setToggleBtn(false)
             );
             
-            host.group4.append((new linb.UI.SButton)
+            host.group4.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton111")
                 .setLeft(10)
                 .setTop(40)
@@ -375,7 +417,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton111_onclick")
             );
             
-            host.group4.append((new linb.UI.SButton)
+            host.group4.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton149")
                 .setLeft(10)
                 .setTop(10)
@@ -384,7 +427,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton149_onclick")
             );
             
-            host.group4.append((new linb.UI.Div)
+            host.group4.append(
+                (new linb.UI.Div)
                 .setHost(host,"div93")
                 .setLeft(110)
                 .setTop(10)
@@ -392,7 +436,8 @@ Class('App', 'linb.Com',{
                 .setHeight(20)
             );
             
-            host.group4.append((new linb.UI.SButton)
+            host.group4.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton28")
                 .setLeft(10)
                 .setTop(70)
@@ -401,7 +446,8 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton28_onclick")
             );
             
-            host.group4.append((new linb.UI.SButton)
+            host.group4.append(
+                (new linb.UI.SButton)
                 .setHost(host,"sbutton29")
                 .setLeft(10)
                 .setTop(100)
@@ -410,9 +456,100 @@ Class('App', 'linb.Com',{
                 .onClick("_sbutton29_onclick")
             );
             
+            append(
+                (new linb.UI.Group)
+                .setHost(host,"ctl_group9")
+                .setLeft(40)
+                .setTop(630)
+                .setWidth(720)
+                .setHeight(90)
+                .setCaption("Others")
+                .setToggleBtn(false)
+            );
+            
+            host.ctl_group9.append(
+                (new linb.UI.SButton)
+                .setHost(host,"ctl_sbutton61")
+                .setLeft(20)
+                .setTop(10)
+                .setWidth(130)
+                .setCaption("set cell background")
+                .onClick("_ctl_sbutton61_onclick")
+            );
+            
+            host.ctl_group9.append(
+                (new linb.UI.SButton)
+                .setHost(host,"ctl_sbutton62")
+                .setLeft(170)
+                .setTop(10)
+                .setWidth(130)
+                .setCaption("\"left\" align header")
+                .onClick("_ctl_sbutton62_onclick")
+            );
+            
+            host.ctl_group9.append(
+                (new linb.UI.SButton)
+                .setHost(host,"ctl_sbutton63")
+                .setLeft(430)
+                .setTop(10)
+                .setWidth(130)
+                .setCaption("hide grid line")
+                .onClick("_ctl_sbutton63_onclick")
+            );
+            
+            host.ctl_group9.append(
+                (new linb.UI.SButton)
+                .setHost(host,"ctl_sbutton64")
+                .setLeft(20)
+                .setTop(40)
+                .setWidth(130)
+                .setCaption("set Custom cell tips")
+                .onClick("_ctl_sbutton64_onclick")
+            );
+            
+            host.ctl_group9.append(
+                (new linb.UI.SButton)
+                .setHost(host,"ctl_sbutton65")
+                .setLeft(580)
+                .setTop(10)
+                .setWidth(130)
+                .setCaption("disable tips")
+                .onClick("_ctl_sbutton65_onclick")
+            );
+            
+            host.ctl_group9.append(
+                (new linb.UI.SButton)
+                .setHost(host,"ctl_sbutton66")
+                .setLeft(580)
+                .setTop(40)
+                .setWidth(130)
+                .setCaption("enable tips")
+                .onClick("_ctl_sbutton66_onclick")
+            );
+            
+            host.ctl_group9.append(
+                (new linb.UI.SButton)
+                .setHost(host,"ctl_sbutton351")
+                .setLeft(430)
+                .setTop(40)
+                .setWidth(130)
+                .setCaption("show grid line")
+                .onClick("_ctl_sbutton351_onclick")
+            );
+            
+            host.ctl_group9.append(
+                (new linb.UI.SButton)
+                .setHost(host,"ctl_sbutton712")
+                .setLeft(170)
+                .setTop(40)
+                .setWidth(130)
+                .setCaption("set a row's height")
+                .onClick("_ctl_sbutton712_onclick")
+            );
+            
             return children;
             // ]]code created by jsLinb UI Builder
-        }, 
+        },
         _onready:function (com, threadid) {
             this.treegrid
             .setHeader([
@@ -454,113 +591,155 @@ Class('App', 'linb.Com',{
             n.div9.setHtml(t.getHeaderHeight());
             n.div10.setHtml(t.getRowHeight());
             n.div93.setHtml(t.getEditable());
-        }, 
+        },
         _sbutton1_onclick:function (profile, e, src, value) {
             this.treegrid.setRowHandler( !this.treegrid.getRowHandler() );
             this.div1.setHtml(this.treegrid.getRowHandler())
-        }, 
+        },
         _sbutton2_onclick:function (profile, e, src, value) {
             this.treegrid.setRowResizer( !this.treegrid.getRowResizer() );
             this.div2.setHtml(this.treegrid.getRowResizer());
-        }, 
+        },
         _sbutton4_onclick:function (profile, e, src, value) {
             this.treegrid.setColHidable( !this.treegrid.getColHidable());
             this.div3.setHtml(this.treegrid.getColHidable());
-        }, 
+        },
         _sbutton3_onclick:function (profile, e, src, value) {
             this.treegrid.setColMovable( !this.treegrid.getColMovable());
              this.div4.setHtml(this.treegrid.getColMovable());
-        }, 
+        },
         _sbutton5_onclick:function (profile, e, src, value) {
             this.treegrid.setRowNumbered( !this.treegrid.getRowNumbered());
              this.div5.setHtml(this.treegrid.getRowNumbered());
-        }, 
+        },
         _sbutton6_onclick:function (profile, e, src, value) {
             this.treegrid.setAltRowsBg( !this.treegrid.getAltRowsBg());
             this.div6.setHtml(this.treegrid.getAltRowsBg());
-        }, 
+        },
         _sbutton7_onclick:function (profile, e, src, value) {
             this.treegrid.setHeaderHeight(30);
             this.div9.setHtml(this.treegrid.getHeaderHeight());
-        }, 
+        },
         _sbutton8_onclick:function (profile, e, src, value) {
             this.treegrid.setRowHeight(30)
             this.div10.setHtml(this.treegrid.getRowHeight());
-        }, 
+        },
         _sbutton17_onclick:function (profile, e, src, value) {
             this.treegrid.setColResizer( !this.treegrid.getColResizer());
             this.div7.setHtml(this.treegrid.getColResizer());
-        }, 
+        },
         _sbutton18_onclick:function (profile, e, src, value) {
             this.treegrid.setColSortable( !this.treegrid.getColSortable());
             this.div8.setHtml(this.treegrid.getColSortable());
-        }, 
+        },
         _sbutton53_onclick:function (profile, e, src, value) {
             alert(_.serialize(this.treegrid.getHeader('min')))
-        }, 
+        },
         _sbutton54_onclick:function (profile, e, src, value) {
             alert(_.serialize(this.treegrid.getRows('min')))
-        }, 
+        },
         _sbutton67_onclick:function (profile, e, src, value) {
             var rows=this.treegrid.getRows();
             this.treegrid.updateCellByRowCol(rows[0].id,'no',{type:"checkbox",value:true})
             this.treegrid.updateCellByRowCol(rows[1].id,'no',{value:"updated", caption:'<span style="background:url(img/img.gif);width:15px;height:15px"></span><span>updated</span>'})
-        }, 
+        },
         _sbutton94_onclick:function (profile, e, src, value) {
             var ar=this.treegrid.getActiveRow();
             alert(ar?ar.id:null);
-        }, 
+        },
         _sbutton95_onclick:function (profile, e, src, value) {
             var rows=this.treegrid.getRows('data');
             this.treegrid.setActiveRow(rows[2].id);
-        }, 
+        },
         _sbutton111_onclick:function (profile, e, src, value) {
             var rows=this.treegrid.getRows('data');
             this.treegrid.setValue(rows[1].id,true);
-        }, 
+        },
         _sbutton128_onclick:function (profile, e, src, value) {
             this.treegrid.showColumn('employee',true);
-        }, 
+        },
         _sbutton129_onclick:function (profile, e, src, value) {
             this.treegrid.showColumn('employee',false);
-        }, 
+        },
         _sbutton149_onclick:function (profile, e, src, value) {
             this.treegrid.setEditable( !this.treegrid.getEditable());
             this.div93.setHtml(this.treegrid.getEditable());
-        }, 
+        },
         _sbutton207_onclick:function (profile, e, src, value) {
             var rows=this.treegrid.getRows();
             this.treegrid.editCellbyRowCol(rows[0].id,'country')
-        }, 
+        },
         _sbutton208_onclick:function (profile, e, src, value) {
             this.treegrid.updateHeader('no',{caption:'<span style="background:url(img/img.gif);width:15px;height:15px"></span><span>updated</span>',width:80});
-        }, 
+        },
         _sbutton252_onclick:function (profile, e, src, value) {
             this.treegrid.toggleRow("030-7");
-        }, 
+        },
         _sbutton253_onclick:function (profile, e, src, value) {
             this.treegrid.removeRows(['a','b'])
-        }, 
+        },
         _sbutton254_onclick:function (profile, e, src, value) {
             this.treegrid.insertRows([["090-0", "MA", "Jerry", "Keith", false, 82, 56, 1242835200000,'#FFdd00',0.8]]);
-        }, 
+        },
         _sbutton28_onclick:function (profile, e, src, value) {
             this.treegrid.setGridHandlerCaption('tg');
-        }, 
+        },
         _sbutton29_onclick:function (profile, e, src, value) {
             this.treegrid.setRowHandlerWidth(100);
-        }, 
+        },
         _sbutton30_onclick:function (profile, e, src, value) {
             this.treegrid.updateRow('c',{caption:'updated',height:60});
-        }, 
+        },
         _sbutton31_onclick:function (profile, e, src, value) {
             var ctrl=this.treegrid;
             var row=ctrl.getRowbyRowId('d');
             ctrl.updateRow('d',{sub:row.sub?null:[]});
-        }, 
+        },
         _sbutton32_onclick:function (profile, e, src, value) {
             this.treegrid.updateRow('d',{cells:["no"]});
             this.treegrid.updateRow('030-7',{group:true});
+        },
+        _ctl_sbutton61_onclick : function (profile, e, src, value) {
+            var rows=this.treegrid.getRows();
+            this.treegrid.updateCellByRowCol(rows[0].id,'no',{cellStyle:"background-color:red"});
+            linb.message("the first cell's background color is red now");
+        },
+        _ctl_sbutton62_onclick : function (profile, e, src, value) {
+            this.treegrid.updateHeader("no", {headerStyle:"text-align:left"});
+            linb.message("the first column align 'left' now");
+        },
+        _ctl_sbutton63_onclick : function (profile, e, src, value) {
+            this.treegrid.setClassName("gridcellnoborder");
+            
+            var css =   ".gridcellnoborder .linb-treegrid-fcell,"
+                      + ".gridcellnoborder .linb-treegrid-cell,"
+                      + ".gridcellnoborder .linb-treegrid-cells"
+                      + "{border-color:transparent;}";
+    
+            linb.CSS.addStyleSheet(css , "gridcellnoborder");
+        },
+        _ctl_sbutton351_onclick : function (profile, e, src, value) {
+            this.treegrid.setClassName("");
+            linb.CSS.remove("id", "gridcellnoborder");
+        },
+        _ctl_sbutton65_onclick : function (profile, e, src, value) {
+            this.treegrid.setDisableTips(true);
+        },
+        _ctl_sbutton66_onclick : function (profile, e, src, value) {
+            this.treegrid.setDisableTips(false);
+        },
+        _ctl_sbutton64_onclick : function (profile, e, src, value) {
+            var rows=this.treegrid.getRows();
+            this.treegrid.updateCellByRowCol(rows[0].id,'no',{tips:"custom tips"});
+            linb.message("the first cell has custom tips now");
+        },
+        _ctl_sbutton712_onclick : function (profile, e, src, value) {
+            var rows=this.treegrid.getRows();
+            this.treegrid.updateRow(rows[0].id,{height:100});
+            linb.message("the first row's height is 100px now");
         }
+    },
+    Static : {
+        viewSize : {"width":1024, "height":768}
     }
 });

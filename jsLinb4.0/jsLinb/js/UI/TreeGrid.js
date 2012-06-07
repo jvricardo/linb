@@ -709,9 +709,9 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                 }
 
                 if(t=options.headerStyle)
-                    (tt=ns.getSubNode('HCELL',hid)).attr('style',tt.attr('style')+";"+t);
+                    (tt=ns.getSubNode('HCELLA',hid)).attr('style',tt.attr('style')+";"+t);
                 if(t=options.headerClass)
-                    ns.getSubNode('HCELL',hid).addClass(t);
+                    ns.getSubNode('HCELLA',hid).addClass(t);
 
                 if(options.hasOwnProperty('caption'))
                     ns.getSubNode('HCELLCAPTION',hid).get(0).innerHTML=options.caption;
