@@ -20575,6 +20575,22 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                     this.boxing().refresh();
                 }
             },
+            disabled:{
+                ini:false,
+                action: function(v){
+                    var i=this.getSubNode('INPUT');
+                    if(v)
+                        i.addClass('linb-ui-inputdisabled');
+                    else
+                        i.removeClass('linb-ui-inputdisabled');
+                    if((""+i.get(0).type).toLowerCase()!='button'){
+                        if(!v && (this.properties.readonly||this.$inputReadonly))
+                            v=true;
+                        // use 'readonly'(not 'disabled') for selection
+                        i.attr('readonly',v);
+                    }
+                }
+            },
             inputReadonly:{
                 ini:false,
                 action: function(v){
@@ -20583,7 +20599,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                     if(v)this.getRoot().addClass(cls);
                     else this.getRoot().removeClass(cls);
 
-                    if(!v && (this.properties.readonly||this.$inputReadonly))
+                    if(!v && (this.properties.disabled||this.properties.readonly||this.$inputReadonly))
                         v=true;
                     n.attr('readonly',v).css('cursor',v?'pointer':'');
                 }
@@ -20596,7 +20612,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                     if(v)this.getRoot().addClass(cls);
                     else this.getRoot().removeClass(cls);
 
-                    if(!v && (this.properties.inputReadonly||this.$inputReadonly))
+                    if(!v && (this.properties.disabled||this.properties.readonly||this.$inputReadonly))
                         v=true;
                     n.attr('readonly',v).css('cursor',v?'pointer':'');
                         
