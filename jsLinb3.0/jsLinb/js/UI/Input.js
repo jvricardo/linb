@@ -437,12 +437,15 @@ Class("linb.UI.Input", ["linb.UI.Widget","linb.absValue"] ,{
                 action: function(v){
                     var i=this.getSubNode('INPUT');
                     if(v)
-                        i.addClass('ui-inputdisabled');
+                        i.addClass('linb-ui-inputdisabled');
                     else
-                        i.removeClass('ui-inputdisabled');
-                    if((""+i.get(0).type).toLowerCase()!='button')
-                        // use readonly for selection
-                        i.attr('readonly'/*'disabled'*/,v);
+                        i.removeClass('linb-ui-inputdisabled');
+                    if((""+i.get(0).type).toLowerCase()!='button'){
+                        if(!v && this.properties.readonly)
+                            v=true;
+                        // use 'readonly'(not 'disabled') for selection
+                        i.attr('readonly',v);
+                    }
                 }
             },
             hAlign:{
@@ -455,11 +458,18 @@ Class("linb.UI.Input", ["linb.UI.Widget","linb.absValue"] ,{
             readonly:{
                 ini:false,
                 action: function(v){
-                    var n=this.getSubNode('INPUT'),
+                    var i=this.getSubNode('INPUT'),
                         cls=this.getClass('KEY','-readonly');
                     
                     if(v)this.getRoot().addClass(cls);
                     else this.getRoot().removeClass(cls);
+
+                    if((""+i.get(0).type).toLowerCase()!='button'){
+                        if(!v && this.properties.disabled)
+                            v=true;
+                        // use 'readonly'(not 'disabled') for selection
+                        i.attr('readonly',v);
+                    }
                 }
             },
             type:{
