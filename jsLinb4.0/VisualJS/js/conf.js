@@ -625,7 +625,10 @@ new function(){
                 CAPTION:[1,'getItemByDom','updateItem']
             },
             "linb.UI.Stacks":{
-                CAPTION:[1,'getItemByDom','updateItem']
+                CAPTION:[1,'getItemByDom',function(prf,item, itemKey, nv){
+                    prf.boxing().updateItem(item.id, {caption:nv});
+                    prf.boxing().reLayout(true);
+                }]
             },
             "linb.UI.ButtonViews":{
                 CAPTION:[1,'getItemByDom','updateItem']
