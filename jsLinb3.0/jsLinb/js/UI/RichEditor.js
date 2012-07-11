@@ -730,27 +730,29 @@
             return v;
         },
         _onresize:function(profile,width,height){
-            var size={};
-            if(width)
-                size.width=width-2;
-            if(size.width<0)
-                size.width=0;
-
-            if(width || height){
-                var itb=profile._$tb,
+            var size={},_top=0;
+            if(width || height){                
+                var itb=profile._$tb,tbh;
+                if(itb){
                     tbh=itb.getRoot().height();
-                if(tbh)
-                    profile.$_tbH=tbh;
-                else
-                    tbh=profile.$_tbH;
-                var _top=(itb?(tbh-1):0);
+                    if(tbh)
+                        profile.$_tbH=tbh;
+                    else
+                        tbh=profile.$_tbH;
+                }
+                _top=(itb?(tbh-1):0);
                 if(!height)
                     height=profile.properties.height;
                 size.height=height-_top-1;
-                if(size.height<0)
-                    size.height=0;
+                
+                if(width)
+                    size.width=width-2;
             }
+            if(size.width<0)size.width=0;
+            if(size.height<0)size.height=0;
+            
             profile.getSubNode('EDITOR').top(_top).cssSize(size,true);
+
         }
     }
 });
