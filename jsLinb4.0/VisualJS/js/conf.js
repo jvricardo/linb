@@ -84,7 +84,7 @@ new function(){
                     },
                     {
                         id:'linb.UI.Input2',key:'linb.UI.Input', caption:'Text Area', draggable:true,
-                        iniProp:{multiLine:true,height:120}
+                        iniProp:{multiLines:true,height:120}
                     },
                     {
                         id:'linb.UI.Input3',key:'linb.UI.Input', caption:'Mask Input', draggable:true,
