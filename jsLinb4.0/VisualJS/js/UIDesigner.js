@@ -19,6 +19,7 @@ Class('UIDesigner', 'linb.Com',{
         events:{
             onReady:function(){
                 SPA=this;
+                LINBBuilder=this;
                 linb.ComFactory.setProfile(CONF.ComFactoryProfile);
             },
             onRender:function(com, threadid){
@@ -446,8 +447,144 @@ Class('UIDesigner', 'linb.Com',{
                     },function(txt){
                         linb.message(txt);
                     }).start();
-
             }
+        },
+        
+         //////
+        // public APIs
+        //////
+        // get the designer 
+        getDesigner:function(){
+            return this.$classEditor._designer;
+        },
+        getViewSize:function(){
+            return _.copy(this.getDesigner().$curViewSize);
+        },
+        // size:{width:,height:}
+        setViewSize:function(size){
+            this.getDesigner().setViewSize(size);
+        },
+        getSelected:function(){
+            var sel=this.getDesigner().tempSelected,
+                out;
+            if(sel && sel.length){
+                out=[];
+                _.arr.each(sel,function(o){
+                    out.push(linb.getObject(o));
+                });
+            }
+            return out;
+        },
+        selectByAlias:function(alias){
+            var des=this.getDesigner(),
+                hash = des.getNames();
+            if(hash[alias]){
+                des.selectWidget(hash[alias].$linbid);
+            }
+        },
+        clearSelected:function(){
+            var des=this.getDesigner();
+            des._clearSelect();
+            des._setSelected(null,true);
+        },
+        delSelected:function(){
+            this.getDesigner()._deleteSelected(true);
+        },
+        getWidgetByAlias:function(alias){
+             var des=this.getDesigner(),
+                hash = des.getNames();
+             return hash[alias];
+        },
+        addWidget:function(widget,parentAlias,subId){
+            if(widget.$key=="linb.UIProfile")
+                widget=widget.boxing();
+
+            if(widget["linb.UI"]){
+                var des=this.getDesigner(),
+                    p= this.getWidgetByAlias(parentAlias);
+                if(p && p.behavior.PanelKeys&& p.behavior.PanelKeys.length)
+                    p=p.boxing();
+                else
+                    p=des.canvas;
+
+                p.append(widget,subId);
+                des._designable(widget.get(0));
+                
+                des._dirty=true;
+            }
+        },
+        removeWidgetByAlias:function(alias){
+            var des = this.getDesigner(),
+                n=this.getWidgetByAlias(alias);
+            if(n){
+                n.boxing().destroy();
+                des._dirty=true;
+            }
+            this.clearSelected();
+        },
+        getRootWidgets:function(){
+            return this.getDesigner().getWidgets();
+        },
+        getAllWidgets:function(){
+            return this.getDesigner().getNames();
+        },
+        getJSCode:function(){
+            var des = this.getDesigner(),
+                code = des.getJSCode(des.getWidgets());
+            code=code.replace(/^return linb\.create\(/,'');
+            code=code.replace(/\)\.get\(\);$/,'');
+            return code;
+        },
+        getJSONCode:function(){
+            var des = this.getDesigner(),
+                code = des.getJSONCode(des.getWidgets());
+            code=code.replace(/^return linb\.create\(/,'');
+            code=code.replace(/\)\.get\(\);$/,'');
+            return code;
+        },
+        clearCode:function(){
+            var des=this.getDesigner();
+            des._clearSelect();
+            des.canvas.removeChildren(null,true);
+            des._dirty=true;
+            des.resetCodeFromDesigner(true);
+        },
+/* JS Code:
+            var host=this, children=[], append=function(child){children.push(child.get(0))};
+            
+            append(
+                (new linb.UI.SButton)
+                .setHost(host,"ctl_sbutton1")
+                .setLeft(90)
+                .setTop(40)
+                .setCaption("button")
+            );
+            
+            return children;
+*/
+        setJSCode:function(code){
+            var des = this.getDesigner();
+            this.clearCode();
+            des.refreshView(code, true);
+            des._dirty=true;
+            des.resetCodeFromDesigner(false);            
+        },
+/* JSON CODE:
+            '[{'+
+            '    "alias" : "ctl_input1",'+
+            '    "key" : "linb.UI.Input",'+
+            '    "host" : this,'+
+            '    "properties" : {'+
+            '        "left" : 150,'+
+            '        "top" : 250'+
+            '    }'+
+            '}]'
+*/
+        setJSONCode:function(json){
+            this.setJSCode('return linb.UI.unserialize(' + json + ').get();');
+        },
+        isDirtied:function(){
+            return this.getDesigner().isDirty();
         }
     }
 });

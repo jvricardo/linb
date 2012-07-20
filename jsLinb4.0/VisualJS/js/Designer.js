@@ -987,10 +987,8 @@ Class('VisualJS.Designer', 'linb.Com',{
             });
             return linb.UI.pack(arr,false);
         },
-        _deleteSelected : function(){
-            var page = this;
-            if(!page.tempSelected || !page.tempSelected.length)return;
-            linb.UI.Dialog.confirm(linb.getRes('VisualJS.designer.confirmdel'),linb.getRes('VisualJS.designer.confirmdel2', page.tempSelected.length),function(){
+        _deleteSelected : function(force){
+            var page = this, fun=function(){
                 var sel = page.getByCacheId(page.tempSelected);
                 if(!sel.isEmpty()){
                     var ids=[];
@@ -1017,8 +1015,12 @@ Class('VisualJS.Designer', 'linb.Com',{
                 //page.onDeleted(page.pProfile, page.tempSelected);
 
                 page._setSelected(null,true);
-            });
-
+            };
+            if(!page.tempSelected || !page.tempSelected.length)return;
+            if(!force)
+                linb.UI.Dialog.confirm(linb.getRes('VisualJS.designer.confirmdel'),linb.getRes('VisualJS.designer.confirmdel2', page.tempSelected.length),fun);
+            else
+               fun();
         },
         _giveHandler:function(profile, isCanvas){
             var prevent = function(){return},
@@ -2571,7 +2573,7 @@ Class('VisualJS.Designer', 'linb.Com',{
             var page = this,t,hash={};
             var fun = function(target){
                 var self=arguments.callee;
-                hash[target.alias]=1;
+                hash[target.alias]=target;
                 if(target.children && target.children.length){
                     _.arr.each(target.children,function(o){
                         self.call(null, o[0]);
@@ -2599,9 +2601,10 @@ Class('VisualJS.Designer', 'linb.Com',{
         setLinkObj:function(obj){
             this._cls=obj;
         },
-        refreshView:function(obj){
+        refreshView:function(obj, onlyCavas){
             var self=this;
-            self._cls=obj;
+            if(!onlyCavas)
+                self._cls=obj;
 
             var ns=self.getWidgets();
             _.arr.each(ns,function(o){
@@ -2610,7 +2613,7 @@ Class('VisualJS.Designer', 'linb.Com',{
             self.iconlist.clearItems();
             self.canvas.reBoxing().empty();
 
-            var fun=_.get(obj,['Instance','iniComponents']);
+            var fun=onlyCavas ? obj : _.get(obj,['Instance','iniComponents']);
 
             if(fun){
                 linb.Dom.setCover(linb.getRes('VisualJS.designer.createContent'));
