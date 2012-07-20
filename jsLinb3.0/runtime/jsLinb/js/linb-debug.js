@@ -1066,7 +1066,7 @@ new function(){
         appPath:location.href.split('?')[0].replace(/[^\\\/]+$/,''),
         img_bg: ini.path+'bg.gif',
         img_busy: ini.path+'busy.gif',
-        img_blank:b.ie&&b.ver<=7?(ini.path+'bg.gif'):"data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==",
+        img_blank:b.ie&&parseInt(b.ver,10)<=7?(ini.path+'bg.gif'):"data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==",
         dummy_tag:'$_dummy_$'
     });
     if(!ini.path)
@@ -18129,7 +18129,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                 left:0,
                 //for firefox bug: cursor not show
                 position:'absolute',
-                overflow:linb.browser.gek?'auto':'hidden'
+                overflow:(linb.browser.gek&&parseInt(linb.browser.ver,10)<3)?'auto':'hidden'
             },
             BOX:{
                 left:0,
