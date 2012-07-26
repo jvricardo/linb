@@ -7,7 +7,9 @@ Class('VisualJS.ClassTool',null,{
                 reg3=/\s*(((function\s*([\w$]+\s*)?\(\s*([\w$\s,]*)\s*\)\s*)?(\{([^\{\}]*)\}))|(\[([^\[\]]*)\]))/g,
                 reg4=/^[\xEF\xBB\xBF\uFEFF\s]*Class\s*\(\s*[\'\"]([^\'\"]+)[\'\"]\s*\,\s*[\'\"]([^\'\"]+)[\'\"]\s*\,1\s*\)\s*;?\s*$/,
                 reg5=/^[\xEF\xBB\xBF\uFEFF\s]*Class\s*\(/,
-                reg6=/^[\w]+[\w\.]*[\w]+$/;
+                reg6=/^[\w]+[\w\.]*[\w]+$/,
+                reg7=/[\(\)\[\]\{\}]/
+                ;
             // clear top comments
             while(reg1.test(str))
                 str = str.replace(reg1,'');
@@ -15,9 +17,14 @@ Class('VisualJS.ClassTool',null,{
             while(reg12.test(str))
                 str = str.replace(reg12,'');
             // clear comments
-            str = str.replace(/\/\/[^\n]*/g,'');
             str = str.replace(/\/\*[^*]*\*+([^\/][^*]*\*+)*\//g,'');
-                
+            str = str.replace(/\/\/[^\n]*/g,'');
+
+            // clear string/reg
+            str = str.replace(/\/(\\[\/\\]|[^*\/])(\\.|[^\/\n\\])*\/[gim]*/g,'null');
+            str = str.replace(/"(\\.|[^"\\])*"/g,function(a){return reg7.test(a)?'\"\"':a});
+            str = str.replace(/'(\\.|[^'\\])*'/g,function(a){return reg7.test(a)?"\'\'":a});
+
             // check "Class(" string
             if(!reg5.test(str))
                 return false;
