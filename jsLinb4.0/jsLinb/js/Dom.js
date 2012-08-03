@@ -1599,7 +1599,7 @@ type:4
                 if(map[name])
                     name = linb.browser.ie?"styleFloat":"cssFloat";
                 //document.defaultView first, for opera 9.0
-                value = ((t=document.defaultView) && t.getComputedStyle)?(t=t.getComputedStyle(node,null))?t.getPropertyValue(name2):'':(node.currentStyle&&(node.currentStyle[name]||node.currentStyle[name2]));
+                value = ((t=document.defaultView) && t.getComputedStyle)?(t=t.getComputedStyle(node,null))?t.getPropertyValue(name2):'':node.currentStyle?(node.currentStyle[name]||node.currentStyle[name2]):(node[name]||'');
 /*
                 if(linb.browser.opr){
                     var map2 = me.map2 || (me.map2={left:1,top:1,right:1,bottom:1});
