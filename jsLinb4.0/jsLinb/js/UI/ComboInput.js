@@ -89,7 +89,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                     return t(profile, value);
             return value;
         },
-        _cache:function(){
+        _cache:function(focus){
             var profile=this.get(0), drop=profile.$drop, cached=profile.properties.cachePopWnd;
             if(drop){
                 if(!cached){
@@ -104,6 +104,8 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                                 drop.getRoot().css('display','none');
                             if(drop.boxing()._clearMouseOver)drop.boxing()._clearMouseOver();
                             profile.getSubNode('POOL').append(drop.getRoot());
+                            if(focus)
+                                profile.boxing().activate();
                         });
                     }
                 }
@@ -234,7 +236,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                                 o.setHeight(pro.dropListHeight);
                             else
                                 o.adjustSize();
-
+                            o.afterClick(function(){this.boxing()._cache(true);return false});
                             o.beforeUIValueSet(function(p, ovalue, value){
                                 var b2=this.boxing();
                                 if(type=='combobox'){
@@ -243,24 +245,22 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                                         value = item[0].caption;
                                 }
                                 //update value
-                                b2.setUIValue(value)
-                                //set activate
-                                .activate();
+                                b2.setUIValue(value);
 
                                 //cache pop
-                                return b2._cache();
+                                return b2._cache(true);
                             });
                             break;
                         case 'time':
                         case 'timepicker':
                             o = linb.create('TimePicker').render();
                             o.setHost(profile);
-                            o.beforeClose(function(){this.boxing().activate()._cache();return false});
+                            o.beforeClose(function(){this.boxing()._cache(true);return false});
                             o.beforeUIValueSet(function(p, o, v){
                                 var b2=this.boxing();
                                 //update value
-                                b2.setUIValue(v).activate();
-                                return b2._cache();
+                                b2.setUIValue(v);
+                                return b2._cache(true);
                             });
                             break;
                         case 'date':
@@ -272,12 +272,12 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                                 o.setTimeInput(true);
 
                             o.setHost(profile);
-                            o.beforeClose(function(){this.boxing().activate()._cache();return false});
+                            o.beforeClose(function(){this.boxing()._cache(true);return false});
                             o.beforeUIValueSet(function(p, o, v){
                                 var b2=this.boxing();
                                 //update value
-                                b2.setUIValue(String(v.getTime())).activate();
-                                return b2._cache();
+                                b2.setUIValue(String(v.getTime()));
+                                return b2._cache(true);
                             });
 
                             break;
@@ -285,12 +285,12 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                         case 'colorpicker':
                             o = linb.create('ColorPicker').render();
                             o.setHost(profile);
-                            o.beforeClose(function(){this.boxing().activate()._cache();return false});
+                            o.beforeClose(function(){this.boxing()._cache(true);return false});
                             o.beforeUIValueSet(function(p, o, v){
                                 var b2=this.boxing();
                                 //update value
-                                b2.setUIValue('#'+v).activate();
-                                return b2._cache();
+                                b2.setUIValue('#'+v);
+                                return b2._cache(true);
                             });
                             break;
                     }
@@ -356,7 +356,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                     box.activate();
                     //unhook
                     linb.Event.keyboardHook('esc');
-                    box._cache();
+                    box._cache(true);
                 });
                 
                 if(profile.afterPopShow)

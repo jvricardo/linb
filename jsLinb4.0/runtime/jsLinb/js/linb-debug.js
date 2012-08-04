@@ -7677,7 +7677,7 @@ type:4
                 if(map[name])
                     name = linb.browser.ie?"styleFloat":"cssFloat";
                 //document.defaultView first, for opera 9.0
-                value = ((t=document.defaultView) && t.getComputedStyle)?(t=t.getComputedStyle(node,null))?t.getPropertyValue(name2):'':(node.currentStyle&&(node.currentStyle[name]||node.currentStyle[name2]));
+                value = ((t=document.defaultView) && t.getComputedStyle)?(t=t.getComputedStyle(node,null))?t.getPropertyValue(name2):'':node.currentStyle?(node.currentStyle[name]||node.currentStyle[name2]):(node[name]||'');
 /*
                 if(linb.browser.opr){
                     var map2 = me.map2 || (me.map2={left:1,top:1,right:1,bottom:1});
@@ -20972,7 +20972,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                     return t(profile, value);
             return value;
         },
-        _cache:function(){
+        _cache:function(focus){
             var profile=this.get(0), drop=profile.$drop, cached=profile.properties.cachePopWnd;
             if(drop){
                 if(!cached){
@@ -20987,6 +20987,8 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                                 drop.getRoot().css('display','none');
                             if(drop.boxing()._clearMouseOver)drop.boxing()._clearMouseOver();
                             profile.getSubNode('POOL').append(drop.getRoot());
+                            if(focus)
+                                profile.boxing().activate();
                         });
                     }
                 }
@@ -21117,7 +21119,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                                 o.setHeight(pro.dropListHeight);
                             else
                                 o.adjustSize();
-
+                            o.afterClick(function(){this.boxing()._cache(true);return false});
                             o.beforeUIValueSet(function(p, ovalue, value){
                                 var b2=this.boxing();
                                 if(type=='combobox'){
@@ -21126,24 +21128,22 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                                         value = item[0].caption;
                                 }
                                 //update value
-                                b2.setUIValue(value)
-                                //set activate
-                                .activate();
+                                b2.setUIValue(value);
 
                                 //cache pop
-                                return b2._cache();
+                                return b2._cache(true);
                             });
                             break;
                         case 'time':
                         case 'timepicker':
                             o = linb.create('TimePicker').render();
                             o.setHost(profile);
-                            o.beforeClose(function(){this.boxing().activate()._cache();return false});
+                            o.beforeClose(function(){this.boxing()._cache(true);return false});
                             o.beforeUIValueSet(function(p, o, v){
                                 var b2=this.boxing();
                                 //update value
-                                b2.setUIValue(v).activate();
-                                return b2._cache();
+                                b2.setUIValue(v);
+                                return b2._cache(true);
                             });
                             break;
                         case 'date':
@@ -21155,12 +21155,12 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                                 o.setTimeInput(true);
 
                             o.setHost(profile);
-                            o.beforeClose(function(){this.boxing().activate()._cache();return false});
+                            o.beforeClose(function(){this.boxing()._cache(true);return false});
                             o.beforeUIValueSet(function(p, o, v){
                                 var b2=this.boxing();
                                 //update value
-                                b2.setUIValue(String(v.getTime())).activate();
-                                return b2._cache();
+                                b2.setUIValue(String(v.getTime()));
+                                return b2._cache(true);
                             });
 
                             break;
@@ -21168,12 +21168,12 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                         case 'colorpicker':
                             o = linb.create('ColorPicker').render();
                             o.setHost(profile);
-                            o.beforeClose(function(){this.boxing().activate()._cache();return false});
+                            o.beforeClose(function(){this.boxing()._cache(true);return false});
                             o.beforeUIValueSet(function(p, o, v){
                                 var b2=this.boxing();
                                 //update value
-                                b2.setUIValue('#'+v).activate();
-                                return b2._cache();
+                                b2.setUIValue('#'+v);
+                                return b2._cache(true);
                             });
                             break;
                     }
@@ -21239,7 +21239,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                     box.activate();
                     //unhook
                     linb.Event.keyboardHook('esc');
-                    box._cache();
+                    box._cache(true);
                 });
                 
                 if(profile.afterPopShow)
@@ -22977,7 +22977,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                     p.boxing()._setCtrlValue(p.$tempValue=sid,false);
                     p.box._vC(p);
                     if(!p.properties.advance)
-                        p.boxing().setUIValue(sid);
+                        p.boxing().setUIValue(sid,true);
                         
                     return false;
                 },
@@ -22985,7 +22985,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                     var sid=p.getSubId(s);
                     p.boxing()._setCtrlValue(p.$tempValue=sid,false);
                     p.box._vC(p);
-                    p.boxing().setUIValue(sid);
+                    p.boxing().setUIValue(sid,true);
                     return false;
                 }
             },
@@ -23149,7 +23149,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 onDblclick:function(p,e,src){
                     p.box._updateValueByPos(p, e);
                     p.box._vC(p);
-                    p.boxing().setUIValue(p.$tempValue);
+                    p.boxing().setUIValue(p.$tempValue,true);
                 }
             },
             ADVCLR:{
@@ -23183,7 +23183,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 onDblclick:function(p,e,src){
                     p.box._updateValueByPos(p, e);
                     p.box._vC(p);
-                    p.boxing().setUIValue(p.$tempValue);
+                    p.boxing().setUIValue(p.$tempValue,true);
                 }
             }
         },
@@ -25188,7 +25188,9 @@ Class("linb.UI.Group", "linb.UI.Div",{
                         box = profile.boxing(),
                         ks=linb.Event.getKey(e),
                         rt,rt2;
-
+                        
+                    if(profile.beforeClick && false===o.boxing().beforeClick(profile,item,e,src))return;
+                        
                     if(properties.disabled|| item.disabled)return false;
 
                     if(profile.onClick)
@@ -25249,7 +25251,6 @@ Class("linb.UI.Group", "linb.UI.Div",{
                         }
                     case 'single':
                         if(properties.readonly|| item.readonly)return false;
-
                         if(box.getUIValue() == item.id)
                             rt=false;
                         else{
@@ -25258,10 +25259,14 @@ Class("linb.UI.Group", "linb.UI.Div",{
                             if(box.get(0) && box.getUIValue() == item.id)
                                 rt=box.onItemSelected(profile, item, e, src, 1);
                         }
+
                         break;
                     }
                     var node=linb.use(src).get(0),href=node&&node.href;
                     node=null;
+                    
+                    if(profile.afterClick)box.afterClick(profile,item,e,src);
+                    
                     return (!href || href.indexOf('javascript:')==0)?false:rt;
                 },
                 onKeydown:function(profile, e, src){
@@ -25303,7 +25308,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                             return false;
                             break;
                         case 'enter':
-                            cur.onClick();
+                            cur.onClick(true);
                             break;
                     }
                 },
@@ -25347,6 +25352,8 @@ Class("linb.UI.Group", "linb.UI.Div",{
         },
         EventHandlers:{
             onClick:function(profile, item, e, src){},
+            beforeClick:function(profile, item, e, src){},
+            afterClick:function(profile, item, e, src){},
             onDblclick:function(profile, item, e, src){},
             onItemSelected:function(profile, item, e, src, type){}
         },
