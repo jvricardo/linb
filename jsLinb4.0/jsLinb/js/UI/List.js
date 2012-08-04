@@ -195,7 +195,9 @@ Class("linb.UI.List", ["linb.UI", "linb.absList","linb.absValue" ],{
                         box = profile.boxing(),
                         ks=linb.Event.getKey(e),
                         rt,rt2;
-
+                        
+                    if(profile.beforeClick && false===o.boxing().beforeClick(profile,item,e,src))return;
+                        
                     if(properties.disabled|| item.disabled)return false;
 
                     if(profile.onClick)
@@ -256,7 +258,6 @@ Class("linb.UI.List", ["linb.UI", "linb.absList","linb.absValue" ],{
                         }
                     case 'single':
                         if(properties.readonly|| item.readonly)return false;
-
                         if(box.getUIValue() == item.id)
                             rt=false;
                         else{
@@ -265,10 +266,14 @@ Class("linb.UI.List", ["linb.UI", "linb.absList","linb.absValue" ],{
                             if(box.get(0) && box.getUIValue() == item.id)
                                 rt=box.onItemSelected(profile, item, e, src, 1);
                         }
+
                         break;
                     }
                     var node=linb.use(src).get(0),href=node&&node.href;
                     node=null;
+                    
+                    if(profile.afterClick)box.afterClick(profile,item,e,src);
+                    
                     return (!href || href.indexOf('javascript:')==0)?false:rt;
                 },
                 onKeydown:function(profile, e, src){
@@ -310,7 +315,7 @@ Class("linb.UI.List", ["linb.UI", "linb.absList","linb.absValue" ],{
                             return false;
                             break;
                         case 'enter':
-                            cur.onClick();
+                            cur.onClick(true);
                             break;
                     }
                 },
@@ -354,6 +359,8 @@ Class("linb.UI.List", ["linb.UI", "linb.absList","linb.absValue" ],{
         },
         EventHandlers:{
             onClick:function(profile, item, e, src){},
+            beforeClick:function(profile, item, e, src){},
+            afterClick:function(profile, item, e, src){},
             onDblclick:function(profile, item, e, src){},
             onItemSelected:function(profile, item, e, src, type){}
         },

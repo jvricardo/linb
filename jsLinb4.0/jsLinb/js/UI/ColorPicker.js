@@ -460,7 +460,7 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
                     p.boxing()._setCtrlValue(p.$tempValue=sid,false);
                     p.box._vC(p);
                     if(!p.properties.advance)
-                        p.boxing().setUIValue(sid);
+                        p.boxing().setUIValue(sid,true);
                         
                     return false;
                 },
@@ -468,7 +468,7 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
                     var sid=p.getSubId(s);
                     p.boxing()._setCtrlValue(p.$tempValue=sid,false);
                     p.box._vC(p);
-                    p.boxing().setUIValue(sid);
+                    p.boxing().setUIValue(sid,true);
                     return false;
                 }
             },
@@ -632,7 +632,7 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
                 onDblclick:function(p,e,src){
                     p.box._updateValueByPos(p, e);
                     p.box._vC(p);
-                    p.boxing().setUIValue(p.$tempValue);
+                    p.boxing().setUIValue(p.$tempValue,true);
                 }
             },
             ADVCLR:{
@@ -666,7 +666,7 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
                 onDblclick:function(p,e,src){
                     p.box._updateValueByPos(p, e);
                     p.box._vC(p);
-                    p.boxing().setUIValue(p.$tempValue);
+                    p.boxing().setUIValue(p.$tempValue,true);
                 }
             }
         },
