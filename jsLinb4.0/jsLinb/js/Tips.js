@@ -285,6 +285,13 @@ Class("linb.Tips", null,{
                 this._tpl.show(s, true);
             }
         },
+        setPos:function(left,top){
+            var n=this;
+            if((n=n._Node)&&(n=n.style)){
+                if(left||left===0)n.left=parseFloat(left)+'px';
+                if(top||top===0)n.top=parseFloat(top)+'px';
+            }
+        },
         show:function(pos, item, key){
             var self=this,t;
             //for mousemove

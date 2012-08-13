@@ -945,7 +945,8 @@ _.set(linb.Locale,["en","app"], {
                 "path [Required]: String, .js file path",
                 "onSuccess [Optional]: Function, if includes the file successfully, call this function. ",
                 "onFail [Optional]: Function, if doesn't include the file, call this function.",
-                "sync [Optional]: Boolean, sync or async. Default is [false]."
+                "sync [Optional]: Boolean, sync or async. Default is [false].",
+                "options [Optional]: Object, a set of key/value pairs that configure the request."
             ],
             $snippet:[
                 "//If the class have been included already, it'll trigger onSuccess callback function. \n"+
@@ -5681,6 +5682,13 @@ _.set(linb.Locale,["en","app"], {
             $desc:"To set the tips string.",
             $paras:[
                 "s [Required] : String"
+            ]
+        },
+        setPos:{
+            $desc:"To set the tips position.",
+            $paras:[
+                "left [Optional] : Number, px number",
+                "top [Optional] : Number, px number"
             ]
         },
         hide:{

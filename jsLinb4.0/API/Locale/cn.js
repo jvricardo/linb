@@ -942,7 +942,8 @@ _.set(linb.Locale,["cn","app"], {
                 "path [必需参数]: String, .js 文件路径",
                 "onSuccess [可选参数]: Function, 包含文件成功时触发的回调函数. ",
                 "onFail [可选参数]: Function, 包含文件失败时触发的回调函数.",
-                "sync [可选参数]: Boolean, 是否同步. 如果是同步,要确保path在同域名下."
+                "sync [可选参数]: Boolean, 是否同步. 如果是同步,要确保path在同域名下.",
+                "options [可选参数]: Object, 一组配置数据."
             ],
             $snippet:[
                 "//改类已经存在,会直接调用onSuccess. \n"+
@@ -5693,6 +5694,13 @@ _.set(linb.Locale,["cn","app"], {
             $desc:"设置tips显示的字符串.",
             $paras:[
                 "s [必需参数] : String"
+            ]
+        },
+        setPos:{
+            $desc:"设置tips显示的位置.",
+            $paras:[
+                "left [可选参数] : Number, 以px表示的横坐标。",
+                "top [可选参数] : Number, 以px表示的纵坐标。"
             ]
         },
         hide:{

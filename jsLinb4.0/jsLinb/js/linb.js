@@ -845,18 +845,23 @@ _.merge(linb,{
 
         ).apply(null, arguments).start()
     },
-    include:function(id,path,onSuccess,onFail,sync){
+    include:function(id,path,onSuccess,onFail,sync,options){
         if(id&&linb.SC.get(id))
             _.tryF(onSuccess);
         else{
-            if(!sync)
-                linb.SAjax(path,'',onSuccess,onFail,0,{rspType:'script',checkKey:id}).start()
-            else
+            options=typeof options=='object'?options:{};
+            if(!sync){
+                options.rspType='script';
+                options.checkKey=id;
+                linb.SAjax(path,'',onSuccess,onFail,0,options).start()
+            }else{
+                options.asy=!sync;
                 linb.Ajax(path,'',function(rsp){
                     try{_.exec(rsp)}
                     catch(e){_.tryF(onFail,[e.name + ": " + e.message])}
                     _.tryF(onSuccess);
-                },onFail,0,{asy:!sync}).start();
+                },onFail,0,options).start();
+                }
         }
     },
     require:function(cls,sync,onSuccess,onFail){
