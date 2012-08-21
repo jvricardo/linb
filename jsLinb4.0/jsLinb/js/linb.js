@@ -318,6 +318,27 @@ _.merge(_,{
         }
         return parseFloat((number<0?"-":"")+v);
     },
+    toNumeric:function(value, precision, groupingSeparator, decimalSeparator){
+        if(!_.isNumb(value))
+            value=parseFloat((value+"").replace(/\s*(e\+|[^0-9])/g, function(a,b,c){return b=='e+'||b=='E+'||(c==0&&b=='-')?b:b==decimalSeparator?'.':''}))||0;
+        if(_.isSet(precision) && precision>=0)
+             value=_.toFixedNumber(value,precision);
+        return value;            
+    },
+    formatNumeric:function(value, precision, groupingSeparator, decimalSeparator){
+        if(_.isSet(precision))precision=parseInt(precision,10);
+        precision=(precision||precision===0)?precision:2;
+        groupingSeparator=groupingSeparator||",";
+        decimalSeparator=decimalSeparator||".";
+        value=""+parseFloat(value);
+        if(value.indexOf('e')==-1){
+            value=_.toFixedNumber(value,precision) + "";
+            value= value.split(".");
+            value[0] = value[0].split("").reverse().join("").replace(/(\d{3})(?=\d)/g, "$1"+groupingSeparator).split("").reverse().join("");
+            return value.join(decimalSeparator);
+        }else
+            return value;
+    },
     /*shadow copy for hash/array
     * var a=[]; a.b='b'; a.b will not be copied
     */
@@ -429,7 +450,29 @@ _.merge(_,{
         }
         return key?hash[key]:hash;
     },
-
+    preLoadImage:function(src, onSuccess, onFail) {
+        if(_.isArr(src)){
+            for(var i=0, l=arr.length; i<l; i++)
+                _.preLoadImage(src[i], onSuccess, onFail);
+            return l;
+        }
+        var img = document.createElement("img");
+        img.style.cssText = "position:absolute;left:-999px;top:-999px";
+        img.width=img.height=2;
+        img.onload = function () {
+            if(typeof onSuccess=='function')onSuccess.call(this);
+            this.onload = this.onerror = null;
+            document.body.removeChild(this);
+        };
+        img.onerror = function () {
+            if(typeof onFail=='function')onFail.call(this);
+            this.onload = this.onerror = null;
+            document.body.removeChild(this);
+        };
+        document.body.appendChild(img);
+        img.src = src;
+		return 1;
+    },
     // type detection
     isDefined:function(target)  {return target!==undefined},
     isNull:function(target)  {return target===null},

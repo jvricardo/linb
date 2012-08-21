@@ -1,7 +1,14 @@
 <?php
 include_once('../phpLinb/linb.php');
 $io = LINB::SC('IO');
-$template = $io->getString("template/singledebug.html");
+
+$testTpl=isset($_POST['testTpl'])?$_POST['testTpl']:'';
+if(!$testTpl){
+    $testTpl="singledebug.html";
+}
+
+$template = $io->getString("template/".$testTpl);
+
 
 $clsName=$_POST['clsName'];
 $clsName=get_magic_quotes_gpc()?stripslashes($clsName):$clsName;

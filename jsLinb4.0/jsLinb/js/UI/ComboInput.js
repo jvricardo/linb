@@ -104,6 +104,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                                 drop.getRoot().css('display','none');
                             if(drop.boxing()._clearMouseOver)drop.boxing()._clearMouseOver();
                             profile.getSubNode('POOL').append(drop.getRoot());
+                            
                             if(focus)
                                 profile.boxing().activate();
                         });
@@ -236,7 +237,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                                 o.setHeight(pro.dropListHeight);
                             else
                                 o.adjustSize();
-                            o.afterClick(function(){this.boxing()._cache(true);return false});
+                            o.afterClick(function(){this.boxing()._cache(true);return false;});
                             o.beforeUIValueSet(function(p, ovalue, value){
                                 var b2=this.boxing();
                                 if(type=='combobox'){
@@ -498,14 +499,15 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 var keymap={a:1,c:1,v:1,x:1};
                 _.merge(profile,{
                     $beforeKeypress : function(p,c,k){
-                        return k.key.length!=1 || /[-0-9,.]/.test(k.key) ||(k.ctrlKey && !!keymap[k.key]);
+                        return k.key.length!=1 || /[-0-9,. ]/.test(k.key) ||(k.ctrlKey && !!keymap[k.key]);
                     },
                     $compareValue : function(p,a,b){
                         return ((a===''&&b!=='')||(b===''&&a!==''))?false:p.box._number(p, a)==p.box._number(p, b)
                     },
                     $getShowValue : function(p,v){
+                        var pp=p.properties;
                         if(_.isSet(v)&&v!==""){
-                            v=p.box.formatCurrency(p.box._number(p, v), p.properties.precision);
+                            v=_.formatNumeric(p.box._number(p, v), pp.precision, pp.groupingSeparator, pp.decimalSeparator);
                             if(p.properties.currencyTpl)
                                 v=p.properties.currencyTpl.replace("*", v);
                         }else
@@ -513,7 +515,8 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                         return v;
                     },
                     $toEditor : function(p,v){
-                        return (_.isSet(v)&&v!=="")?p.box.formatCurrency(p.box._number(p, v), p.properties.precision):"";
+                        var pp=p.properties;
+                        return (_.isSet(v)&&v!=="")?_.formatNumeric(p.box._number(p, v), pp.precision, pp.groupingSeparator, pp.decimalSeparator):"";
                     },
                     $fromEditor : function(p,v){
                         return (_.isSet(v)&&v!=="")?p.box._number(p, v):"";
@@ -524,13 +527,18 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 var keymap={a:1,c:1,v:1,x:1};
                 _.merge(profile,{
                     $beforeKeypress : function(p,c,k){
-                        return k.key.length!=1 || /[-0-9.]/.test(k.key)|| (k.ctrlKey && !!keymap[k.key]);
+                        return k.key.length!=1 || /[-0-9. ]/.test(k.key)|| (k.ctrlKey && !!keymap[k.key]);
                     },
                     $compareValue : function(p,a,b){
                         return ((a===''&&b!=='')||(b===''&&a!==''))?false:p.box._number(p, a)==p.box._number(p, b)
                     },
                     $getShowValue : function(p,v){
-                        return (_.isSet(v)&&v!=="")?p.box._number(p, v):"";
+                        var pp=p.properties;
+                        return (_.isSet(v)&&v!=="")?_.formatNumeric(p.box._number(p, v), pp.precision, pp.groupingSeparator, pp.decimalSeparator):"";
+                    },
+                    $toEditor : function(p,v){
+                        var pp=p.properties;
+                        return (_.isSet(v)&&v!=="")?_.formatNumeric(p.box._number(p, v), pp.precision, pp.groupingSeparator, pp.decimalSeparator):"";
                     },
                     $fromEditor : function(p,v){
                         return (_.isSet(v)&&v!=="")?p.box._number(p, v):"";
@@ -990,6 +998,10 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
             // yyyy-mm-dd
             // yyyy/mm/dd
             dateEditorTpl:"",
+            // for number&currency
+            groupingSeparator:",",
+            decimalSeparator:".",
+
             popCtrlProp:{
                 ini:{}
             },
@@ -1068,16 +1080,16 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
             disabled:{
                 ini:false,
                 action: function(v){
-                    var n=this.getSubNode('INPUT');
+                    var i=this.getSubNode('INPUT');
                     if(v)
-                        n.addClass('linb-ui-inputdisabled');
+                        i.addClass('linb-ui-inputdisabled');
                     else
-                        n.removeClass('linb-ui-inputdisabled');
-                    if((""+n.get(0).type).toLowerCase()!='button'){
+                        i.removeClass('linb-ui-inputdisabled');
+                    if((""+i.get(0).type).toLowerCase()!='button'){
                         if(!v && (this.properties.readonly||this.$inputReadonly))
                             v=true;
                         // use 'readonly'(not 'disabled') for selection
-                        n.attr('readonly',v);
+                        i.attr('readonly',v);
                     }
                 }
             },
@@ -1102,7 +1114,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                     if(v)this.getRoot().addClass(cls);
                     else this.getRoot().removeClass(cls);
 
-                    if(!v && (this.properties.disabled||this.properties.readonly||this.$inputReadonly))
+                    if(!v && (this.properties.disabled||this.properties.inputReadonly||this.$inputReadonly))
                         v=true;
                     n.attr('readonly',v).css('cursor',v?'pointer':'');
                         
@@ -1265,37 +1277,15 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 default:
                     return typeof value=='string'?value:(value||value===0)?String(value):'';
             }
-        },
+        },        
         _number:function(profile, value){
             var prop=profile.properties;
-
-            if(!_.isNumb(value))
-                value=parseFloat((value+"").replace(/[^\d.-]/g,''))||0;
-
+            value=_.toNumeric(value, prop.precision, prop.groupingSeparator, prop.decimalSeparator);
             if(_.isSet(prop.max))
                 value=value>prop.max?prop.max:value;
             if(_.isSet(prop.min))
                 value=value<prop.min?prop.min:value;
-            if(_.isSet(prop.precision) && prop.precision>=0)
-                 value=_.toFixedNumber(value,prop.precision);
-                 
             return value;
-            //var n=Math.pow(10,Math.max(parseInt(prop.precision,10)||0,0));
-            //value=(+value||0);
-            //value=Math.ceil((value-0.0000000000003)*n)/n;
-        },
-        formatCurrency:function(value, precision){
-            if(_.isSet(precision))precision=parseInt(precision,10);
-            precision=(precision||precision===0)?precision:2;
-            value=parseFloat(value);
-            if((value+"").indexOf('e')==-1){
-                value=_.toFixedNumber(value,precision) + "";
-                value= value.split(".");
-                value[0] = value[0].split("").reverse().join("").replace(/(\d{3})(?=\d)/g, "$1,").split("").reverse().join("");
-                return value.join(".");
-            }else{
-                return '0.00';
-            }
         },
         _onresize:function(profile,width,height){
             var f=function(k){return k?profile.getSubNode(k).get(0):null},

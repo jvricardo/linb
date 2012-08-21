@@ -62,6 +62,7 @@ Class('UIDesigner', 'linb.Com',{
                             return false;
                         }
                         linb.Dom.submit(CONF.testphpPath,{
+                            testTpl:CONF.testTpl,
                             clsName:clsName,
                             content:content,
                             theme:linb.UI.getTheme(),
@@ -134,7 +135,7 @@ Class('UIDesigner', 'linb.Com',{
                 url=_.urlDecode(location.href.split('#')[1],'url'),
                 hash={};
 
-            hash.ajax1=linb.Ajax(com.$dftCodePath + linb.getLang()+"/"+ com.$dftCodeFileName,'',function(code){
+            hash.ajax1=linb.Ajax(com.$dftCodePath + linb.getLang()+"/"+ (CONF.initFilePath||com.$dftCodeFileName),'',function(code){
                 com.$iniCode=code.replace('{className}','App');
             },function(){
                 alert(linb.getRes('VisualJS.builder.noexist', com.$dftCodePath));

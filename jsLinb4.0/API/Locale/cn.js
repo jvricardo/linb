@@ -208,6 +208,24 @@ _.set(linb.Locale,["cn","app"], {
                     "var a=0.1*0.2; alert(a); alert(_.toFixedNumber(a, 10));"
                 ]
             },
+            toNumeric:{
+                $desc:"按给定的精度、千位分隔符和小数分隔符来从取得数字.",
+                $paras:[
+                    "value [必需参数]: String, 字符串.",
+                    "precision [可选参数]: Number, 小数点后精度. 默认为 2.",
+                    "groupingSeparator[可选参数]: String, 千位分隔符. 默认为 ','.",
+                    "decimalSeparator[可选参数]: String, 小数分隔符. 默认为 '.'."
+                ]
+            },
+            formatNumeric:{
+                $desc:"按给定的精度、千位分隔符和小数分隔符来格式化数字,返回的是格式化后的字符串.",
+                $paras:[
+                    "value [必需参数]: Number, 数字.",
+                    "precision [可选参数]: Number, 小数点后精度. 默认为 2.",
+                    "groupingSeparator[可选参数]: String, 千位分隔符. 默认为 ','.",
+                    "decimalSeparator[可选参数]: String, 小数分隔符. 默认为 '.'."
+                ]
+            },
             clone:{
                 $desc:"拷贝对象, 深度拷贝.",
                 $rtn:"Object",
@@ -10085,6 +10103,30 @@ _.set(linb.Locale,["cn","app"], {
                     "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为 [false]."
                 ]
             },
+            getGroupingSeparator:{
+                $desc:"得到千位分隔符.",
+                $rtn:"String"
+            },
+            setGroupingSeparator:{
+                $desc:"设置千位分隔符.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : String.",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为 [false]."
+                ]
+            },
+            getDecimalSeparator:{
+                $desc:"得到小数分隔符.",
+                $rtn:"String"
+            },
+            setDecimalSeparator:{
+                $desc:"设置小数分隔符.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [必需参数] : String.",
+                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为 [false]."
+                ]
+            },
             getPopCtrlProp:{
                 $desc:"得到固定弹出窗口('combobox,listbox,helpinput,date,time,datetime,color')的属性.",
                 $rtn:"Object"
@@ -11235,8 +11277,26 @@ _.set(linb.Locale,["cn","app"], {
                     "}"
                 ]
             },
+            beforeClick:{
+                $desc:"在单击条目前触发该事件.如返回 false, 单击事件取消.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "item: Object, 项对象.",
+                    "e: Event, 事件对象.",
+                    "src: String, 事件所属DOM元素的linbid."
+                ]
+            },
             onClick:{
                 $desc:"在单击条目的时候触发该事件.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "item: Object, 项对象.",
+                    "e: Event, 事件对象.",
+                    "src: String, 事件所属DOM元素的linbid."
+                ]
+            },
+            afterClick:{
+                $desc:"在单击条目后触发该事件",
                 $paras:[
                     "profile : linb.UIProfile.",
                     "item: Object, 项对象.",

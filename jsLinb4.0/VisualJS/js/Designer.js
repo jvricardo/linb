@@ -114,6 +114,9 @@ Class('VisualJS.Designer', 'linb.Com',{
 
                 page.toolbar.setItems(page.$canvasMenuItems);
                 
+                if(typeof CONF.customDesingerOnReady=='function'){
+                    CONF.customDesingerOnReady(page);
+                }
             },
             onRender:function(page){
                 var _refresh=page._refresh=function(obj, key, region){
@@ -330,6 +333,9 @@ Class('VisualJS.Designer', 'linb.Com',{
                 page._giveHandler(page.canvas.get(0),true);
                 page._enablePanelDesign(page.canvas.get(0));
 
+                if(typeof CONF.customDesingerOnRender=='function'){
+                    CONF.customDesingerOnRender(page);
+                }
             },
             onDestroy:function(page){
                 if(page.frame && page.frame.destroy)
@@ -2808,6 +2814,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                 .setTop(5)
                 .setWidth(100)
                 .setHeight(100)
+                .setZIndex(10)
                 .setCustomStyle({"KEY":"background-color:#FFFEF6;"})
             );
 
@@ -2850,7 +2857,7 @@ Class('VisualJS.Designer', 'linb.Com',{
                 .setTop(5)
                 .setWidth(100)
                 .setHeight(100)
-                .setZIndex(10)
+                .setZIndex(20)
                 .setCustomStyle({"KEY":"overflow:visible"})
                 .onContextmenu('_oncanvasmenu')
             );

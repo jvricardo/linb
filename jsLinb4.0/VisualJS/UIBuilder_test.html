@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<body spellcheck="false">
+
+
+<script type="text/javascript">
+/*
+public APIs for UIBuilder:
+
+getDesigner
+getViewSize
+setViewSize
+getSelected
+selectByAlias
+clearSelected
+delSelected
+getWidgetByAlias
+addWidget
+removeWidgetByAlias
+getRootWidgets
+getAllWidgets
+getJSCode
+getJSONCode
+clearCode
+setJSCode
+setJSONCode
+isDirtied
+
+*/
+
+var f_getContents=function(){
+    var code=frames["uibuilder"].SPA.getJSONCode();
+    alert(code);
+};
+f_clrContents=function(){
+    frames["uibuilder"].SPA.clearCode();
+};
+var f_setContents=function(){
+    
+    var code='[{'+
+            '    "alias" : "ctl_input1",'+
+            '    "key" : "linb.UI.Input",'+
+            '    "host" : this,'+
+            '    "properties" : {'+
+            '        "left" : 150,'+
+            '        "top" : 250'+
+            '    }'+
+            '}]';
+    
+    frames["uibuilder"].SPA.setJSONCode(code);
+};
+var f_isdirtied=function(){
+    alert(frames["uibuilder"].SPA.isDirtied());
+};
+
+</script>
+
+
+
+<p>
+    <a onclick="javascript:f_getContents();return false;" href="#" >get</a>
+    |
+    <a onclick="javascript:f_clrContents();return false;" href="#" >clear</a>
+    |
+    <a onclick="javascript:f_setContents();return false;" href="#" >set</a>
+    |
+    <a onclick="javascript:f_isdirtied();return false;" href="#" >Modified?</a>
+    
+</p>
+
+    <div>
+       <iframe name="uibuilder" id="uibuilder" width=800 height=600 border=0 src="UIBuilder.html"></iframe>
+    </div>
+</body>
+</html>

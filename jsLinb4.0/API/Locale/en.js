@@ -207,6 +207,24 @@ _.set(linb.Locale,["en","app"], {
                     "var a=0.1*0.2; alert(a); alert(_.toFixedNumber(a, 10));"
                 ]
             },
+            toNumeric:{
+                $desc:"Gets a number from string. Returns number.",
+                $paras:[
+                    "value [Required]: String,  the target number.",
+                    "precision [Optional]: Number, the number of digits after the decimal point. Default is 2.",
+                    "groupingSeparator[Optional]: String, thousands separator. Default is  ','.",
+                    "decimalSeparator[Optional]: String, decimal separator. Default is  '.'."
+                ]
+            },
+            formatNumeric:{
+                $desc:"Formats a number to string. Returns number.",
+                $paras:[
+                    "value [Required]: Number,  the target number.",
+                    "precision [Optional]: Number, the number of digits after the decimal point. Default is 2.",
+                    "groupingSeparator[Optional]: String, thousands separator. Default is  ','.",
+                    "decimalSeparator[Optional]: String, decimal separator. Default is  '.'."
+                ]
+            },
             clone:{
                 $desc:"Clones Object, deep copy.",
                 $rtn:"Object",
@@ -10159,6 +10177,30 @@ _.set(linb.Locale,["en","app"], {
                     "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
                 ]
             },
+            getGroupingSeparator:{
+                $desc:"Gets the thousands separator.",
+                $rtn:"String"
+            },
+            setGroupingSeparator:{
+                $desc:"Sets the thousands separator.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : String.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
+            getDecimalSeparator:{
+                $desc:"Gets the decimal separator.",
+                $rtn:"String"
+            },
+            setDecimalSeparator:{
+                $desc:"Sets the decimal separator.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Required] : String.",
+                    "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
+                ]
+            },
             getPopCtrlProp:{
                 $desc:"Gets properties of the standard pop control('combobox,listbox,helpinput,date,time,datetime,color').",
                 $rtn:"Object"
@@ -11309,8 +11351,26 @@ _.set(linb.Locale,["en","app"], {
                     "}"
                 ]
             },
+            beforeClick:{
+                $desc:"Fired before a list item was clicked. If returns false, click function will be ignored.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "item: list item Object.",
+                    "e: Event, the DOM event Object.",
+                    "src : String, the event source DOM element's linbid."
+                ]
+            },
             onClick:{
-                $desc:"Fired when list item was clicked.",
+                $desc:"Fired when a list item was clicked.",
+                $paras:[
+                    "profile : linb.UIProfile.",
+                    "item: list item Object.",
+                    "e: Event, the DOM event Object.",
+                    "src : String, the event source DOM element's linbid."
+                ]
+            },
+            afterClick:{
+                $desc:"Fired after a list item was clicked.",
                 $paras:[
                     "profile : linb.UIProfile.",
                     "item: list item Object.",
