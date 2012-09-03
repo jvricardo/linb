@@ -10054,6 +10054,9 @@ _.set(linb.Locale,["en","app"], {
             },
             getUploadObj:{
                 $desc:"Gest the Object (picture or other binary file), that need to be uploaded.",
+                $paras:[
+                    "keepContent [Optional] : Whether keep file content or not."
+                ],
                 $rtn:"linb.Dom",
                 $snippet:[
                     "var id='linb.temp.ci2'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:100px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+

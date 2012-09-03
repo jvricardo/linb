@@ -122,38 +122,44 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
             return this;
         },
         //for upload ,special must get the original node
-        getUploadObj:function(){
+        getUploadObj:function(keepContent){
             var profile=this.get(0);
             if(profile.renderId && profile.properties.type=='upload'){
                 var o = profile.getSubNode('FILE').get(0)
                 if(!o.value)
                     return null;
-
-                var c=o.cloneNode(false);
-                c.value="";
-                //inner replace
-                linb.setNodeData(c.$linbid=o.$linbid,'element',c);
-                c.onclick=o.onclick;
-                c.onchange=o.onchange;
-
-                //remove those
-                //if(linb.browser.ie)
-                //    o.removeAttribute('$linbid');
-                //else
-                //    delete o.$linbid;
-                //**: "removeAttribute" doesn't work in IE9+
-                o.$linbid=null;
-                
-                o.id=o.onclick=o.onchange=null;
-
-                //a special node, must delete if from cache here:
-                delete profile.$_domid[profile.keys['FILE']];
-                linb([o]).addPrev(c).remove(false);
-                c=null;
-
-                this.setUIValue(this.getValue());
-
-                return o;
+                    
+                if(keepContent){
+                    var c=o.cloneNode(true);
+                    c.$linbid=c.id=c.onclick=c.onchange=null;
+                    return c;
+                }else{
+                    var c=o.cloneNode(false);
+                    c.value="";
+                    //inner replace
+                    linb.setNodeData(c.$linbid=o.$linbid,'element',c);
+                    c.onclick=o.onclick;
+                    c.onchange=o.onchange;
+    
+                    //remove those
+                    //if(linb.browser.ie)
+                    //    o.removeAttribute('$linbid');
+                    //else
+                    //    delete o.$linbid;
+                    //**: "removeAttribute" doesn't work in IE9+
+                    o.$linbid=null;
+                    
+                    o.id=o.onclick=o.onchange=null;
+    
+                    //a special node, must delete if from cache here:
+                    delete profile.$_domid[profile.keys['FILE']];
+                    linb([o]).addPrev(c).remove(false);
+                    c=null;
+    
+                    this.setUIValue(this.getValue());
+    
+                    return o;
+                }
             }
         },
         resetValue:function(value){
