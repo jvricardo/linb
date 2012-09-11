@@ -9,7 +9,7 @@ new function(){
     
     window.CONF={
         dftLang:'en',
-        localeItems:[{"id":"en", "caption":"$VisualJS.en"}, {"id":"cn", "caption":"$VisualJS.cn"}, {"id":"tw", "caption":"$VisualJS.tw"}, {"id":"ja", "caption":"$VisualJS.ja"}],
+        localeItems:[{"id":"en", "caption":"$VisualJS.en"}, {"id":"cn", "caption":"$VisualJS.cn"}, {"id":"tw", "caption":"$VisualJS.tw"}, {"id":"ja", "caption":"$VisualJS.ja"}, {"id":"ru", "caption":"$VisualJS.ru"}],
 
         img_app:_img_app,
         img_widgets:_img_widgets,

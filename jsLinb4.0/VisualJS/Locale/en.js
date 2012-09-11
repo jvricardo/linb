@@ -13,6 +13,7 @@
     cn:'Chinese',
     ja:"Japanese",
     tw:'Traditional Chinese',
+    ru:'Russian',
     langTips:'Switch Locale',
     
     spabuilder:{

@@ -14,6 +14,7 @@
     cn:'中文',
     ja:'日语',
     tw:'中文繁体',
+    ru:'俄语',
     langTips:'改变语言',
     
     spabuilder:{

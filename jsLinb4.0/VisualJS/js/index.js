@@ -727,7 +727,8 @@ Class('VisualJS', 'linb.Com',{
                             {id:'en',caption:linb.getRes('VisualJS.en')},
                             {id:'cn',caption:linb.getRes('VisualJS.cn')},
                             {id:'tw',caption:linb.getRes('VisualJS.tw')},
-                            {id:'ja',caption:linb.getRes('VisualJS.ja')}
+                            {id:'ja',caption:linb.getRes('VisualJS.ja')},
+                            {id:'ru',caption:linb.getRes('VisualJS.ru')}
                             ]},{
                             onMenuSelected:function(p,item){
                                 if(linb.getLang()!=item.id)

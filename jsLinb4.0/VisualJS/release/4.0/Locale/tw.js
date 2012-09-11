@@ -13,6 +13,7 @@
     cn:'中文',
     ja:'日語',
     tw:'中文繁體',
+    ru:'俄語',
     langTips:'改變語言',
     
     spabuilder:{

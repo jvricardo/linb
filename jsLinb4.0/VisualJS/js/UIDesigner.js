@@ -34,7 +34,7 @@ Class('UIDesigner', 'linb.Com',{
                 .append( new linb.UI.Button(
                     {
                         caption:linb.wrapRes('VisualJS.builder.save'),
-                        tips:linb.getRes('VisualJS.builder.saveTips'),
+                        tips:'$VisualJS.builder.saveTips',
                         zIndex:100, left:'auto', top:6, right:130,  width:68, height:54, type:'custom', border:true, renderer:function(item){return '<img src=img/save.gif /><br />' + item.caption;}},
                     {onClick:function(p,e,src){
                         self.popSave.updateItem('savetoserver',{disabled:!self.$url || linb.absIO.isCrossDomain(self.$url)});
@@ -51,7 +51,7 @@ Class('UIDesigner', 'linb.Com',{
                 .append( self.$btnRun = new linb.UI.Button(
                     {
                         caption:linb.wrapRes('VisualJS.builder.run'),
-                        tips:linb.getRes('VisualJS.builder.runTips'),
+                        tips:'$VisualJS.builder.runTips',
                         zIndex:100, left:'auto', top:6, right:210, width:68, height:54, type:'custom', border:true, renderer:function(item){return '<img src=img/run.gif /><br />' + item.caption;}},
                     {onClick:function(){
                         var content=self.getValue(),
@@ -75,7 +75,7 @@ Class('UIDesigner', 'linb.Com',{
                 self.$btnTheme=new linb.UI.Button({
                     type:'drop',
                     caption:linb.wrapRes('VisualJS.builder.dftTheme'),
-                    tips:linb.wrapRes('VisualJS.builder.dftThemeTips'),
+                    tips:'$VisualJS.builder.dftThemeTips',
                     position:'absolute',
                     top:38,
                     right:4,
