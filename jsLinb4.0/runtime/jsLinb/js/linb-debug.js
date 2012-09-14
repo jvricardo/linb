@@ -20379,7 +20379,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                                 kprf._onchangethread=null;
                                 // check again
                                 if(kprf && kprf.box)
-                                    kprf.box._checkc(profile);
+                                    kprf.box._checkc(kprf);
                             }
                         },
                         gekfix=function(e){
