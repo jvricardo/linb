@@ -1268,6 +1268,8 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                             d=value;
                         else if(_.isFinite(value))
                             d=new Date(parseInt(value,10));
+                        else
+                            d=linb.Date.parse(value+"");
                     }
                     return d?String(profile.properties.type=='datetime'?d.getTime():linb.Date.getTimSpanStart(d,'d',1).getTime()):"";
                 case 'color':
