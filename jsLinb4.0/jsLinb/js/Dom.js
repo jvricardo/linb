@@ -370,6 +370,8 @@ Class('linb.Dom','linb.absBox',{
                          if(triggerGC)
                             linb.$purgeChildren(o);
                             
+                         o.innerHTML=content;
+
                          if(loadScripts){
                                 var reg1=/(?:<script([^>]*)?>)((\n|\r|.)*?)(?:<\/script>)/ig,
                                 reg2=/(?:<script.*?>)((\n|\r|.)*?)(?:<\/script>)/ig,
@@ -387,7 +389,6 @@ Class('linb.Dom','linb.absBox',{
                             content=content.replace(reg2, '');
                          }
                         
-                         o.innerHTML=content;
                         //if(triggerGC)
                         //    linb.UI.$addEventsHanlder(o);
 
