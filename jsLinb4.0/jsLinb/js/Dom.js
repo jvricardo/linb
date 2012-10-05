@@ -369,25 +369,35 @@ Class('linb.Dom','linb.absBox',{
                          //clear first
                          if(triggerGC)
                             linb.$purgeChildren(o);
-                            
-                         o.innerHTML=content;
 
+                         var scripts;                            
                          if(loadScripts){
-                                var reg1=/(?:<script([^>]*)?>)((\n|\r|.)*?)(?:<\/script>)/ig,
+                            var reg1=/(?:<script([^>]*)?>)((\n|\r|.)*?)(?:<\/script>)/ig,
                                 reg2=/(?:<script.*?>)((\n|\r|.)*?)(?:<\/script>)/ig,
                                 reg3 = /\ssrc=([\'\"])(.*?)\1/i,
                                 matched, attr,src;
+                            scripts=[];
                             while((matched = reg1.exec(content))){
                                 attr = matched[1];
                                 src = attr ? attr.match(reg3) : false;
                                 if(src && src[2]){
-                                   linb.include(null,src[2]);
+                                   scripts.push([1,src[2]]);
                                 }else if(matched[2] && matched[2].length > 0){
-                                    _.exec(matched[2]);
+                                   scripts.push([2,matched[2]]);
                                 }
                             }
                             content=content.replace(reg2, '');
-                         }
+                        }
+                        
+                        o.innerHTML=content;
+                        if(scripts && scripts.length>0){
+                            _.arr.each(scripts,function(s){
+                                if(s[0]==1)
+                                    linb.include(null,s[1]);
+                                else
+                                    _.exec(s[1]);
+                            });
+                        }
                         
                         //if(triggerGC)
                         //    linb.UI.$addEventsHanlder(o);
