@@ -35,7 +35,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                     ? ns._toEditor(value)
                     : ns.getShowValue(value);
 
-                if(type!=='none'&& !profile.properties.multiLines && typeof value=='string' && r1.test(value))value=value.replace(r2,'');
+                if(type!=='none'&& type!=='input'&& type!=='password' && !profile.properties.multiLines && typeof value=='string' && r1.test(value))value=value.replace(r2,'');
                 o.attr('value',value||'');
                 if(type=='colorpicker'||type=='color')
                     o.css({backgroundColor:value, color:linb.UI.ColorPicker.getTextColor(value)});
@@ -174,7 +174,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 var pro = profile.properties, type=pro.type, cacheDrop=pro.cachePopWnd;
                 if(pro.disabled||pro.readonly)return;
 
-                if(type=='upload'||type=='none'||type=='spin'||type=='currency'||type=='number')return;
+                if(type=='upload'||type=='none'||type=='input'||type=='password'||type=='spin'||type=='currency'||type=='number')return;
                 //open already
                 if(profile.$poplink)return;
 
@@ -935,7 +935,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                                 profile.box._spin(profile, k.key=='up');
                                 return false;
                             }
-                        }else if(k.ctrlKey && p.type!='none'){
+                        }else if(k.ctrlKey && p.type!='none' && p.type!='input' && p.type!='password'){
                             profile.boxing()._drop(e,src);
                             return false;
                         }
@@ -1063,7 +1063,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
             },
             type:{
                 ini:'combobox',
-                listbox:_.toArr('none,combobox,listbox,upload,getter,helpinput,cmdbox,popbox,date,time,datetime,color,spin,currency,number'),
+                listbox:_.toArr('none,input,password,combobox,listbox,upload,getter,helpinput,cmdbox,popbox,date,time,datetime,color,spin,currency,number'),
                 set:function(value){
                     var pro=this;
                     pro.properties.type=value;
@@ -1193,8 +1193,14 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
 
                 switch(properties.type){
                 case 'none':
+                case 'input':
                 case 'currency':
                 case 'number':
+                    t.BOX.WRAP.INPUT.tagName='input';
+                break;
+                case 'password':
+                    t.BOX.WRAP.INPUT.tagName='input';
+                    t.BOX.WRAP.INPUT.type='password';
                 break;
                 case 'spin':
                     t.RBTN={
@@ -1249,7 +1255,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
             data._saveDisplay = data.commandBtn!='none'?'':'display:none';
             data._commandCls = profile.getClass("SMID","-"+data.commandBtn);
 
-            data._popbtnDisplay = data.type!='none'?'':'display:none';
+            data._popbtnDisplay = (data.type!='none'&&data.type!='input'&&data.type!='password')?'':'display:none';
             data.typecls=profile.getClass('KEY','-'+data.type);
             return data;
         },
@@ -1313,7 +1319,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 labelPos=t.labelPos || 'left',
                 px='px',
                 commandbtn=f(t.commandBtn!='none'?'SBTN':null),
-                functionbtn=f(t.type=='spin'?'RBTN':t.type=='none'?null:'BTN'),
+            functionbtn=f(t.type=='spin'?'RBTN':(t.type=='none'||t.type=='input'||t.type=='password')?null:'BTN'),
                 ww=width,
                 hh=height,
                 bw1=0,

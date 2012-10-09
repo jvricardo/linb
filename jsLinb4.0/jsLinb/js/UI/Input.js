@@ -546,8 +546,11 @@ Class("linb.UI.Input", ["linb.UI.Widget","linb.absValue"] ,{
             type:{
                 ini:'text',
                 listbox:['text','password'],
-                action: function(value){
-                    this.getSubNode('INPUT').attr('type',value);
+                set:function(value){
+                    var pro=this;
+                    pro.properties.type=value;
+                    if(pro.renderId)
+                        pro.boxing().refresh(true);
                 }
             },
             maxlength:{
