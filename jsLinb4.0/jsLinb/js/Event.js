@@ -134,8 +134,11 @@ Class('linb.Event',null,{
                 if(src.$linbid==dragdrop._dropElement)
                     r=false;
             }
+            if(linb.browser.isTouch && ('mousedown'==type || 'mouseover'==type || 'mouseup'==type))
+                r=false;
+
             if(r===false)self.stopBubble(event);
-            src=null;
+            src=null;                
             return r;
         }
     },
@@ -267,6 +270,8 @@ Class('linb.Event',null,{
         },
         getPos:function(event){
             event = event || window.event;
+            if(linb.browser.isTouch && event.changedTouches && event.changedTouches[0])
+                event = event.changedTouches[0];
             if('pageX' in event)
                 return {left:event.pageX, top:event.pageY};
             else{
@@ -447,20 +452,46 @@ Class('linb.Event',null,{
                 dragleave:'onmouseout',
                 drop:'onmouseup'
             },
+            m2={},
             a1=['before','on','after'],
             t1,t2,s;
 
+        if(linb.browser.isTouch){
+            _.merge(m1,{
+                mousedown:'ontouchstart',
+                mousemove:'ontouchmove',
+                mouseup:'ontouchend',
+
+                dragbegin:'ontouchstart',
+                dragenter:'ontouchmove',
+                dragleave:'ontouchmove',
+                drop:'ontouchend'
+            },'all');
+            m2={
+                mousedown:'touchstart',
+                mousemove:'touchmove',
+                mouseup:'touchend'                
+            };
+        }
+        
         t1=ns._map1={};
         _.arr.each(ns._events,function(o){
             s=_.str.initial(o);
             t1[o]=[a1[0]+s, a1[1]+s, a1[2]+s];
         });
         
+        if(linb.browser.isTouch){
+            t1['touchstart']=t1['mousedown'];
+            t1['touchmove']=t1['mousemove'];
+            t1['touchend']=t1['mouseup'];
+            t1['touchcancel']=t1['mouseup'];
+        }
+        
         t1=ns._eventMap={};
         t2=ns._eventHandler={};
         _.arr.each(ns._events,function(o){
             s=_.str.initial(o);
-            t1[o]=t1[a1[1]+o]=t1[a1[0]+s]=t1[a1[1]+s]=t1[a1[2]+s]=o;
+            t1[o]=t1[a1[1]+o]=t1[a1[0]+s]=t1[a1[1]+s]=t1[a1[2]+s]= (o in m2)?m2[o]:o;;
             t2[o]=t2[a1[1]+o]=t2[a1[0]+s]=t2[a1[1]+s]=t2[a1[2]+s]= (o in m1)?m1[o]:('on'+o);
         });
         

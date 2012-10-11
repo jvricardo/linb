@@ -299,17 +299,20 @@ Class('linb.DragDrop',null,{
             this._stop=true;
         },
         _end:function(){
-            var d=this,doc=document;
-
+            var d=this,doc=document,body=doc.body,md="onmousedown",mm="onmousemove",mu="onmouseup";
+            if(linb.browser.isTouch){
+                md="ontouchstart",mm="ontouchmove",mu="ontouchend"
+            }
+            
             if(d._proxy) d._unpack();
 
             //must here
             //if bak, restore
-            if(d.$onselectstart!='*')doc.body.onselectstart=d.$onselectstart;
+            if(d.$onselectstart!='*')body.onselectstart=d.$onselectstart;
             if(d.$ondragstart!='*')doc.ondragstart=d.$ondragstart;
             //if bak, restore
-            if(d.$mousemove!='*')doc.onmousemove=d.$mousemove;
-            if(d.$mouseup!='*')doc.onmouseup=d.$mouseup;
+            if(d.$mousemove!='*')doc[mm]=d.$mousemove;
+            if(d.$mouseup!='*')doc[mu]=d.$mouseup;
 
             return  d;
         },
@@ -339,7 +342,11 @@ Class('linb.DragDrop',null,{
             if(true===profile.dragCursor)profile.dragCursor=d._cursor;
             if(typeof profile.dragIcon == 'string') profile.dragType="icon";
 
-            var doc=document, _pos = linb.Event.getPos(e);
+            var doc=document, body=doc.body, _pos = linb.Event.getPos(e),md="onmousedown",mm="onmousemove",mu="onmouseup";
+            if(linb.browser.isTouch){
+                md="ontouchstart",mm="ontouchmove",mu="ontouchend"
+            }
+            
             profile.x = _pos.left;
             profile.y = _pos.top;
 
@@ -379,16 +386,16 @@ Class('linb.DragDrop',null,{
 
                 //set back first
                 if(p.dragDefer<1){
-                    d.$mousemove = doc.onmousemove;
-                    d.$mouseup = doc.onmouseup;
+                    d.$mousemove = doc[mm];
+                    d.$mouseup = doc[mu];
                 }
                 //avoid setcapture
                 if(linb.browser.ie)
                     setTimeout(function(){fromN.releaseCapture()});
 
                 //back up
-                doc.onmousemove = d.$onDrag;
-                doc.onmouseup = d.$onDrop;
+                doc[mm] = d.$onDrag;
+                doc[mu] = d.$onDrop;
                 //for events
                 d._source.afterDragbegin();
                 //for delay, call ondrag now
@@ -397,8 +404,8 @@ Class('linb.DragDrop',null,{
             };
             if(linb.browser.ie){
                 d.$ondragstart=doc.ondragstart;
-                d.$onselectstart=doc.body.onselectstart;
-                doc.ondragstart = doc.body.onselectstart = null;
+                d.$onselectstart=body.onselectstart;
+                doc.ondragstart = body.onselectstart = null;
                 if(doc.selection && doc.selection.empty)doc.selection.empty();
             }
 
@@ -414,15 +421,15 @@ Class('linb.DragDrop',null,{
                 return false;
             }else{
                 //for mouseup before drag
-                d.$mouseup = doc.onmouseup;
-                doc.onmouseup = function(e){
+                d.$mouseup = doc[mu];
+                doc[mu] = function(e){
                     linb.DragDrop._end()._reset();
-                    return _.tryF(document.onmouseup,[e],null,true);
+                    return _.tryF(linb.browser.isTouch?document.ontouchend:document.onmouseup,[e],null,true);
                 };
                 //for mousemove before drag
-                d.$mousemove = doc.onmousemove;
+                d.$mousemove = doc[mm];
                 var pbak={};
-                doc.onmousemove = function(e){
+                doc[mm] = function(e){
                     var p=linb.Event.getPos(e);
                     if(p.left===pbak.left&&p.top===pbak.top)return;
                     pbak=p;
@@ -480,6 +487,7 @@ Class('linb.DragDrop',null,{
                     //fireEvent
                     //d._source.onDrag(true); //shortcut for mousemove
                 }
+      
                 if(d._onDrag!=1){
                     if(d._onDrag)d._onDrag(e,d._source._get(0));
                     else{
@@ -514,7 +522,7 @@ Class('linb.DragDrop',null,{
 //                }catch(a){}finally{
                 d._reset();
                 evt.stopBubble(e);
-                _.tryF(document.onmouseup,[e]);
+                _.tryF(linb.browser.isTouch?document.ontouchend:document.onmouseup,[e]);
                 return !!r;
 //                }
         },

@@ -1117,7 +1117,8 @@ new function(){
         isMac:/(macintosh|mac os x)/.test(u),
         isAir:/adobeair/.test(u),
         isLinux:/linux/.test(u),
-        isSecure:location.href.toLowerCase().indexOf("https")==0
+        isSecure:location.href.toLowerCase().indexOf("https")==0,
+        isTouch:"ontouchend" in d
     },v=function(k,s){return k + (b.ver=u.split(s)[1].split('.')[0])};
 
     linb.$secureUrl=b.isSecure&&b.ie?'javascript:""':'about:blank';
@@ -4106,8 +4107,11 @@ Class('linb.Event',null,{
                 if(src.$linbid==dragdrop._dropElement)
                     r=false;
             }
+            if(linb.browser.isTouch && ('mousedown'==type || 'mouseover'==type || 'mouseup'==type))
+                r=false;
+
             if(r===false)self.stopBubble(event);
-            src=null;
+            src=null;                
             return r;
         }
     },
@@ -4239,6 +4243,8 @@ Class('linb.Event',null,{
         },
         getPos:function(event){
             event = event || window.event;
+            if(linb.browser.isTouch && event.changedTouches && event.changedTouches[0])
+                event = event.changedTouches[0];
             if('pageX' in event)
                 return {left:event.pageX, top:event.pageY};
             else{
@@ -4419,20 +4425,46 @@ Class('linb.Event',null,{
                 dragleave:'onmouseout',
                 drop:'onmouseup'
             },
+            m2={},
             a1=['before','on','after'],
             t1,t2,s;
 
+        if(linb.browser.isTouch){
+            _.merge(m1,{
+                mousedown:'ontouchstart',
+                mousemove:'ontouchmove',
+                mouseup:'ontouchend',
+
+                dragbegin:'ontouchstart',
+                dragenter:'ontouchmove',
+                dragleave:'ontouchmove',
+                drop:'ontouchend'
+            },'all');
+            m2={
+                mousedown:'touchstart',
+                mousemove:'touchmove',
+                mouseup:'touchend'                
+            };
+        }
+        
         t1=ns._map1={};
         _.arr.each(ns._events,function(o){
             s=_.str.initial(o);
             t1[o]=[a1[0]+s, a1[1]+s, a1[2]+s];
         });
         
+        if(linb.browser.isTouch){
+            t1['touchstart']=t1['mousedown'];
+            t1['touchmove']=t1['mousemove'];
+            t1['touchend']=t1['mouseup'];
+            t1['touchcancel']=t1['mouseup'];
+        }
+        
         t1=ns._eventMap={};
         t2=ns._eventHandler={};
         _.arr.each(ns._events,function(o){
             s=_.str.initial(o);
-            t1[o]=t1[a1[1]+o]=t1[a1[0]+s]=t1[a1[1]+s]=t1[a1[2]+s]=o;
+            t1[o]=t1[a1[1]+o]=t1[a1[0]+s]=t1[a1[1]+s]=t1[a1[2]+s]= (o in m2)?m2[o]:o;;
             t2[o]=t2[a1[1]+o]=t2[a1[0]+s]=t2[a1[1]+s]=t2[a1[2]+s]= (o in m1)?m1[o]:('on'+o);
         });
         
@@ -7573,7 +7605,11 @@ type:4
             }else
                 target=ns;
 
-            if(!doc.onmousedown)doc.onmousedown=linb.Event.$eventhandler;
+            if(linb.browser.isTouch)
+                if(!doc.onmousedown)doc.onmousedown=linb.Event.$eventhandler;
+            else
+                if(!doc.ontouchstart)doc.body.ontouchstart=linb.Event.$eventhandler;
+            
             target.each(function(o){if(!o.id)o.id=linb.Dom._pickDomId()});
             //remove this trigger
             if(!trigger){
@@ -9991,17 +10027,20 @@ Class('linb.DragDrop',null,{
             this._stop=true;
         },
         _end:function(){
-            var d=this,doc=document;
-
+            var d=this,doc=document,body=doc.body,md="onmousedown",mm="onmousemove",mu="onmouseup";
+            if(linb.browser.isTouch){
+                md="ontouchstart",mm="ontouchmove",mu="ontouchend"
+            }
+            
             if(d._proxy) d._unpack();
 
             //must here
             //if bak, restore
-            if(d.$onselectstart!='*')doc.body.onselectstart=d.$onselectstart;
+            if(d.$onselectstart!='*')body.onselectstart=d.$onselectstart;
             if(d.$ondragstart!='*')doc.ondragstart=d.$ondragstart;
             //if bak, restore
-            if(d.$mousemove!='*')doc.onmousemove=d.$mousemove;
-            if(d.$mouseup!='*')doc.onmouseup=d.$mouseup;
+            if(d.$mousemove!='*')doc[mm]=d.$mousemove;
+            if(d.$mouseup!='*')doc[mu]=d.$mouseup;
 
             return  d;
         },
@@ -10031,7 +10070,11 @@ Class('linb.DragDrop',null,{
             if(true===profile.dragCursor)profile.dragCursor=d._cursor;
             if(typeof profile.dragIcon == 'string') profile.dragType="icon";
 
-            var doc=document, _pos = linb.Event.getPos(e);
+            var doc=document, body=doc.body, _pos = linb.Event.getPos(e),md="onmousedown",mm="onmousemove",mu="onmouseup";
+            if(linb.browser.isTouch){
+                md="ontouchstart",mm="ontouchmove",mu="ontouchend"
+            }
+            
             profile.x = _pos.left;
             profile.y = _pos.top;
 
@@ -10071,16 +10114,16 @@ Class('linb.DragDrop',null,{
 
                 //set back first
                 if(p.dragDefer<1){
-                    d.$mousemove = doc.onmousemove;
-                    d.$mouseup = doc.onmouseup;
+                    d.$mousemove = doc[mm];
+                    d.$mouseup = doc[mu];
                 }
                 //avoid setcapture
                 if(linb.browser.ie)
                     setTimeout(function(){fromN.releaseCapture()});
 
                 //back up
-                doc.onmousemove = d.$onDrag;
-                doc.onmouseup = d.$onDrop;
+                doc[mm] = d.$onDrag;
+                doc[mu] = d.$onDrop;
                 //for events
                 d._source.afterDragbegin();
                 //for delay, call ondrag now
@@ -10089,8 +10132,8 @@ Class('linb.DragDrop',null,{
             };
             if(linb.browser.ie){
                 d.$ondragstart=doc.ondragstart;
-                d.$onselectstart=doc.body.onselectstart;
-                doc.ondragstart = doc.body.onselectstart = null;
+                d.$onselectstart=body.onselectstart;
+                doc.ondragstart = body.onselectstart = null;
                 if(doc.selection && doc.selection.empty)doc.selection.empty();
             }
 
@@ -10106,15 +10149,15 @@ Class('linb.DragDrop',null,{
                 return false;
             }else{
                 //for mouseup before drag
-                d.$mouseup = doc.onmouseup;
-                doc.onmouseup = function(e){
+                d.$mouseup = doc[mu];
+                doc[mu] = function(e){
                     linb.DragDrop._end()._reset();
-                    return _.tryF(document.onmouseup,[e],null,true);
+                    return _.tryF(linb.browser.isTouch?document.ontouchend:document.onmouseup,[e],null,true);
                 };
                 //for mousemove before drag
-                d.$mousemove = doc.onmousemove;
+                d.$mousemove = doc[mm];
                 var pbak={};
-                doc.onmousemove = function(e){
+                doc[mm] = function(e){
                     var p=linb.Event.getPos(e);
                     if(p.left===pbak.left&&p.top===pbak.top)return;
                     pbak=p;
@@ -10172,6 +10215,7 @@ Class('linb.DragDrop',null,{
                     //fireEvent
                     //d._source.onDrag(true); //shortcut for mousemove
                 }
+      
                 if(d._onDrag!=1){
                     if(d._onDrag)d._onDrag(e,d._source._get(0));
                     else{
@@ -10206,7 +10250,7 @@ Class('linb.DragDrop',null,{
 //                }catch(a){}finally{
                 d._reset();
                 evt.stopBubble(e);
-                _.tryF(document.onmouseup,[e]);
+                _.tryF(linb.browser.isTouch?document.ontouchend:document.onmouseup,[e]);
                 return !!r;
 //                }
         },

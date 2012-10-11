@@ -1447,7 +1447,11 @@ type:4
             }else
                 target=ns;
 
-            if(!doc.onmousedown)doc.onmousedown=linb.Event.$eventhandler;
+            if(linb.browser.isTouch)
+                if(!doc.onmousedown)doc.onmousedown=linb.Event.$eventhandler;
+            else
+                if(!doc.ontouchstart)doc.body.ontouchstart=linb.Event.$eventhandler;
+            
             target.each(function(o){if(!o.id)o.id=linb.Dom._pickDomId()});
             //remove this trigger
             if(!trigger){

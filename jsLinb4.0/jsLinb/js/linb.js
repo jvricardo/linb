@@ -1117,7 +1117,8 @@ new function(){
         isMac:/(macintosh|mac os x)/.test(u),
         isAir:/adobeair/.test(u),
         isLinux:/linux/.test(u),
-        isSecure:location.href.toLowerCase().indexOf("https")==0
+        isSecure:location.href.toLowerCase().indexOf("https")==0,
+        isTouch:"ontouchend" in d
     },v=function(k,s){return k + (b.ver=u.split(s)[1].split('.')[0])};
 
     linb.$secureUrl=b.isSecure&&b.ie?'javascript:""':'about:blank';
