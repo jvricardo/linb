@@ -21577,17 +21577,17 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 'font-size':'12px',
                 overflow:'hidden'
             },
-            'KEY-number INPUT, KEY-spin INPUT, KEY-currency INPUT':{
+            'KEY-type-number INPUT, KEY-type-spin INPUT, KEY-type-currency INPUT':{
                 $order:4,
                 'text-align':'right'
             },
-            'KEY-upload INPUT, KEY-cmdbox INPUT, KEY-listbox INPUT':{
+            'KEY-type-upload INPUT, KEY-type-cmdbox INPUT, KEY-type-listbox INPUT':{
                 $order:4,
                 cursor:'pointer',
                 'text-align':'left',
                 overflow:'hidden'
             },
-            'KEY-upload BOX, KEY-cmdbox BOX, KEY-listbox BOX':{
+            'KEY-type-upload BOX, KEY-type-cmdbox BOX, KEY-type-listbox BOX':{
                 $order:4,
                 background:linb.UI.$bg('inputbgb.gif', '#fff left bottom repeat-x',"Input")
             },
@@ -22252,7 +22252,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
             data._commandCls = profile.getClass("SMID","-"+data.commandBtn);
 
             data._popbtnDisplay = (data.type!='none'&&data.type!='input'&&data.type!='password')?'':'display:none';
-            data.typecls=profile.getClass('KEY','-'+data.type);
+            data.typecls=profile.getClass('KEY','-type-'+data.type);
             return data;
         },
         _ensureValue:function(profile, value){
