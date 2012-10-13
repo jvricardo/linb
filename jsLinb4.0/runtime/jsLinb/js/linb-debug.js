@@ -328,7 +328,7 @@ _.merge(_,{
     formatNumeric:function(value, precision, groupingSeparator, decimalSeparator){
         if(_.isSet(precision))precision=parseInt(precision,10);
         precision=(precision||precision===0)?precision:2;
-        groupingSeparator=groupingSeparator||",";
+        groupingSeparator=_.isSet(groupingSeparator)?groupingSeparator:",";
         decimalSeparator=decimalSeparator||".";
         value=""+parseFloat(value);
         if(value.indexOf('e')==-1){
@@ -22182,11 +22182,6 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 template = _.clone(profile.box.getTemplate());
                 var t=template.FRAME.BORDER;
 
-                if(properties.multiLines){
-                    t.BOX.WRAP.INPUT.tagName='textarea';
-                    delete t.BOX.WRAP.INPUT.type;
-                }
-
                 switch(properties.type){
                 case 'none':
                 case 'input':
@@ -22233,6 +22228,18 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                             style:'{_btnStyle}'
                         }
                     };
+                }
+                if(properties.multiLines){
+                    switch(properties.type){
+                    case 'none':
+                    case 'input':
+                    case 'currency':
+                    case 'number':
+                    case 'listbox':
+                    case 'cmdbox':
+                        t.BOX.WRAP.INPUT.tagName='textarea';
+                        delete t.BOX.WRAP.INPUT.type;
+                    }
                 }
 
                 // set template

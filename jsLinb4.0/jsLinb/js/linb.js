@@ -328,7 +328,7 @@ _.merge(_,{
     formatNumeric:function(value, precision, groupingSeparator, decimalSeparator){
         if(_.isSet(precision))precision=parseInt(precision,10);
         precision=(precision||precision===0)?precision:2;
-        groupingSeparator=groupingSeparator||",";
+        groupingSeparator=_.isSet(groupingSeparator)?groupingSeparator:",";
         decimalSeparator=decimalSeparator||".";
         value=""+parseFloat(value);
         if(value.indexOf('e')==-1){
