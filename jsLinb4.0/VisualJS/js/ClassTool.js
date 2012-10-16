@@ -23,8 +23,8 @@ Class('VisualJS.ClassTool',null,{
 
             // clear string/reg
             str = str.replace(/\/(\\[\/\\]|[^*\/])(\\.|[^\/\n\\])*\/[gim]*/g,'null');
-            str = str.replace(/"(\\.|[^"\\])*"/g,function(a){return reg7.test(a)?a:'\"\"'});
-            str = str.replace(/'(\\.|[^'\\])*'/g,function(a){return reg8.test(a)?a:"\'\'"});
+            str = str.replace(/"(\\.|[^"\\\n])*"/g,function(a){return reg7.test(a)?a:'\"\"'});
+            str = str.replace(/'(\\.|[^'\\\n])*'/g,function(a){return reg8.test(a)?a:"\'\'"});
 
             // check "Class(" string
             if(!reg5.test(str))
