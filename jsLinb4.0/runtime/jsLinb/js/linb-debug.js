@@ -2369,7 +2369,9 @@ new function(){
         '\x0B': '\\u000b'
     },
     H={'@window':'window','@this':'this'},
-    A=/\uffff/.test('\uffff') ? /[\\\"\x00-\x1f\x7f-\uffff]/g : /[\\\"\x00-\x1f\x7f-\xff]/g,
+    // A1/A2 for avoiding IE's lastIndex problem
+    A1=/\uffff/.test('\uffff') ? /[\\\"\x00-\x1f\x7f-\uffff]/ : /[\\\"\x00-\x1f\x7f-\xff]/,
+    A2=/\uffff/.test('\uffff') ? /[\\\"\x00-\x1f\x7f-\uffff]/g : /[\\\"\x00-\x1f\x7f-\xff]/g,
     D=/^(-\d+|\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.(\d{1,3}))?((?:[+-](\d{2})(\d{2}))|Z)?$/,
     E=function(t,i,a,v,m,n,p){
         for(i in t)
@@ -2401,9 +2403,9 @@ new function(){
         return H[x] ||
             '"' +
             (
-            A.test(x)
+            A1.test(x)
             ?
-            x.replace(A, function(a,b) {
+            x.replace(A2, function(a,b) {
                 if(b=M[a])return b;
                 return '\\u' + ((b=a.charCodeAt())<16?'000':b<256?'00':b<4096?'0':'')+b.toString(16)
             })
