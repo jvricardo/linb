@@ -9979,11 +9979,15 @@ _.set(linb.Locale,["cn","app"], {
             collapse:{
                 $desc:"关闭弹出窗口."
             },
-            getUploadObj:{
-                $desc:"获取上传文件名,仅对上传框有效.",
+            setUplaodObj:{
+                $desc:"设置上传文件对象,仅对上传框有效.",
+                $rtn:"[self]",
                 $paras:[
-                    "keepContent [可选参数] : 是否要保留文件内容."
-                ],
+                    "value [必需参数] : file input 对象."
+                ]
+            },
+            getUploadObj:{
+                $desc:"获取上传文件对象,仅对上传框有效.",
                 $rtn:"linb.Dom",
                 $snippet:[
                     "var id='linb.temp.ci2'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:100px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+

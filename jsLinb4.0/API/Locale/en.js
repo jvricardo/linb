@@ -10052,11 +10052,15 @@ _.set(linb.Locale,["en","app"], {
             collapse:{
                 $desc:"Close pop window."
             },
-            getUploadObj:{
-                $desc:"Gest the Object (picture or other binary file), that need to be uploaded.",
+            setUplaodObj:{
+                $desc:"Sets the file object, only for type='uplaod'.",
+                $rtn:"[self]",
                 $paras:[
-                    "keepContent [Optional] : Whether keep file content or not."
-                ],
+                    "value [Required] : file input object."
+                ]
+            },
+            getUploadObj:{
+                $desc:"Gets the file object, only for type='uplaod'.",
                 $rtn:"linb.Dom",
                 $snippet:[
                     "var id='linb.temp.ci2'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:100px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
