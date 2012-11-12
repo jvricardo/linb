@@ -22250,10 +22250,11 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                     switch(properties.type){
                     case 'none':
                     case 'input':
-                    case 'currency':
+                    case 'getter':
+                    case 'helpinput':
+                    case 'popbox':
                     case 'number':
-                    case 'listbox':
-                    case 'cmdbox':
+                    case 'combobox':
                         t.BOX.WRAP.INPUT.tagName='textarea';
                         delete t.BOX.WRAP.INPUT.type;
                     }
