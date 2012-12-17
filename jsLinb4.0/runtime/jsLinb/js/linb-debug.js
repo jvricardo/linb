@@ -12091,7 +12091,7 @@ Class("linb.UI",  "linb.absObj", {
             html=typeof html=='string'?html:'<span style="background:url('+linb.ini.img_busy+') no-repeat left center;padding-left:16px;">'+message+'</span>';
             return this.each(function(profile){
                 _.resetRun(profile.$linbid+':busy',function(profile,key,subId){
-                    var keys=profile.keys;
+                    var keys=profile.keys,node;
                     key=keys[key]||keys['BORDER']||keys['PANEL']||keys['KEY'];
                     var parentNode=profile.getSubNode(key,subId);
                     if(parentNode.isEmpty())
