@@ -26671,6 +26671,7 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
         DataModel:{
             dataField:null,
             dataBinder:null,
+            readonly:null,
 
             caption:{
                 ini:' Page: ',
@@ -26709,6 +26710,7 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
             return v;
         },
         _click:function(profile, src){
+            if(profile.properties.disabled)return false;
             var b=profile.boxing(),
                 v=b.getValue(),
                 a=v.split(':');
@@ -26717,6 +26719,7 @@ Class("linb.UI.PageBar",["linb.UI","linb.absValue"] ,{
             return typeof r=="boolean"?r:false;
         },
         _show:function(profile, e, src, flag){
+            if(profile.properties.disabled)return false;
             var prop = profile.properties,
                 arr = profile.box._v2a(prop.value),
                 min=arr[0],
