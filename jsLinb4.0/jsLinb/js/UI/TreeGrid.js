@@ -3994,7 +3994,7 @@ editorDropListHeight
                         if(editor){
                             _.tryF(editor.undo,[],editor);
                             var hash=linb.Event.getEventPara(e);
-                            if(hash.keyCode=='enter')hash.keyCode='down';
+                            if(hash.keyCode=='enter')hash.keyCode='right';
         
                             profile.getSubNode('CELLA', cell._serialId).onKeydown(true,hash);
                         }
