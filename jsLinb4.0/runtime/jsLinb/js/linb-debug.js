@@ -34525,7 +34525,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                             parent = profile.getSubNode('BODY').get(0);
                         }
                         //sor sub first
-                        var a1=[], a2=[], a3=[], t,ff;
+                        var a1=[], a2=[], a3=[], a4=[],t,ff;
                         _.arr.each(rows,function(row){
                             if(row.sub && row.sub.length>1)
                                 self(profile, row, index, type, sortby, order, null);
@@ -34533,8 +34533,12 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                              a1[a1.length]= index==-1 
                                 ? row.caption 
                                 : (t=row.cells)?(t=t[index])?t.value:'':row[index];
+                             a4[a4.length]= index==-1
+                             		? row
+                                : (t=row.cells)?t[index]:row[index];
                              a2[a2.length]=a2.length;
                         });
+                        var sortf;
                         if(typeof sortby!='function'){
                             switch(type){
                                 case 'number':
@@ -34549,12 +34553,16 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                                 default:
                                     ff=function(n){return n||''};
                             }
-                            sortby=function(x,y){
+                            sortf=function(x,y){
                                x=ff(a1[x]); y=ff(a1[y]);
                                return (x>y?1:x==y?0:-1)*(order?1:-1);
                             };
+                        }else{
+                        		sortf=function(x,y){
+                               return sortby.apply(profile,[x,y,a1,order,index,a4]);
+                            };
                         }
-                        a2.sort(sortby);
+                        a2.sort(sortf);
 
                         //sort memory array
                         //sort dom node

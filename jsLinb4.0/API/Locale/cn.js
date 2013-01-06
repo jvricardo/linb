@@ -16189,7 +16189,7 @@ _.set(linb.Locale,["cn","app"], {
                 $paras:[
                     "colId [必需参数] : String, 列id.",
                     "desc [可选参数] : Boolean, True为递降排序,false为递增排序. 不指定或null为当前排序的逆序.",
-                    "sortby [可选参数] : Function, 排序函数. function(x,y){return 0|1|-1}" 
+                    "sortby [可选参数] : Function, 排序函数. function(x,y,values,asc,colIndex,colCells){return 0|1|-1}" 
                 ]
             },
             removeAllRows:{

@@ -16265,7 +16265,7 @@ _.set(linb.Locale,["en","app"], {
                 $paras:[
                     "colId [Required] : String, the column id.",
                     "desc [Required] : Boolean, [True] for desc, [false] for asc. No-specified or null for switching between desc and asc.",
-                    "sortby [Required] : Function, sortby function. function(x,y){return 0|1|-1}" 
+                    "sortby [Required] : Function, sortby function(x,y,values,asc,colIndex,colCells){return 0|1|-1}" 
                 ]
             },
             removeAllRows:{
