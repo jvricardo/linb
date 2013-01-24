@@ -24,7 +24,7 @@ Class('VisualJS.About', 'linb.Com',{
                 .setTop(10)
                 .setWidth(260)
                 .setHeight(80)
-                .setHtml("Powered by jsLinb <br /> <br />&copy;2006-2010 <a href=\"mailto:&#108;&#105;&#110;&#98;&#46;&#110;&#101;&#116;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;\">Jack Lee</a> All rights reserved.")
+                .setHtml("Powered by jsLinb <br /> <br />&copy;2006-2013 <a href=\"mailto:&#108;&#105;&#110;&#98;&#46;&#110;&#101;&#116;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;\">Jack Lee</a> All rights reserved.")
             );
             
             host.dialog.append((new linb.UI.Button)
