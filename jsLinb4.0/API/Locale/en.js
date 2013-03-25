@@ -16184,7 +16184,7 @@ _.set(linb.Locale,["en","app"], {
             },
             getHotRowMode:{
                 $desc:"Gets the grid's hot row mode.",
-                $rtn:"String. 'none'[no hot row], 'auto'[auto show or hide] or 'show'[always show]."
+                $rtn:"String. 'none'[no hot row], 'show'[hot row always show], 'hide'[auto hide invalid row(beforeHotRowAdded return false)] or 'auto'[auto hide invalid row(beforeHotRowAdded return false), and auto adding a hot row with empty grid]."
             },
             setHotRowMode:{
                 $desc:"Sets the grid's hot row mode.",
@@ -16297,7 +16297,10 @@ _.set(linb.Locale,["en","app"], {
             },
             addHotRow:{
                 $desc:"To add the hot row.",
-                $rtn:"[self]"
+                $rtn:"[self]",
+                $paras:[
+                    "focusColId [Optional] : String, the focused column id."
+                ]
             },
             removeHotRow:{
                 $desc:"To remove the hot row.",

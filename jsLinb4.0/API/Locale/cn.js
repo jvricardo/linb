@@ -16107,7 +16107,7 @@ _.set(linb.Locale,["cn","app"], {
             },
             getHotRowMode:{
                 $desc:"得到Grid的[热行]模式.",
-                $rtn:"String. 'none'[没有热行模式], 'auto'[热行自动显示或隐藏] 或 'show'[热行始终显示]."
+                $rtn:"String. 'none'[没有热行模式], 'show'[热行始终显示] 或 'hide'[不符合规定(beforeHotRowAdded返回false)的热行自动隐藏] 或 'auto'[不符合规定(beforeHotRowAdded返回false)的热行自动隐藏，并且自动给空表加热行]."
             },
             setHotRowMode:{
                 $desc:"设置Grid的[热行]模式.",
@@ -16221,7 +16221,10 @@ _.set(linb.Locale,["cn","app"], {
             },
             addHotRow:{
                 $desc:"加[热行](如果没有的话).",
-                $rtn:"[self]"
+                $rtn:"[self]",
+                $paras:[
+                    "focusColId [可选参数] : String, [热行]获得焦点的列 ."
+                ]
             },
             removeHotRow:{
                 $desc:"去除[热行].",

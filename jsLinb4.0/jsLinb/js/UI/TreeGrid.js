@@ -186,10 +186,10 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                 }
             });
         },
-        addHotRow:function(){
+        addHotRow:function(focusColId){
             var prf=this.get(0);
             if(prf.renderId)
-                prf.box._addTempRow(prf);
+                prf.box._addTempRow(prf, focusColId);
             return this;
         },
         removeHotRow:function(){
@@ -1801,7 +1801,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                                 ? row.caption 
                                 : (t=row.cells)?(t=t[index])?t.value:'':row[index];
                              a4[a4.length]= index==-1
-                             		? row
+                                    ? row
                                 : (t=row.cells)?t[index]:row[index];
                              a2[a2.length]=a2.length;
                         });
@@ -1825,7 +1825,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
                                return (x>y?1:x==y?0:-1)*(order?1:-1);
                             };
                         }else{
-                        		sortf=function(x,y){
+                                sortf=function(x,y){
                                return sortby.apply(profile,[x,y,a1,order,index,a4]);
                             };
                         }
@@ -2639,7 +2639,7 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             },
             hotRowMode:{
                 ini:'none',
-                listbox:['none','auto','show'],
+                listbox:['none','show','hide','auto'],
                 action:function(value){
                     if(this.renderId){
                         if(value=='none')
@@ -2727,6 +2727,10 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
         },
         _temprowid:'_ r _temp_',
         _addTempRow:function(profile,coId){
+            var prop=profile.properties;
+            if(prop.readonly || prop.disabled  || !prop.header || prop.header.length<=0)
+                return false;
+            
             // clear first, ensure only one
             profile.box._sethotrowoutterblur(profile,true);
             delete profile.__hastmpRow;
@@ -2749,16 +2753,15 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
 
             // gives a special id
             row.id = this._temprowid;
-            row.rowNumber=profile.properties.hotRowNumber;
+            row.rowNumber=prop.hotRowNumber;
             row.rowClass=profile.getClass('CELLS', '-hot');
 
             ins.insertRows([row]);
             
-            // focus to next cell
-            ins.focusCellbyRowCol(this._temprowid, coId||profile.properties.header[0].id);
-    
             profile.__hastmpRow=true;
-            
+
+            // focus to next cell
+            ins.focusCellbyRowCol(row.id, coId||prop.header[0].id);            
             profile.box._sethotrowoutterblur(profile);
         },
 
@@ -2787,17 +2790,17 @@ Class("linb.UI.TreeGrid",["linb.UI","linb.absValue"],{
             
             // do nothing
             if(result===null){
-                if(prop.hotRowMode=='auto'){
+                if(prop.hotRowMode=='hide'||prop.hotRowMode=='auto'){
                     profile.box._sethotrowoutterblur(profile);
                 }
                 return false;
             }
             // remove the hot row
             else if(result===false){
-                if(prop.hotRowMode=='auto'){
+                if(prop.hotRowMode=='hide'||prop.hotRowMode=='auto'){
                     delete profile.__hastmpRow;
                     ins.removeRows([rowId]);
-                    if(prop.rows.length===0)
+                    if(prop.rows.length===0 && prop.hotRowMode=='auto')
                         this._addTempRow(profile);
                 }
                 // dont add new hot row
