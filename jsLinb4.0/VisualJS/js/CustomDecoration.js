@@ -364,6 +364,7 @@ Class('VisualJS.CustomDecoration', 'linb.Com',{
                     prf.boxing().setCustomClass(tplKey, className||null);
                     // custom style
                     prf.boxing().setCustomStyle(tplKey, arr.join(";")||null);
+                    ns.fireEvent('onDirty');
                 }
             }
         }

@@ -575,6 +575,9 @@ Class('VisualJS.Designer', 'linb.Com',{
                           this.setProperties({
                               targetProfile:prf
                           });
+                          this.setEvents({
+                          	  onDirty:function(){page._change()}
+                          });
                           this.show();
                       });
                     }
