@@ -187,9 +187,11 @@ Class('VisualJS.JSEditor', 'linb.Com',{
                         if(doc){
                             var paras=doc.$paras, arr, str;
                             if(paras&&paras.length){
-                                arr=[{code:"(new "+o.key+").get(0)"}];
+                                arr=[{code:"(new "+o.key+").get(0);"}];
                                 for(var i=1;i<paras.length;i++){
                                     str=paras[i].replace(/.*\:\s*(([\w]+\.)*[\w]+).*/, '$1');
+                                    if(str=="Event"||str=="Element"||str=="Document")
+                                        str="Object";
                                     arr.push({type:str+".prototype"});
                                 }
                                 instanceFunMap[evt]=arr;

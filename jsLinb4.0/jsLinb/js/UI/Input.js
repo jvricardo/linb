@@ -439,7 +439,7 @@ Class("linb.UI.Input", ["linb.UI.Widget","linb.absValue"] ,{
                 }
             },
             labelCaption:{
-                ini:undefined,
+                ini:"",
                 action: function(v){
                     v=(_.isSet(v)?v:"")+"";
                     this.getSubNode('LABEL').html(linb.adjustRes(v,true));
@@ -589,10 +589,6 @@ Class("linb.UI.Input", ["linb.UI.Widget","linb.absValue"] ,{
             onLabelActive:function(profile, e, src){}
         },
         _prepareData:function(profile){
-            // give default labelCaption
-            if(profile.properties.labelCaption===undefined)
-                profile.properties.labelCaption =  profile.alias;
-
             var d=arguments.callee.upper.call(this, profile);
 
             d._type = d.type || '';
@@ -604,7 +600,8 @@ Class("linb.UI.Input", ["linb.UI.Widget","linb.absValue"] ,{
             d.labelShow=d.labelSize?"":("display:none");
     
             // adjustRes for labelCaption
-            d.labelCaption=linb.adjustRes(d.labelCaption,true);
+            if(d.labelCaption)
+                d.labelCaption=linb.adjustRes(d.labelCaption,true);
 
             return d;
         },

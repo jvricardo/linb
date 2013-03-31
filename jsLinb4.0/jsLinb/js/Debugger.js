@@ -206,5 +206,9 @@ Class('linb.Debugger', null, {
                 },100,10).start();
             }, time||5000);
         };
+        
+        if(!_.isDefined(window.console)){
+            window.console={log:linb.log};
+        }
     }
 });

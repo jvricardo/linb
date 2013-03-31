@@ -1333,8 +1333,8 @@ ns.__forcrackignorechange=true;
                                
                                // 1. try single line
                                var scode=codearr[codearr.length-1].code, itype;
-                               ocode="var a;\n"
-                                +"a=(function(){try{\n"+"var " + firstkey + "=" + scode +";\n" + "return ("+firstkey+")"+(keytag?("."+keytag):"")+";\n}catch(e){}\n})();\n";
+                               ocode="//--try 1st\n"
+                                +"var a=(function(){try{\n"+"var " + firstkey + "=" + scode +";\n" + "return ("+firstkey+")"+(keytag?("."+keytag):"")+";\n}catch(e){}\n}).call({});\n";
 
                                // 2. try relatived lines
                                 co=[];
@@ -1356,7 +1356,7 @@ ns.__forcrackignorechange=true;
                                     }
                                },null,true);
                                co.reverse();
-                               ocode += "if(a===null||a===undefined)\na=(function(){try{\n"+co.join('\n')+"\nreturn ("+firstkey+")"+(keytag?("."+keytag):"")+";\n}catch(e){}\n})();\n";
+                               ocode += "\n\n//--try 2nd\n if(a===null||a===undefined)\na=(function(){try{\n"+co.join('\n')+"\nreturn ("+firstkey+")"+(keytag?("."+keytag):"")+";\n}catch(e){}\n}).call({});\n";
 
                                // 3. try all code
                                 co=[];
@@ -1366,7 +1366,7 @@ ns.__forcrackignorechange=true;
                                         if(cached.type){
                                             itype=cached.type;
                                             if(/\.prototype$/.test(itype))
-                                               itype = itype.replace(/(.+)(\.prototype)$/, "new $1()");
+                                               itype = itype.replace(/(.+)(\.prototype)$/, "new $1();");
                                         }
                                         if(!cached.code && !itype)
                                             cached=null;
@@ -1374,11 +1374,12 @@ ns.__forcrackignorechange=true;
                                     co.push(
                                         o.defkey
                                         ? (o.defkey +"=" + (cached ? (cached.code || itype): o.code +";"))
-                                        : ("try{" + o.key + "=" + o.code +"}catch(e){}")
+                                        : ("(function(){try{" + o.key + "=" + o.code +"}catch(e){}}).call("+_this+");")
                                     );
                                });
-                               ocode += "if(a===null||a===undefined)\na=(function(){try{\n"+co.join('\n')+"\nreturn ("+firstkey+")"+(keytag?("."+keytag):"")+";\n}catch(e){}})();\n";
+                               ocode += "\n\n//--try 2nd\n if(a===null||a===undefined)\na=(function(){try{\n"+co.join('\n')+"\nreturn ("+firstkey+")"+(keytag?("."+keytag):"")+";\n}catch(e){}}).call({});\n";
                                ocode += "a;";
+console.log(ocode);
                             }
                             else{
                                 // try to take it as a type

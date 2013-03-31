@@ -11394,6 +11394,10 @@ Class("linb.Tips", null,{
                 },100,10).start();
             }, time||5000);
         };
+        
+        if(!_.isDefined(window.console)){
+            window.console={log:linb.log};
+        }
     }
 });//UIProfile Class
 Class('linb.UIProfile','linb.Profile', {
@@ -19797,7 +19801,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                 }
             },
             labelCaption:{
-                ini:undefined,
+                ini:"",
                 action: function(v){
                     v=(_.isSet(v)?v:"")+"";
                     this.getSubNode('LABEL').html(linb.adjustRes(v,true));
@@ -19947,10 +19951,6 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
             onLabelActive:function(profile, e, src){}
         },
         _prepareData:function(profile){
-            // give default labelCaption
-            if(profile.properties.labelCaption===undefined)
-                profile.properties.labelCaption =  profile.alias;
-
             var d=arguments.callee.upper.call(this, profile);
 
             d._type = d.type || '';
@@ -19962,7 +19962,8 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
             d.labelShow=d.labelSize?"":("display:none");
     
             // adjustRes for labelCaption
-            d.labelCaption=linb.adjustRes(d.labelCaption,true);
+            if(d.labelCaption)
+                d.labelCaption=linb.adjustRes(d.labelCaption,true);
 
             return d;
         },
