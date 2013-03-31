@@ -103,7 +103,7 @@ Class('VisualJS', 'linb.Com',{
                     {split:true},
                     {id:'servicetester', image:CONF.img_app, imagePos:'-64px top', tips:'$VisualJS.menu.servicetester'},
                     {split:true},
-                    {id:'jsoneditor', image:CONF.img_app, imagePos:'-128px -64px', tips:'$VisualJS.menu.servicetester'},
+                    {id:'jsoneditor', image:CONF.img_app, imagePos:'-128px -64px', tips:'$VisualJS.menu.jsoneditor'},
                     {split:true},
                     {id:'info', caption:'...', label:'$VisualJS.noMessage', tips:'$VisualJS.message'}
                 ]}]);
@@ -791,7 +791,7 @@ Class('VisualJS', 'linb.Com',{
                         return;
                     }
                     self._dirtyWarn(function(){
-                        linb.Dom.submit(linb.ini.appPath+self.curProject);
+                        linb.Dom.submit(linb.ini.appPath+self.curProject+"/debug.html");
                     });
                     break;
                 case 'release':

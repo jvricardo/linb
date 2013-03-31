@@ -88,14 +88,6 @@ class VisualJS extends Unit
             $template = LINB::parseTemplate($template, array("libpath"=>"","clsName" => $hash->clsName, "content"=>$hash->content, "theme"=>$hash->theme, "lang"=>$hash->lang));
             $zip->addFile($template, $path2);
 
-            $path2=$rootName.DIRECTORY_SEPARATOR.'loading.gif';
-            $f = file_get_contents($path.DIRECTORY_SEPARATOR.$path2);
-            $zip->addFile($f, $path2);
-
-            $path2=$rootName.DIRECTORY_SEPARATOR.'addBuilderLink.js';
-            $f = file_get_contents($path.DIRECTORY_SEPARATOR.$path2);
-            $zip->addFile($f, $path2);
-            
             $io->_zip($path, $rootName.DIRECTORY_SEPARATOR.'jsLinb'.DIRECTORY_SEPARATOR.'Locale',$zip);
             $io->_zip($path, $rootName.DIRECTORY_SEPARATOR.'jsLinb'.DIRECTORY_SEPARATOR.'appearance',$zip);
 
@@ -103,6 +95,26 @@ class VisualJS extends Unit
             $f = file_get_contents($path.DIRECTORY_SEPARATOR.$path2);
             $zip->addFile($f, $path2);
 
+            $path2=$rootName.DIRECTORY_SEPARATOR.'jsLinb'.DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.'adv-all.js';
+            $f = file_get_contents($path.DIRECTORY_SEPARATOR.$path2);
+            $zip->addFile($f, $path2);
+            
+            $path2=$rootName.DIRECTORY_SEPARATOR.'loading.gif';
+            $f = file_get_contents($path.DIRECTORY_SEPARATOR.$path2);
+            $zip->addFile($f, $path2);
+            
+            $path2=$rootName.DIRECTORY_SEPARATOR."jsLinb".DIRECTORY_SEPARATOR.'bg.gif';
+            $f = file_get_contents($path.DIRECTORY_SEPARATOR.$path2);
+            $zip->addFile($f, $path2);
+
+            $path2=$rootName.DIRECTORY_SEPARATOR."jsLinb".DIRECTORY_SEPARATOR.'busy.gif';
+            $f = file_get_contents($path.DIRECTORY_SEPARATOR.$path2);
+            $zip->addFile($f, $path2);
+
+            $path2=$rootName.DIRECTORY_SEPARATOR."jsLinb".DIRECTORY_SEPARATOR.'ondrag.gif';
+            $f = file_get_contents($path.DIRECTORY_SEPARATOR.$path2);
+            $zip->addFile($f, $path2);
+                        
             $fd = fopen ($fileName, "wb");
             $out = fwrite ($fd, $zip -> getZippedfile());
             fclose ($fd);    
@@ -110,16 +122,66 @@ class VisualJS extends Unit
             @unlink($fileName);
             return;
             break;
+        case 'release':
+            $runtimepath='runtime';            
+
+            $arr = explode('/', $hash->path);
+            $name = array_pop($arr);
+            $fileName =$name.".zip";
+            $apppath = implode('/', $arr);    
+        
+            $zip = new zip;
+                       
+            // Add app folder
+    	    $io->_zip($apppath, $name, $zip);
+  
+            // Add lib files and folders
+            $io->_zip(self::BASE_PATH, $runtimepath.DIRECTORY_SEPARATOR.'jsLinb'.DIRECTORY_SEPARATOR.'Locale',$zip, $name);
+            $io->_zip(self::BASE_PATH, $runtimepath.DIRECTORY_SEPARATOR.'jsLinb'.DIRECTORY_SEPARATOR.'appearance',$zip, $name);
+  
+            $path2=$runtimepath.DIRECTORY_SEPARATOR.'loading.gif';
+            $f = file_get_contents(self::BASE_PATH.DIRECTORY_SEPARATOR.$path2);
+            $zip->addFile($f, $name.DIRECTORY_SEPARATOR.$path2);
+
+            $path2=$runtimepath.DIRECTORY_SEPARATOR.'jsLinb'.DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.'linb-all.js';
+            $f = file_get_contents(self::BASE_PATH.DIRECTORY_SEPARATOR.$path2);
+            $zip->addFile($f, $name.DIRECTORY_SEPARATOR.$path2);
+
+            $path2=$runtimepath.DIRECTORY_SEPARATOR.'jsLinb'.DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.'adv-all.js';
+            $f = file_get_contents(self::BASE_PATH.DIRECTORY_SEPARATOR.$path2);
+            $zip->addFile($f, $name.DIRECTORY_SEPARATOR.$path2);
+
+            $path2=$runtimepath.DIRECTORY_SEPARATOR.'loading.gif';
+            $f = file_get_contents(self::BASE_PATH.DIRECTORY_SEPARATOR.$path2);
+            $zip->addFile($f, $name.DIRECTORY_SEPARATOR.$path2);
+            
+            $path2=$runtimepath.DIRECTORY_SEPARATOR."jsLinb".DIRECTORY_SEPARATOR.'bg.gif';
+            $f = file_get_contents(self::BASE_PATH.DIRECTORY_SEPARATOR.$path2);
+            $zip->addFile($f, $name.DIRECTORY_SEPARATOR.$path2);
+
+            $path2=$runtimepath.DIRECTORY_SEPARATOR."jsLinb".DIRECTORY_SEPARATOR.'busy.gif';
+            $f = file_get_contents(self::BASE_PATH.DIRECTORY_SEPARATOR.$path2);
+            $zip->addFile($f, $name.DIRECTORY_SEPARATOR.$path2);
+
+            $path2=$runtimepath.DIRECTORY_SEPARATOR."jsLinb".DIRECTORY_SEPARATOR.'ondrag.gif';
+            $f = file_get_contents(self::BASE_PATH.DIRECTORY_SEPARATOR.$path2);
+            $zip->addFile($f, $name.DIRECTORY_SEPARATOR.$path2);
+     
+            // out file
+            $fd = fopen ($fileName, "wb");
+            $out = fwrite ($fd, $zip -> getZippedfile());
+            fclose ($fd);    
+
+            $zip -> forceDownload($fileName);
+            @unlink($fileName);
+            return;
+
+            break;
         case 'savetoserver':
             $io->setString($hash->path, $hash->content);
             return array('OK'=>true);
             //throw new LINB_E("You cant save file to this server!");
             break;
-            
-            
-            
-            
-        
         case 'del':
             foreach( $hash->path as $v)
                 $io->delete($v);
@@ -188,13 +250,6 @@ class VisualJS extends Unit
             unset($io);
             return $b;
                 
-            break;
-        case 'release':
-            $arr = explode(DIRECTORY_SEPARATOR, $hash->path);
-            $name = array_pop($arr);
-            $io->zipDir4Download($hash->path ,$name.'.zip');
-            return;
-
             break;
         case 'upload':
             LINB::checkArgs($hash, array(

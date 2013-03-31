@@ -575,16 +575,20 @@ class IO{
 		return file_put_contents($path, LINB::$json->encode($a));
 	}
 
-    function _zip($basepath, $path, $zip){
+    function _zip($basepath, $path, $zip, $parentPath=null){
         $list = $this->dirList($this->absPath($basepath.DIRECTORY_SEPARATOR.$path));
 
-        $zip->addDirectory($path);
+        if(is_null($parentPath)){
+            $parentPath="";
+        }
+        
+        $zip->addDirectory($parentPath.DIRECTORY_SEPARATOR.$path);
 	    foreach($list as $v){
 	        if($v['type'] === 0){
-	            $this->_zip($basepath, $path.DIRECTORY_SEPARATOR.$v['name'], $zip);
+	            $this->_zip($basepath, $path.DIRECTORY_SEPARATOR.$v['name'], $zip,$parentPath);
 	        }else{
 	            $f = file_get_contents($v['location']);
-	            $zip->addFile($f, $path.DIRECTORY_SEPARATOR.$v['name']);
+	            $zip->addFile($f, $parentPath.DIRECTORY_SEPARATOR.$path.DIRECTORY_SEPARATOR.$v['name']);
 	        }
 	    }
     }
