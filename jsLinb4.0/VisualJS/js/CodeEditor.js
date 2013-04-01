@@ -1379,7 +1379,7 @@ ns.__forcrackignorechange=true;
                                });
                                ocode += "\n\n//--try 2nd\n if(a===null||a===undefined)\na=(function(){try{\n"+co.join('\n')+"\nreturn ("+firstkey+")"+(keytag?("."+keytag):"")+";\n}catch(e){}}).call({});\n";
                                ocode += "a;";
-console.log(ocode);
+//console.log(ocode);
                             }
                             else{
                                 // try to take it as a type

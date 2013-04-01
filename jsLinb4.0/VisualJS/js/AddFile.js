@@ -96,7 +96,7 @@ Class('VisualJS.AddFile', 'linb.Com',{
                 .setTop(150)
                 .setWidth(110)
                 .setType("listbox")
-                .setItems([{"id":"/", "caption":"$VisualJS.addfile.iDir"}, {"id":".html", "caption":"$VisualJS.addfile.iHtml"}, {"id":".css", "caption":"$VisualJS.addfile.iCSS"}, {"id":".js", "caption":"$VisualJS.addfile.iJs"}, {"id":".php", "caption":"$VisualJS.addfile.iPhp"}, {"id":"upload", "caption":"$VisualJS.addfile.iUpload"}])
+                .setItems([{"id":"/", "caption":"$VisualJS.addfile.iDir"}, {"id":".html", "caption":"$VisualJS.addfile.iHtml"}, {"id":".css", "caption":"$VisualJS.addfile.iCSS"}, {"id":".js", "caption":"$VisualJS.addfile.iJs"}, {"id":".php", disabled:true, "caption":"$VisualJS.addfile.iPhp"}, {"id":"upload", disabled:true, "caption":"$VisualJS.addfile.iUpload"}])
                 .setValue(".js")
                 .afterUIValueSet("_refresh")
             );
