@@ -840,8 +840,8 @@ _.merge(linb,{
         linb.include(z,linb.getPath(z, '.js'),m,m);
     },
     _langParamReg:/\x24(\d+)/g,
-    _langscMark:/[$@][\S]+/,
-    _langReg:/((\$)([^\w]))|((\$)([\w][\w\.]*[\w]+))|((\@)([\w][\w\.]*[\w]+))/g,
+    _langscMark:/[$@{][\S]+/,
+    _langReg:/((\$)([^\w]))|((\$)([\w][\w\.]*[\w]+))|((\@)([\w][\w\.]*[\w]+)(\@?))|((\{)([\S]+)(\}))/g,
     getRes:function(path){
         var arr,conf,tmp,params=arguments;
         if(typeof path=='string'){
@@ -871,8 +871,8 @@ _.merge(linb,{
     },
     adjustRes:function(str, wrap){
         wrap=wrap?linb.wrapRes:linb.getRes;
-        return linb._langscMark.test(str) ?  str.replace(linb._langReg, function(a,b,c,d,e,f,g,h,i,j){
-            return c=='$' ? d : f=='$' ? wrap(g) : i=='@' ? ((j=linb.SC.get(j)) || (_.isSet(j)?j:"")) : a;
+        return linb._langscMark.test(str) ?  str.replace(linb._langReg, function(a,b,c,d,e,f,g,h,i,j,k,l,m,n){
+            return c=='$' ? d : f=='$' ? wrap(g) : (i=='@'||m=="{") ? ((j=linb.SC.get(i=="@"?j:n)) || (_.isSet(j)?j:"")) : a;
             }): str;
     },
     request:function(uri, query, onSuccess, onFail, threadid, options){

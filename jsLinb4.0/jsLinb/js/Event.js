@@ -134,7 +134,7 @@ Class('linb.Event',null,{
                 if(src.$linbid==dragdrop._dropElement)
                     r=false;
             }
-            if(linb.browser.isTouch && ('mousedown'==type || 'mouseover'==type || 'mouseup'==type))
+            if(linb && linb.browser.isTouch && ('mousedown'==type || 'mouseover'==type || 'mouseup'==type))
                 r=false;
 
             if(r===false)self.stopBubble(event);

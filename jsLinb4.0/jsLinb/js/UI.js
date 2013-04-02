@@ -1112,7 +1112,7 @@ Class("linb.UI",  "linb.absObj", {
                         _.arr.each(h[i].split(';'),function(o,i){
                             if((b=o.split(':')).length==2){
                                 b[0]=b[0].replace(/\-(\w)/g,function(a,b){return b.toUpperCase()});
-                                try{node.css(b[0], flag?'':b[1])}catch(e){}
+                                try{node.css(b[0], flag?'':linb.adjustRes(b[1]))}catch(e){}
                             }
                         });
                 }));
