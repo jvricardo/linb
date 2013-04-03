@@ -17,14 +17,15 @@ Class('VisualJS.ClassTool',null,{
             // clear bottom comments
             while(reg12.test(str))
                 str = str.replace(reg12,'');
-            // clear comments
-            str = str.replace(/\/\*[^*]*\*+([^\/][^*]*\*+)*\//g,'');
-            str = str.replace(/\/\/[^\n]*/g,'');
 
             // clear string/reg
             str = str.replace(/\/(\\[\/\\]|[^*\/])(\\.|[^\/\n\\])*\/[gim]*/g,'null');
             str = str.replace(/"(\\.|[^"\\\n])*"/g,function(a){return reg7.test(a)?a:'\"\"'});
             str = str.replace(/'(\\.|[^'\\\n])*'/g,function(a){return reg8.test(a)?a:"\'\'"});
+
+            // clear comments
+            str = str.replace(/\/\*[^*]*\*+([^\/][^*]*\*+)*\//g,'');
+            str = str.replace(/\/\/[^\n]*/g,'');
 
             // check "Class(" string
             if(!reg5.test(str))
