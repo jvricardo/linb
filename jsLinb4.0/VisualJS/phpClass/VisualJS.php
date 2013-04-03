@@ -35,6 +35,18 @@ class VisualJS extends Unit
         $io = LINB::SC('IO');
         //only input relative path, and not ./ or ../ allowed
         switch($hash->action){
+        case 'getThemes':
+            $apepath=self::BASE_PATH."runtime/jsLinb/appearance";
+            $b = $io->dirList($io->absPath($apepath));
+            unset($io);
+            $r = array();
+            foreach($b as &$v){
+                $r[]=$v["name"];
+            }
+            unset($b);
+            return $r;
+            
+            break;
         case 'fetchwebfile':
             $content=file_get_contents($hash->path);
             if ($content!==false) {

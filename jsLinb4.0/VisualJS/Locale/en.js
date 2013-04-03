@@ -69,9 +69,11 @@
         saveashtml:"Save a runnable file(.html) to local disk",
         saveaszip:"Save release package(.zip) to local disk",
         
-        themeDft:'Default Theme',
-        themeAqua:'Aqua Theme',
-        themeVista:'Vista Theme',
+        themes:{
+            'default':'Default Theme',
+            aqua:'Aqua Theme',
+            vista:'Vista Theme'
+        },
         
         noexist:"$0 doesn't exist!"
     },

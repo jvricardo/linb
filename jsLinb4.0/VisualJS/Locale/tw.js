@@ -68,10 +68,12 @@
         savetolocal:"保存 jsLinb 類文件(.js)到本地",
         saveashtml:"保存一個可以運行的網頁文件(.html)到本地",
         saveaszip:"保存可以發佈的文件包(.zip)到本地",
-        
-        themeDft:'默認界面主題',
-        themeAqua:'Aqua 界面主題',
-        themeVista:'Vista 界面主題',
+
+        themes:{
+            'default':'默認界面主題',
+            aqua:'Aqua 界面主題',
+            vista:'Vista 界面主題',
+        },
         
         noexist:"$0 不存在!"
     },
@@ -249,7 +251,7 @@
             gridwh: '按網格調整大小',
             clone:'克隆選中控件',
             'delete': '刪除選中控件',
-            aligngroup : '控件對齊'',
+            aligngroup : '控件對齊',
             posgroup : '網格和層'
         }
     },

@@ -69,10 +69,12 @@
         savetolocal:"jsLinbクラスファイル(.js)をローカルディスクに保存",
         saveashtml:"実行可能ファイル(.html)をローカルディスクに保存",
         saveaszip:"リリースパッケージ(.zip)をローカルディスクに保存",
-        
-        themeDft:'デフォルトのテーマ',
-        themeAqua:'Aquaテーマ',
-        themeVista:'Vistaテーマ',
+
+        themes:{
+            'default':'デフォルトのテーマ',
+            aqua:'Aquaテーマ',
+            vista:'Vistaテーマ',
+        },
         
         noexist:"$0 は存在しません"
     },

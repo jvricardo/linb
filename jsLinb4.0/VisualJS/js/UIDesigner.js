@@ -84,18 +84,44 @@ Class('UIDesigner', 'linb.Com',{
                     zIndex:100
                 },{
                     onClick:function(profile,e,src){
-                        if(SPA.popMenu.$lang!=linb.getLang()){
-                            SPA.popMenu.$lang=linb.getLang();
-                            SPA.popMenu.refresh();
-                        }
-                        SPA.popMenu.pop(src);
+                        profile.boxing().onClickDrop(profile,e,src);
                     },
                     onClickDrop:function(profile,e,src){
-                        if(SPA.popMenu.$lang!=linb.getLang()){
-                            SPA.popMenu.$lang=linb.getLang();
-                            SPA.popMenu.refresh();
-                        }
-                        SPA.popMenu.pop(src);
+                        var callback=function(items){
+                            if(SPA.popTheme.$lang!=linb.getLang()){
+                                SPA.popTheme.$lang=linb.getLang();
+                                SPA.popTheme.refresh();
+                            }
+                            SPA.popTheme.pop(src);
+                        };
+                        if(SPA.popTheme.getTag()){
+                            callback();
+                        }else{
+                            linb.Ajax(CONF.phpPath, {
+                                key:CONF.requestKey, para:{
+                                    action:'getThemes',
+                                    hashCode:_()
+                                }
+                            }, function(txt){
+                                var obj = txt;
+                                if(obj && !obj.error && obj.data){
+                                    var items=[];
+                                    _.arr.each(obj.data,function(o){
+                                        items.push({"id":o, "caption":"$VisualJS.builder.themes."+o});
+                                    });
+                                    var fIndex = _.arr.subIndexOf(items,"id","default"),
+                                        first = items[fIndex];
+                                    _.arr.removeFrom(items,fIndex);
+                                    _.arr.insertAny(items,first,0);
+                                    SPA.popTheme.setItems(items);
+                                    SPA.popTheme.setTag("Loaded");
+                                    callback(items);
+                                }else
+                                    linb.message(obj.error.message);
+                            },function(txt){
+                                linb.message(txt);
+                            }).start();
+                        } 
                     }
                 });
                 self.appRoot.append(self.$btnTheme);
@@ -112,11 +138,7 @@ Class('UIDesigner', 'linb.Com',{
                     zIndex:100
                 },{
                     onClick:function(profile,e,src){
-                        if(SPA.popLang.$lang!=linb.getLang()){
-                            SPA.popLang.$lang=linb.getLang();
-                            SPA.popLang.refresh();
-                        }
-                        SPA.popLang.pop(src);
+                        profile.boxing().onClickDrop(profile,e,src);
                     },
                     onClickDrop:function(profile,e,src){
                         if(SPA.popLang.$lang!=linb.getLang()){
@@ -223,8 +245,7 @@ Class('UIDesigner', 'linb.Com',{
             
             append(
                 (new linb.UI.PopMenu)
-                .setHost(host,"popMenu")
-                .setItems([{"id":"default", "caption":"$VisualJS.builder.themeDft"}, {"id":"aqua", "caption":"$VisualJS.builder.themeAqua"}, {"id":"vista", "caption":"$VisualJS.builder.themeVista"}])
+                .setHost(host,"popTheme")
                 .onMenuSelected("_onmenusel")
             );
             

@@ -743,24 +743,51 @@ Class('VisualJS', 'linb.Com',{
                     this.$dropmenulang.pop(src);
                     break;
                 case 'theme':
-                    if(!this.$dropmenutheme){
-                        this.$dropmenutheme=new linb.UI.PopMenu({
-                            items:[
-                            {id:'default',caption:linb.getRes('VisualJS.builder.themeDft')},
-                            {id:'vista',caption:linb.getRes('VisualJS.builder.themeVista')},
-                            {id:'aqua',caption:linb.getRes('VisualJS.builder.themeAqua')}
-                            ]},{
-                            onMenuSelected:function(p,item){
-                                if(linb.getLang()!=item.id)
-                                    linb.UI.setTheme(item.id,function(){
-                                        self.$dropmenutheme.destroy();
-                                        delete self.$dropmenutheme;
-                                      // self.toolbar.updateItem('ec',{'caption':linb.getRes('VisualJS.'+item.id)});
-                                    });
+                    var m;
+                    if(!(m=this.$dropmenutheme)){
+                        m=this.$dropmenutheme=new linb.UI.PopMenu();
+                        m.onMenuSelected(function(p,item){
+                            if(linb.getLang()!=item.id){
+                                linb.UI.setTheme(item.id,function(){
+                                    self.$dropmenutheme.destroy();
+                                    delete self.$dropmenutheme;
+                                  // self.toolbar.updateItem('ec',{'caption':linb.getRes('VisualJS.'+item.id)});
+                                });
                             }
                         });
                     }
-                    this.$dropmenutheme.pop(src);
+                    var callback=function(){
+                        m.pop(src);
+                    };
+                
+                   if(m.getTag()){
+                        callback();
+                    }else{
+                        linb.Ajax(CONF.phpPath, {
+                            key:CONF.requestKey, para:{
+                                action:'getThemes',
+                                hashCode:_()
+                            }
+                        }, function(txt){
+                            var obj = txt;
+                            if(obj && !obj.error && obj.data){
+                                var items=[];
+                                _.arr.each(obj.data,function(o){
+                                    items.push({"id":o, "caption":"$VisualJS.builder.themes."+o});
+                                });
+                                var fIndex = _.arr.subIndexOf(items,"id","default"),
+                                    first = items[fIndex];
+                                _.arr.removeFrom(items,fIndex);
+                                _.arr.insertAny(items,first,0);
+                                m.setItems(items);
+                                m.setTag("Loaded");
+                                callback(items);
+                            }else
+                                linb.message(obj.error.message);
+                        },function(txt){
+                            linb.message(txt);
+                        }).start();
+                    } 
                     break;
 //                case 'flash':
 //                    linb.Dom.submit(CONF.path_video);

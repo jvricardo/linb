@@ -70,9 +70,11 @@
         saveashtml:"保存一个可以运行的网页文件(.html)到本地",
         saveaszip:"保存可以发布的文件包(.zip)到本地",
         
-        themeDft:'默认界面主题',
-        themeAqua:'Aqua 界面主题',
-        themeVista:'Vista 界面主题',
+        themes:{
+            'default':'默认界面主题',
+            aqua:'Aqua 界面主题',
+            vista:'Vista 界面主题'
+        },
         
         noexist:"$0 不存在!"
     },

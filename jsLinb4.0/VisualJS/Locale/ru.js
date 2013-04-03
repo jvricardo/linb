@@ -71,10 +71,12 @@
         saveashtml:"Сохранить готовый файл (.html) на локальный диск",
         saveaszip:"Сохранить релиз пакета (.zip) на локальный диск",
 
-        themeDft:'Тема по умолчанию',
-        themeAqua:'Тема Aqua',
-        themeVista:'Тема Vista',
-
+        themes:{
+            'default':'Тема по умолчанию',
+            aqua:'Тема Aqua',
+            vista:'Тема Vista',
+        },
+        
         noexist:"$0 не существует!"
     },
 
