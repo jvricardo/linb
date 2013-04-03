@@ -578,18 +578,17 @@ class IO{
     function _zip($basepath, $path, $zip, $parentPath=null){
         $list = $this->dirList($this->absPath($basepath.DIRECTORY_SEPARATOR.$path));
 
-        $relpath=$path;
         if(!is_null($parentPath)){
-            $relpath=$parentPath.DIRECTORY_SEPARATOR.$path;
+            $zip->addDirectory($parentPath);
+            $parentPath=$parentPath.DIRECTORY_SEPARATOR;
         }
-        $zip->addDirectory($relpath);
         
 	    foreach($list as $v){
 	        if($v['type'] === 0){
-	            $this->_zip($basepath, $path.DIRECTORY_SEPARATOR.$v['name'], $zip,$parentPath);
+	            $this->_zip($basepath, $path.DIRECTORY_SEPARATOR.$v['name'], $zip, $parentPath.$v['name']);
 	        }else{
 	            $f = file_get_contents($v['location']);
-	            $zip->addFile($f, $relpath.DIRECTORY_SEPARATOR.$v['name']);
+	            $zip->addFile($f, $parentPath.$v['name']);
 	        }
 	    }
     }
