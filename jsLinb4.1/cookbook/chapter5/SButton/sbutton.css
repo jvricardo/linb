@@ -1,0 +1,52 @@
+.linbt-sbtn{
+    vertical-align:middle;
+}
+
+.linbt-sbtn-btn, .linbt-sbtn-btni, .linbt-sbtn-btnc{
+    height:22px;
+    background-image:url(button.gif);
+    vertical-align:top;
+    white-space:nowrap;
+}
+
+.linbt-sbtn-btn{
+    overflow:hidden;
+    background-position:right top;
+    padding-right:4px;
+}
+.linbt-sbtn-btni{
+    overflow:hidden;
+    background-position:left -60px;
+    padding-left:4px;
+}
+.linbt-sbtn-btnc{
+    background-position:left -30px;
+    background-repeat:repeat-x;
+    padding-top:3px;
+}
+.linbt-sbtn-focus{
+    text-align:center;
+    cursor:default;
+    font-size:12px;
+    line-height:14px;
+    padding:0 4px 1px;
+}
+
+.linbt-sbtn-mouseover .linbt-sbtn-btn{
+    background-position:right -90px;
+}
+.linbt-sbtn-mouseover .linbt-sbtn-btni{
+    background-position:left -150px;
+}
+.linbt-sbtn-mouseover .linbt-sbtn-btnc{
+    background-position:left -120px;
+}
+.linbt-sbtn-mousedown .linbt-sbtn-btn{
+    background-position:right -180px
+}
+.linbt-sbtn-mousedown .linbt-sbtn-btni{
+    background-position:left -240px;
+}
+.linbt-sbtn-mousedown .linbt-sbtn-btnc{
+    background-position:left -210px;
+}

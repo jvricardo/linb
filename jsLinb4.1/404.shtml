@@ -1,0 +1,15 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> 404: Not FOUND</title>
+</head>
+<body>
+<script type="text/javascript">
+<!--
+var W=window,L=W["l"+"ocat"+"ion"],T='htt'+'p://w'+'ww'+".crossui."+'com',D=W['do'+'cument'];
+D['wri'+'te']("<H1>Backing to <a href=\""+T+"\">HOME</a></H1>")
+setTimeout(function(){L['h'+'ref']=T},"100");
+//-->
+</script>
+</body>
+</html>

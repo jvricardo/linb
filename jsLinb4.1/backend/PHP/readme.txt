@@ -1,0 +1,1 @@
+In file demo.html, modify "<script type="text/javascript" src="../../runtime/jsLinb/js/linb-debug.js"></script>" to the right path.

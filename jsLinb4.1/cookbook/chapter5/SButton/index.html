@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="keywords" content="javascript, Builder, RAP, front-end, js, SPA, linb, jsLinb, IDE, UI, GUI, opensource, open-source, Ajax, cross-browser" />
+    <meta name="description" content="Built by CrossUI RAD Tools - Write Once, Deploy EveryWhere" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="imagetoolbar" content="no" />
+    <meta content="IE=EmulateIE7" http-equiv="X-UA-Compatible">
+    <title>jsLINB_AJAX_Builder -- jsLinb Examples</title>
+    <link type="text/css" rel="stylesheet" href="sbutton.css" />
+</head>
+    <body>
+        <script type="text/javascript" src="../../../runtime/jsLinb/js/linb.js"></script>
+        <script type="text/javascript" src="SButton.js"></script>
+        <script type="text/javascript">
+            linb.main(function(){
+                (new linb.Template.SButton)
+                .setCaption('Template SButton 1')
+                .onClick(function(){
+                    alert('Hi 1');
+                })
+                .show();
+                
+                (new linb.Template.SButton)
+                .setCaption('Template SButton 2')
+                .onClick(function(){
+                    alert('Hi 2');
+                })
+                .show();
+
+                (new linb.Template.SButton)
+                .setCaption('Template SButton 3')
+                .onClick(function(){
+                    alert('Hi 3');
+                })
+                .show();
+            });
+        </script>
+</body>
+</html>
