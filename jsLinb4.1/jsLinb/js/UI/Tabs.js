@@ -108,11 +108,11 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
             return profile.getSubNodeByItemId('PANEL', subId);
         },
         ////
-        addPanel:function(para, children, item){
+        addPanel:function(paras, children, item){
             var i={},
                 id = item&&item.id,
                 items = this.getItems(),
-                id2=para.id||para.tag;
+                id2=paras.id||paras.tag;
             if(items.length){
                 if(-1!=_.arr.subIndexOf(items,'id',id2))
                     return false;
@@ -122,15 +122,15 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
             }
 
             _.merge(i, {
-                caption:para.caption,
-                image:para.image,
-                closeBtn:para.closeBtn || false,
-                popBtn:para.popBtn || false,
-                optBtn:para.optBtn || false,
-                imagePos:para.imagePos,
-                dragKey:para.dragKey,
-                dropKeys:para.dropKeys,
-                id : para.id || para.tag || _.id()
+                caption:paras.caption,
+                image:paras.image,
+                closeBtn:paras.closeBtn || false,
+                popBtn:paras.popBtn || false,
+                optBtn:paras.optBtn || false,
+                imagePos:paras.imagePos,
+                dragKey:paras.dragKey,
+                dropKeys:paras.dropKeys,
+                id : paras.id || paras.tag || _.id()
             });
 
             this.insertItems([i], id);
@@ -151,10 +151,10 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
             var profile=this.get(0),
                 pp=profile.properties,
                 item = profile.getItemByDom(domId),
-                para = _.clone(item);
-            if(!para.dragKey)para.dragKey=pp.dragKey;
-            if(!para.dropKeys)para.dropKeys=pp.dropKeys;
-            return para;
+                paras = _.clone(item);
+            if(!paras.dragKey)paras.dragKey=pp.dragKey;
+            if(!paras.dropKeys)paras.dropKeys=pp.dropKeys;
+            return paras;
         },
         getPanelChildren:function(domId){
             var profile=this.get(0),

@@ -34,7 +34,7 @@ Class('App', 'linb.Com',{
         _sbutton3_onclick:function (profile, e, src, value) {
             var file=this.upload.getUploadObj();
             if(file){
-                linb.IAjax('../request.php',{key:'upload',para:{},file:file},function(rsp){
+                linb.IAjax('../request.php',{key:'upload',paras:{},file:file},function(rsp){
                     linb.alert(rsp.data.message);
                 },function(errMsg){
                     linb.alert(errMsg)

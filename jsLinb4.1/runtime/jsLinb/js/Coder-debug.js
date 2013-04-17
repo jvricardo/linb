@@ -197,7 +197,7 @@ Class("linb.Coder", null,{
                 len = ((m).replace(reg1, "").match(reg2) || "").length;
                 if(typeof n !='function'){
                     if (reg3.test(n)) {
-                        //if only one para and valid
+                        //if only one paras and valid
                         if (reg4.test(n)) {
                             _t = parseInt(n.slice(1),10);
                             if(_t<=len)n=_t;

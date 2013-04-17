@@ -327,11 +327,11 @@ Class('App', 'linb.Com',{
         _panel16_ondrop:function (profile, e, node, key, data, item) {
             var target = profile.boxing(),
                 source = data.profile.boxing(),
-                para = source.getPanelPara(data.domId),
+                paras = source.getPanelPara(data.domId),
                 children = source.getPanelChildren(data.domId)
 
             source.removePanel(data.domId);
-            target.addPanel(para, children, item);
+            target.addPanel(paras, children, item);
 
         }, 
         _toolbar7_onclick:function (profile, id, groupid, src) {

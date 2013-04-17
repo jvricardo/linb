@@ -477,6 +477,7 @@ if(linb.browser.ie){
             iframeAutoLoad:"",
             ajaxAutoLoad:"",
             html:{
+                html:1,
                 action:function(v){
                     this.getSubNode('PANEL').html(v);
                 }
@@ -497,10 +498,11 @@ if(linb.browser.ie){
                 }
             },
             image:{
+                format:'image',
                 action: function(value){
                     this.getSubNode('ICON')
                         .css('display',value?'':'none')
-                        .css('backgroundImage','url('+(value||'')+')');
+                        .css('backgroundImage','url('+linb.adjustRes(value||'')+')');
                 }
             },
             imagePos:{

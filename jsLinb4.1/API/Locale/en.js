@@ -2828,6 +2828,13 @@ _.set(linb.Locale,["en","app"], {
                     "}"
                 ]
             },
+            nativeEvent : {
+                $desc:"To trigger DOM Element's native Event.",
+                $rtn:"linb.Dom",
+                $paras:[
+                    "name [required] : String, Event name."
+                ]
+            },
             css:{
                 $desc:"Gets a css property on the first element, or sets a css property(or key/value Object as css properties) to all elements.",
                 $rtn:"String/[self]",
@@ -6340,7 +6347,7 @@ _.set(linb.Locale,["en","app"], {
             addPanel:{
                 $desc:"Adds a panel to the current UI.",
                 $paras:[
-                    "para [Required] : a key/value pairs.",
+                    "paras [Required] : a key/value pairs.",
                     "children [Required] : Array, the panel's children.",
                     "item [Optional] : Object"
                 ],
@@ -10064,7 +10071,7 @@ _.set(linb.Locale,["en","app"], {
                 $rtn:"linb.Dom",
                 $snippet:[
                     "var id='linb.temp.ci2'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:100px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
-                    "var o;linb(id).prepend(o=new linb.UI.ComboInput({type:'upload'}));"+
+                    "var o;linb(id).prepend(o=new linb.UI.ComboInput({type:'file'}));"+
                     "o.afterUIValueSet(function(){alert(o.getUploadObj().value)});"+
                     "}"
                 ]
@@ -10073,13 +10080,13 @@ _.set(linb.Locale,["en","app"], {
                 $desc:"Sets the type property value on the each UIProfile, and reflects the value to UI.",
                 $rtn:"[self]",
                 $paras:[
-                    "value [Required] : 'none','combobox','listbox','upload','getter','currency','number','helpinput','cmdbox','popbox','time','date', 'datetime','color' or 'spin'. Default is 'combobox'.",
+                    "value [Required] : 'none','combobox','listbox','file','getter','currency','number','helpinput','cmdbox','popbox','time','date', 'datetime','color' or 'spin'. Default is 'combobox'.",
                     "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
                 ],
                 $snippet:[
                     "var id='linb.temp.ci4'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:100px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var label,o;linb(id).prepend(o=new linb.UI.ComboInput({position:'relative'})).prepend(label=new linb.UI.Label({position:'relative',width:100}));"+
-                    "var arr=['none','combobox','listbox','upload','getter','helpinput','cmdbox','popbox','time','date','color'];"+
+                    "var arr=['none','combobox','listbox','file','getter','helpinput','cmdbox','popbox','time','date','color'];"+
                     "linb.Thread(null,[function(id){if(!arr.length)return linb.Thread.abort(id); var type=arr.shift();o.setType(type);label.setCaption(type)}],1000,null,null,null,true).start();"+
                     "}"
                 ]
@@ -10426,7 +10433,7 @@ _.set(linb.Locale,["en","app"], {
                 ],
                 $snippet:[
                     "var id='linb.temp.ci99'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:100px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
-                    "var o;linb(id).prepend(o=new linb.UI.ComboInput({type:'upload'}));"+
+                    "var o;linb(id).prepend(o=new linb.UI.ComboInput({type:'file'}));"+
                     "o.onFileDlgOpen(function(){alert('File upload dialog is open.')});"+
                     "}"
                 ]
@@ -12732,7 +12739,7 @@ _.set(linb.Locale,["en","app"], {
                 $desc:"Adds a panel to the current UI.",
                 $rtn:"[self]",
                 $paras:[
-                    "para [Required] : a key/value pairs.",
+                    "paras [Required] : a key/value pairs.",
                     "children [Required] : Array, the panel's children.",
                     "item [Optional] : Object"
                 ],
@@ -14535,7 +14542,7 @@ _.set(linb.Locale,["en","app"], {
                 $desc:"Sets the editorType property value on the each UIProfile, and reflects the value to UI.",
                 $rtn:"[self]",
                 $paras:[
-                    "value [Required] : 'none','combobox','listbox','upload','getter','currency','number','helpinput','cmdbox','popbox','time','date' or 'color'. Default is 'none'.",
+                    "value [Required] : 'none','combobox','listbox','file','getter','currency','number','helpinput','cmdbox','popbox','time','date' or 'color'. Default is 'none'.",
                     "force [Optional] : Boolean, force to set the property value even if the same property value already exists. Default is [false]."
                 ],
                 $snippet:[

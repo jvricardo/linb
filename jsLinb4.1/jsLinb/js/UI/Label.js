@@ -73,11 +73,12 @@ Class("linb.UI.Label", "linb.UI.Widget",{
                 }
             },
             image:{
+                format:'image',
                 action: function(value){
                     var self=this,k=self.keys;
                     self.getSubNodes(['ICON','SICON'])
                         .css('display',value?'':'none')
-                        .css('backgroundImage','url('+(value||'')+')');
+                        .css('backgroundImage','url('+linb.adjustRes(value||'')+')');
                 }
             },
             imagePos:{

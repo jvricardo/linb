@@ -1045,6 +1045,12 @@ Class('linb.Dom','linb.absBox',{
                 }
             });
         },
+        nativeEvent:function(name){
+            return this.each(function(o){
+                if(o.nodeType===3||o.nodeType===8)return;
+        		try{o[name]()}catch(e){}
+            });
+        },
 
 //functions
         $canFocus:function(){

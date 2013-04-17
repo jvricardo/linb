@@ -438,7 +438,7 @@ Class('linb.UI.TimePicker', ['linb.UI',"linb.absValue"], {
                     a[0]=profile.$hour;
                     a[1]=profile.$minute;
                     profile.boxing().setUIValue(a.join(':'),true);
-                    profile.box._hourC(profile);
+                    if(profile.box)profile.box._hourC(profile);
                 }
             },
             HI:{
@@ -453,12 +453,12 @@ Class('linb.UI.TimePicker', ['linb.UI',"linb.absValue"], {
                 onClick:function(profile, e, src){
                     profile.$hour=profile.getSubId(src);
                     profile.boxing()._setCtrlValue(profile.$hour+":"+profile.$minute);
-                    profile.box._hourC(profile);
+                    if(profile.box)profile.box._hourC(profile);
                 },
                 onDblclick:function(profile, e, src){
                     profile.$hour=profile.getSubId(src);
                     profile.boxing().setUIValue(profile.$hour+":"+profile.$minute,true);
-                    profile.box._hourC(profile);
+                    if(profile.box)profile.box._hourC(profile);
                 }
             },
             MI:{
@@ -473,7 +473,7 @@ Class('linb.UI.TimePicker', ['linb.UI',"linb.absValue"], {
                 onClick:function(profile, e, src){
                     profile.$minute=profile.getSubId(src);
                     profile.boxing().setUIValue(profile.$hour+":"+profile.$minute,true);
-                    profile.box._hourC(profile);
+                    if(profile.box)profile.box._hourC(profile);
                 }
             },
             PRE:{
@@ -485,7 +485,7 @@ Class('linb.UI.TimePicker', ['linb.UI',"linb.absValue"], {
                     v=(v%60+60)%60;
                     profile.$minute=v=(v<=9?'0':'')+v;
                     profile.boxing()._setCtrlValue(profile.$hour+":"+profile.$minute);
-                    profile.box._hourC(profile);
+                    if(profile.box)profile.box._hourC(profile);
                 }
             },
             NEXT:{
@@ -497,7 +497,7 @@ Class('linb.UI.TimePicker', ['linb.UI',"linb.absValue"], {
                     v=(v%60+60)%60;
                     profile.$minute=v=(v<=9?'0':'')+v;
                     profile.boxing()._setCtrlValue(profile.$hour+":"+profile.$minute);
-                    profile.box._hourC(profile);
+                    if(profile.box)profile.box._hourC(profile);
                 }
             },
             PRE2:{
@@ -509,7 +509,7 @@ Class('linb.UI.TimePicker', ['linb.UI',"linb.absValue"], {
                     v=(v%24+24)%24;
                     profile.$hour=v=(v<=9?'0':'')+v;
                     profile.boxing()._setCtrlValue(profile.$hour+":"+profile.$minute);
-                    profile.box._hourC(profile);
+                    if(profile.box)profile.box._hourC(profile);
                 }
             },
             NEXT2:{
@@ -521,7 +521,7 @@ Class('linb.UI.TimePicker', ['linb.UI',"linb.absValue"], {
                     v=(v%24+24)%24;
                     profile.$hour=v=(v<=9?'0':'')+v;
                     profile.boxing()._setCtrlValue(profile.$hour+":"+profile.$minute);
-                    profile.box._hourC(profile);
+                    if(profile.box)profile.box._hourC(profile);
                 }
             },
             CLOSE:{
@@ -545,8 +545,11 @@ Class('linb.UI.TimePicker', ['linb.UI',"linb.absValue"], {
                 ini:250,
                 readonly:true
             },
-            value:'00:00',
-            closeBtn:{
+            value:{
+                ini:'00:00',
+                format:'time'
+            },
+            closeBt:{
                 ini:true,
                 action:function(v){
                     this.getSubNode('CLOSE').css('display',v?'':'none');

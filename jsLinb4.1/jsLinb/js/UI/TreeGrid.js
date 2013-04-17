@@ -3846,6 +3846,9 @@ editorDropListHeight
                                         return profile.boxing().beforeComboPop(profile, cell, pro, pos, e, src);
                                 });
                                 break;
+                            case 'file':
+                                editor.setType(type);
+                            break;
                         }
                         baseNode.append(editor);
                         //cache the stantdard editor

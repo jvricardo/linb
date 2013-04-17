@@ -230,12 +230,12 @@ Class('App', 'linb.Com',{
         _block1_ondrop:function (profile, e, node, key, data, item) {
             var target = profile.boxing(),
                 source = data.profile.boxing(),
-                para = source.getPanelPara(data.domId),
+                paras = source.getPanelPara(data.domId),
                 children = source.getPanelChildren(data.domId)
             
-            para.popBtn=para.popBtn||para.landBtn;
+            paras.popBtn=paras.popBtn||paras.landBtn;
             
-            if(target.addPanel(para, children, item))
+            if(target.addPanel(paras, children, item))
                 source.removePanel(data.domId);
         } 
     }

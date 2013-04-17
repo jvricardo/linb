@@ -145,10 +145,11 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 }
             },
             image:{
+                format:'image',
                 action: function(value){
                     this.getSubNode('ICON')
                         .css('display',value?'':'none')
-                        .css('backgroundImage','url('+(value||'')+')');
+                        .css('backgroundImage','url('+linb.adjustRes(value||'')+')');
                 }
             },
             imagePos:{

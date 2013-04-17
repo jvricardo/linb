@@ -631,7 +631,10 @@ Class('linb.UI.DatePicker', ['linb.UI',"linb.absValue"], {
                 ini:210,
                 readonly:true
             },
-            value:new Date,
+            value:{
+                ini:new Date,
+                format:'date'
+            },
             closeBtn:{
                 ini:true,
                 action:function(v){

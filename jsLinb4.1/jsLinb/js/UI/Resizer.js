@@ -459,7 +459,7 @@ Class("linb.UI.Resizer","linb.UI",{
             var map= arguments.callee.map || (arguments.callee.map={
                 //move icon size 13*13
                 MOVE:{tagName:'div', style:'top:50%;left:50%;margin-left:-6px;margin-top:-6px;width:13px;height:13px;'},
-                CONF:{tagName:'div', style:'top:0;left:auto;right:-14px;width:12px;height:12px;{_showCofigBtn};'},
+                CONF:{tagName:'div', style:'top:2px;left:2px;width:12px;height:12px;{_showCofigBtn};'},
                 T:{tagName:'div', style:'top:-{extend}px;margin-left:-{extend}px;width:{handlerSize}px;height:{handlerSize}px;'},
                 RT:{tagName:'div', style:'top:-{extend}px;right:-{extend}px;width:{handlerSize}px;height:{handlerSize}px;'},
                 R:{tagName:'div', style:'right:-{extend}px;margin-top:-{extend}px;width:{handlerSize}px;height:{handlerSize}px;'},

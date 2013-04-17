@@ -2839,6 +2839,13 @@ _.set(linb.Locale,["cn","app"], {
                     "}"
                 ]
             },
+            nativeEvent : {
+                $desc:"触发DOM内部事件.",
+                $rtn:"linb.Dom",
+                $paras:[
+                    "name [必需参数] : String, 事件名称."
+                ]
+            },
             css:{
                 $desc:"获取第一个元素的某个CSS属性值, 或设置所有元素的某个属性值.",
                 $rtn:"String/[self]",
@@ -6362,7 +6369,7 @@ _.set(linb.Locale,["cn","app"], {
             addPanel:{
                 $desc:"添加一个面板.",
                 $paras:[
-                    "para [必需参数] : 键值对.",
+                    "paras [必需参数] : 键值对.",
                     "children [必需参数] : Array, 面板的子控件.",
                     "item [可选参数] : Object"
                 ],
@@ -9991,7 +9998,7 @@ _.set(linb.Locale,["cn","app"], {
                 $rtn:"linb.Dom",
                 $snippet:[
                     "var id='linb.temp.ci2'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:100px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
-                    "var o;linb(id).prepend(o=new linb.UI.ComboInput({type:'upload'}));"+
+                    "var o;linb(id).prepend(o=new linb.UI.ComboInput({type:'file'}));"+
                     "o.afterUIValueSet(function(){alert(o.getUploadObj().value)});"+
                     "}"
                 ]
@@ -10000,12 +10007,12 @@ _.set(linb.Locale,["cn","app"], {
                 $desc:"设置下拉框类型, 并刷新界面.",
                 $rtn:"[self]",
                 $paras:[
-                    "value [必需参数] : 'none'代表是普通的输入框,'combobox'代表下拉框,'listbox'代表列表框,'upload'代表上传框,'getter'代表获取框,'helpinput'代表帮助框,'cmdbox'代表命令框,'popbox'代表弹出框,'time'代表时间选择框,'date'代表日期选择框,'datetime'代表日期时间选择框,'color'代表颜色选择框,'currency'代表货币,'number'代表数字,'spin'代表是spin输入框. 默认为 'combobox'.",                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为 [false]."
+                    "value [必需参数] : 'none'代表是普通的输入框,'combobox'代表下拉框,'listbox'代表列表框,'file'代表文件框,'getter'代表获取框,'helpinput'代表帮助框,'cmdbox'代表命令框,'popbox'代表弹出框,'time'代表时间选择框,'date'代表日期选择框,'datetime'代表日期时间选择框,'color'代表颜色选择框,'currency'代表货币,'number'代表数字,'spin'代表是spin输入框. 默认为 'combobox'.",                    "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为 [false]."
                 ],
                 $snippet:[
                     "var id='linb.temp.ci4'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:100px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
                     "var label,o;linb(id).prepend(o=new linb.UI.ComboInput({position:'relative'})).prepend(label=new linb.UI.Label({position:'relative',width:100}));"+
-                    "var arr=['none','combobox','listbox','upload','getter','helpinput','cmdbox','popbox','time','date','color'];"+
+                    "var arr=['none','combobox','listbox','file','getter','helpinput','cmdbox','popbox','time','date','color'];"+
                     "linb.Thread(null,[function(id){if(!arr.length)return linb.Thread.abort(id); var type=arr.shift();o.setType(type);label.setCaption(type)}],1000,null,null,null,true).start();"+
                     "}"
                 ]
@@ -10352,7 +10359,7 @@ _.set(linb.Locale,["cn","app"], {
                 ],
                 $snippet:[
                     "var id='linb.temp.ci99'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:20px;position:relative;height:100px;width:300px;\">' + '<button style=\"position:absolute; bottom:0px; z-index:2;\" onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
-                    "var o;linb(id).prepend(o=new linb.UI.ComboInput({type:'upload'}));"+
+                    "var o;linb(id).prepend(o=new linb.UI.ComboInput({type:'file'}));"+
                     "o.onFileDlgOpen(function(){alert('File upload dialog is open.')});"+
                     "}"
                 ]
@@ -12657,7 +12664,7 @@ _.set(linb.Locale,["cn","app"], {
                 $desc:"添加一个面板到标签中.",
                 $rtn:"[self]",
                 $paras:[
-                    "para [必需参数] : Object, 键值对.",
+                    "paras [必需参数] : Object, 键值对.",
                     "children [必需参数] : Array, 子控件.",
                     "item [可选参数] : Object"
                 ],
@@ -14460,7 +14467,7 @@ _.set(linb.Locale,["cn","app"], {
                 $desc:"设置编辑器的种类.",
                 $rtn:"[self]",
                 $paras:[
-                    "value [必需参数] : 'none','combobox','listbox','upload','getter','helpinput','cmdbox','currency','number','popbox','time','date' or 'color'. 默认为 'none'.",
+                    "value [必需参数] : 'none','combobox','listbox','file','getter','helpinput','cmdbox','currency','number','popbox','time','date' or 'color'. 默认为 'none'.",
                     "force [可选参数] : Boolean, 强制设置该属性值,即使属性已经设置为该值. 默认为[false]."
                 ],
                 $snippet:[

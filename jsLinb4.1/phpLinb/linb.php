@@ -106,7 +106,7 @@
          * request data sub symbol: parameter
          *
          */
-      const SYM_PARA = "para";
+      const SYM_PARA = "paras";
 
       const MAX_LEN = 800;
 
@@ -299,7 +299,7 @@
        */
       public static function stimulate(&$hash){
          $key = self::SYM_KEY;
-         $para = self::SYM_PARA;
+         $paras = self::SYM_PARA;
          if(!is_object($hash)){ throw new LINB_E('Input data format error!');}
          if(!isset($hash->$key)){ throw new LINB_E('Input data must include key!');}
 
@@ -307,14 +307,14 @@
          $o = self::SC($key);
 
          if(is_subclass_of($o,self::UNIT)){
-            return $o->stimulate($hash->$para);
+            return $o->stimulate($hash->$paras);
          }else{ throw new LINB_E('$key is not a substantial class of Unit!'); }
       }
 
       /**
        * handle http post or get request
-       * html get/post : key=xxx&para={...}
-       * cgi get/pos :{key:xxx,para:{...}}
+       * html get/post : key=xxx&paras={...}
+       * cgi get/pos :{key:xxx,paras:{...}}
        * there must be a 'key' included.
        *
        */
@@ -322,7 +322,7 @@
          try{
              $httpdata=new stdClass;
              $data = self::SYM_DATA;
-             $para = self::SYM_PARA;
+             $paras = self::SYM_PARA;
 
              //"post" request
              //post a=b$c=d
@@ -361,9 +361,9 @@
     			header ("Cache-Control: no-cache, must-revalidate");
     			header ("Pragma: no-cache");
     		}
-             if(isset($httpdata->$para)){
-                if(is_string($httpdata->$para))
-                    $httpdata->$para = LINB::$json->decode($httpdata->$para);
+             if(isset($httpdata->$paras)){
+                if(is_string($httpdata->$paras))
+                    $httpdata->$paras = LINB::$json->decode($httpdata->$paras);
 
                  // for __autoload
                  LINB::$data = &$httpdata;
@@ -381,14 +381,14 @@
             $callback = self::SYM_CALLBACK;
             $err = self::SYM_ERR;
             $key = self::SYM_KEY;
-            $para = self::SYM_PARA;
+            $paras = self::SYM_PARA;
 
             $httpdata = &LINB::$data;
             if(isset($httpdata->$callback))
                 $cb=$httpdata->$callback;
 
             unset($httpdata->$key);
-            unset($httpdata->$para);
+            unset($httpdata->$paras);
             unset($httpdata->$callback);
             if($ok)
                 $httpdata->$data = $d;

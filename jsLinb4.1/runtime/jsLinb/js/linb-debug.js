@@ -1,5 +1,5 @@
 /*
-jsLinb 4.0
+jsLinb 4.1
 Copyright(c) 2011 Yingbo Li(www.linb.net, linb.net[at]gmail.com)
 Open Source under LGPL (http://www.gnu.org/licenses/lgpl-3.0-standalone.html)
 Contact linb.net[at]gmail.com for Commercial issues
@@ -379,7 +379,7 @@ _.merge(_,{
     filter: filter function(will delete "return false")
     */
     filter:function(obj, filter, force){
-        if(!force && obj && obj.constructor == Array){
+        if(!force && obj && _.isArr(obj)){
             var i,l,v,a=[],o;
             for(i=0, l=obj.length; i<l; i++)a[a.length]=obj[i];
             obj.length=0;
@@ -505,13 +505,13 @@ _.merge(_,{
             return str.charAt(0).toUpperCase() + str.substring(1);
         },
         trim:function(str){
-            return str.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '');
+            return str?str.replace(/^(\s|\uFEFF|\xA0)+|(\s|\uFEFF|\xA0)+$/g, ''):str;
         },
         ltrim:function(str){
-            return str.replace(/^[\s\xa0]+/,'');
+            return str?str.replace(/^(\s|\uFEFF|\xA0)+/,''):str;
         },
         rtrim:function(str){
-            return str.replace(/[\s\xa0]+$/,'');
+            return str?str.replace(/(\s|\uFEFF|\xA0)+$/,''):str;
         },
 /*
         blen : function(s){
@@ -565,7 +565,7 @@ _.merge(_,{
         */
         insertAny:function (arr, target,index, flag) {
             var l=arr.length;
-            flag=target.constructor!=Array || flag;
+            flag=(!_.isArr(target)) || flag;
             if(index===0){
                 if(flag)
                     arr.unshift(target);
@@ -599,8 +599,8 @@ _.merge(_,{
         each:function(arr,fun,scope,desc){
             var i, l, a=arr;
             if(!a)return a;
-            if(a.constructor!=Array){
-                if((a=a._nodes) || a.constructor!=Array)
+            if(!_.isArr(a)){
+                if((a=a._nodes) || !_.isArr(a))
                     throw new Error('errNotArray');
                 if(desc===undefined)
                     desc=1;
@@ -1253,6 +1253,7 @@ new function(){
 
     //for dom ready
     var f = function(){
+        if(linb.isDomReady)return;
         if(d.addEventListener && !b.kde)
             d.removeEventListener("DOMContentLoaded",arguments.callee,false);
         try{
@@ -1273,10 +1274,13 @@ new function(){
         (function(){try{
             //for ie7 iframe(doScroll is always ok)
             d.activeElement.id;
-            d.documentElement.doScroll('left');f()}catch(e){setTimeout(arguments.callee,1)}})();
+            d.documentElement.doScroll('left');f()}catch(e){setTimeout(arguments.callee,9)}})();
     //kde
     else
-        (function(){/loaded|complete/.test(d.readyState)?f():setTimeout(arguments.callee,1)})()
+        (function(){/loaded|complete/.test(d.readyState)?f():setTimeout(arguments.callee,9)})();
+
+    // ex
+    (function(){/in/.test(d.readyState)?setTimeout(arguments.callee,9):f()})();
 };
 // for loction url info
 new function(){
@@ -1486,7 +1490,7 @@ Class('linb.Thread',null,{
         },
         insert:function(arr, index){
             var self=this,o=self.profile.tasks,l=o.length,a;
-            if(arr.constructor!=Array)arr=[arr];
+            if(!_.isArr(arr))arr=[arr];
             index= index || self.profile.index;
             if(index<0)index=-1;
             if(index==-1){
@@ -2453,7 +2457,7 @@ new function(){
                 n+=m.getTimezoneOffset();
                 if(n)m.setTime(m.getTime()+n*60000);
                 t[i]=m;
-            }else if(a=='object' && t[i] && (t[i].constructor===Object || t[i].constructor===Array)) E(t[i]);
+            }else if(a=='object' && t[i] && (_.isObj(t[i]) || _.isArr(t[i]))) E(t[i]);
         return t;
     },
     R=function(n){return n<10?'0'+n:n},
@@ -2491,13 +2495,13 @@ new function(){
         if(deep>linb.SERIALIZEMAXLAYER||max>linb.SERIALIZEMAXSIZE)return '"too much recursion!"';
         max++;
         if (x){
-            var a=[], b=[], c=x.constructor, f, i, l, v;
+            var a=[], b=[], f, i, l, v;
             if(x===window)return "window";
             if(x===document)return "document";
             //for ie alien
-            if((typeof x==O || typeof x==F) && typeof c != F)
+            if((typeof x==O || typeof x==F) && !_.isFun(x.constructor))
                 return x.nodeType? "document.getElementById('"+x.id+"')" :"$alien";
-            else if(c==Array){
+            else if(_.isArr(x)){
                 a[0] = '[';
                 l = x.length;
                 for(i=0;i<l;++i){
@@ -2508,7 +2512,7 @@ new function(){
                             b[b.length]=v;
                 }
                 a[2]=']';
-            }else if(c==Date){
+            }else if(_.isDate(x)){
                 if(dateformat=='utc')
                     return '"'+ x.getUTCFullYear() + '-' +
                         R(x.getUTCMonth() + 1) + '-' +
@@ -2529,7 +2533,7 @@ new function(){
                          Z+'"';
                 else
                     return 'new Date('+[x.getFullYear(),x.getMonth(),x.getDate(),x.getHours(),x.getMinutes(),x.getSeconds(),x.getMilliseconds()].join(',')+')';
-            }else if(c==RegExp){
+            }else if(_.isReg(x)){
                 return String(x);
             }else{
                 if(typeof x.serialize == F)
@@ -7284,6 +7288,12 @@ Class('linb.Dom','linb.absBox',{
 	                  },'all');                	
                     handler.call(o,hash);
                 }
+            });
+        },
+        nativeEvent:function(name){
+            return this.each(function(o){
+                if(o.nodeType===3||o.nodeType===8)return;
+        		try{o[name]()}catch(e){}
             });
         },
 
@@ -12183,7 +12193,7 @@ Class("linb.UI",  "linb.absObj", {
                         return;
 
                     if(!profile.$busy||profile.$busy.isEmpty()){
-                        node=profile.$busy=linb.create('<div style="left:0;top:0;z-index:10;position:absolute;background-color:#DDD;width:100%;height:100%;"></div><div style="left:0;top:0;z-index:20;text-align:center;position:absolute;width:100%;height:100%;"><div>'+html+'</div></div>');
+                        node=profile.$busy=linb.create('<div style="left:0;top:0;z-index:10;position:absolute;background-color:#DDD;width:100%;height:100%"></div><div style="left:0;top:0;z-index:20;text-align:center;position:absolute;width:100%;height:100%;font-size:11px;line-height:24px;cursor:wait;"><div>'+html+'</div></div>');
                         linb([node.get(0)]).css({opacity:0.5});
                     }
                     node=profile.$busy;
@@ -12259,7 +12269,7 @@ Class("linb.UI",  "linb.absObj", {
             var self=this,
                 pro=self.get(0),
                 me=arguments.callee,
-                para=me.para||(me.para=function(node){
+                paras=me.paras||(me.paras=function(node){
                     var r = node.cssRegion();
                     r.tabindex=node.attr('tabIndex');
                     if(r.tabindex<=0)delete r.tabindex;
@@ -12269,7 +12279,7 @@ Class("linb.UI",  "linb.absObj", {
                 }),
                 id=node.id();
 
-            _.merge(pro.properties, para(node),'all');
+            _.merge(pro.properties, paras(node),'all');
             pro.properties.dock='none';
             if(!pro.alias && id)
                 pro.alias=id;
@@ -12328,7 +12338,7 @@ Class("linb.UI",  "linb.absObj", {
             return arguments.callee.upper.apply(this,["domId"]);
         },
         refresh:function(remedy){
-            var para,node,b,p,s,$linbid,serialId,fun,box,children,uiv;
+            var paras,node,b,p,s,$linbid,serialId,fun,box,children,uiv;
             return this.each(function(o){
                 if(!o.renderId)return;
 
@@ -12349,7 +12359,7 @@ Class("linb.UI",  "linb.absObj", {
                 //keep parent
                 if(b=!!o.parent){
                     p=o.parent.boxing();
-                    para=o.childrenId;
+                    paras=o.childrenId;
                 }else
                     p=o.getRoot().parent();
 
@@ -12405,7 +12415,7 @@ Class("linb.UI",  "linb.absObj", {
 
                 //add to parent, and trigger RenderTrigger
                 if(b)
-                    p.append(o,para);
+                    p.append(o,paras);
                 else
                     p.append(o);
 
@@ -13532,11 +13542,11 @@ Class("linb.UI",  "linb.absObj", {
             if(arr && arr[0])return arr.pop();
             return this._ctrlId.next();
         },
-        $bg:function(path, para, forceKey){
+        $bg:function(path, paras, forceKey){
             return function(key){
                 var p=linb.ini.path + 'appearance/default/'+ (typeof forceKey=='string'?forceKey:forceKey?'Public':(p=key.split('.'))[p.length-1]) + "/" + path;
                 //_.asyRun(function(){new Image().src=p;});
-                return 'url(' + p +') '+ (para||'');
+                return 'url(' + p +') '+ (paras||'');
             }
         },
         $ieBg:function(path,  forceKey){
@@ -13895,12 +13905,12 @@ Class("linb.UI",  "linb.absObj", {
             if(!linb.SC.get('linb.absComposed'))
                 Class('linb.absComposed','linb.absObj',{
                     Instance:{
-                        addPanel:function(para, children, item){
+                        addPanel:function(paras, children, item){
                             var pro = _.copy(linb.UI.Panel.$DataStruct);
-                            _.merge(pro, para, 'with');
+                            _.merge(pro, paras, 'with');
                             _.merge(pro,{
                                 dock:'fill',
-                                tag:para.tag||para.id
+                                tag:paras.tag||paras.id
                             },'all');
 
                             var pb = new linb.UI.Panel(pro),arr=[];
@@ -14498,7 +14508,7 @@ Class("linb.UI",  "linb.absObj", {
             if('readonly' in dm)
                 hashOut.readonly= (_.isSet(hashOut.readonly) && hashOut.readonly) ?'linb-ui-itemreadonly':'';
 
-            //todo:remove the extra para
+            //todo:remove the extra paras
             hashOut.imageDisplay = (hashOut.imageClass||hashOut.image)?'':'display:none';
             if(hashOut.image)
                 hashOut.backgroundImage="background-image:url("+ hashOut.image +");";
@@ -16272,6 +16282,7 @@ new function(){
                 height:'16',
                 selectable:true,
                 html:{
+                    html:1,
                     action:function(v){
                         this.getRoot().html(v);
                     }
@@ -16317,6 +16328,7 @@ new function(){
                 height:'100',
                 selectable:true,
                 html:{
+                    html:1,
                     action:function(v){
                         this.getRoot().html(v);
                     }
@@ -16563,6 +16575,7 @@ new function(){
                 }
             },
             src:{
+                format:'image',
                 ini:linb.ini.img_bg,
                 //use asyn mode
                 action:function(v){
@@ -16647,6 +16660,7 @@ new function(){
             height:300,
             cover:false,
             src:{
+                format:'flash',
                 ini:'',
                 action:function(v,o){
                     this.boxing().refreshFlash();
@@ -16720,7 +16734,7 @@ new function(){
             var ns=this;
             var prop=profile.properties,
                 serialId=profile.serialId,
-                src=prop.src,
+                src=linb.adjustRes(prop.src),
                 parameters=prop.parameters,
                 options = _.copy(prop.flashvars),
                 xml="";
@@ -17645,7 +17659,7 @@ Class("linb.UI.Resizer","linb.UI",{
             var map= arguments.callee.map || (arguments.callee.map={
                 //move icon size 13*13
                 MOVE:{tagName:'div', style:'top:50%;left:50%;margin-left:-6px;margin-top:-6px;width:13px;height:13px;'},
-                CONF:{tagName:'div', style:'top:0;left:auto;right:-14px;width:12px;height:12px;{_showCofigBtn};'},
+                CONF:{tagName:'div', style:'top:2px;left:2px;width:12px;height:12px;{_showCofigBtn};'},
                 T:{tagName:'div', style:'top:-{extend}px;margin-left:-{extend}px;width:{handlerSize}px;height:{handlerSize}px;'},
                 RT:{tagName:'div', style:'top:-{extend}px;right:-{extend}px;width:{handlerSize}px;height:{handlerSize}px;'},
                 R:{tagName:'div', style:'right:-{extend}px;margin-top:-{extend}px;width:{handlerSize}px;height:{handlerSize}px;'},
@@ -17964,6 +17978,7 @@ Class("linb.UI.Resizer","linb.UI",{
             ajaxAutoLoad:"",
             selectable:true,
             html:{
+                html:1,
                 action:function(v){
                     this.getSubNode('PANEL').html(v);
                 }
@@ -18014,6 +18029,7 @@ Class("linb.UI.Resizer","linb.UI",{
                 }
             },
             background:{
+                format:'color',
                 ini:'',
                 action:function(v){
                     this.getSubNode('PANEL').css('background',v);
@@ -18133,11 +18149,12 @@ Class("linb.UI.Label", "linb.UI.Widget",{
                 }
             },
             image:{
+                format:'image',
                 action: function(value){
                     var self=this,k=self.keys;
                     self.getSubNodes(['ICON','SICON'])
                         .css('display',value?'':'none')
-                        .css('backgroundImage','url('+(value||'')+')');
+                        .css('backgroundImage','url('+linb.adjustRes(value||'')+')');
                 }
             },
             imagePos:{
@@ -18646,10 +18663,11 @@ Class("linb.UI.Button", ["linb.UI.Widget","linb.absValue"],{
                 }
             },
             image:{
+                format:'image',
                 action: function(value){
                     this.getSubNode('ICON')
                         .css('display',value?'':'none')
-                        .css('backgroundImage','url('+(value||'')+')');
+                        .css('backgroundImage','url('+linb.adjustRes(value||'')+')');
                 }
             },
             imagePos:{
@@ -21160,9 +21178,10 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
         },
         setUploadObj:function(input){
             var profile=this.get(0),
+                prop=profile.properties,
                 c = linb(input).get(0);
             if(c.tagName && c.tagName.toLowerCase()=='input' && c.type=='file'){
-                if(profile.renderId && profile.properties.type=='upload'){
+                if(profile.renderId && (prop.type=='upload'||prop.type=='file')){
                     var o = profile.getSubNode('FILE').get(0);
                     
                     linb.setNodeData(c.$linbid=o.$linbid,'element',c);
@@ -21181,8 +21200,8 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
         },
         //for upload ,special must get the original node
         getUploadObj:function(){
-            var profile=this.get(0);
-            if(profile.renderId && profile.properties.type=='upload'){
+            var profile=this.get(0),prop=profile.properties;
+            if(profile.renderId && (prop.type=='upload'||prop.type=='file')){
                 var o = profile.getSubNode('FILE').get(0);
                 if(!o.value)
                     return null;
@@ -21216,7 +21235,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
         },
         resetValue:function(value){
             this.each(function(p){
-                if(p.properties.type=='upload')
+                if(p.properties.type=='upload'||p.properties.type=='file')
                     p.getSubNode('FILE').attr('value','');
             });
             return arguments.callee.upper.apply(this,arguments);
@@ -21226,7 +21245,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 var pro = profile.properties, type=pro.type, cacheDrop=pro.cachePopWnd;
                 if(pro.disabled||pro.readonly)return;
 
-                if(type=='upload'||type=='none'||type=='input'||type=='password'||type=='spin'||type=='currency'||type=='number')return;
+                if(type=='upload'||type=='file'||type=='none'||type=='input'||type=='password'||type=='spin'||type=='currency'||type=='number')return;
                 //open already
                 if(profile.$poplink)return;
 
@@ -21476,7 +21495,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
             delete profile.$fromEditor;
             delete profile.$typeOK;
 
-            if(type=='listbox'||type=='upload'||type=='cmdbox')
+            if(type=='listbox'||type=='upload'||type=='file'||type=='cmdbox')
                 profile.$inputReadonly=true;
 
             if(type!='listbox' && type!='combobox' && type!='helpinput')
@@ -21637,13 +21656,13 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                 $order:4,
                 'text-align':'right'
             },
-            'KEY-type-upload INPUT, KEY-type-cmdbox INPUT, KEY-type-listbox INPUT':{
+            'KEY-type-file INPUT, KEY-type-cmdbox INPUT, KEY-type-listbox INPUT':{
                 $order:4,
                 cursor:'pointer',
                 'text-align':'left',
                 overflow:'hidden'
             },
-            'KEY-type-upload BOX, KEY-type-cmdbox BOX, KEY-type-listbox BOX':{
+            'KEY-type-file BOX, KEY-type-cmdbox BOX, KEY-type-listbox BOX':{
                 $order:4,
                 background:linb.UI.$bg('inputbgb.gif', '#fff left bottom repeat-x',"Input")
             },
@@ -22035,7 +22054,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
             'number':'',
             combobox:'left top',
             listbox:'left top',
-            upload:'-16px top',
+            file:'-16px top',
             getter:'left -31px',
             helpinput:'-16px -46px',
             cmdbox:'left -16px',
@@ -22115,7 +22134,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
             },
             type:{
                 ini:'combobox',
-                listbox:_.toArr('none,input,password,combobox,listbox,upload,getter,helpinput,cmdbox,popbox,date,time,datetime,color,spin,currency,number'),
+                listbox:_.toArr('none,input,password,combobox,listbox,file,getter,helpinput,cmdbox,popbox,date,time,datetime,color,spin,currency,number'),
                 set:function(value){
                     var pro=this;
                     pro.properties.type=value;
@@ -22264,6 +22283,7 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
                     };
                 break;
                 case 'upload':
+                case 'file':
                     t.FILE={
                         $order:20,
                         tagName:'input',
@@ -22316,7 +22336,13 @@ Class("linb.UI.ComboInput", "linb.UI.Input",{
             data._commandCls = profile.getClass("SMID","-"+data.commandBtn);
 
             data._popbtnDisplay = (data.type!='none'&&data.type!='input'&&data.type!='password')?'':'display:none';
-            data.typecls=profile.getClass('KEY','-type-'+data.type);
+            data.typecls=profile.getClass('KEY','-type-'+(
+            data.type=='colorpicker'?'color'
+            :data.type=='datepicker'?'date'
+            :data.type=='timepicker'?'time'
+            :data.type=='upload'?'file'
+            :data.type
+            ));
             return data;
         },
         _ensureValue:function(profile, value){
@@ -22608,10 +22634,11 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 }
             },
             image:{
+                format:'image',
                 action: function(value){
                     this.getSubNode('ICON')
                         .css('display',value?'':'none')
-                        .css('backgroundImage','url('+(value||'')+')');
+                        .css('backgroundImage','url('+linb.adjustRes(value||'')+')');
                 }
             },
             imagePos:{
@@ -22950,7 +22977,10 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 ini:'auto',
                 readonly:true
             },
-            value:"FFFFFF",
+            value:{
+                ini:"FFFFFF",
+                format:'color'
+            },
             barDisplay : {
                 ini:true,
                 action:function(v){
@@ -24319,7 +24349,10 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 ini:210,
                 readonly:true
             },
-            value:new Date,
+            value:{
+                ini:new Date,
+                format:'date'
+            },
             closeBtn:{
                 ini:true,
                 action:function(v){
@@ -25002,7 +25035,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                     a[0]=profile.$hour;
                     a[1]=profile.$minute;
                     profile.boxing().setUIValue(a.join(':'),true);
-                    profile.box._hourC(profile);
+                    if(profile.box)profile.box._hourC(profile);
                 }
             },
             HI:{
@@ -25017,12 +25050,12 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 onClick:function(profile, e, src){
                     profile.$hour=profile.getSubId(src);
                     profile.boxing()._setCtrlValue(profile.$hour+":"+profile.$minute);
-                    profile.box._hourC(profile);
+                    if(profile.box)profile.box._hourC(profile);
                 },
                 onDblclick:function(profile, e, src){
                     profile.$hour=profile.getSubId(src);
                     profile.boxing().setUIValue(profile.$hour+":"+profile.$minute,true);
-                    profile.box._hourC(profile);
+                    if(profile.box)profile.box._hourC(profile);
                 }
             },
             MI:{
@@ -25037,7 +25070,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 onClick:function(profile, e, src){
                     profile.$minute=profile.getSubId(src);
                     profile.boxing().setUIValue(profile.$hour+":"+profile.$minute,true);
-                    profile.box._hourC(profile);
+                    if(profile.box)profile.box._hourC(profile);
                 }
             },
             PRE:{
@@ -25049,7 +25082,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                     v=(v%60+60)%60;
                     profile.$minute=v=(v<=9?'0':'')+v;
                     profile.boxing()._setCtrlValue(profile.$hour+":"+profile.$minute);
-                    profile.box._hourC(profile);
+                    if(profile.box)profile.box._hourC(profile);
                 }
             },
             NEXT:{
@@ -25061,7 +25094,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                     v=(v%60+60)%60;
                     profile.$minute=v=(v<=9?'0':'')+v;
                     profile.boxing()._setCtrlValue(profile.$hour+":"+profile.$minute);
-                    profile.box._hourC(profile);
+                    if(profile.box)profile.box._hourC(profile);
                 }
             },
             PRE2:{
@@ -25073,7 +25106,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                     v=(v%24+24)%24;
                     profile.$hour=v=(v<=9?'0':'')+v;
                     profile.boxing()._setCtrlValue(profile.$hour+":"+profile.$minute);
-                    profile.box._hourC(profile);
+                    if(profile.box)profile.box._hourC(profile);
                 }
             },
             NEXT2:{
@@ -25085,7 +25118,7 @@ Class("linb.UI.Group", "linb.UI.Div",{
                     v=(v%24+24)%24;
                     profile.$hour=v=(v<=9?'0':'')+v;
                     profile.boxing()._setCtrlValue(profile.$hour+":"+profile.$minute);
-                    profile.box._hourC(profile);
+                    if(profile.box)profile.box._hourC(profile);
                 }
             },
             CLOSE:{
@@ -25109,8 +25142,11 @@ Class("linb.UI.Group", "linb.UI.Div",{
                 ini:250,
                 readonly:true
             },
-            value:'00:00',
-            closeBtn:{
+            value:{
+                ini:'00:00',
+                format:'time'
+            },
+            closeBt:{
                 ini:true,
                 action:function(v){
                     this.getSubNode('CLOSE').css('display',v?'':'none');
@@ -26227,10 +26263,11 @@ Class("linb.UI.Panel", "linb.UI.Div",{
                 }
             },
             image:{
+                format:'image',
                 action: function(value){
                     this.getSubNode('ICON')
                         .css('display',value?'':'none')
-                        .css('backgroundImage','url('+(value||'')+')');
+                        .css('backgroundImage','url('+linb.adjustRes(value||'')+')');
                 }
             },
             imagePos:{
@@ -26921,11 +26958,11 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
             return profile.getSubNodeByItemId('PANEL', subId);
         },
         ////
-        addPanel:function(para, children, item){
+        addPanel:function(paras, children, item){
             var i={},
                 id = item&&item.id,
                 items = this.getItems(),
-                id2=para.id||para.tag;
+                id2=paras.id||paras.tag;
             if(items.length){
                 if(-1!=_.arr.subIndexOf(items,'id',id2))
                     return false;
@@ -26935,15 +26972,15 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
             }
 
             _.merge(i, {
-                caption:para.caption,
-                image:para.image,
-                closeBtn:para.closeBtn || false,
-                popBtn:para.popBtn || false,
-                optBtn:para.optBtn || false,
-                imagePos:para.imagePos,
-                dragKey:para.dragKey,
-                dropKeys:para.dropKeys,
-                id : para.id || para.tag || _.id()
+                caption:paras.caption,
+                image:paras.image,
+                closeBtn:paras.closeBtn || false,
+                popBtn:paras.popBtn || false,
+                optBtn:paras.optBtn || false,
+                imagePos:paras.imagePos,
+                dragKey:paras.dragKey,
+                dropKeys:paras.dropKeys,
+                id : paras.id || paras.tag || _.id()
             });
 
             this.insertItems([i], id);
@@ -26964,10 +27001,10 @@ Class("linb.UI.Tabs", ["linb.UI", "linb.absList","linb.absValue"],{
             var profile=this.get(0),
                 pp=profile.properties,
                 item = profile.getItemByDom(domId),
-                para = _.clone(item);
-            if(!para.dragKey)para.dragKey=pp.dragKey;
-            if(!para.dropKeys)para.dropKeys=pp.dropKeys;
-            return para;
+                paras = _.clone(item);
+            if(!paras.dragKey)paras.dragKey=pp.dragKey;
+            if(!paras.dropKeys)paras.dropKeys=pp.dropKeys;
+            return paras;
         },
         getPanelChildren:function(domId){
             var profile=this.get(0),
@@ -36618,6 +36655,9 @@ editorDropListHeight
                                         return profile.boxing().beforeComboPop(profile, cell, pro, pos, e, src);
                                 });
                                 break;
+                            case 'file':
+                                editor.setType(type);
+                            break;
                         }
                         baseNode.append(editor);
                         //cache the stantdard editor
@@ -38053,6 +38093,7 @@ if(linb.browser.ie){
             iframeAutoLoad:"",
             ajaxAutoLoad:"",
             html:{
+                html:1,
                 action:function(v){
                     this.getSubNode('PANEL').html(v);
                 }
@@ -38073,10 +38114,11 @@ if(linb.browser.ie){
                 }
             },
             image:{
+                format:'image',
                 action: function(value){
                     this.getSubNode('ICON')
                         .css('display',value?'':'none')
-                        .css('backgroundImage','url('+(value||'')+')');
+                        .css('backgroundImage','url('+linb.adjustRes(value||'')+')');
                 }
             },
             imagePos:{

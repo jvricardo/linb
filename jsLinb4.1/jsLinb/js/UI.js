@@ -701,7 +701,7 @@ Class("linb.UI",  "linb.absObj", {
                         return;
 
                     if(!profile.$busy||profile.$busy.isEmpty()){
-                        node=profile.$busy=linb.create('<div style="left:0;top:0;z-index:10;position:absolute;background-color:#DDD;width:100%;height:100%;"></div><div style="left:0;top:0;z-index:20;text-align:center;position:absolute;width:100%;height:100%;"><div>'+html+'</div></div>');
+                        node=profile.$busy=linb.create('<div style="left:0;top:0;z-index:10;position:absolute;background-color:#DDD;width:100%;height:100%"></div><div style="left:0;top:0;z-index:20;text-align:center;position:absolute;width:100%;height:100%;font-size:11px;line-height:24px;cursor:wait;"><div>'+html+'</div></div>');
                         linb([node.get(0)]).css({opacity:0.5});
                     }
                     node=profile.$busy;
@@ -777,7 +777,7 @@ Class("linb.UI",  "linb.absObj", {
             var self=this,
                 pro=self.get(0),
                 me=arguments.callee,
-                para=me.para||(me.para=function(node){
+                paras=me.paras||(me.paras=function(node){
                     var r = node.cssRegion();
                     r.tabindex=node.attr('tabIndex');
                     if(r.tabindex<=0)delete r.tabindex;
@@ -787,7 +787,7 @@ Class("linb.UI",  "linb.absObj", {
                 }),
                 id=node.id();
 
-            _.merge(pro.properties, para(node),'all');
+            _.merge(pro.properties, paras(node),'all');
             pro.properties.dock='none';
             if(!pro.alias && id)
                 pro.alias=id;
@@ -846,7 +846,7 @@ Class("linb.UI",  "linb.absObj", {
             return arguments.callee.upper.apply(this,["domId"]);
         },
         refresh:function(remedy){
-            var para,node,b,p,s,$linbid,serialId,fun,box,children,uiv;
+            var paras,node,b,p,s,$linbid,serialId,fun,box,children,uiv;
             return this.each(function(o){
                 if(!o.renderId)return;
 
@@ -867,7 +867,7 @@ Class("linb.UI",  "linb.absObj", {
                 //keep parent
                 if(b=!!o.parent){
                     p=o.parent.boxing();
-                    para=o.childrenId;
+                    paras=o.childrenId;
                 }else
                     p=o.getRoot().parent();
 
@@ -923,7 +923,7 @@ Class("linb.UI",  "linb.absObj", {
 
                 //add to parent, and trigger RenderTrigger
                 if(b)
-                    p.append(o,para);
+                    p.append(o,paras);
                 else
                     p.append(o);
 
@@ -2050,11 +2050,11 @@ Class("linb.UI",  "linb.absObj", {
             if(arr && arr[0])return arr.pop();
             return this._ctrlId.next();
         },
-        $bg:function(path, para, forceKey){
+        $bg:function(path, paras, forceKey){
             return function(key){
                 var p=linb.ini.path + 'appearance/default/'+ (typeof forceKey=='string'?forceKey:forceKey?'Public':(p=key.split('.'))[p.length-1]) + "/" + path;
                 //_.asyRun(function(){new Image().src=p;});
-                return 'url(' + p +') '+ (para||'');
+                return 'url(' + p +') '+ (paras||'');
             }
         },
         $ieBg:function(path,  forceKey){
@@ -2413,12 +2413,12 @@ Class("linb.UI",  "linb.absObj", {
             if(!linb.SC.get('linb.absComposed'))
                 Class('linb.absComposed','linb.absObj',{
                     Instance:{
-                        addPanel:function(para, children, item){
+                        addPanel:function(paras, children, item){
                             var pro = _.copy(linb.UI.Panel.$DataStruct);
-                            _.merge(pro, para, 'with');
+                            _.merge(pro, paras, 'with');
                             _.merge(pro,{
                                 dock:'fill',
-                                tag:para.tag||para.id
+                                tag:paras.tag||paras.id
                             },'all');
 
                             var pb = new linb.UI.Panel(pro),arr=[];
@@ -3016,7 +3016,7 @@ Class("linb.UI",  "linb.absObj", {
             if('readonly' in dm)
                 hashOut.readonly= (_.isSet(hashOut.readonly) && hashOut.readonly) ?'linb-ui-itemreadonly':'';
 
-            //todo:remove the extra para
+            //todo:remove the extra paras
             hashOut.imageDisplay = (hashOut.imageClass||hashOut.image)?'':'display:none';
             if(hashOut.image)
                 hashOut.backgroundImage="background-image:url("+ hashOut.image +");";
@@ -4790,6 +4790,7 @@ new function(){
                 height:'16',
                 selectable:true,
                 html:{
+                    html:1,
                     action:function(v){
                         this.getRoot().html(v);
                     }
@@ -4835,6 +4836,7 @@ new function(){
                 height:'100',
                 selectable:true,
                 html:{
+                    html:1,
                     action:function(v){
                         this.getRoot().html(v);
                     }

@@ -60,6 +60,7 @@ Class("linb.UI.Flash", "linb.UI",{
             height:300,
             cover:false,
             src:{
+                format:'flash',
                 ini:'',
                 action:function(v,o){
                     this.boxing().refreshFlash();
@@ -133,7 +134,7 @@ Class("linb.UI.Flash", "linb.UI",{
             var ns=this;
             var prop=profile.properties,
                 serialId=profile.serialId,
-                src=prop.src,
+                src=linb.adjustRes(prop.src),
                 parameters=prop.parameters,
                 options = _.copy(prop.flashvars),
                 xml="";

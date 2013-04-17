@@ -40,6 +40,7 @@ Class("linb.UI.Block", "linb.UI.Widget",{
             ajaxAutoLoad:"",
             selectable:true,
             html:{
+                html:1,
                 action:function(v){
                     this.getSubNode('PANEL').html(v);
                 }
@@ -90,6 +91,7 @@ Class("linb.UI.Block", "linb.UI.Widget",{
                 }
             },
             background:{
+                format:'color',
                 ini:'',
                 action:function(v){
                     this.getSubNode('PANEL').css('background',v);

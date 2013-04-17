@@ -70,7 +70,7 @@ Class('App', 'linb.Com',{
         request:function(hash, callback, onStart, onEnd, file){
             _.tryF(onStart);
             linb.Thread.observableRun(function(threadid){
-                var data={key:'DBProcess',para:hash}, options;
+                var data={key:'DBProcess',paras:hash}, options;
                 if(file){
                     data.file=file;
                     options={method:'post'};

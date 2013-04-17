@@ -1,5 +1,5 @@
 /*
-jsLinb 4.0
+jsLinb 4.1
 Copyright(c) 2011 Yingbo Li(www.linb.net, linb.net[at]gmail.com)
 Open Source under LGPL (http://www.gnu.org/licenses/lgpl-3.0-standalone.html)
 Contact linb.net[at]gmail.com for Commercial issues
@@ -379,7 +379,7 @@ _.merge(_,{
     filter: filter function(will delete "return false")
     */
     filter:function(obj, filter, force){
-        if(!force && obj && obj.constructor == Array){
+        if(!force && obj && _.isArr(obj)){
             var i,l,v,a=[],o;
             for(i=0, l=obj.length; i<l; i++)a[a.length]=obj[i];
             obj.length=0;
@@ -505,13 +505,13 @@ _.merge(_,{
             return str.charAt(0).toUpperCase() + str.substring(1);
         },
         trim:function(str){
-            return str.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '');
+            return str?str.replace(/^(\s|\uFEFF|\xA0)+|(\s|\uFEFF|\xA0)+$/g, ''):str;
         },
         ltrim:function(str){
-            return str.replace(/^[\s\xa0]+/,'');
+            return str?str.replace(/^(\s|\uFEFF|\xA0)+/,''):str;
         },
         rtrim:function(str){
-            return str.replace(/[\s\xa0]+$/,'');
+            return str?str.replace(/(\s|\uFEFF|\xA0)+$/,''):str;
         },
 /*
         blen : function(s){
@@ -565,7 +565,7 @@ _.merge(_,{
         */
         insertAny:function (arr, target,index, flag) {
             var l=arr.length;
-            flag=target.constructor!=Array || flag;
+            flag=(!_.isArr(target)) || flag;
             if(index===0){
                 if(flag)
                     arr.unshift(target);
@@ -599,8 +599,8 @@ _.merge(_,{
         each:function(arr,fun,scope,desc){
             var i, l, a=arr;
             if(!a)return a;
-            if(a.constructor!=Array){
-                if((a=a._nodes) || a.constructor!=Array)
+            if(!_.isArr(a)){
+                if((a=a._nodes) || !_.isArr(a))
                     throw new Error('errNotArray');
                 if(desc===undefined)
                     desc=1;
@@ -1253,6 +1253,7 @@ new function(){
 
     //for dom ready
     var f = function(){
+        if(linb.isDomReady)return;
         if(d.addEventListener && !b.kde)
             d.removeEventListener("DOMContentLoaded",arguments.callee,false);
         try{
@@ -1273,10 +1274,13 @@ new function(){
         (function(){try{
             //for ie7 iframe(doScroll is always ok)
             d.activeElement.id;
-            d.documentElement.doScroll('left');f()}catch(e){setTimeout(arguments.callee,1)}})();
+            d.documentElement.doScroll('left');f()}catch(e){setTimeout(arguments.callee,9)}})();
     //kde
     else
-        (function(){/loaded|complete/.test(d.readyState)?f():setTimeout(arguments.callee,1)})()
+        (function(){/loaded|complete/.test(d.readyState)?f():setTimeout(arguments.callee,9)})();
+
+    // ex
+    (function(){/in/.test(d.readyState)?setTimeout(arguments.callee,9):f()})();
 };
 // for loction url info
 new function(){
@@ -1486,7 +1490,7 @@ Class('linb.Thread',null,{
         },
         insert:function(arr, index){
             var self=this,o=self.profile.tasks,l=o.length,a;
-            if(arr.constructor!=Array)arr=[arr];
+            if(!_.isArr(arr))arr=[arr];
             index= index || self.profile.index;
             if(index<0)index=-1;
             if(index==-1){
@@ -2453,7 +2457,7 @@ new function(){
                 n+=m.getTimezoneOffset();
                 if(n)m.setTime(m.getTime()+n*60000);
                 t[i]=m;
-            }else if(a=='object' && t[i] && (t[i].constructor===Object || t[i].constructor===Array)) E(t[i]);
+            }else if(a=='object' && t[i] && (_.isObj(t[i]) || _.isArr(t[i]))) E(t[i]);
         return t;
     },
     R=function(n){return n<10?'0'+n:n},
@@ -2491,13 +2495,13 @@ new function(){
         if(deep>linb.SERIALIZEMAXLAYER||max>linb.SERIALIZEMAXSIZE)return '"too much recursion!"';
         max++;
         if (x){
-            var a=[], b=[], c=x.constructor, f, i, l, v;
+            var a=[], b=[], f, i, l, v;
             if(x===window)return "window";
             if(x===document)return "document";
             //for ie alien
-            if((typeof x==O || typeof x==F) && typeof c != F)
+            if((typeof x==O || typeof x==F) && !_.isFun(x.constructor))
                 return x.nodeType? "document.getElementById('"+x.id+"')" :"$alien";
-            else if(c==Array){
+            else if(_.isArr(x)){
                 a[0] = '[';
                 l = x.length;
                 for(i=0;i<l;++i){
@@ -2508,7 +2512,7 @@ new function(){
                             b[b.length]=v;
                 }
                 a[2]=']';
-            }else if(c==Date){
+            }else if(_.isDate(x)){
                 if(dateformat=='utc')
                     return '"'+ x.getUTCFullYear() + '-' +
                         R(x.getUTCMonth() + 1) + '-' +
@@ -2529,7 +2533,7 @@ new function(){
                          Z+'"';
                 else
                     return 'new Date('+[x.getFullYear(),x.getMonth(),x.getDate(),x.getHours(),x.getMinutes(),x.getSeconds(),x.getMilliseconds()].join(',')+')';
-            }else if(c==RegExp){
+            }else if(_.isReg(x)){
                 return String(x);
             }else{
                 if(typeof x.serialize == F)

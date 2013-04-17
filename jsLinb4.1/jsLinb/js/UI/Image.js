@@ -104,6 +104,7 @@ Class("linb.UI.Image", "linb.UI",{
                 }
             },
             src:{
+                format:'image',
                 ini:linb.ini.img_bg,
                 //use asyn mode
                 action:function(v){

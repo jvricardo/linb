@@ -252,7 +252,10 @@ Class('linb.UI.ColorPicker', ['linb.UI',"linb.absValue"], {
                 ini:'auto',
                 readonly:true
             },
-            value:"FFFFFF",
+            value:{
+                ini:"FFFFFF",
+                format:'color'
+            },
             barDisplay : {
                 ini:true,
                 action:function(v){
