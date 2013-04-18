@@ -11,6 +11,17 @@ Class("linb.UI.Dialog","linb.UI.Widget",{
                     ins = profile.boxing(),
                     fun = function(){
                         var ins=profile.boxing();
+
+                        // default to center dlg
+                        if(!_.isSet(left)){
+                            left=((parent.get(0)==linb('body').get(0)?linb.win:parent).width()-p.width)/2;
+                            if(left<0)left=0;
+                        }
+                        if(!_.isSet(top)){
+                            top=((parent.get(0)==linb('body').get(0)?linb.win:parent).height()-p.height)/2;
+                            if(top<0)top=0;
+                        }
+
                         if(left||left===0)
                             ins.setLeft(left);
                         if(top||top===0)
