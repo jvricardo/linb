@@ -245,7 +245,8 @@ Class("linb.CSS", null,{
                             selectorText = ns._rep(v.selectorText);
                             if(_.arr.indexOf(selectorText.split(','),selector)!=-1){
                                 if(!cssValue){
-                                    return v.style[cssKey];
+                                    // replace is crack for opera
+                                    return (v.style[cssKey]||"").replace(/^\"|\"$/g,'');
                                 }else if(cssValue===v.style[cssKey]){
                                     return ds[i].ownerNode||ds[i].owningElement ;
                                 }

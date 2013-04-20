@@ -106,20 +106,29 @@ Class("linb.UI.Label", "linb.UI.Widget",{
                 action: function(v){
                     var self=this,c=self.getSubNode('BOX'),
                         d=self.getSubNode('SHADOW'),
-                        t=self.properties;
-                    switch(v){
-                        case 'left':
-                            c.css({left:0,right:'auto','marginLeft':'auto'});
-                            d.css({left:t._textSshadowSize+'px',right:'auto','marginLeft':'auto'});
-                            break;
-                        case 'right':
-                            c.css({left:'auto',right:t._textSshadowSize+'px','marginLeft':'auto'});
-                            d.css({left:'auto',right:0,'marginLeft':'auto'});
-                            break;
-                        case 'center':
-                            c.css({left:'50%',right:'auto','marginLeft':-1*c.get(0).offsetWidth/2+'px'});
-                            d.css({left:'50%',right:'auto','marginLeft':-1*c.get(0).offsetWidth/2 + t._textSshadowSize+'px'});
-                            break;
+                        t=self.properties,
+                        fun=function(){
+                            switch(v){
+                                case 'left':{
+                                    c.css({left:0,right:'auto','marginLeft':'auto'});
+                                    d.css({left:t._textSshadowSize+'px',right:'auto','marginLeft':'auto'});
+                                }
+                                break;
+                                case 'right':{
+                                    c.css({left:'auto',right:t._textSshadowSize+'px','marginLeft':'auto'});
+                                    d.css({left:'auto',right:0,'marginLeft':'auto'});
+                                }
+                                break;
+                                case 'center':{
+                                    c.css({left:'50%',right:'auto','marginLeft':-1*c.get(0).offsetWidth/2+'px'});
+                                    d.css({left:'50%',right:'auto','marginLeft':-1*c.get(0).offsetWidth/2 + t._textSshadowSize+'px'});
+                                }break;
+                            }
+                        };
+                    if(c.get(0).offsetWidth){
+                        fun();
+                    }else{
+                        _.asyRun(fun);
                     }
                 }
             },
@@ -129,20 +138,27 @@ Class("linb.UI.Label", "linb.UI.Widget",{
                 action: function(v){
                     var self=this,c=self.getSubNode('BOX'),
                         d=self.getSubNode('SHADOW'),
-                        t=self.properties;
-                    switch(v){
-                        case 'top':
-                            c.css({top:0,bottom:'auto','marginTop':'auto'});
-                            d.css({top:t._textSshadowSize+'px',bottom:'auto','marginTop':'auto'});
-                            break;
-                        case 'bottom':
-                            c.css({top:'auto',bottom:t._textSshadowSize+'px','marginTop':'auto'});
-                            d.css({top:'auto',bottom:0,'marginTop':'auto'});
-                            break;
-                        case 'middle':
-                            c.css({top:'50%',bottom:'auto','marginTop':-1*c.get(0).offsetHeight/2+'px'});
-                            d.css({top:'50%',bottom:'auto','marginTop':-1*c.get(0).offsetHeight/2+ t._textSshadowSize+'px'});
-                            break;
+                        t=self.properties,
+                        fun=function(){
+                            switch(v){
+                                case 'top':
+                                    c.css({top:0,bottom:'auto','marginTop':'auto'});
+                                    d.css({top:t._textSshadowSize+'px',bottom:'auto','marginTop':'auto'});
+                                    break;
+                                case 'bottom':
+                                    c.css({top:'auto',bottom:t._textSshadowSize+'px','marginTop':'auto'});
+                                    d.css({top:'auto',bottom:0,'marginTop':'auto'});
+                                    break;
+                                case 'middle':
+                                    c.css({top:'50%',bottom:'auto','marginTop':-1*c.get(0).offsetHeight/2+'px'});
+                                    d.css({top:'50%',bottom:'auto','marginTop':-1*c.get(0).offsetHeight/2+ t._textSshadowSize+'px'});
+                                    break;
+                            }
+                        };
+                    if(c.get(0).offsetHeight){
+                        fun();
+                    }else{
+                        _.asyRun(fun);
                     }
                 }
             },

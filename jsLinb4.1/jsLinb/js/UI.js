@@ -3288,10 +3288,10 @@ Class("linb.UI",  "linb.absObj", {
                 //set the fix value first
                 switch(value){
                     case 'middle':
-                        region={right:auto, bottom:auto,left:prop.left||'',width:prop.width||'',height:prop.height||''};
+                        region={right:prop.right=='auto'?auto:(prop.right||''), bottom:auto,left:prop.left=='auto'?auto:(prop.left||''),width:prop.width||'',height:prop.height||''};
                         break;
                     case 'center':
-                        region={right:auto, bottom:auto,top:prop.top||'',width:prop.width||'',height:prop.height||''};
+                        region={right:auto, bottom:prop.bottom=='auto'?auto:(prop.bottom||''),top:prop.top=='auto'?auto:(prop.top||''),width:prop.width||'',height:prop.height||''};
                         break;
                     case 'origin':
                         region={right:auto, bottom:auto,width:prop.width||'',height:prop.height||''};

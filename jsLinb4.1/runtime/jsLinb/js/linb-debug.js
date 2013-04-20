@@ -6146,7 +6146,8 @@ Class("linb.CSS", null,{
                             selectorText = ns._rep(v.selectorText);
                             if(_.arr.indexOf(selectorText.split(','),selector)!=-1){
                                 if(!cssValue){
-                                    return v.style[cssKey];
+                                    // replace is crack for opera
+                                    return (v.style[cssKey]||"").replace(/^\"|\"$/g,'');
                                 }else if(cssValue===v.style[cssKey]){
                                     return ds[i].ownerNode||ds[i].owningElement ;
                                 }
@@ -14780,10 +14781,10 @@ Class("linb.UI",  "linb.absObj", {
                 //set the fix value first
                 switch(value){
                     case 'middle':
-                        region={right:auto, bottom:auto,left:prop.left||'',width:prop.width||'',height:prop.height||''};
+                        region={right:prop.right=='auto'?auto:(prop.right||''), bottom:auto,left:prop.left=='auto'?auto:(prop.left||''),width:prop.width||'',height:prop.height||''};
                         break;
                     case 'center':
-                        region={right:auto, bottom:auto,top:prop.top||'',width:prop.width||'',height:prop.height||''};
+                        region={right:auto, bottom:prop.bottom=='auto'?auto:(prop.bottom||''),top:prop.top=='auto'?auto:(prop.top||''),width:prop.width||'',height:prop.height||''};
                         break;
                     case 'origin':
                         region={right:auto, bottom:auto,width:prop.width||'',height:prop.height||''};
@@ -18182,20 +18183,29 @@ Class("linb.UI.Label", "linb.UI.Widget",{
                 action: function(v){
                     var self=this,c=self.getSubNode('BOX'),
                         d=self.getSubNode('SHADOW'),
-                        t=self.properties;
-                    switch(v){
-                        case 'left':
-                            c.css({left:0,right:'auto','marginLeft':'auto'});
-                            d.css({left:t._textSshadowSize+'px',right:'auto','marginLeft':'auto'});
-                            break;
-                        case 'right':
-                            c.css({left:'auto',right:t._textSshadowSize+'px','marginLeft':'auto'});
-                            d.css({left:'auto',right:0,'marginLeft':'auto'});
-                            break;
-                        case 'center':
-                            c.css({left:'50%',right:'auto','marginLeft':-1*c.get(0).offsetWidth/2+'px'});
-                            d.css({left:'50%',right:'auto','marginLeft':-1*c.get(0).offsetWidth/2 + t._textSshadowSize+'px'});
-                            break;
+                        t=self.properties,
+                        fun=function(){
+                            switch(v){
+                                case 'left':{
+                                    c.css({left:0,right:'auto','marginLeft':'auto'});
+                                    d.css({left:t._textSshadowSize+'px',right:'auto','marginLeft':'auto'});
+                                }
+                                break;
+                                case 'right':{
+                                    c.css({left:'auto',right:t._textSshadowSize+'px','marginLeft':'auto'});
+                                    d.css({left:'auto',right:0,'marginLeft':'auto'});
+                                }
+                                break;
+                                case 'center':{
+                                    c.css({left:'50%',right:'auto','marginLeft':-1*c.get(0).offsetWidth/2+'px'});
+                                    d.css({left:'50%',right:'auto','marginLeft':-1*c.get(0).offsetWidth/2 + t._textSshadowSize+'px'});
+                                }break;
+                            }
+                        };
+                    if(c.get(0).offsetWidth){
+                        fun();
+                    }else{
+                        _.asyRun(fun);
                     }
                 }
             },
@@ -18205,20 +18215,27 @@ Class("linb.UI.Label", "linb.UI.Widget",{
                 action: function(v){
                     var self=this,c=self.getSubNode('BOX'),
                         d=self.getSubNode('SHADOW'),
-                        t=self.properties;
-                    switch(v){
-                        case 'top':
-                            c.css({top:0,bottom:'auto','marginTop':'auto'});
-                            d.css({top:t._textSshadowSize+'px',bottom:'auto','marginTop':'auto'});
-                            break;
-                        case 'bottom':
-                            c.css({top:'auto',bottom:t._textSshadowSize+'px','marginTop':'auto'});
-                            d.css({top:'auto',bottom:0,'marginTop':'auto'});
-                            break;
-                        case 'middle':
-                            c.css({top:'50%',bottom:'auto','marginTop':-1*c.get(0).offsetHeight/2+'px'});
-                            d.css({top:'50%',bottom:'auto','marginTop':-1*c.get(0).offsetHeight/2+ t._textSshadowSize+'px'});
-                            break;
+                        t=self.properties,
+                        fun=function(){
+                            switch(v){
+                                case 'top':
+                                    c.css({top:0,bottom:'auto','marginTop':'auto'});
+                                    d.css({top:t._textSshadowSize+'px',bottom:'auto','marginTop':'auto'});
+                                    break;
+                                case 'bottom':
+                                    c.css({top:'auto',bottom:t._textSshadowSize+'px','marginTop':'auto'});
+                                    d.css({top:'auto',bottom:0,'marginTop':'auto'});
+                                    break;
+                                case 'middle':
+                                    c.css({top:'50%',bottom:'auto','marginTop':-1*c.get(0).offsetHeight/2+'px'});
+                                    d.css({top:'50%',bottom:'auto','marginTop':-1*c.get(0).offsetHeight/2+ t._textSshadowSize+'px'});
+                                    break;
+                            }
+                        };
+                    if(c.get(0).offsetHeight){
+                        fun();
+                    }else{
+                        _.asyRun(fun);
                     }
                 }
             },
@@ -37629,10 +37646,14 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                         var ins=profile.boxing();
 
                         // default to center dlg
-                        if(!_.isSet(left))
+                        if(!_.isSet(left)){
                             left=((parent.get(0)==linb('body').get(0)?linb.win:parent).width()-p.width)/2;
-                        if(!_.isSet(top))
+                            if(left<0)left=0;
+                        }
+                        if(!_.isSet(top)){
                             top=((parent.get(0)==linb('body').get(0)?linb.win:parent).height()-p.height)/2;
+                            if(top<0)top=0;
+                        }
 
                         if(left||left===0)
                             ins.setLeft(left);
