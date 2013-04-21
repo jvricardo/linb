@@ -1,7 +1,7 @@
 _.set(linb.Locale,["cn","app"], {
     en:'英文',
     cn:'中文',
-    apititle:"jsLINB 4.0 - API 文档",
+    apititle:"jsLINB 4.1 - API 文档",
 
     search:'API查询',
     lQ1:'按API查询',

@@ -1,7 +1,7 @@
 _.set(linb.Locale,["en","app"], {
     en:'English',
     cn:'Chinese',
-    apititle:"jsLINB 4.0 - API Documentation",
+    apititle:"jsLINB 4.1 - API Documentation",
 
     search:'Search',
     lQ1:'Search API',
