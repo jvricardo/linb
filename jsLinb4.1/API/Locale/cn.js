@@ -2567,7 +2567,8 @@ _.set(linb.Locale,["cn","app"], {
                 $rtn:"[self]",
                 $paras:[
                     "target [必需参数] : linb.Dom对象(包含有一系列的DOM elements 或linb.UIProile 对象).",
-                    "reversed [可选参数] : Boolean, 如果是 [true], 表示本操作是'append to' 默认 [false]."
+                    "reversed [可选参数] : Boolean, 如果是 [true], 表示本操作是'append to' 默认 [false].",
+                    "force [可选参数] : Boolean, 如果是 [true], 表示即使target已在本DOM中，也要调用appendChild将target加到最后, 默认 [false]."
                 ],
                 $snippet:[
                 "var id='linb.temp.1'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:10px;\">' + '<br /><button onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -13621,6 +13622,16 @@ _.set(linb.Locale,["cn","app"], {
                 ],
                 $snippet:[
                     "var dlg=(new linb.UI.Dialog).show(null,false, 100,100); alert(dlg.getCaption());_.asyRun(function(){dlg.setCaption('c cc c');},1000);"
+                ]
+            },
+            getInitPos:{
+                $desc:"得到窗口的初始化位置."
+            },
+            setInitPos:{
+                $desc:"设置窗口的初始化位置.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [可选参数] : String. 'auto','center'之一。默认是'center'。"
                 ]
             },
             getCloseBtn:{

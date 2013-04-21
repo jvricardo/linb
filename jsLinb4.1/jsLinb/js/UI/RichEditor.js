@@ -302,7 +302,7 @@ Class("linb.UI.RichEditor", ["linb.UI","linb.absValue"],{
                                 }else{
                                     var prf=self;
                                     // for opera
-                                    if(linb.browser.opr){
+                                    if(linb.browser.opr || !win.addEventListener){
                                         prf.$repeatT=linb.Thread.repeat(function(){
                                             if(!frames[id])
                                                 return false;
@@ -310,7 +310,7 @@ Class("linb.UI.RichEditor", ["linb.UI","linb.absValue"],{
                                                 if(!prf.$win.document || !prf.$win.document.defaultView)
                                                     prf.boxing().refresh(); 
                                             }
-                                        }, 200);
+                                        }, 99);
                                     }else
                                         win.addEventListener("unload",gekfix,false);
 
@@ -319,7 +319,7 @@ Class("linb.UI.RichEditor", ["linb.UI","linb.absValue"],{
                                         doc.addEventListener("dblclick",event,false);
                                         doc.addEventListener("click",event,false);
                                         doc.addEventListener("keyup",event,false);
-                                        if(linb.browser.gek){
+                                        if(linb.browser.gek || !win.addEventListener){
                                             doc.addEventListener("focus",_focus,false);
                                             doc.addEventListener("blur",_blur,false);
                                             doc.addEventListener("keypress",event,false);
@@ -351,7 +351,7 @@ Class("linb.UI.RichEditor", ["linb.UI","linb.absValue"],{
                                             doc.removeEventListener("dblclick",event,false);
                                             doc.removeEventListener("click",event,false);
                                             doc.removeEventListener("keyup",event,false);
-                                            if(linb.browser.gek){
+                                            if(linb.browser.gek || !win.removeEventListener){
                                                 doc.removeEventListener("focus",_focus,false);
                                                 doc.removeEventListener("blur",_blur,false);
                                                 doc.removeEventListener("keypress",event,false);

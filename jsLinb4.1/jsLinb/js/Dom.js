@@ -275,9 +275,9 @@ Class('linb.Dom','linb.absBox',{
                 }
             },target,reversed);
         },
-        append:function(target,reversed){
+        append:function(target,reversed,force){
             return this.$add(function(node){
-                if(this.lastChild!=node){
+                if(force||this!=node.parentNode){
                     this.appendChild(node);
                 }
             },target,reversed);

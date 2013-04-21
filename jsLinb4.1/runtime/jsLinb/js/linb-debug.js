@@ -6521,9 +6521,9 @@ Class('linb.Dom','linb.absBox',{
                 }
             },target,reversed);
         },
-        append:function(target,reversed){
+        append:function(target,reversed,force){
             return this.$add(function(node){
-                if(this.lastChild!=node){
+                if(force||this!=node.parentNode){
                     this.appendChild(node);
                 }
             },target,reversed);
@@ -20607,7 +20607,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                                 }else{
                                     var prf=self;
                                     // for opera
-                                    if(linb.browser.opr){
+                                    if(linb.browser.opr || !win.addEventListener){
                                         prf.$repeatT=linb.Thread.repeat(function(){
                                             if(!frames[id])
                                                 return false;
@@ -20615,7 +20615,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                                                 if(!prf.$win.document || !prf.$win.document.defaultView)
                                                     prf.boxing().refresh(); 
                                             }
-                                        }, 200);
+                                        }, 99);
                                     }else
                                         win.addEventListener("unload",gekfix,false);
 
@@ -20624,7 +20624,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                                         doc.addEventListener("dblclick",event,false);
                                         doc.addEventListener("click",event,false);
                                         doc.addEventListener("keyup",event,false);
-                                        if(linb.browser.gek){
+                                        if(linb.browser.gek || !win.addEventListener){
                                             doc.addEventListener("focus",_focus,false);
                                             doc.addEventListener("blur",_blur,false);
                                             doc.addEventListener("keypress",event,false);
@@ -20656,7 +20656,7 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                                             doc.removeEventListener("dblclick",event,false);
                                             doc.removeEventListener("click",event,false);
                                             doc.removeEventListener("keyup",event,false);
-                                            if(linb.browser.gek){
+                                            if(linb.browser.gek || !win.removeEventListener){
                                                 doc.removeEventListener("focus",_focus,false);
                                                 doc.removeEventListener("blur",_blur,false);
                                                 doc.removeEventListener("keypress",event,false);
@@ -37638,22 +37638,14 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
         },
         show:function(parent, modal, left, top){
             parent = parent || linb('body');
+
             return this.each(function(profile){
+                if(profile.inShowing)return;
                 var t,
                     p=profile.properties,
                     ins = profile.boxing(),
                     fun = function(){
                         var ins=profile.boxing();
-
-                        // default to center dlg
-                        if(!_.isSet(left)){
-                            left=((parent.get(0)==linb('body').get(0)?linb.win:parent).width()-p.width)/2;
-                            if(left<0)left=0;
-                        }
-                        if(!_.isSet(top)){
-                            top=((parent.get(0)==linb('body').get(0)?linb.win:parent).height()-p.height)/2;
-                            if(top<0)top=0;
-                        }
 
                         if(left||left===0)
                             ins.setLeft(left);
@@ -37685,10 +37677,30 @@ Class("linb.UI.Slider", ["linb.UI","linb.absValue"],{
                         delete profile.inShowing;
                     };
 
-                if(profile.inShowing)return;
+                // default to center dlg
+                if(!profile._inited && p.initPos!='auto'){
+                    var pr = parent.get(0)==linb('body').get(0)?linb.win:parent;
+                    switch(p.initPos){
+                        case 'auto':
+                        top=(top||top===0)?top:p.top;
+                        left=(left||left===0)?left:p.left;
+                        case 'center':
+                        top=(top||top===0)?top:((pr.height()-p.height)/2);
+                        left=(left||left===0)?left:((pr.width()-p.width)/2);
+                        break;
+                    }
+                    if(left<0)left=0;
+                    if(top<0)top=0;
+
+                    profile._inited=1;
+                }else{
+                    top=(top||top===0)?top:p.top;
+                    left=(left||left===0)?left:p.left;                    
+                }
+
                 profile.inShowing=1;
                 if(t=p.fromRegion)
-                    linb.Dom.animate({border:'dashed 1px #ff0000'},{left:[t.left,p.left],top:[t.top,p.top],width:[t.width,p.width],height:[t.height,p.height]}, null,fun,360,12,'expoIn').start();
+                    linb.Dom.animate({border:'dashed 1px #ff0000'},{left:[t.left,left],top:[t.top,top],width:[t.width,p.width],height:[t.height,p.height]}, null,fun,360,12,'expoIn').start();
                 else
                     fun();
             });
@@ -38117,6 +38129,10 @@ if(linb.browser.ie){
             disabled:null,
             dock:{
                 hidden:true
+            },
+            initPos:{
+                ini:'center',
+                listbox:['auto','center']
             },
             iframeAutoLoad:"",
             ajaxAutoLoad:"",

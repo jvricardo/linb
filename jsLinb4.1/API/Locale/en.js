@@ -2556,7 +2556,8 @@ _.set(linb.Locale,["en","app"], {
                 $rtn:"[self]",
                 $paras:[
                     "target [Required] : a linb.Dom Object(including a set of DOM elements or linb.UIProile objects).",
-                    "reversed [Optional] : Boolean, if it's [true], that means 'append to' Default is [false]."
+                    "reversed [Optional] : Boolean, if it's [true], that means 'append to' Default is [false].",
+                    "force [Optional] : Boolean, [true]: force to call DOM's 'appendChild' to append 'target' to the last one, even 'target' is in the DOM already, Default is [false]."
                 ],
                 $snippet:[
                 "var id='linb.temp.1'; if(!linb.Dom.byId(id)){this.prepend(linb.create('<div id='+id+' style=\"border:solid 1px;padding:10px;\">' + '<br /><button onclick=\"linb(this).parent().remove()\">remove this example</button>' + '</div>'));"+
@@ -13715,7 +13716,16 @@ _.set(linb.Locale,["en","app"], {
                     "var dlg=(new linb.UI.Dialog).show(null,false, 100,100); alert(dlg.getCloseBtn());_.asyRun(function(){dlg.setCloseBtn(false);},1000);_.asyRun(function(){dlg.close();},2000);"
                 ]
             },
-
+            getInitPos:{
+                $desc:"To get the dialog's init position."
+            },
+            setInitPos:{
+                $desc:"To set the dialog's init position.",
+                $rtn:"[self]",
+                $paras:[
+                    "value [Optional] : String. one of 'auto','center'. Default is 'center'."
+                ]
+            },
             getMinBtn:{
                 $desc:"To determine whether this control has a min button",
                 $rtn:"Boolean",
