@@ -958,6 +958,11 @@ Class("linb.UI",  "linb.absObj", {
                 return;
 
             if(target['linb.Com']){
+                if(subId!==false){
+                    target.getUIComponents().each(function(profile){
+                        profile.linkParent(pro,subId);
+                    });
+                }
                 if(pro.renderId){
                     if(subId=typeof subId=='string'?subId:null)subId=pro.getSubIdByItemId(subId);
                     parentNode=pro.keys.PANEL?pro.getSubNode(pro.keys.PANEL, subId):pro.getRoot();

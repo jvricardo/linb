@@ -912,7 +912,7 @@ _.merge(linb,{
     _langParamReg:/\x24(\d+)/g,
     _langscMark:/[$@{][\S]+/,
     _langReg:/((\$)([^\w]))|((\$)([\w][\w\.]*[\w]+))|((\@)([\w][\w\.]*[\w]+)(\@?))|((\{)([\S]+)(\}))/g,
-    getRes:function(path, locale){
+    getRes:function(path){
         var arr,conf,tmp,params=arguments;
         if(typeof path=='string'){
             if(path.indexOf('-')!=-1){
@@ -924,7 +924,7 @@ _.merge(linb,{
         }else{
             arr=path;
         }
-        conf=_.get(linb.Locale[locale||linb.$localeKey], arr);
+        conf=_.get(linb.Locale[linb.$localeKey], arr);
         return (tmp=typeof conf)=='string'
                ? ( params.length>1 ? conf.replace(linb._langParamReg,function(z,id,k){k=params[1+ +id];return (k===null||k===undefined)?z:k}) : conf)
                : tmp=='function'
@@ -12451,6 +12451,11 @@ Class("linb.UI",  "linb.absObj", {
                 return;
 
             if(target['linb.Com']){
+                if(subId!==false){
+                    target.getUIComponents().each(function(profile){
+                        profile.linkParent(pro,subId);
+                    });
+                }
                 if(pro.renderId){
                     if(subId=typeof subId=='string'?subId:null)subId=pro.getSubIdByItemId(subId);
                     parentNode=pro.keys.PANEL?pro.getSubNode(pro.keys.PANEL, subId):pro.getRoot();

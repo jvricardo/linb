@@ -21,7 +21,7 @@ Class('App', 'linb.Com',{
                 .setHost(host,"radiobox1")
                 .setItems([{"id":"en", "caption":"English"}, {"id":"cn", "caption":"Chniese"}])
                 .setLeft(290)
-                .setTop(420)
+                .setTop(480)
                 .setHeight(60)
                 .setValue("en")
                 .onItemSelected("_radiobox1_onitemselected")
