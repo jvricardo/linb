@@ -3191,7 +3191,7 @@ Class('linb.absObj',"linb.absBox",{
         checkValid:function(){
             return linb.absValue.pack(this.get(0)._n,false).checkValid();
         },
-        getDirtied:function(withCaption){
+        getUIValue:function(withCaption, dirtied){
             var ns=this,
                 prf=ns.get(0),
                 hash={};
@@ -3199,10 +3199,9 @@ Class('linb.absObj',"linb.absBox",{
                 var p=profile.properties,
                     b = profile.boxing(),
                     // maybe return array
-                    v = b.getValue(),
                     uv = b.getUIValue();
                 // v and uv can be object(Date,Number)
-                if((uv+" ")!==(v+" ")){
+                if(!dirtied || (uv+" ")!==(b.getValue()+" ")){
                     if(withCaption && b.getCaption){
                         hash[p.dataField]={value:uv,caption:b.getCaption()};
                     }else{
@@ -3211,6 +3210,10 @@ Class('linb.absObj',"linb.absBox",{
                 }
             });
             return hash;
+        },
+        // get dirtied UI Value
+        getDirtied:function(withCaption){
+            return this.getUIValue(withCaption, true);
         },
         updateValue:function(){
             linb.absValue.pack(this.get(0)._n,false).updateValue();
