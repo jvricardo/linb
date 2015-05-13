@@ -1,0 +1,1 @@
+This project is deprecated. Please go to http://code.google.com/p/crossui. Or, http://www.crossui.com
